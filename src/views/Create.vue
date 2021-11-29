@@ -1,38 +1,46 @@
 <template>
 
+  <div class="headlines">
+    <div >Overview</div>
+    <div> Presentation </div>
+    <div> Edit question</div>
+  </div>
+
   <div class="wrapper">
 
-    <div>
-      Overview
-    </div>
+    <div id="overview"> </div>
 
-<div class="slideEdit">
+
+<div id="presentation">
     <div>
-    Poll link:
-    <input type="text" v-model="pollId">
-    <button v-on:click="createPoll">
-      Create poll
-    </button>
+
     </div>
+  <br>
 
 
     <div></div>
     <div></div>
 
-    <div>
-      {{uiLabels.question}}:
-      <input type="text" v-model="question">
+    <div >
+<!--      {{uiLabels.question}}:-->
+      <input class="questionInput" type="text" v-model="question" placeholder="Write your question here" >
+
       <div>
+        <br>
         Answers:
         <input v-for="(_, i) in answers" 
                v-model="answers[i]" 
                v-bind:key="'answer'+i">
+
+
         <button v-on:click="addAnswer">
+
           Add answer alternative
         </button>
+        <br>
       </div>
     </div>
-
+  <br>
     <div>
     <button v-on:click="addQuestion">
       Add question
@@ -45,13 +53,33 @@
     </div>
 
 
+
     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
   </div>
 
 
-  <div> Edit question </div>
+  <div class="editQuestion">
+    <div id="v-model-select" class="typeOfQuestion">
+      <label> Choose type of question </label>
+      <select>
+        <option> Quiz </option>
+        <option> Voting </option>
+        <option > True or False </option>
+
+
+      </select>
+      <!--      <span> Selected: {{ selected }}</span>-->
+    </div>
+  </div>
   </div>
 
+
+
+  Poll link:
+  <input type="text" v-model="pollId">
+  <button v-on:click="createPoll">
+    Create poll
+  </button>
 </template>
 
 <script>
@@ -102,17 +130,49 @@ export default {
 
 <style>
 
+
+
 .wrapper{
   display: grid;
   grid-template-rows: 100%;
   grid-template-columns: 25% 50% 25%;
+  grid-gap: 2px;
+  font-family: AppleGothic;
 }
 
-.slideEdit{
+#overview{
+
+  border:solid;
+  border-radius: 10%;
+  background-color: beige;
+
+}
+
+#presentation{
+  border: solid;
+  border-radius: 5%;
+
+}
+
+.headlines{
   display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 33% 33% 33%;
-  grid-gap: 10px;
+  grid-template-rows: 100%;
+  grid-template-columns: 25% 50% 25%;
+  font-size: 50px;
+
+}
+
+.editQuestion{
+  border: solid;
+  border-radius: 5%;
+  margin: 2px;
+}
+
+.questionInput{
+  height: 100px;
+  width: 400px;
+  font-size: 30px;
+  max-width: 400px;
 }
 
 </style>
