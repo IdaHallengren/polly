@@ -1,10 +1,25 @@
 <template>
-  <div>
-    Poll link: 
+
+  <div class="wrapper">
+
+
+    <div>
+      Overview
+    </div>
+
+<div class="slideEdit">
+    <div>
+    Poll link:
     <input type="text" v-model="pollId">
     <button v-on:click="createPoll">
       Create poll
     </button>
+    </div>
+
+
+    <div></div>
+    <div></div>
+
     <div>
       {{uiLabels.question}}:
       <input type="text" v-model="question">
@@ -18,6 +33,8 @@
         </button>
       </div>
     </div>
+
+    <div>
     <button v-on:click="addQuestion">
       Add question
     </button>
@@ -26,8 +43,16 @@
       Run question
     </button>
     {{data}}
+    </div>
+
+
     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
   </div>
+
+
+  <div> Edit question </div>
+  </div>
+
 </template>
 
 <script>
@@ -75,3 +100,20 @@ export default {
   }
 }
 </script>
+
+<style>
+
+.wrapper{
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 25% 50% 25%;
+}
+
+.slideEdit{
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 33% 33% 33%;
+  grid-gap: 10px;
+}
+
+</style>
