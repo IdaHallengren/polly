@@ -7,8 +7,8 @@
   </div>
 
   <div class="wrapper">
-
-    <div id="overview"> </div>
+    <div id="overview">
+    </div>
 
 
 <div id="presentation">
@@ -21,26 +21,31 @@
     <div></div>
     <div></div>
 
-    <div >
+    <div>
 <!--      {{uiLabels.question}}:-->
       <input class="questionInput" type="text" v-model="question" placeholder="Write your question here" >
 
-      <div>
+      <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
+
+
+      <div class="answers">
         <br>
         Answers:
         <input v-for="(_, i) in answers" 
                v-model="answers[i]" 
-               v-bind:key="'answer'+i">
+               v-bind:key="'answer'+i"
+            class="answersStyle"
+        >
 
 
         <button v-on:click="addAnswer">
-
           Add answer alternative
         </button>
         <br>
       </div>
     </div>
   <br>
+
     <div>
     <button v-on:click="addQuestion">
       Add question
@@ -59,17 +64,55 @@
 
 
   <div class="editQuestion">
-    <div id="v-model-select" class="typeOfQuestion">
+    <div id="v-model-select-question" class="typeOfQuestion">
       <label> Choose type of question </label>
       <select>
         <option> Quiz </option>
         <option> Voting </option>
         <option > True or False </option>
+        <option > Presentation </option>
 
 
       </select>
       <!--      <span> Selected: {{ selected }}</span>-->
     </div>
+
+
+    <div id="v-model-select-time" class="timeForQuestion">
+      <label> Choose time for this question </label>
+      <br>
+      <select>
+        <option> 5s </option>
+        <option> 10s </option>
+        <option > 15s </option>
+        <option > 20s </option>
+        <option > 25s </option>
+        <option > 30s </option>
+        <option > 35s </option>
+        <option > 40s </option>
+        <option > 45s </option>
+        <option > 50s </option>
+        <option > 55s </option>
+        <option > 60s </option>
+      </select>
+      <!--      <span> Selected: {{ selected }}</span>-->
+    </div>
+
+    <div id="v-model-select-points" class="pointsForQuestion">
+      <label> Choose points for this question </label>
+      <br>
+      <select>
+        <option> 5p </option>
+        <option> 10p </option>
+        <option > 15p </option>
+        <option > 20p </option>
+        <option > 25p </option>
+        <option > 30p </option>
+      </select>
+      <!--      <span> Selected: {{ selected }}</span>-->
+    </div>
+
+
   </div>
   </div>
 
@@ -158,7 +201,7 @@ export default {
   display: grid;
   grid-template-rows: 100%;
   grid-template-columns: 25% 50% 25%;
-  font-size: 50px;
+  font-size: 40px;
 
 }
 
@@ -170,9 +213,42 @@ export default {
 
 .questionInput{
   height: 100px;
-  width: 400px;
+  width: 600px;
   font-size: 30px;
-  max-width: 400px;
+  max-width: 8000px;
+}
+
+
+.marginPresentation{
+  margin-bottom: 400px;
+}
+
+.typeOfQuestion{
+
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.timeForQuestion{
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+
+.pointsForQuestion{
+  font-size: 20px;
+}
+
+
+.answers{
+  font-size: 20px;
+}
+
+.answersStyle{
+  height: 30px;
+  width: 150px;
+  font-size: 15px;
+
 }
 
 </style>
