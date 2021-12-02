@@ -5,12 +5,28 @@
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>-->
+<div id = "HidePollId">
 
+
+  <div v-show = "showID">
+    <div class = "wrapper1">
+  <label><h2>Enter your Poll-Id</h2></label>
+  <input v-model = "PollId" type="text" id = "PollId" name = "PollId" placeholder="Poll-Id">
+
+  <button class = "okButton" v-on:click = "showID = !showID">
+    OK
+  </button>
+
+  </div>
+</div>
+</div>
+
+  <div v-if=" showID==false">
 
 <div id = "HideOk">
   <div v-show ="isThisVisible">
 
-    <div class = "wrapper">
+    <div class = "wrapper2">
       <label><h2>Enter your name</h2></label>
 
       <div style = position:center>
@@ -28,40 +44,52 @@
     </div>
     </div>
 </div>
+</div>
 
 <!--  <div id = "ChosenProfile">
 
     <v-avatar>
 
-
-
-
-
     </v-avatar>
+
+  </div>-->
+
+  <!--<div id = "ChosenProfile">
+    <div v-if=""
+
+
 
 
 
   </div>-->
 
 
+
 <div id ="HideAvatars">
   <div v-if = "isThisVisible==false">
 
 
-
-
-
-
-
-
-
-
+<span id = "YourName">{{EnterName}}</span>
 
 
 
     <div id = "avatars">
       <form id = "form">
+
+
+
+
+
+          <AvatarLoop v-for="avatar in Avatars"
+                  v-bind:avatar="avatar"
+                  v-bind:key="avatar.Name"
+
+          />
+
+
+<!--
         <label class = "avatars">
+
           <input type = "radio"
                  name = "avatar"/>
           <img
@@ -123,6 +151,8 @@
           <img
             src="https://www.how-to-draw-cartoons-online.com/image-files/xhow-to-draw-sonic.gif.pagespeed.ic.MhqtKIS1HE.png" width="200px" alt=""/>
         </label>
+-->
+
 
 
 
@@ -141,32 +171,55 @@
 
     </button>-->
 
-  </form>
+      </form>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+  <div id = "backButton">
+    <div v-if=" isThisVisible==false">
+      <button class = "backButton" v-on:click = "isThisVisible = !isThisVisible">
+        BACK
+      </button>
     </div>
-</div>
-</div>
+    <div v-else-if="showID==false">
+      <button class = "backButton" v-on:click = "showID = !showID">
+        BACK
+      </button>
+
+    </div>
+
+  </div>
 </template>
 
 <script>
 /*// @ is an alias to /src
 import Question from '@/components/Question.vue';*/
 
-import io from 'socket.io-client';
+import AvatarLoop from '../components/AvatarLoop.vue'
+import io from 'socket.io-client'
+import avatar from '../data/avatar.json'
 
 // import .....json
 const socket = io();
 
 export default {
   name: 'Poll',
-  /*components: {
-    Question
-  },*/
+  components: {
+    AvatarLoop
+  },
   data: function () {
     return {
-      // Avatars: Avatar,
+      Avatars: avatar,
       EnterName: "",
       isThisVisible: true,
-      isThisHidden: false,
+      // isThisHidden: false,
+      showID: true,
       question: {
         q: "",
         a: []
@@ -205,16 +258,35 @@ btn.onclick = function(){
 </script>
 
 <style>
-.wrapper{
+
+.wrapper1{
   font-family: "Al Nile";
   padding-top: 200px;
   grid-template-rows: 100%;
+
+}
+.wrapper2{
+  font-family: "Al Nile";
+  padding-top: 200px;
+  grid-template-rows: 100%;
+}
+
+#PollId{
+  width: 150px;
+  height: 50px;
+  font-size: larger;
+
 }
 
 #EnterName{
   width: 150px;
   height: 50px;
   font-size: larger;
+
+}
+#YourName{
+  font-size: xx-large;
+
 
 }
 
@@ -241,12 +313,7 @@ btn.onclick = function(){
   padding-right: 250px;
 
 }
-.avatars img:hover {
-  border-radius: 100%;
-  padding: 15px;
-  position: relative;
 
-}
 .avatars > input {
   display: none;
 
@@ -258,10 +325,13 @@ btn.onclick = function(){
   border: 2px solid transparent;
   border-radius: 100%;
 
+
+
 }
 
 .avatars > input:checked + img{
   border: 2px solid forestgreen;
+
 
 }
 #form{
@@ -272,6 +342,23 @@ btn.onclick = function(){
   padding-left: 50px;
   background-color: cadetblue;
   border: 0.3em solid black;
+}
+.avatars img {
+  /*border-radius: 100%;*/
+  shape: rounded;
+  padding: 15px;
+  position: relative;
+
+}
+.backButton{
+  position: fixed;
+  bottom: 0em;
+  left: 0em;
+  width: 100px;
+  height: 55px;
+  background-color: forestgreen;
+  color: white;
+
 }
 
 
