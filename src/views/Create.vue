@@ -123,6 +123,8 @@
   <button v-on:click="createPoll">
     Create poll
   </button>
+  
+
 </template>
 
 <script>
@@ -156,10 +158,10 @@ export default {
   },
   methods: {
     createPoll: function () {
-      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
     },
     addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers});
     },
     addAnswer: function () {
       this.answers.push("");
@@ -167,8 +169,10 @@ export default {
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
     }
+
   }
-}
+  }
+
 </script>
 
 <style>
