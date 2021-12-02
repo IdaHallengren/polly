@@ -1,10 +1,12 @@
 
 <template>
-<!--  <div>
+
+ <div>
+
     {{pollId}}
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
-  </div>-->
+  </div>
 <div id = "HidePollId">
 
 

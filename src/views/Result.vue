@@ -1,5 +1,7 @@
 <template>
+
   <div>
+
     {{question}}
   </div>
   <Bars v-bind:data="data"/>
