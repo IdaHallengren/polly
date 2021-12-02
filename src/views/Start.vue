@@ -1,8 +1,10 @@
 <template>
-<main>
+<main id="main">
+
   <div id="wrapperHead">
 
   <div id="header">
+    <img id="logo" src="../img/logo.jpg">
     <h1> Welcome to Pollify</h1>
     <h3> - Easy to create and participate</h3>
   </div>
@@ -18,20 +20,31 @@
 
  <section id="wrapperButtons">
 
-   <div id="divCreate">
+<!--   <div id="divCreate">
     <button id="buttonCreate">
     <router-link  v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
     </button>
-   </div>
-<!--    <label>
-    Write poll id:
-      <input type="text" v-model="id">
-    </label> -->
-    <div id="divPart">
+   </div>-->
+
+   <button class="button">
+     <router-link  v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
+   </button>
+
+   <button id="partButton" class="button">
+     <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
+   </button>
+
+
+     <!--    <label>
+         Write poll id:
+           <input type="text" v-model="id">
+         </label> -->
+
+<!--    <div id="divPart">
     <button id="buttonParticipate">
     <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>
     </button>
-    </div>
+    </div>-->
  </section>
 
 </main>
@@ -73,6 +86,9 @@ export default {
 </script>
 
 <style>
+body{
+  background-color: indigo;
+}
 
 #wrapperHead {
   display: grid;
@@ -83,6 +99,16 @@ export default {
   position: relative;
   grid-column: 3;
   grid-row: 1;
+}
+
+#sweImg:hover{
+  width: 2.5em;
+  height: 2.5em;
+}
+
+#engImg:hover{
+  width: 2.5em;
+  height: 2.5em;
 }
 
 #engImg{
@@ -97,13 +123,19 @@ export default {
 #sweImg{
   position: absolute;
   top: 0em;
-  right: 2em;
+  right: 2.2em;
   border-radius: 100%;
   width: 2em;
   height: 2em;
 }
+#logo{
+  height:40vh;
+  width: 20vw;
+
+}
 
 #header{
+  color: white;
   padding-bottom: 6em;
   grid-column: 2;
   grid-row: 1;
@@ -111,6 +143,7 @@ export default {
 
 #wrapperButtons{
   display: grid;
+  place-items: center;
   grid-template-columns: 25% 25% 25% 25%;
 }
 
@@ -132,5 +165,41 @@ Padding: 1em;
   grid-row: 1;
   padding: 1em;
 }
+
+.button {
+  height:10vh;
+  width: 15vw;
+  grid-column: 2;
+  grid-row: 1;
+/*  width: 9em;
+  height: 3em;*/
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: black;
+  background: white;
+  border: 0.1em solid black;
+  box-shadow: 0.25em 0.25em 0 black,
+  -0.25em -0.25em 0 black,
+  -0.25em 0.25em 0 black,
+  0.25em -0.25em 0 black;
+  transition: 500ms ease-in-out;
+}
+
+button:hover {
+  box-shadow: 2em 0.25em 0 black, -2em -0.25em 0 black;
+  background: palegreen;
+  color: white;
+}
+
+button:focus {
+  outline: none;
+}
+#partButton{
+  grid-column: 3;
+  grid-row: 1;
+}
+
+
 
 </style>
