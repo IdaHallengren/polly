@@ -8,10 +8,17 @@
 
   <div class="wrapper">
     <div id="overview">
+
+      <div class="overviewPresentationSlide">
+
+      </div>
+
+      <button v-on:click="addSlide" > Add slide </button>
+
     </div>
 
 
-<div id="presentation">
+<div id="presentation" ref="printPresentation">
     <div>
 
     </div>
@@ -23,12 +30,18 @@
 
     <div>
 <!--      {{uiLabels.question}}:-->
+      <div v-if="typeOfQuestion!='Presentation'"> <!--This is to change the input area for when it is a presentation-->
       <input class="questionInput" type="text" v-model="question" placeholder="Write your question here" >
+      </div>
+
+      <div v-if="typeOfQuestion==='Presentation'">
+        <input class="presentationInput" type="text" v-model="presentation" placeholder="Write your presentation here">
+      </div>
 
       <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
 
-
-      <div class="answers">
+<div v-if="typeOfQuestion!='Presentation'" class="answers" >
+      <div >
         <br>
         Answers:
         <input v-for="(_, i) in answers" 
@@ -37,13 +50,24 @@
             class="answersStyle"
         >
 
+        <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
 
-        <button v-on:click="addAnswer">
-          Add answer alternative
+        <button  v-on:click="addAnswer" class="icon-btn add-btn" >
+          <div class="add-icon"></div>
+          <div class="btn-txt">Add alternative</div>
         </button>
+
+          <button v-on:click="removeAnswer" class="icon-btn add-btn">
+            <div class="btn-txt">Remove alternative</div>
+          </button>
+
+
+
+        </div>
+
         <br>
       </div>
-    </div>
+
   <br>
 
     <div>
@@ -56,33 +80,37 @@
     </button>
     {{data}}
     </div>
-
+    </div>
+    </div>
 
 
     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
   </div>
 
 
-  <div class="editQuestion">
+  <div id="editQuestion">
     <div id="v-model-select-question" class="typeOfQuestion">
+      <br>
       <label> Choose type of question </label>
-      <select>
-        <option> Quiz </option>
-        <option> Voting </option>
-        <option > True or False </option>
-        <option > Presentation </option>
+      <br>
+      <select v-model="typeOfQuestion" >
+        <option v-on="showAnswerButton" > Quiz </option>
+        <option v-on="showAnswerButton" > Voting </option>
+        <option v-on="showAnswerButton=!showAnswerButton" > True or False </option>
+        <option v-on="showAnswerButton=!showAnswerButton" > Presentation </option>
 
 
       </select>
-      <!--      <span> Selected: {{ selected }}</span>-->
+<!--  <span> Selected: {{ showAnswerButton }}</span>-->
+
     </div>
 
 
-    <div id="v-model-select-time" class="timeForQuestion">
+    <div id="v-model-select-time" class="timeForQuestion" v-if="typeOfQuestion!='Presentation'">
       <label> Choose time for this question </label>
       <br>
-      <select>
-        <option> 5s </option>
+      <select v-model="timeForQuestion" >
+        <option > 5s </option>
         <option> 10s </option>
         <option > 15s </option>
         <option > 20s </option>
@@ -95,21 +123,21 @@
         <option > 55s </option>
         <option > 60s </option>
       </select>
-      <!--      <span> Selected: {{ selected }}</span>-->
+<!--       <span> Selected: {{ timeForQuestion }}</span>-->
     </div>
 
-    <div id="v-model-select-points" class="pointsForQuestion">
+    <div v-if="typeOfQuestion!='Presentation'" id="v-model-select-points" class="pointsForQuestion">
       <label> Choose points for this question </label>
       <br>
-      <select>
-        <option> 5p </option>
-        <option> 10p </option>
+      <select v-model="pointsForQuestion" >
+        <option > 5p </option>
+        <option > 10p </option>
         <option > 15p </option>
         <option > 20p </option>
         <option > 25p </option>
         <option > 30p </option>
       </select>
-      <!--      <span> Selected: {{ selected }}</span>-->
+<!--      <span> Selected: {{ pointsForQuestion }}</span>-->
     </div>
 
 
@@ -123,11 +151,20 @@
   <button v-on:click="createPoll">
     Create poll
   </button>
+
+
+
+
+
+
+
 </template>
 
 <script>
 import io from 'socket.io-client';
 const socket = io();
+
+
 
 export default {
   name: 'Create',
@@ -136,10 +173,16 @@ export default {
       lang: "",
       pollId: "",
       question: "",
+      presentation: "",
       answers: ["", ""],
+      slides: {},
       questionNumber: 0,
       data: {},
-      uiLabels: {}
+      uiLabels: {},
+      typeOfQuestion: "Quiz",
+      timeForQuestion: "5s",
+      pointsForQuestion: "5p",
+      showAnswerButton: true
     }
   },
   created: function () {
@@ -149,31 +192,44 @@ export default {
       this.uiLabels = labels
     })
     socket.on("dataUpdate", (data) =>
-      this.data = data
+        this.data = data
     )
     socket.on("pollCreated", (data) =>
-      this.data = data)
+        this.data = data)
   },
   methods: {
     createPoll: function () {
-      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
     },
     addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers})
     },
     addAnswer: function () {
       this.answers.push("");
     },
+    removeAnswer: function () {
+      this.answers.pop();
+    },
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
-    }
-  }
+    },
+    addSlide: function () {
+      var p = document.createElement("DIV");
+      p.setAttribute("style", "margin:10px;border:solid;border-radius:10%; background-color:white;height:200px");
+
+      document.body.appendChild(p);
+
+      // this.slides.push("")
+    },
+  },
+
 }
+
+
+
 </script>
 
 <style>
-
-
 
 .wrapper{
   display: grid;
@@ -184,16 +240,21 @@ export default {
 }
 
 #overview{
-
   border:solid;
-  border-radius: 10%;
-  background-color: beige;
+  border-radius: 2%;
+  background-color: lightblue;
 
 }
 
 #presentation{
   border: solid;
-  border-radius: 5%;
+  border-radius: 2%;
+}
+
+#editQuestion{
+  border: solid;
+  border-radius: 2%;
+  background-color: lightblue;
 
 }
 
@@ -202,29 +263,29 @@ export default {
   grid-template-rows: 100%;
   grid-template-columns: 25% 50% 25%;
   font-size: 40px;
+  font-family: AppleGothic;
 
 }
 
-.editQuestion{
-  border: solid;
-  border-radius: 5%;
-  margin: 2px;
-}
 
 .questionInput{
-  height: 100px;
-  width: 600px;
-  font-size: 30px;
-  max-width: 8000px;
+  height: 5em;
+  width: 90%;
+  font-size: 2vw;
+}
+
+.presentationInput{
+  height: 5em;
+  width: 90%;
+  font-size: 2em;
 }
 
 
 .marginPresentation{
-  margin-bottom: 400px;
+  margin-bottom: 20em;
 }
 
 .typeOfQuestion{
-
   font-size: 20px;
   margin-bottom: 30px;
 }
@@ -248,7 +309,101 @@ export default {
   height: 30px;
   width: 150px;
   font-size: 15px;
-
 }
+
+.overviewPresentationSlide{
+  border:solid;
+  border-radius: 10%;
+  background-color: white;
+  height: 200px;
+  margin: 10px;
+}
+
+
+
+
+.icon-btn {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #cdcdcd;
+  background: white;
+  border-radius: 25px;
+  overflow: hidden;
+  position: relative;
+  transition: width 0.2s ease-in-out;
+}
+.add-btn:hover {
+  width: 120px;
+}
+.add-btn::before,
+.add-btn::after {
+  transition: width 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+  content: "";
+  position: absolute;
+  height: 4px;
+  width: 10px;
+  top: calc(50% - 2px);
+  background: plum;
+}
+.add-btn::after {
+  right: 14px;
+  overflow: hidden;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.add-btn::before {
+  left: 14px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+.icon-btn:focus {
+  outline: none;
+}
+.btn-txt {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.add-btn:hover::before,
+.add-btn:hover::after {
+  width: 4px;
+  border-radius: 2px;
+}
+
+
+.add-btn:hover .btn-txt {
+  opacity: 1;
+}
+.add-icon::after,
+.add-icon::before {
+  transition: all 0.2s ease-in-out;
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 2px;
+  top: calc(50% - 10px);
+  background: plum;
+  overflow: hidden;
+}
+.add-icon::before {
+  left: 22px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+.add-icon::after {
+  right: 22px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.add-btn:hover .add-icon::before {
+  left: 15px;
+  height: 4px;
+  top: calc(50% - 2px);
+}
+.add-btn:hover .add-icon::after {
+  right: 15px;
+  height: 4px;
+  top: calc(50% - 2px);
+}
+
 
 </style>
