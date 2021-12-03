@@ -2,8 +2,8 @@
 <main class="start">
 
   <div id="wrapperHead">
-
     <div id="header">
+
       <img id="logo" src="../img/logo.jpg">
       <h1> Welcome to Pollify</h1>
       <h3> - Easy to create and participate</h3>
@@ -13,12 +13,11 @@
 
       <img id="sweImg" src="../img/swe.jpg" v-on:click="switchToSwedishLanguage"/>
 
-
       <img id="engImg" src="../img/eng.jpg" v-on:click="switchToEnglishLanguage"/>
     </div>
   </div>
 
- <section id="wrapperButtons">
+<section id="wrapperButtons">
 
    <button class="button" v-on:click="newPage('Create')">
      {{uiLabels.createPoll}}
@@ -28,7 +27,7 @@
      {{uiLabels.participatePoll}}
    </button>
 
- </section>
+</section>
 
 </main>
 
@@ -37,8 +36,6 @@
 <script>
 import io from 'socket.io-client';
 const socket = io();
-
-
 
 export default {
   name: 'Start',
@@ -59,11 +56,13 @@ export default {
         this.lang = "sv"
       socket.emit("switchLanguage", this.lang)
     },
+
     switchToEnglishLanguage: function() {
       if (this.lang === "sv")
         this.lang = "en"
       socket.emit("switchLanguage", this.lang)
     },
+
     newPage: function(route) {
       if (route === 'Create')
         this.$router.push( '/create/' + this.lang)

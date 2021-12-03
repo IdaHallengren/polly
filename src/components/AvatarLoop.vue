@@ -1,11 +1,11 @@
 <template>
-  <div id = "Avatars">
+<div id = "Avatars">
   <div class = "avatars">
 
-  <img class="avatars" v-bind:src= "avatar.url" style="width: 100px; height: 100px">
+    <img class="avatars" v-bind:src= "avatar.url" style="width: 100px; height: 100px">
 
   </div>
-  </div>
+</div>
 
 </template>
 
@@ -23,19 +23,14 @@ export default {
 
 }
 
-
-
 .avatars img {
   border-radius: 100%;
   padding: 15px;
   position: relative;
-
 }
 
 .avatars > input {
   display: none;
-
-
 }
 
 .avatars > input + img{
@@ -51,7 +46,6 @@ export default {
 #form{
   padding-top: 50px;
   padding-bottom: 50px;
-  padding-top: 50px;
   padding-right: 50px;
   padding-left: 50px;
   background-color: cadetblue;
