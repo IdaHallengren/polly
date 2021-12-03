@@ -16,6 +16,7 @@
       </div>
       </div>
       <button v-on:click="addSlide" > Add slide </button>
+      <button v-on:click="removeSlide"> Remove slide </button>
 
     </div>
 
@@ -202,11 +203,18 @@ export default {
 
     },
     addAnswer: function () {
-      this.answers.push("");
+
+      this.answers.push("")
+
     },
     removeAnswer: function () {
+      if (this.answers.length === 1) {
+        this.answers();
+      }
       this.answers.pop();
     },
+
+
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
 
@@ -214,10 +222,15 @@ export default {
     addSlide: function () {
       var p = document.createElement("DIV");
       p.setAttribute("style", "margin:10px;border:solid;border-radius:10%; background-color:white;height:200px");
-
+      p.id="removeSlides"
       document.getElementById("slides").appendChild(p);
 
       // this.slides.push("")
+    },
+
+    removeSlide: function(){
+
+      document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
     }
 
 }}
