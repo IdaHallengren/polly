@@ -1,12 +1,11 @@
 <template>
-  <form id = "form">
-  </form>
+  <div id = "Avatars">
   <div class = "avatars">
 
-  <img class="avatars" v-bind:src= "avatar.url">
+  <img class="avatars" v-bind:src= "avatar.url" style="width: 100px; height: 100px">
 
   </div>
-
+  </div>
 
 </template>
 
@@ -20,13 +19,16 @@ export default {
 </script>
 
 <style scoped>
+#Avatars{
 
-#avatars{
-  overflow-y: auto;
-  grid-template-rows: 33% 33% 33%;
-  grid-template-rows: 33% 33% 33%;
-  padding-left: 250px;
-  padding-right: 250px;
+}
+
+
+
+.avatars img {
+  border-radius: 100%;
+  padding: 15px;
+  position: relative;
 
 }
 
@@ -42,7 +44,7 @@ export default {
   border-radius: 100%;
 }
 
-.avatars > input:checked + img{
+.avatars > input:checked + img {
   border: 2px solid forestgreen;
 }
 
@@ -61,7 +63,5 @@ export default {
   padding: 15px;
   position: relative;
 }
-
-
 
 </style>

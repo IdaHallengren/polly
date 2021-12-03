@@ -7,7 +7,7 @@
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
-<div id = "HidePollId">
+<div id = "HidePollId">2
 
 
   <div v-show = "showID">
@@ -48,24 +48,6 @@
 </div>
 </div>
 
-<!--  <div id = "ChosenProfile">
-
-    <v-avatar>
-
-    </v-avatar>
-
-  </div>-->
-
-  <!--<div id = "ChosenProfile">
-    <div v-if=""
-
-
-
-
-
-  </div>-->
-
-
 
 <div id ="HideAvatars">
   <div v-if = "isThisVisible==false">
@@ -73,28 +55,25 @@
 
 <span id = "YourName">{{EnterName}}</span>
 
+    <form class = "form">
 
-
-    <div id = "avatars">
-      <form id = "form">
+    <div class = "wrapper">
 
           <AvatarLoop v-for="avatar in Avatars"
                   v-bind:avatar="avatar"
                   v-bind:key="avatar.Name"
-
           />
 
-<!--    <button class = "avatarButton">
-      <img src = "" id = "avatar1" onclick = butClick();>
-    </button>-->
 
-      </form>
+    </div>
 
-</div>
+    </form>
+    </div>
+  </div>
 
-</div>
 
-</div>
+
+
 
 
 
@@ -112,6 +91,7 @@
     </div>
 
   </div>
+
 </template>
 
 <script>
@@ -221,14 +201,17 @@ btn.onclick = function(){
   box-sizing: border-box;
 }*/
 
-#avatars{
-  overflow-y: auto;
+.wrapper{
+  display:grid;
   grid-template-rows: 33% 33% 33%;
-  grid-template-rows: 33% 33% 33%;
+  grid-template-columns: 33% 33% 33%;
   padding-left: 250px;
   padding-right: 250px;
 
 }
+
+
+
 
 .avatars > input {
   display: none;
@@ -250,7 +233,7 @@ btn.onclick = function(){
 
 
 }
-#form{
+.form{
   padding-top: 50px;
   padding-bottom: 50px;
   padding-top: 50px;
@@ -258,6 +241,10 @@ btn.onclick = function(){
   padding-left: 50px;
   background-color: cadetblue;
   border: 0.3em solid black;
+  overflow-y: auto;
+  padding-left: 250px;
+  padding-right: 250px;
+
 }
 .avatars img {
   /*border-radius: 100%;*/
