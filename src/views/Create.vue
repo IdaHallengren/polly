@@ -9,10 +9,12 @@
   <div class="wrapper">
     <div id="overview">
 
-      <div class="overviewPresentationSlide">
+      <div id="slides">
+
+      <div id="overviewPresentationSlide">
 
       </div>
-
+      </div>
       <button v-on:click="addSlide" > Add slide </button>
 
     </div>
@@ -213,7 +215,7 @@ export default {
       var p = document.createElement("DIV");
       p.setAttribute("style", "margin:10px;border:solid;border-radius:10%; background-color:white;height:200px");
 
-      document.body.appendChild(p);
+      document.getElementById("slides").appendChild(p);
 
       // this.slides.push("")
     }
@@ -233,12 +235,15 @@ export default {
   grid-template-columns: 25% 50% 25%;
   grid-gap: 2px;
   font-family: AppleGothic;
+
+  height: 45em;
 }
 
 #overview{
   border:solid;
   border-radius: 2%;
   background-color: lightblue;
+  overflow: scroll;
 
 }
 
@@ -307,7 +312,7 @@ export default {
   font-size: 15px;
 }
 
-.overviewPresentationSlide{
+#overviewPresentationSlide{
   border:solid;
   border-radius: 10%;
   background-color: white;
