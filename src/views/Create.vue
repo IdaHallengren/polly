@@ -152,12 +152,6 @@
     Create poll
   </button>
 
-
-
-
-
-
-
 </template>
 
 <script>
@@ -202,7 +196,8 @@ export default {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
     },
     addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers})
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers});
+
     },
     addAnswer: function () {
       this.answers.push("");
@@ -212,6 +207,7 @@ export default {
     },
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
+
     },
     addSlide: function () {
       var p = document.createElement("DIV");
@@ -220,10 +216,10 @@ export default {
       document.body.appendChild(p);
 
       // this.slides.push("")
-    },
-  },
+    }
 
-}
+}}
+
 
 
 
