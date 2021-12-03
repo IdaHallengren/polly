@@ -4,5 +4,22 @@
 	"createPoll": "Skapa röstning",
 	"participatePoll": "Delta",
 	"question": "Fråga",
-	"changeLanguage": "English"
+	"changeLanguage": "English",
+	"overview": "Översikt",
+	"presentation": "Presentation",
+	"editQuestion": "Redigera fråga",
+	"removeSlide": "Ta bort slide",
+	"addSlide": "Lägg till slide",
+	"removeAlternative": "Ta bort alternativ",
+	"addAlternative": "Lägg till alternativ",
+	"chooseTypeOfQuestion": "Välj typ av fråga",
+	"chooseTimeForQuestion": "Välj tid för frågan",
+	"choosePointsForQuestion": "Välj poäng för frågan",
+	"answers": "Svar",
+	"voting": "Omröstning",
+	"trueOrFalse": "Sant eller falskt",
+	"createPoll": "Skapa poll",
+	"writeYourQuestionHere": "Skriv din fråga här",
+	"writeYourPresentationHere": "Skriv din presentation här"
+
 }
