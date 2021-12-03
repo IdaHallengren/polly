@@ -7,7 +7,7 @@
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
-<div id = "HidePollId">
+<div id = "HidePollId">2
 
 
   <div v-show = "showID">
@@ -73,10 +73,10 @@
 
 <span id = "YourName">{{EnterName}}</span>
 
+    <form class = "form">
 
+    <div class = "wrapper">
 
-    <div id = "avatars">
-      <form id = "form">
 
 
 
@@ -172,10 +172,10 @@
 
 
     </button>-->
+    </div>
 
-      </form>
 
-</div>
+    </form>
 
 </div>
 
@@ -307,14 +307,17 @@ btn.onclick = function(){
   box-sizing: border-box;
 }*/
 
-#avatars{
-  overflow-y: auto;
+.wrapper{
+  display:grid;
   grid-template-rows: 33% 33% 33%;
-  grid-template-rows: 33% 33% 33%;
+  grid-template-columns: 33% 33% 33%;
   padding-left: 250px;
   padding-right: 250px;
 
 }
+
+
+
 
 .avatars > input {
   display: none;
@@ -336,7 +339,7 @@ btn.onclick = function(){
 
 
 }
-#form{
+.form{
   padding-top: 50px;
   padding-bottom: 50px;
   padding-top: 50px;
@@ -344,6 +347,10 @@ btn.onclick = function(){
   padding-left: 50px;
   background-color: cadetblue;
   border: 0.3em solid black;
+  overflow-y: auto;
+  padding-left: 250px;
+  padding-right: 250px;
+
 }
 .avatars img {
   /*border-radius: 100%;*/
