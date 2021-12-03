@@ -1,5 +1,5 @@
 <template>
-<main id="main">
+<main class="start">
 
   <div id="wrapperHead">
 
@@ -115,10 +115,10 @@ body{
   width: 2em;
   height: 2em;
 }
+
 #logo{
   height:40vh;
   width: 20vw;
-
 }
 
 #header{
@@ -156,7 +156,7 @@ Padding: 1em;
   padding: 1em;
 }*/
 
-.button {
+.start .button {
 
   height:10vh;
   width: 15vw;
@@ -175,13 +175,13 @@ Padding: 1em;
   transition: 500ms ease-in-out;
 }
 
-button:hover {
+.start button:hover {
   box-shadow: 2em 0.25em 0 black, -2em -0.25em 0 black;
   background: palegreen;
   color: indigo;
 }
 
-button:focus {
+.start button:focus {
   outline: none;
 }
 #partButton{
