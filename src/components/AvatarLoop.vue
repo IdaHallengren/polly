@@ -8,9 +8,6 @@
   </div>
 
 
-
-
-
 </template>
 
 <script>
@@ -43,16 +40,12 @@ export default {
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: 100%;
-
-
-
 }
 
 .avatars > input:checked + img{
   border: 2px solid forestgreen;
-
-
 }
+
 #form{
   padding-top: 50px;
   padding-bottom: 50px;
@@ -62,6 +55,7 @@ export default {
   background-color: cadetblue;
   border: 0.3em solid black;
 }
+
 .avatars img {
   border-radius: 100%;
   padding: 15px;

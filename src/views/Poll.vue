@@ -78,99 +78,14 @@
     <div id = "avatars">
       <form id = "form">
 
-
-
-
-
           <AvatarLoop v-for="avatar in Avatars"
                   v-bind:avatar="avatar"
                   v-bind:key="avatar.Name"
 
           />
 
-
-<!--
-        <label class = "avatars">
-
-          <input type = "radio"
-                 name = "avatar"/>
-          <img
-              src= "https://www.loudegg.com/wp-content/uploads/2020/10/Patrick-Star.jpg" width="200px" height="220px" alt = "" />
-        </label>
-
-        <label class = "avatars">
-          <input type = "radio"
-                 name = "avatar"/>
-          <img
-            src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHn_TpINxs0q_Hpn0nZhUCIayEig99hw7S9Q&usqp=CAU" alt = ""/>
-        </label>
-        <label class = "avatars">
-          <input type = "radio"
-                 name = "avatar"/>
-          <img
-              src = "https://i.pinimg.com/originals/ce/5f/53/ce5f53437e291c48705428721406985c.jpg" width="200px" height="220px" alt = ""/>
-        </label>
-        <label class = "avatars">
-          <input type = "radio"
-                 name = "avatar"/>
-          <img
-              src = "https://st.depositphotos.com/1787196/1330/i/600/depositphotos_13301967-stock-photo-furry-blue-monster.jpg" width="230px" alt = ""/>
-        </label>
-
-        <label class = "avatars">
-          <input type = "radio"
-                 name = "avatar"/>
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiJC_WmCWZS0lPcmq9PloqGY7L8wZgfs0Sww&usqp=CAU" width="230px" height="200px" alt=""/>
-        </label>
-
-        <label class = "avatars">
-          <input type = "radio"
-                 name = "avatar"/>
-          <img
-            src="https://www.liveabout.com/thmb/b_XjAEyjRIBb-loREyq24Dmg4Sg=/1000x1000/filters:no_upscale():max_bytes(150000):strip_icc()/bart-simpson-58fe1f773df78ca159b60cc2.jpg" width="220px" alt=""/>
-        </label>
-
-        <label class = "avatars">
-          <input type = "radio"
-                 name = "avatar"/>
-          <img
-            src="https://img.buzzfeed.com/buzzfeed-static/static/2018-08/1/16/tmp/buzzfeed-prod-web-06/18744028b408f907a59e0b9229fc85ef-8.jpg?downsize=900:*&output-format=auto&output-quality=auto" width="220px" alt=""/>
-
-        </label>
-
-        <label class = "avatars">
-          <input type = "radio"
-                 name = "avatar"/>
-          <img
-            src="https://pleated-jeans.com/wp-content/uploads/2011/06/Kitty-White.jpeg" width="200px" height="220px"  alt=""/>
-
-        </label>
-
-        <label class = "avatars">
-          <input type = "radio"
-                 name = "avatar"/>
-          <img
-            src="https://www.how-to-draw-cartoons-online.com/image-files/xhow-to-draw-sonic.gif.pagespeed.ic.MhqtKIS1HE.png" width="200px" alt=""/>
-        </label>
--->
-
-
-
-
-
-
-
-
-
-
-
-
 <!--    <button class = "avatarButton">
       <img src = "" id = "avatar1" onclick = butClick();>
-
-
-
     </button>-->
 
       </form>
@@ -207,7 +122,6 @@ import AvatarLoop from '../components/AvatarLoop.vue'
 import io from 'socket.io-client'
 import avatar from '../data/avatar.json'
 
-// import .....json
 const socket = io();
 
 export default {
