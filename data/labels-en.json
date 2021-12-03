@@ -4,5 +4,21 @@
 	"createPoll": "Create poll",
 	"participatePoll": "Participate",
 	"question": "Question",
-	"changeLanguage": "Svenska"
+	"changeLanguage": "Svenska",
+	"overview": "Overview",
+	"presentation": "Presentation",
+	"editQuestion": "Edit question",
+	"removeSlide": "Remove slide",
+	"addSlide": "Add slide",
+	"removeAlternative": "Remove alternative",
+	"addAlternative": "Add alternative",
+	"chooseTypeOfQuestion": "Choose type of question",
+	"chooseTimeForQuestion": "Choose time for question",
+	"choosePointsForQuestion": "Choose points for question",
+	"answers": "Answers",
+	"voting": "Voting",
+	"trueOrFalse": "True or false",
+	"createPoll": "Create poll",
+	"writeYourQuestionHere": "Write your question here",
+	"writeYourPresentationHere": "Write your presentation here"
 }

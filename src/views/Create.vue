@@ -1,19 +1,24 @@
 <template>
 
   <div class="headlines">
-    <div >Overview</div>
-    <div> Presentation </div>
-    <div> Edit question</div>
+    <div> {{uiLabels.overview}} </div>
+    <div> {{uiLabels.presentation}} </div>
+    <div> {{uiLabels.editQuestion}}</div>
   </div>
 
   <div class="wrapper">
     <div id="overview">
 
-      <div class="overviewPresentationSlide">
+      <div id="slides">
+
+      <div id="overviewPresentationSlide">
 
       </div>
+      </div>
 
-      <button v-on:click="addSlide" > Add slide </button>
+      <button v-on:click="removeSlide"> {{ uiLabels.removeSlide }} </button>
+      <button v-on:click="addSlide" > {{ uiLabels.addSlide }} </button>
+
 
     </div>
 
@@ -43,7 +48,7 @@
 <div v-if="typeOfQuestion!='Presentation'" class="answers" >
       <div >
         <br>
-        Answers:
+        {{ uiLabels.answers }}
         <input v-for="(_, i) in answers" 
                v-model="answers[i]" 
                v-bind:key="'answer'+i"
@@ -52,15 +57,15 @@
 
         <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
 
-        <button  v-on:click="addAnswer" class="icon-btn add-btn" >
-          <div class="add-icon"></div>
-          <div class="btn-txt">Add alternative</div>
-        </button>
+
 
           <button v-on:click="removeAnswer" class="icon-btn add-btn">
-            <div class="btn-txt">Remove alternative</div>
+            <div class="btn-txt">{{ uiLabels.removeAlternative }}</div>
           </button>
-
+          <button  v-on:click="addAnswer" class="icon-btn add-btn" >
+            <div class="add-icon"></div>
+            <div class="btn-txt">{{ uiLabels.addAlternative }}</div>
+          </button>
 
 
         </div>
@@ -91,12 +96,12 @@
   <div id="editQuestion">
     <div id="v-model-select-question" class="typeOfQuestion">
       <br>
-      <label> Choose type of question </label>
+      <label> {{ uiLabels.chooseTypeOfQuestion }} </label>
       <br>
       <select v-model="typeOfQuestion" >
         <option v-on="showAnswerButton" > Quiz </option>
-        <option v-on="showAnswerButton" > Voting </option>
-        <option v-on="showAnswerButton=!showAnswerButton" > True or False </option>
+        <option v-on="showAnswerButton" > {{ uiLabels.voting }} </option>
+        <option v-on="showAnswerButton=!showAnswerButton" > {{ uiLabels.trueOrFalse }} </option>
         <option v-on="showAnswerButton=!showAnswerButton" > Presentation </option>
 
 
@@ -107,7 +112,7 @@
 
 
     <div id="v-model-select-time" class="timeForQuestion" v-if="typeOfQuestion!='Presentation'">
-      <label> Choose time for this question </label>
+      <label>{{uiLabels.chooseTimeForQuestion }} </label>
       <br>
       <select v-model="timeForQuestion" >
         <option > 5s </option>
@@ -127,7 +132,7 @@
     </div>
 
     <div v-if="typeOfQuestion!='Presentation'" id="v-model-select-points" class="pointsForQuestion">
-      <label> Choose points for this question </label>
+      <label> {{ uiLabels.choosePointsForQuestion}}</label>
       <br>
       <select v-model="pointsForQuestion" >
         <option > 5p </option>
@@ -141,6 +146,10 @@
     </div>
 
 
+    <button v-on:click="createPoll" id="startButton">
+      {{ uiLabels.createPoll }}
+    </button>
+
   </div>
   </div>
 
@@ -148,9 +157,7 @@
 
   Poll link:
   <input type="text" v-model="pollId">
-  <button v-on:click="createPoll">
-    Create poll
-  </button>
+
 
 </template>
 
@@ -199,12 +206,19 @@ export default {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers});
 
     },
+
     addAnswer: function () {
-      this.answers.push("");
+      this.answers.push("")
+
     },
     removeAnswer: function () {
+      if (this.answers.length === 1) {
+        this.answers();
+      }
       this.answers.pop();
     },
+
+
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
 
@@ -212,10 +226,15 @@ export default {
     addSlide: function () {
       var p = document.createElement("DIV");
       p.setAttribute("style", "margin:10px;border:solid;border-radius:10%; background-color:white;height:200px");
-
-      document.body.appendChild(p);
+      p.id="removeSlides"
+      document.getElementById("slides").appendChild(p);
 
       // this.slides.push("")
+    },
+
+    removeSlide: function(){
+
+      document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
     }
 
 }}
@@ -233,12 +252,15 @@ export default {
   grid-template-columns: 25% 50% 25%;
   grid-gap: 2px;
   font-family: AppleGothic;
+
+  height: 45em;
 }
 
 #overview{
   border:solid;
   border-radius: 2%;
   background-color: lightblue;
+  overflow: scroll;
 
 }
 
@@ -307,13 +329,20 @@ export default {
   font-size: 15px;
 }
 
-.overviewPresentationSlide{
+#overviewPresentationSlide{
   border:solid;
   border-radius: 10%;
   background-color: white;
   height: 200px;
   margin: 10px;
 }
+
+#startButton{
+  margin-top: 30em ;
+
+}
+
+
 
 
 

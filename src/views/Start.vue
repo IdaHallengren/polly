@@ -1,5 +1,5 @@
 <template>
-<main id="main">
+<main class="start">
 
   <div id="wrapperHead">
 
@@ -20,19 +20,15 @@
 
    <button class="button" v-on:click="newPage('Create')">
      {{uiLabels.createPoll}}
-<!--     <router-link  v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>-->
    </button>
 
    <button id="partButton" class="button" v-on:click="newPage('Poll')">
      {{uiLabels.participatePoll}}
-<!--     <router-link v-bind:to="'/poll/'+id" tag="button">{{uiLabels.participatePoll}}</router-link>-->
    </button>
 
  </section>
 
-
 </main>
-
 
 </template>
 
@@ -47,7 +43,6 @@ export default {
   data: function () {
     return {
       uiLabels: {},
-      id: "",
       lang: "en"
     }
   },
@@ -69,9 +64,9 @@ export default {
     },
     newPage: function(route) {
       if (route === 'Create')
-        this.$router.push( /create/ + this.lang)
+        this.$router.push( '/create/' + this.lang)
       else
-        this.$router.push( /poll/ )
+        this.$router.push( '/poll/:id' )
     }
   }
 }
@@ -120,10 +115,10 @@ body{
   width: 2em;
   height: 2em;
 }
+
 #logo{
   height:40vh;
   width: 20vw;
-
 }
 
 #header{
@@ -161,7 +156,7 @@ Padding: 1em;
   padding: 1em;
 }*/
 
-.button {
+.start .button {
 
   height:10vh;
   width: 15vw;
@@ -180,13 +175,13 @@ Padding: 1em;
   transition: 500ms ease-in-out;
 }
 
-button:hover {
+.start button:hover {
   box-shadow: 2em 0.25em 0 black, -2em -0.25em 0 black;
   background: palegreen;
   color: indigo;
 }
 
-button:focus {
+.start button:focus {
   outline: none;
 }
 #partButton{
