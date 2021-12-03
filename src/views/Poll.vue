@@ -23,7 +23,7 @@
 </div>
 </div>
 
-  <div v-if=" showID==false">
+  <div v-if="!showID">
 
 <div id = "HideOk">
   <div v-show ="isThisVisible">
