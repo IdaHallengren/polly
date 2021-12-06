@@ -1,6 +1,8 @@
 
 <template>
-
+  <div id="cancel">
+  <button1 v-on:click="newPage()"><span class='text'>Cancel</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/></svg></span></button1>
+  </div>
  <div>
 
     <Question v-bind:question="question"
@@ -49,11 +51,13 @@
     <p class="YourName"> Name: {{participantName}} </p>
 
       <section id="selectAvatar">
+        <p id="select"> Avatar:  </p>
+        <span > <img id="selectedAvatar" src={{participantImg}}> </span>
+<!--          src="https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg"  alt="Avatar"></span>-->
 
-       <p class="YourName"> Avatar: <span> <img id="selectedAvatar" src="https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg"  alt="Avatar"></span> </p>
-        {{this.participantImg}}
 
       </section>
+    {{this.participantImg}}
 
     <div id="formsize">
         <form class = "form">
@@ -110,7 +114,6 @@ export default {
       participantName: "",
       participantImg: "",
       isThisVisible: true,
-      // isThisHidden: false,
       participantInfo: {
         participantName: "",
         participantImg: ""
@@ -137,6 +140,10 @@ export default {
     changeAvatar: function (event) {
       return this.participantImg = event
     },
+    newPage: function() {
+        this.$router.push( '/' )
+
+    }
 
   }
 }
@@ -169,6 +176,13 @@ export default {
   font-size: larger;
 }
 
+#select {
+  position: relative;
+  font-size: xx-large;
+  grid-column: 2;
+
+}
+
 .YourName{
   font-size: xx-large;
 }
@@ -186,6 +200,8 @@ export default {
 }
 
 #selectAvatar {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
   padding-bottom: 1em;
   position: relative;
   width: 50%;
@@ -193,12 +209,14 @@ export default {
 }
 
 #selectedAvatar {
-  width: 40%;
-  height: 40%;
+  grid-column: 3;
+  width: 7em;
+  height: auto;
   border-radius: 100%;
-  padding: 1em;
+  padding-left: 2em;
+  padding-right: 2em;
   position: relative;
-  top: 50%;
+  top: -10%
 
 }
 
@@ -246,12 +264,76 @@ export default {
 
 .backButton{
   position: fixed;
-  bottom: 0em;
-  left: 0em;
+  bottom: 0.5em;
+  left: 0.5em;
   width: 100px;
   height: 55px;
   background-color: forestgreen;
   color: white;
 }
+#cancel {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+}
+
+button1{
+
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #e62222;
+}
+
+button1, button1 span {
+  transition: 200ms;
+}
+
+button1 .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+button1 .icon {
+  position: absolute;
+  border-left: 1px solid #c41b1b;
+  transform: translateX(110px);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button1 svg {
+  width: 15px;
+  fill: #eee;
+}
+
+button1:hover {
+  background: #ff3636;
+}
+
+button1:hover .text {
+  color: transparent;
+}
+
+button1:hover .icon {
+  width: 150px;
+  border-left: none;
+  transform: translateX(0);
+}
+
+button1:focus {
+  outline: none;
+}
+
 
 </style>
