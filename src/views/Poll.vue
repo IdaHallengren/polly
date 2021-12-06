@@ -7,7 +7,7 @@
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
   </div>
-<div id = "HidePollId">2
+<div id = "HidePollId">
 
 
   <div v-show = "showID">
