@@ -1,4 +1,9 @@
+
+
+
 <template>
+
+  <div v-show="startPoll">
 
   <div class="headlines">
     <div> {{uiLabels.overview}} </div>
@@ -146,10 +151,11 @@
     </div>
 
 
-    <button v-on:click="createPoll" id="startButton">
+<div v-on:click= "startPoll= !startPoll" id="startButton">
+    <button v-on:click="createPoll">
       {{ uiLabels.createPoll }}
     </button>
-
+</div>
   </div>
   </div>
 
@@ -159,11 +165,35 @@
   <input type="text" v-model="pollId">
 
 
+  </div>
+
+
+  <div class="pollIdStyle">
+PollId: {{pollId}}
+  </div>
+
+  <qr-code text="Hejhej" class="QRCode">
+
+  </qr-code>
+
+
+
+
+
+
+
+
 </template>
 
 <script>
+import Vue from 'vue'
+import VueQRCodeComponent from 'vue-qrcode-component'
+Vue.node_modules.vue-qrcode-component.src('qr-code', VueQRCodeComponent)
+
 import io from 'socket.io-client';
 const socket = io();
+
+
 
 
 
@@ -183,7 +213,9 @@ export default {
       typeOfQuestion: "Quiz",
       timeForQuestion: "5s",
       pointsForQuestion: "5p",
-      showAnswerButton: true
+      showAnswerButton: true,
+      startPoll: true,
+
     }
   },
   created: function () {
@@ -201,7 +233,13 @@ export default {
   methods: {
     createPoll: function () {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
+      console.log("Skickat info")
+      this.getPollId();
     },
+    getPollId: function () {
+      return this.pollId=Math.floor(Math.random() * 100000);
+    },
+
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers});
 
@@ -339,8 +377,15 @@ export default {
 
 #startButton{
   margin-top: 30em ;
-
 }
+
+.pollIdStyle{
+  background-color: lightblue;
+  width: 10em;
+}
+
+
+
 
 
 
