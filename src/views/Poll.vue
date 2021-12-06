@@ -3,7 +3,6 @@
 
  <div>
 
-    {{pollId}}
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
  </div>
@@ -17,12 +16,14 @@
       <button class = "okButton" v-on:click = "showID = !showID">
       OK
       </button>
-
     </div>
   </div>
 </div>
 
 <div v-if="!showID">
+
+  <p class="YourName"> Poll-ID: {{PollId}} </p>
+
   <div id = "HideOk">
     <div v-show ="isThisVisible">
       <div class = "wrapper2">
@@ -30,7 +31,7 @@
 
         <div style = position:center>
 
-          <input v-model = "EnterName" type="text" id = "EnterName" name = "EnterName" placeholder="Name">
+          <input v-model = "participantName" type="text" id = "participantName" name = "participantName" placeholder="Name">
 
           <button class = "okButton" v-on:click = "isThisVisible = !isThisVisible">
             OK
@@ -45,21 +46,30 @@
 
 <div id ="HideAvatars">
   <div v-if = "isThisVisible==false">
+    <p class="YourName"> Name: {{participantName}} </p>
 
+      <section id="selectAvatar">
 
-    <span id = "YourName">{{EnterName}}</span>
+       <p class="YourName"> Avatar: <span> <img id="selectedAvatar" src="https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg"  alt="Avatar"></span> </p>
+        {{this.participantImg}}
 
-      <form class = "form">
-        <div class = "wrapper">
-          <AvatarLoop v-for="avatar in Avatars"
+      </section>
+
+    <div id="formsize">
+        <form class = "form">
+          <div class = "wrapper">
+           <AvatarLoop v-for="avatar in Avatars"
                   v-bind:avatar="avatar"
                   v-bind:key="avatar.Name"
-          />
-        </div>
+                  v-on:participantImg="changeAvatar($event)"
+           />
+           </div>
 
-      </form>
+        </form>
+    </div>
   </div>
 </div>
+
 
 <div id = "backButton">
   <div v-if=" isThisVisible==false">
@@ -97,9 +107,14 @@ export default {
   data: function () {
     return {
       Avatars: avatar,
-      EnterName: "",
+      participantName: "",
+      participantImg: "",
       isThisVisible: true,
       // isThisHidden: false,
+      participantInfo: {
+        participantName: "",
+        participantImg: ""
+      },
       showID: true,
       question: {
         q: "",
@@ -119,23 +134,13 @@ export default {
     submitAnswer: function (answer) {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
     },
-    nextstep: function () {
-
-    }
-
+    changeAvatar: function (event) {
+      return this.participantImg = event
+    },
 
   }
 }
-/*const targetDiv = document.getElementById("HideOk");
-const btn = document.getElementId("toggle");
-btn.onclick = function(){
-  if(targetDiv.style.display !== "none") {
-    targetDiv.style.display = "none";
-  }else {
-    targetDiv.style.display = "block";
 
-    }
-}*/
 </script>
 
 <style>
@@ -144,11 +149,11 @@ btn.onclick = function(){
   font-family: "Al Nile";
   padding-top: 200px;
   grid-template-rows: 100%;
-
 }
+
 .wrapper2{
   font-family: "Al Nile";
-  padding-top: 200px;
+  padding-top: 100px;
   grid-template-rows: 100%;
 }
 
@@ -156,16 +161,15 @@ btn.onclick = function(){
   width: 150px;
   height: 50px;
   font-size: larger;
-
 }
 
-#EnterName{
+#participantName{
   width: 150px;
   height: 50px;
   font-size: larger;
-
 }
-#YourName{
+
+.YourName{
   font-size: xx-large;
 }
 
@@ -180,16 +184,35 @@ btn.onclick = function(){
 .avatarButton{
   border-radius: 100%;
 }
-/**{
-  box-sizing: border-box;
-}*/
+
+#selectAvatar {
+  padding-bottom: 1em;
+  position: relative;
+  width: 50%;
+  left: 25%;
+}
+
+#selectedAvatar {
+  width: 40%;
+  height: 40%;
+  border-radius: 100%;
+  padding: 1em;
+  position: relative;
+  top: 50%;
+
+}
+
+#formsize {
+  width: 50%;
+  position: absolute;
+  left: 25%
+}
 
 .wrapper{
   display:grid;
+  width: 100%;
   grid-template-rows: 33% 33% 33%;
   grid-template-columns: 33% 33% 33%;
-  padding-left: 250px;
-  padding-right: 250px;
 }
 
 .avatars > input {
@@ -207,22 +230,17 @@ btn.onclick = function(){
 }
 
 .form{
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-top: 50px;
-  padding-right: 50px;
-  padding-left: 50px;
+  padding-top: 2em;
+  padding-bottom: 2em;
   background-color: cadetblue;
   border: 0.3em solid black;
   overflow-y: auto;
-  padding-left: 250px;
-  padding-right: 250px;
 }
 
 .avatars img {
   /*border-radius: 100%;*/
   shape: rounded;
-  padding: 15px;
+  padding: 1em;
   position: relative;
 }
 
