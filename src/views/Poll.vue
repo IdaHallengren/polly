@@ -6,110 +6,82 @@
     {{pollId}}
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
+
   </div>
+
+
+
+
+
 <div id = "HidePollId">
-
-
   <div v-show = "showID">
     <div class = "wrapper1">
-  <label><h2>Enter your Poll-Id</h2></label>
-  <input v-model = "PollId" type="text" id = "PollId" name = "PollId" placeholder="Poll-Id">
+      <label><h2>Enter your Poll-Id</h2></label>
+      <input v-model = "PollId" type="text" id = "PollId" name = "PollId" placeholder="Poll-Id">
 
-  <button class = "okButton" v-on:click = "showID = !showID">
-    OK
-  </button>
+      <button class = "okButton" v-on:click = "showID = !showID">
+      OK
+      </button>
 
+    </div>
   </div>
 </div>
-</div>
 
-  <div v-if="!showID">
+<div v-if="!showID">
+  <div id = "HideOk">
+    <div v-show ="isThisVisible">
+      <div class = "wrapper2">
+        <label><h2>Enter your name</h2></label>
 
-<div id = "HideOk">
-  <div v-show ="isThisVisible">
+        <div style = position:center>
 
-    <div class = "wrapper2">
-      <label><h2>Enter your name</h2></label>
+          <input v-model = "EnterName" type="text" id = "EnterName" name = "EnterName" placeholder="Name">
 
-      <div style = position:center>
+          <button class = "okButton" v-on:click = "isThisVisible = !isThisVisible">
+            OK
+          </button>
 
-
-        <input v-model = "EnterName" type="text" id = "EnterName" name = "EnterName" placeholder="Name">
-
-        <button class = "okButton" v-on:click = "isThisVisible = !isThisVisible">
-          OK
-        </button>
-
-
-
+        </div>
+      </div>
     </div>
-    </div>
-    </div>
+  </div>
 </div>
-</div>
-
-<!--  <div id = "ChosenProfile">
-
-    <v-avatar>
-
-    </v-avatar>
-
-  </div>-->
-
-  <!--<div id = "ChosenProfile">
-    <div v-if=""
-
-
-
-
-
-  </div>-->
-
 
 
 <div id ="HideAvatars">
   <div v-if = "isThisVisible==false">
 
 
-<span id = "YourName">{{EnterName}}</span>
+    <span id = "YourName">{{EnterName}}</span>
 
-    <form class = "form">
-
-    <div class = "wrapper">
-
-
-
+      <form class = "form">
+        <div class = "wrapper">
           <AvatarLoop v-for="avatar in Avatars"
                   v-bind:avatar="avatar"
                   v-bind:key="avatar.Name"
           />
+        </div>
 
-
-    </div>
-
-
-    </form>
-
+      </form>
+  </div>
 </div>
 
-</div>
-
-
-
-  <div id = "backButton">
-    <div v-if=" isThisVisible==false">
-      <button class = "backButton" v-on:click = "isThisVisible = !isThisVisible">
+<div id = "backButton">
+  <div v-if=" isThisVisible==false">
+    <button class = "backButton" v-on:click = "isThisVisible = !isThisVisible">
         BACK
-      </button>
-    </div>
-    <div v-else-if="showID==false">
-      <button class = "backButton" v-on:click = "showID = !showID">
-        BACK
-      </button>
+    </button>
+  </div>
 
-    </div>
+  <div v-else-if="showID==false">
+    <button class = "backButton" v-on:click = "showID = !showID">
+        BACK
+    </button>
 
   </div>
+
+</div>
+
 </template>
 
 <script>
@@ -120,7 +92,6 @@ import AvatarLoop from '../components/AvatarLoop.vue'
 import io from 'socket.io-client'
 import avatar from '../data/avatar.json'
 
-// import .....json
 const socket = io();
 
 export default {
@@ -201,8 +172,6 @@ btn.onclick = function(){
 }
 #YourName{
   font-size: xx-large;
-
-
 }
 
 .okButton{
@@ -226,32 +195,22 @@ btn.onclick = function(){
   grid-template-columns: 33% 33% 33%;
   padding-left: 250px;
   padding-right: 250px;
-
 }
-
-
-
 
 .avatars > input {
   display: none;
-
-
 }
 
 .avatars > input + img{
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: 100%;
-
-
-
 }
 
 .avatars > input:checked + img{
   border: 2px solid forestgreen;
-
-
 }
+
 .form{
   padding-top: 50px;
   padding-bottom: 50px;
@@ -263,15 +222,15 @@ btn.onclick = function(){
   overflow-y: auto;
   padding-left: 250px;
   padding-right: 250px;
-
 }
+
 .avatars img {
   /*border-radius: 100%;*/
   shape: rounded;
   padding: 15px;
   position: relative;
-
 }
+
 .backButton{
   position: fixed;
   bottom: 0em;
@@ -280,9 +239,6 @@ btn.onclick = function(){
   height: 55px;
   background-color: forestgreen;
   color: white;
-
 }
-
-
 
 </style>
