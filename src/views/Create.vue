@@ -22,7 +22,7 @@
       </div>
 
       <button v-on:click="removeSlide"> {{ uiLabels.removeSlide }} </button>
-      <button v-on:click="testingQ"> {{ uiLabels.addSlide }} </button>
+      <button v-on:click="addQuestion"> {{ uiLabels.addSlide }} </button>
 
 
     </div>
@@ -88,7 +88,7 @@
     <button v-on:click="runQuestion">
       Run question
     </button>
-    {{data}}
+      {{data}}
     </div>
     </div>
     </div>
@@ -163,8 +163,8 @@
   Poll link:
   <input type="text" v-model="pollId">
 
-<!--  {{allQuestions}}-->
-  {{allAnswers}}
+<!--  {{allQuestions}}
+  {{allAnswers}}-->
 </template>
 
 <script>
@@ -223,9 +223,22 @@ export default {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
     },
     addQuestion: function () {
+      this.addSlide();
+      this.allQuestions.push(this.question)
+      this.allAnswers.push(this.answers)
+
+      this.questionNumber ++;
+      socket.emit("dataUpdate", {questionNumber: this.questionNumber})
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers});
 
-    },
+      this.runQuestion();
+
+      this.question = "";
+      for(let i = 0; i < this.answers.length; i++) {
+        this.answers[i] = "";
+
+    }
+      },
 
     addAnswer: function () {
       this.answers.push("")
@@ -238,27 +251,10 @@ export default {
       this.answers.pop();
     },
 
-
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
 
     },
-
-    testingQ: function () {
-      console.log(this.allQuestions)
-      this.addQuestion();
-      //socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, questionNumber: this.questionNumber});
-      //socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber});
-      this.addSlide();
-
-      this.allQuestions.push(this.question)
-      this.allAnswers.push(this.answers)
-
-      this.questionNumber ++;
-
-      //console.log(this.allAnswers)
-    },
-
 
     addSlide: function () {
       var p = document.createElement("DIV");
@@ -274,19 +270,21 @@ export default {
       if (this.questionNumber != 0) {
         this.allAnswers.pop(this.answers)
         this.allQuestions.pop(this.question)
-        this.questionNumber--;
-        console.log(this.allQuestions)
+
+
         //this.question.$remove(this.questionNumber);
         //this.question.pop();
         //this.answers.pop();
 
+
+        //socket.emit("dataUpdate", {questionNumber: this.questionNumber, });
         //this.data.q.$delete();
         //this.data.a.$delete();
         //this.answers.$remove(this.questionNumber);
-        //delete(this.data.questions[this.questionNumber]);
-        //delete(this.data.answers[this.questionNumber]);
-
-        //socket.emit("dataUpdate", {questionNumber: this.questionNumber-1, q: this.question, a: this.answers});
+        delete(this.data.questions[this.questionNumber]);
+        delete(this.data.answers[this.questionNumber]);
+        this.questionNumber--;
+        socket.emit("dataUpdate", {questionNumber: this.questionNumber, q: this.question, a: this.answers});
       }
     }
 }}
@@ -362,11 +360,9 @@ export default {
   margin-bottom: 30px;
 }
 
-
 .pointsForQuestion{
   font-size: 20px;
 }
-
 
 .answers{
   font-size: 20px;
@@ -390,11 +386,6 @@ export default {
   margin-top: 30em ;
 
 }
-
-
-
-
-
 
 .icon-btn {
   width: 50px;
