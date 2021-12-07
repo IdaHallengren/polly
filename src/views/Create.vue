@@ -1,4 +1,11 @@
+
+
+
 <template>
+
+
+<div v-show="letsPlayButton">
+  <div v-show="startPoll">
 
   <div class="headlines">
     <div> {{uiLabels.overview}} </div>
@@ -23,10 +30,11 @@
     </div>
 
 
-<div id="presentation" ref="printPresentation">
+<div id="presentation" >
     <div>
 
     </div>
+  <br>
   <br>
 
 
@@ -146,10 +154,18 @@
     </div>
 
 
-    <button v-on:click="createPoll" id="startButton">
-      {{ uiLabels.createPoll }}
-    </button>
 
+<div v-on:click= "startPoll= !startPoll" id="startButton">
+
+  <buttonCreatePoll class="noselect" v-on:click="createPoll">
+    <span class='text'>{{ uiLabels.createPoll }}</span>
+  </buttonCreatePoll>
+
+
+<!--    <button v-on:click="createPoll">-->
+<!--      {{ uiLabels.createPoll }}-->
+<!--    </button>-->
+</div>
   </div>
   </div>
 
@@ -159,16 +175,109 @@
   <input type="text" v-model="pollId">
 
 
+    <buttonCancel1 class="noselect" v-on:click="cancelPage">
+      <span class='text'>Cancel</span>
+    </buttonCancel1>
+
+  </div>
+
+
+
+<!--  NEXT PAGE  -->
+
+<div v-show="!startPoll" class="wrapperWaitRoom">
+
+  <div> </div>
+
+  <div>
+  <buttonCancel2 class="noselect" v-on:click="cancelPage">
+    <span class='text'>Cancel</span>
+  </buttonCancel2>
+    </div>
+
+  <div>
+  <div class="pollIdStyle">
+PollId: {{pollId}}
+  </div>
+
+
+<div id="QRCode">
+
+  <qrcode-vue :value="qrValue" text="Hejhej"  :size="size" >
+
+  </qrcode-vue>
+
+</div>
+
+  </div>
+
+
+
+
+
+<div>  <h2> Waitingroom</h2>
+
+  <form class = "waitingRoom">
+    <div class = "wrapper">
+
+    </div>
+
+  </form>
+
+</div>
+
+
+<div>
+  <buttonBack class="noselect" v-on:click="startPoll=!startPoll">
+    <span class='text'> Back </span>
+  </buttonBack>
+</div>
+
+  <div v-on:click="letsPlayButton=!letsPlayButton">
+    <buttonLetsPlay class="noselect" v-on:click="letsPlay">
+      <span class='text'> Let's play! </span>
+    </buttonLetsPlay>
+  </div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+
 </template>
 
 <script>
+
+import QrcodeVue from 'qrcode.vue'
+import html2canvas from 'html2canvas'
+
+/*
+
+import Vue from 'vue'
+import VueQRCodeComponent from 'vue-qrcode-component'
+Vue.node_modules.vue-qrcode-component.src('qr-code', VueQRCodeComponent)
+*/
+
+
+
 import io from 'socket.io-client';
 const socket = io();
 
 
 
+
+
 export default {
   name: 'Create',
+  components: {
+    QrcodeVue
+  },
   data: function () {
     return {
       lang: "",
@@ -183,7 +292,14 @@ export default {
       typeOfQuestion: "Quiz",
       timeForQuestion: "5s",
       pointsForQuestion: "5p",
-      showAnswerButton: true
+      showAnswerButton: true,
+      startPoll: true,
+      qrValue: "https://old.utn.se/sv/bokningskalendern",
+      size: 300,
+      letsPlayButton: true
+
+
+
     }
   },
   created: function () {
@@ -201,7 +317,15 @@ export default {
   methods: {
     createPoll: function () {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
+      console.log("Skickat info")
+      this.getPollId();
+
     },
+    getPollId: function () {
+      return this.pollId=Math.floor(Math.random() * 100000);
+
+    },
+
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers});
 
@@ -229,12 +353,34 @@ export default {
       p.id="removeSlides"
       document.getElementById("slides").appendChild(p);
 
+        var slides = html2canvas(document.querySelector("#presentation")).then(canvas => {
+        document.body.appendChild(canvas)
+        slides.id="removePictures"
+
+
+      });
+
+
       // this.slides.push("")
     },
 
-    removeSlide: function(){
+    removeSlide: function() {
 
       document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
+      document.getElementById('presentation').removeChild()
+
+    },
+
+
+
+
+    cancelPage: function() {
+      this.$router.push( '/' )
+
+    },
+
+    letsPlay: function(){
+
     }
 
 }}
@@ -339,8 +485,49 @@ export default {
 
 #startButton{
   margin-top: 30em ;
+}
+
+.pollIdStyle{
+  background-color: lightblue;
+  width: 10em;
+  margin-left: 6em;
+  margin-top: 4em;
+  text-align: center;
+  font-size: 2em;
 
 }
+
+
+#QRCode{
+margin-top: 2em;
+}
+
+
+
+.wrapperWaitRoom{
+  display: grid;
+  grid-gap: 3em;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 1% 79% 20%;
+}
+
+.waitingRoom{
+  width: 8em;
+  height: 28em;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  padding-right: 50px;
+  padding-left: 50px;
+  background-color: cadetblue;
+  border: 0.3em solid black;
+  overflow-y: auto;
+  padding-left: 250px;
+  padding-right: 250px;
+}
+
+
+
 
 
 
@@ -429,6 +616,163 @@ export default {
   height: 4px;
   top: calc(50% - 2px);
 }
+
+
+
+
+
+buttonCancel1{
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #e62222;
+
+}
+
+/*button1, button1 span {*/
+/*  transition: 200ms;*/
+/*}*/
+
+buttonCancel1 .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+
+
+buttonCancel2{
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #e62222;
+  margin-left: 32em;
+}
+
+/*button1, button1 span {*/
+/*  transition: 200ms;*/
+/*}*/
+
+buttonCancel2 .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+/*button1 .icon {*/
+/*  position: absolute;*/
+/*  border-left: 1px solid #c41b1b;*/
+/*  transform: translateX(110px);*/
+/*  height: 40px;*/
+/*  width: 40px;*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*}*/
+
+/*button1 svg {*/
+/*  width: 15px;*/
+/*  fill: #eee;*/
+/*}*/
+
+
+
+
+buttonletsPlay{
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: green;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: green;
+  margin-left: 32em;
+
+}
+
+buttonletsPlay .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+
+
+buttonletsPlay:hover {
+  background: green;
+}
+
+
+
+buttonCreatePoll{
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: green;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: green;
+}
+
+buttonCreatePoll .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+
+
+buttonCreatePoll:hover {
+  background: green;
+}
+
+
+
+buttonBack{
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: green;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: green;
+  left: 0em;
+
+}
+
+buttonBack .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+
+
+buttonBack:hover {
+  background: green;
+}
+
 
 
 </style>

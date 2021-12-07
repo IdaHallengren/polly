@@ -1,7 +1,7 @@
 {
 	"sales-pitch": "Svar. Helt. Enkelt.",
 	"invite": "Bjud in deltagare med den här länken:",
-	"createPoll": "Skapa röstning",
+	"createPoll": "Skapa poll",
 	"participatePoll": "Delta",
 	"question": "Fråga",
 	"changeLanguage": "English",
@@ -18,8 +18,6 @@
 	"answers": "Svar",
 	"voting": "Omröstning",
 	"trueOrFalse": "Sant eller falskt",
-	"createPoll": "Skapa poll",
 	"writeYourQuestionHere": "Skriv din fråga här",
 	"writeYourPresentationHere": "Skriv din presentation här"
-
 }
