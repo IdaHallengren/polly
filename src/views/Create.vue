@@ -7,6 +7,14 @@
 <div v-show="letsPlayButton">
   <div v-show="startPoll">
 
+    <div> </div>
+    <div> </div>
+    <buttonCancel1 class="noselect" v-on:click="cancelPage">
+      <span class='text'>Cancel</span>
+    </buttonCancel1>
+
+
+
   <div class="headlines">
     <div> {{uiLabels.overview}} </div>
     <div> {{uiLabels.presentation}} </div>
@@ -25,6 +33,7 @@
 
       <button v-on:click="removeSlide"> {{ uiLabels.removeSlide }} </button>
       <button v-on:click="addSlide" > {{ uiLabels.addSlide }} </button>
+
 
 
     </div>
@@ -155,18 +164,30 @@
 
 
 
-<div v-on:click= "startPoll= !startPoll" id="startButton">
+
+
+
+    <div v-on:click= "startPoll= !startPoll" >
 
   <buttonCreatePoll class="noselect" v-on:click="createPoll">
     <span class='text'>{{ uiLabels.createPoll }}</span>
   </buttonCreatePoll>
 
 
-<!--    <button v-on:click="createPoll">-->
+
+
+
+      <!--    <button v-on:click="createPoll">-->
 <!--      {{ uiLabels.createPoll }}-->
 <!--    </button>-->
 </div>
+
+
   </div>
+
+    <buttonBack1 class="noselect" v-on:click="cancelPage">
+      <span class='text'> Back </span>
+    </buttonBack1>
   </div>
 
 
@@ -175,9 +196,8 @@
   <input type="text" v-model="pollId">
 
 
-    <buttonCancel1 class="noselect" v-on:click="cancelPage">
-      <span class='text'>Cancel</span>
-    </buttonCancel1>
+
+
 
   </div>
 
@@ -228,9 +248,9 @@ PollId: {{pollId}}
 
 
 <div>
-  <buttonBack class="noselect" v-on:click="startPoll=!startPoll">
+  <buttonBack2 class="noselect" v-on:click="startPoll=!startPoll">
     <span class='text'> Back </span>
-  </buttonBack>
+  </buttonBack2>
 </div>
 
   <div v-on:click="letsPlayButton=!letsPlayButton">
@@ -347,7 +367,9 @@ export default {
       p.id="removeSlides"
       document.getElementById("slides").appendChild(p);
 
-        var slides = html2canvas(document.querySelector("#presentation")).then(canvas => {
+
+
+        var slides = html2canvas(document.querySelector('#presentation')).then(canvas => {
         document.body.appendChild(canvas)
         slides.id="removePictures"
 
@@ -361,7 +383,12 @@ export default {
     removeSlide: function() {
 
       document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
-      document.getElementById('presentation').removeChild()
+
+
+      document.getElementById('presentation').del(document.getElementById("removePictures"))
+
+
+
 
     },
 
@@ -392,7 +419,6 @@ export default {
   grid-template-columns: 25% 50% 25%;
   grid-gap: 2px;
   font-family: AppleGothic;
-
   height: 45em;
 }
 
@@ -414,11 +440,12 @@ export default {
   border-radius: 2%;
   background-color: lightpink;
 
+
 }
 
 .headlines{
   display: grid;
-  grid-template-rows: 100%;
+  grid-template-rows: 98% 2%;
   grid-template-columns: 25% 50% 25%;
   font-size: 40px;
   font-family: AppleGothic;
@@ -477,9 +504,9 @@ export default {
   margin: 10px;
 }
 
-#startButton{
-  margin-top: 30em ;
-}
+/*#startButton{*/
+/*  margin-top: 31em ;*/
+/*}*/
 
 .pollIdStyle{
   background-color: lightblue;
@@ -625,7 +652,9 @@ buttonCancel1{
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #e62222;
+  background: red;
+  margin-left: 79.5em;
+  margin-bottom: 0.5em;
 
 }
 
@@ -647,11 +676,11 @@ buttonCancel2{
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: red;
+  background: #ff3636;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #e62222;
+  background: #ff3636;
   margin-left: 32em;
 }
 
@@ -690,11 +719,11 @@ buttonletsPlay{
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: green;
+  background: #006400;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: green;
+  background: #006400;
   margin-left: 32em;
 
 }
@@ -708,7 +737,7 @@ buttonletsPlay .text {
 
 
 buttonletsPlay:hover {
-  background: green;
+  background: #008000;
 }
 
 
@@ -719,11 +748,14 @@ buttonCreatePoll{
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: green;
+  background: #006400;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: green;
+  background: #006400;
+  margin-top: 32em ;
+  margin-left: 12.5em;
+
 }
 
 buttonCreatePoll .text {
@@ -735,27 +767,28 @@ buttonCreatePoll .text {
 
 
 buttonCreatePoll:hover {
-  background: green;
+  background: #008000;
 }
 
 
 
-buttonBack{
+buttonBack1{
   width: 150px;
   height: 50px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: green;
+  background: #1E90FF;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: green;
+  background: #1E90FF;
   left: 0em;
+  margin-top:1.5em;
 
 }
 
-buttonBack .text {
+buttonBack1 .text {
   transform: translateX(35px);
   color: white;
   font-weight: bold;
@@ -763,10 +796,39 @@ buttonBack .text {
 
 
 
-buttonBack:hover {
-  background: green;
+buttonBack1:hover {
+  background: #00BFFF;
 }
 
 
+
+
+
+buttonBack2{
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: #1E90FF;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #1E90FF;
+  left: 0em;
+
+}
+
+buttonBack2 .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+
+
+buttonBack2:hover {
+  background: #00BFFF;
+}
 
 </style>
