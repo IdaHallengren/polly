@@ -153,13 +153,8 @@
 
 <div v-on:click= "startPoll= !startPoll" id="startButton">
 
-  <button2 class="noselect">
+  <button2 class="noselect" v-on:click="createPoll">
     <span class='text'>{{ uiLabels.createPoll }}</span>
-    <span class="icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-        <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
-      </svg>
-    </span>
   </button2>
 
 
@@ -178,11 +173,6 @@
 
     <button1 class="noselect">
       <span class='text'>Cancel</span>
-      <span class="icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-        <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
-      </svg>
-     </span>
     </button1>
 
   </div>
@@ -194,7 +184,7 @@
 
   <div>
   <div class="pollIdStyle">
-PollId: <br> {{pollId}}
+PollId: {{pollId}}
   </div>
 
 
@@ -219,13 +209,8 @@ PollId: <br> {{pollId}}
 
 </div>
 
-  <button1 class="noselect">
+  <button1 class="noselect" v-on:click="startPoll=!startPoll">
     <span class='text'>Cancel</span>
-    <span class="icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-        <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
-      </svg>
-    </span>
   </button1>
 
   </div>
@@ -299,7 +284,7 @@ export default {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
       console.log("Skickat info")
       this.getPollId();
-      console.log(this.pollId)
+
     },
     getPollId: function () {
       return this.pollId=Math.floor(Math.random() * 100000);
@@ -593,9 +578,9 @@ button1{
   background: #e62222;
 }
 
-button1, button1 span {
-  transition: 200ms;
-}
+/*button1, button1 span {*/
+/*  transition: 200ms;*/
+/*}*/
 
 button1 .text {
   transform: translateX(35px);
@@ -603,46 +588,29 @@ button1 .text {
   font-weight: bold;
 }
 
-button1 .icon {
-  position: absolute;
-  border-left: 1px solid #c41b1b;
-  transform: translateX(110px);
-  height: 40px;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/*button1 .icon {*/
+/*  position: absolute;*/
+/*  border-left: 1px solid #c41b1b;*/
+/*  transform: translateX(110px);*/
+/*  height: 40px;*/
+/*  width: 40px;*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*}*/
+
+/*button1 svg {*/
+/*  width: 15px;*/
+/*  fill: #eee;*/
+/*}*/
+
+
+
+
+
+button2:hover {
+  background: green;
 }
-
-button1 svg {
-  width: 15px;
-  fill: #eee;
-}
-
-button1:hover {
-  background: #ff3636;
-}
-
-button1:hover .text {
-  color: transparent;
-}
-
-button1:hover .icon {
-  width: 150px;
-  border-left: none;
-  transform: translateX(0);
-}
-
-button1:focus {
-  outline: none;
-}
-
-
-
-
-
-
-
 
 button2{
   width: 150px;
@@ -657,49 +625,22 @@ button2{
   background: green;
 }
 
-button2, button2 span {
-  transition: 200ms;
-}
-
 button2 .text {
   transform: translateX(35px);
   color: white;
   font-weight: bold;
 }
 
-button2 .icon {
-  position: absolute;
-  border-left: 1px solid green;
-  transform: translateX(110px);
-  height: 40px;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-/*button2 svg {*/
-/*  width: 15px;*/
-/*  fill: #eee;*/
-/*}*/
 
 button2:hover {
   background: green;
 }
 
-button2:hover .text {
-  color: transparent;
-}
 
-button2:hover .icon {
-  width: 150px;
-  border-left: none;
-  transform: translateX(0);
-}
 
-button2:focus {
-  outline: none;
-}
+
+
 
 
 
