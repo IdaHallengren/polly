@@ -1,46 +1,39 @@
 
 <template>
   <div id="cancel">
-  <button1 v-on:click="newPage()"><span class='text'>Cancel</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/></svg></span></button1>
+    <button1 v-on:click="newPage()"><span class='text'>Cancel</span>
+    </button1>
   </div>
- <div>
 
+ <div>
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
  </div>
 
-<div id = "HidePollId">
+
   <div v-show = "showID">
     <div class = "wrapper1">
       <label><h2>Enter your Poll-Id</h2></label>
-      <input v-model = "PollId" type="text" id = "PollId" name = "PollId" placeholder="Poll-Id">
+        <div class="contentCenter">
+          <input v-model = "PollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
-      <button class = "okButton" v-on:click = "showID = !showID">
-      OK
-      </button>
+          <button4 v-on:click = "showID = !showID"><span class='text'>OK</span></button4>
+        </div>
     </div>
   </div>
-</div>
+
 
 <div v-if="!showID">
 
-  <p class="YourName"> Poll-ID: {{PollId}} </p>
+<p class="YourName"> Poll-ID: {{PollId}} </p>
 
-  <div id = "HideOk">
-    <div v-show ="isThisVisible">
-      <div class = "wrapper2">
-        <label><h2>Enter your name</h2></label>
-
-        <div style = position:center>
-
-          <input v-model = "participantName" type="text" id = "participantName" name = "participantName" placeholder="Name">
-
-          <button class = "okButton" v-on:click = "isThisVisible = !isThisVisible">
-            OK
-          </button>
-
+  <div v-show ="isThisVisible">
+    <div class = "wrapper2">
+      <label><h2>Enter your name</h2></label>
+        <div class="contentCenter">
+          <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" required>
+          <button4 v-on:click = "isThisVisible = !isThisVisible"><span class='text'>OK</span></button4>
         </div>
-      </div>
     </div>
   </div>
 </div>
@@ -52,9 +45,7 @@
 
       <section id="selectAvatar">
         <p id="select"> Avatar:  </p>
-        <span > <img id="selectedAvatar" src={{participantImg}}> </span>
-<!--          src="https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg"  alt="Avatar"></span>-->
-
+        <span > <img id="selectedAvatar" src="https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg"> </span>
 
       </section>
     {{this.participantImg}}
@@ -74,22 +65,15 @@
   </div>
 </div>
 
-
-<div id = "backButton">
   <div v-if=" isThisVisible==false">
-    <button class = "backButton" v-on:click = "isThisVisible = !isThisVisible">
-        BACK
-    </button>
+    <button2 class = "backButton" v-on:click = "isThisVisible = !isThisVisible"><span class='text'>Back</span>
+    </button2>
   </div>
 
   <div v-else-if="showID==false">
-    <button class = "backButton" v-on:click = "showID = !showID">
-        BACK
-    </button>
-
+    <button2 class = "backButton" v-on:click = "showID = !showID"><span class='text'>Back</span>
+    </button2>
   </div>
-
-</div>
 
 </template>
 
@@ -147,33 +131,34 @@ export default {
 
   }
 }
-
 </script>
 
 <style>
 
 .wrapper1{
-  font-family: "Al Nile";
   padding-top: 200px;
-  grid-template-rows: 100%;
 }
 
 .wrapper2{
-  font-family: "Al Nile";
   padding-top: 100px;
-  grid-template-rows: 100%;
+}
+
+.contentCenter{
+  padding-left: 42%;
 }
 
 #PollId{
   width: 150px;
   height: 50px;
   font-size: larger;
+  float:left;
 }
 
 #participantName{
   width: 150px;
   height: 50px;
   font-size: larger;
+  float: left;
 }
 
 #select {
@@ -185,18 +170,6 @@ export default {
 
 .YourName{
   font-size: xx-large;
-}
-
-.okButton{
-  width: 50px;
-  height: 55px;
-  color: white;
-  background: forestgreen;
-  font-style: italic;
-}
-
-.avatarButton{
-  border-radius: 100%;
 }
 
 #selectAvatar {
@@ -217,7 +190,6 @@ export default {
   padding-right: 2em;
   position: relative;
   top: -10%
-
 }
 
 #formsize {
@@ -233,20 +205,6 @@ export default {
   grid-template-columns: 33% 33% 33%;
 }
 
-.avatars > input {
-  display: none;
-}
-
-.avatars > input + img{
-  cursor: pointer;
-  border: 2px solid transparent;
-  border-radius: 100%;
-}
-
-.avatars > input:checked + img{
-  border: 2px solid forestgreen;
-}
-
 .form{
   padding-top: 2em;
   padding-bottom: 2em;
@@ -255,22 +213,12 @@ export default {
   overflow-y: auto;
 }
 
-.avatars img {
-  /*border-radius: 100%;*/
-  shape: rounded;
-  padding: 1em;
-  position: relative;
-}
-
 .backButton{
   position: fixed;
   bottom: 0.5em;
   left: 0.5em;
-  width: 100px;
-  height: 55px;
-  background-color: forestgreen;
-  color: white;
 }
+
 #cancel {
   position: absolute;
   top: 0.5em;
@@ -278,8 +226,7 @@ export default {
 }
 
 button1{
-
-  width: 150px;
+  width: 100px;
   height: 50px;
   cursor: pointer;
   display: flex;
@@ -291,49 +238,60 @@ button1{
   background: #e62222;
 }
 
-button1, button1 span {
-  transition: 200ms;
-}
-
 button1 .text {
-  transform: translateX(35px);
+  transform: translateX(25px);
   color: white;
   font-weight: bold;
-}
-
-button1 .icon {
-  position: absolute;
-  border-left: 1px solid #c41b1b;
-  transform: translateX(110px);
-  height: 40px;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-button1 svg {
-  width: 15px;
-  fill: #eee;
 }
 
 button1:hover {
   background: #ff3636;
 }
 
-button1:hover .text {
-  color: transparent;
+button2{
+  width: 100px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: #1E90FF;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #1E90FF;
 }
 
-button1:hover .icon {
-  width: 150px;
-  border-left: none;
-  transform: translateX(0);
+button2 .text {
+  transform: translateX(30px);
+  color: white;
+  font-weight: bold;
 }
 
-button1:focus {
-  outline: none;
+button2:hover {
+  background: #00BFFF;
 }
 
+button4{
+  width: 45px;
+  height: 56px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: #006400;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #006400;
+}
+
+button4 .text {
+  transform: translateX(10px);
+  color: white;
+  font-weight: bold;
+}
+
+button4:hover {
+  background: #008000;
+}
 
 </style>
