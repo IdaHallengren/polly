@@ -8,7 +8,9 @@
  <div>
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
- </div>
+
+  </div>
+
 
 
   <div v-show = "showID">
@@ -45,7 +47,14 @@
 
       <section id="selectAvatar">
         <p id="select"> Avatar:  </p>
-        <span > <img id="selectedAvatar" src= "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg"> </span>
+
+
+        <span > <img id="selectedAvatar" src={{participantImg}}> </span>
+
+
+
+
+
 
       </section>
 
