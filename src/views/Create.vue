@@ -152,9 +152,20 @@
 
 
 <div v-on:click= "startPoll= !startPoll" id="startButton">
-    <button v-on:click="createPoll">
-      {{ uiLabels.createPoll }}
-    </button>
+
+  <button2 class="noselect">
+    <span class='text'>{{ uiLabels.createPoll }}</span>
+    <span class="icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
+      </svg>
+    </span>
+  </button2>
+
+
+<!--    <button v-on:click="createPoll">-->
+<!--      {{ uiLabels.createPoll }}-->
+<!--    </button>-->
 </div>
   </div>
   </div>
@@ -165,30 +176,66 @@
   <input type="text" v-model="pollId">
 
 
+    <button1 class="noselect">
+      <span class='text'>Cancel</span>
+      <span class="icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
+      </svg>
+     </span>
+    </button1>
+
   </div>
 
 
+
+
+<div v-show="!startPoll" class="wrapperWaitRoom">
+
+  <div>
   <div class="pollIdStyle">
-PollId: {{pollId}}
+PollId: <br> {{pollId}}
   </div>
 
-  <qr-code text="Hejhej" class="QRCode">
 
-  </qr-code>
+<div id="QRCode">
 
+  <qrcode-vue :value="qrValue" text="Hejhej"  :size="size" >
 
+  </qrcode-vue>
 
+</div>
 
+  </div>
 
+<div> Waitingroom
+
+  <form class = "waitingRoom">
+    <div class = "wrapper">
+
+    </div>
+
+  </form>
+
+</div>
+
+  <button1 class="noselect">
+    <span class='text'>Cancel</span>
+    <span class="icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
+      </svg>
+    </span>
+  </button1>
+
+  </div>
 
 
 
 </template>
 
 <script>
-import Vue from 'vue'
-import VueQRCodeComponent from 'vue-qrcode-component'
-Vue.node_modules.vue-qrcode-component.src('qr-code', VueQRCodeComponent)
+import QrcodeVue from 'qrcode.vue'
 
 import io from 'socket.io-client';
 const socket = io();
@@ -199,6 +246,9 @@ const socket = io();
 
 export default {
   name: 'Create',
+  components: {
+    QrcodeVue
+  },
   data: function () {
     return {
       lang: "",
@@ -215,6 +265,10 @@ export default {
       pointsForQuestion: "5p",
       showAnswerButton: true,
       startPoll: true,
+      qrValue: "https://old.utn.se/sv/bokningskalendern",
+      size: 300,
+
+
 
     }
   },
@@ -235,9 +289,11 @@ export default {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
       console.log("Skickat info")
       this.getPollId();
+      console.log(this.pollId)
     },
     getPollId: function () {
       return this.pollId=Math.floor(Math.random() * 100000);
+
     },
 
     addQuestion: function () {
@@ -382,6 +438,40 @@ export default {
 .pollIdStyle{
   background-color: lightblue;
   width: 10em;
+  margin-left: 6em;
+  margin-top: 4em;
+  text-align: center;
+  font-size: 2em;
+
+}
+
+
+#QRCode{
+margin-top: 2em;
+}
+
+
+
+.wrapperWaitRoom{
+  display: grid;
+  grid-gap: 3em;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+}
+
+.waitingRoom{
+  width: 8em;
+  height: 35em;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  padding-right: 50px;
+  padding-left: 50px;
+  background-color: cadetblue;
+  border: 0.3em solid black;
+  overflow-y: auto;
+  padding-left: 250px;
+  padding-right: 250px;
 }
 
 
@@ -474,6 +564,135 @@ export default {
   height: 4px;
   top: calc(50% - 2px);
 }
+
+
+
+
+
+
+button1{
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #e62222;
+}
+
+button1, button1 span {
+  transition: 200ms;
+}
+
+button1 .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+button1 .icon {
+  position: absolute;
+  border-left: 1px solid #c41b1b;
+  transform: translateX(110px);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button1 svg {
+  width: 15px;
+  fill: #eee;
+}
+
+button1:hover {
+  background: #ff3636;
+}
+
+button1:hover .text {
+  color: transparent;
+}
+
+button1:hover .icon {
+  width: 150px;
+  border-left: none;
+  transform: translateX(0);
+}
+
+button1:focus {
+  outline: none;
+}
+
+
+
+
+
+
+
+
+button2{
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: green;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: green;
+}
+
+button2, button2 span {
+  transition: 200ms;
+}
+
+button2 .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+button2 .icon {
+  position: absolute;
+  border-left: 1px solid green;
+  transform: translateX(110px);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*button2 svg {*/
+/*  width: 15px;*/
+/*  fill: #eee;*/
+/*}*/
+
+button2:hover {
+  background: green;
+}
+
+button2:hover .text {
+  color: transparent;
+}
+
+button2:hover .icon {
+  width: 150px;
+  border-left: none;
+  transform: translateX(0);
+}
+
+button2:focus {
+  outline: none;
+}
+
+
+
 
 
 </style>
