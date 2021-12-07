@@ -254,8 +254,11 @@ PollId: {{pollId}}
 
 <script>
 
+
 import QrcodeVue from 'qrcode.vue'
 import html2canvas from 'html2canvas'
+
+
 
 import io from 'socket.io-client';
 const socket = io();
