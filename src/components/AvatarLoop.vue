@@ -1,27 +1,36 @@
 <template>
-<div id = "Avatars">
   <div class = "avatars">
 
-    <img class="avatars" v-bind:src= "avatar.url" style="width: 100px; height: 100px">
+    <img class="avatars" v-on:click="avatarChange(avatar.url)"  v-bind:src= "avatar.url"  style="width: 100px; height: 100px">
 
   </div>
-</div>
-
 </template>
 
 <script>
+
 export default {
   name: "AvatarLoop",
   props:{
     avatar:Object
-  }
+  },
+  data: function () {
+    return {
+      url: "",
+    }
+  },
+methods: {
+
+  avatarChange: function (url) {
+    this.url = url
+    this.$emit('participantImg', this.url)
+
+  },
+
+}
 }
 </script>
 
 <style scoped>
-#Avatars{
-
-}
 
 .avatars img {
   border-radius: 100%;
@@ -52,10 +61,5 @@ export default {
   border: 0.3em solid black;
 }
 
-.avatars img {
-  border-radius: 100%;
-  padding: 15px;
-  position: relative;
-}
 
 </style>

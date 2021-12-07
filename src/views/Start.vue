@@ -10,7 +10,6 @@
     </div>
 
     <div id="langDiv">
-
       <img id="sweImg" src="../img/swe.jpg" v-on:click="switchToSwedishLanguage"/>
 
       <img id="engImg" src="../img/eng.jpg" v-on:click="switchToEnglishLanguage"/>
