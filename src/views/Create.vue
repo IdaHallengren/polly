@@ -3,6 +3,8 @@
 
 <template>
 
+
+<div v-show="letsPlayButton">
   <div v-show="startPoll">
 
   <div class="headlines">
@@ -28,10 +30,11 @@
     </div>
 
 
-<div id="presentation" ref="printPresentation">
+<div id="presentation" >
     <div>
 
     </div>
+  <br>
   <br>
 
 
@@ -151,11 +154,12 @@
     </div>
 
 
+
 <div v-on:click= "startPoll= !startPoll" id="startButton">
 
-  <button2 class="noselect" v-on:click="createPoll">
+  <buttonCreatePoll class="noselect" v-on:click="createPoll">
     <span class='text'>{{ uiLabels.createPoll }}</span>
-  </button2>
+  </buttonCreatePoll>
 
 
 <!--    <button v-on:click="createPoll">-->
@@ -171,16 +175,25 @@
   <input type="text" v-model="pollId">
 
 
-    <button1 class="noselect">
+    <buttonCancel1 class="noselect" v-on:click="cancelPage">
       <span class='text'>Cancel</span>
-    </button1>
+    </buttonCancel1>
 
   </div>
 
 
 
+<!--  NEXT PAGE  -->
 
 <div v-show="!startPoll" class="wrapperWaitRoom">
+
+  <div> </div>
+
+  <div>
+  <buttonCancel2 class="noselect" v-on:click="cancelPage">
+    <span class='text'>Cancel</span>
+  </buttonCancel2>
+    </div>
 
   <div>
   <div class="pollIdStyle">
@@ -198,7 +211,11 @@ PollId: {{pollId}}
 
   </div>
 
-<div> Waitingroom
+
+
+
+
+<div>  <h2> Waitingroom</h2>
 
   <form class = "waitingRoom">
     <div class = "wrapper">
@@ -209,11 +226,27 @@ PollId: {{pollId}}
 
 </div>
 
-  <button1 class="noselect" v-on:click="startPoll=!startPoll">
-    <span class='text'>Cancel</span>
-  </button1>
 
+<div>
+  <buttonBack class="noselect" v-on:click="startPoll=!startPoll">
+    <span class='text'> Back </span>
+  </buttonBack>
+</div>
+
+  <div v-on:click="letsPlayButton=!letsPlayButton">
+    <buttonLetsPlay class="noselect" v-on:click="letsPlay">
+      <span class='text'> Let's play! </span>
+    </buttonLetsPlay>
   </div>
+
+
+</div>
+
+</div>
+
+
+
+
 
 
 
@@ -222,6 +255,7 @@ PollId: {{pollId}}
 <script>
 
 import QrcodeVue from 'qrcode.vue'
+import html2canvas from 'html2canvas'
 
 /*
 
@@ -262,6 +296,7 @@ export default {
       startPoll: true,
       qrValue: "https://old.utn.se/sv/bokningskalendern",
       size: 300,
+      letsPlayButton: true
 
 
 
@@ -318,12 +353,34 @@ export default {
       p.id="removeSlides"
       document.getElementById("slides").appendChild(p);
 
+        var slides = html2canvas(document.querySelector("#presentation")).then(canvas => {
+        document.body.appendChild(canvas)
+        slides.id="removePictures"
+
+
+      });
+
+
       // this.slides.push("")
     },
 
-    removeSlide: function(){
+    removeSlide: function() {
 
       document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
+      document.getElementById('presentation').removeChild()
+
+    },
+
+
+
+
+    cancelPage: function() {
+      this.$router.push( '/' )
+
+    },
+
+    letsPlay: function(){
+
     }
 
 }}
@@ -451,12 +508,12 @@ margin-top: 2em;
   display: grid;
   grid-gap: 3em;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 50% 50%;
+  grid-template-rows: 1% 79% 20%;
 }
 
 .waitingRoom{
   width: 8em;
-  height: 35em;
+  height: 28em;
   padding-top: 50px;
   padding-bottom: 50px;
   padding-top: 50px;
@@ -564,8 +621,7 @@ margin-top: 2em;
 
 
 
-
-button1{
+buttonCancel1{
   width: 150px;
   height: 50px;
   cursor: pointer;
@@ -576,13 +632,40 @@ button1{
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #e62222;
+
 }
 
 /*button1, button1 span {*/
 /*  transition: 200ms;*/
 /*}*/
 
-button1 .text {
+buttonCancel1 .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+
+
+buttonCancel2{
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #e62222;
+  margin-left: 32em;
+}
+
+/*button1, button1 span {*/
+/*  transition: 200ms;*/
+/*}*/
+
+buttonCancel2 .text {
   transform: translateX(35px);
   color: white;
   font-weight: bold;
@@ -607,12 +690,36 @@ button1 .text {
 
 
 
+buttonletsPlay{
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: green;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: green;
+  margin-left: 32em;
 
-button2:hover {
+}
+
+buttonletsPlay .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
+
+
+
+buttonletsPlay:hover {
   background: green;
 }
 
-button2{
+
+
+buttonCreatePoll{
   width: 150px;
   height: 50px;
   cursor: pointer;
@@ -625,7 +732,7 @@ button2{
   background: green;
 }
 
-button2 .text {
+buttonCreatePoll .text {
   transform: translateX(35px);
   color: white;
   font-weight: bold;
@@ -633,16 +740,38 @@ button2 .text {
 
 
 
-button2:hover {
+buttonCreatePoll:hover {
   background: green;
 }
 
 
 
+buttonBack{
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: green;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: green;
+  left: 0em;
+
+}
+
+buttonBack .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+}
 
 
 
-
+buttonBack:hover {
+  background: green;
+}
 
 
 
