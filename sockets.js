@@ -38,7 +38,7 @@ function sockets(io, socket, data) {
     data = new Data();
     data.initializeData();
   })
- 
+
 }
 
 module.exports = sockets;

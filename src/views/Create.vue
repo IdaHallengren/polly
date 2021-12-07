@@ -45,7 +45,7 @@
       </div>
 
       <div v-if="typeOfQuestion==='Presentation'">
-        <input class="presentationInput" type="text" v-model="presentation" placeholder="Write your presentation here">
+        <input class="presentationInput" type="text" v-model="presentation" src="data" placeholder="Write your presentation here">
       </div>
 
       <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
@@ -55,7 +55,7 @@
         <br>
         {{ uiLabels.answers }}
         <input v-for="(_, i) in answers" 
-               v-model="answers[i]" 
+               v-model="this.answers[i]"
                v-bind:key="'answer'+i"
             class="answersStyle"
         >
@@ -163,7 +163,8 @@
   Poll link:
   <input type="text" v-model="pollId">
 
-
+<!--  {{allQuestions}}-->
+  {{allAnswers}}
 </template>
 
 <script>
@@ -180,15 +181,18 @@ export default {
       pollId: "",
       question: "",
       presentation: "",
-      answers: ["", ""],
+      answers: ["",""],
       slides: {},
-      questionNumber: 0,
+      questionNumber: 1,
       data: {},
       uiLabels: {},
       typeOfQuestion: "Quiz",
       timeForQuestion: "5s",
       pointsForQuestion: "5p",
-      showAnswerButton: true
+      showAnswerButton: true,
+
+      allQuestions: [],
+      allAnswers: []
     }
   },
   created: function () {
@@ -215,6 +219,7 @@ export default {
       socket.emit("switchLanguage", this.lang)
     },
     createPoll: function () {
+
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
     },
     addQuestion: function () {
@@ -240,11 +245,18 @@ export default {
     },
 
     testingQ: function () {
-      socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber});
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers});
-
+      console.log(this.allQuestions)
+      this.addQuestion();
+      //socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, questionNumber: this.questionNumber});
+      //socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber});
       this.addSlide();
+
+      this.allQuestions.push(this.question)
+      this.allAnswers.push(this.answers)
+
       this.questionNumber ++;
+
+      //console.log(this.allAnswers)
     },
 
 
@@ -258,20 +270,26 @@ export default {
     },
 
     removeSlide: function(){
+      document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
       if (this.questionNumber != 0) {
-        delete(this.data.questions[this.questionNumber]);
-        delete(this.data.answers[this.questionNumber]);
-        socket.emit("dataUpdate", {pollId: this.pollId, questionNumber: this.questionNumber, question: this.question});
+        this.allAnswers.pop(this.answers)
+        this.allQuestions.pop(this.question)
         this.questionNumber--;
+        console.log(this.allQuestions)
+        //this.question.$remove(this.questionNumber);
+        //this.question.pop();
+        //this.answers.pop();
+
+        //this.data.q.$delete();
+        //this.data.a.$delete();
+        //this.answers.$remove(this.questionNumber);
+        //delete(this.data.questions[this.questionNumber]);
+        //delete(this.data.answers[this.questionNumber]);
+
+        //socket.emit("dataUpdate", {questionNumber: this.questionNumber-1, q: this.question, a: this.answers});
       }
-        document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
-
     }
-
 }}
-
-
-
 
 </script>
 
