@@ -11,8 +11,6 @@
 
 </div>
 
-
-
 <div v-show = "showID">
   <div class = "wrapper1">
     <label><h2>Enter your Poll-Id</h2></label>
@@ -59,7 +57,7 @@
         </div>
       </form>
     </div>
-      <button5 id="continueWaiting" v-on:click="newPage('/waiting/')"><span class='text'>Next</span></button5>
+      <button5 id="continueWaiting" v-on:click="newPage('/waiting/')"><span class='text'>GO!</span></button5>
   </div>
 </div>
 
@@ -124,15 +122,15 @@ export default {
 
     newPage: function(route) {
       if (route === '/')
-        this.$router.push( '/' )
-      else
+        this.$router.push('/')
+      else {
         socket.emit("addParticipant", {
           participantInfo: {
             participantName: this.participantName,
             participantImg: this.participantImg
           },
         },);
-        this.$router.push( '/waiting/' + this.PollId )
+        this.$router.push( '/waiting/' + this.PollId )}
     },
   }
 }
