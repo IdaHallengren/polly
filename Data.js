@@ -79,6 +79,7 @@ Data.prototype.getAnswers = function(pollId) {
   }
   return {}
 }
+
 module.exports = Data;
 
 
