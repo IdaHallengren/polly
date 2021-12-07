@@ -254,16 +254,9 @@ PollId: {{pollId}}
 
 <script>
 
+
 import QrcodeVue from 'qrcode.vue'
 import html2canvas from 'html2canvas'
-
-/*
-
-import Vue from 'vue'
-import VueQRCodeComponent from 'vue-qrcode-component'
-Vue.node_modules.vue-qrcode-component.src('qr-code', VueQRCodeComponent)
-*/
-
 
 
 import io from 'socket.io-client';

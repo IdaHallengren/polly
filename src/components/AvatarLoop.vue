@@ -23,7 +23,6 @@ methods: {
   avatarChange: function (url) {
     this.url = url
     this.$emit('participantImg', this.url)
-
   },
 
 }
@@ -43,9 +42,5 @@ methods: {
 .avatars img:hover{
   border: 2px solid #228b22;
 }
-
-
-
-
 
 </style>
