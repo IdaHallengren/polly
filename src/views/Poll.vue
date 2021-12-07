@@ -48,6 +48,7 @@
       <section id="selectAvatar">
         <p id="select"> Avatar:  </p>
 
+
         <span > <img id="selectedAvatar" src={{participantImg}}> </span>
 
 
@@ -56,7 +57,6 @@
 
 
       </section>
-    {{this.participantImg}}
 
     <div id="formsize">
         <form class = "form">
@@ -125,18 +125,20 @@ export default {
         this.question = q
     )
   },
+
   methods: {
     submitAnswer: function (answer) {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
     },
+
     changeAvatar: function (event) {
-      return this.participantImg = event
+      document.getElementById("selectedAvatar").setAttribute('src', event)
     },
+
     newPage: function() {
         this.$router.push( '/' )
 
     }
-
   }
 }
 </script>
