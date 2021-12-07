@@ -1,14 +1,16 @@
 
 <template>
   <div id="cancel">
-    <button1 v-on:click="newPage()"><span class='text'>Cancel</span>
+    <button1 v-on:click="newPage('/')"><span class='text'>Cancel</span>
     </button1>
   </div>
 
  <div>
     <Question v-bind:question="question"
               v-on:answer="submitAnswer"/>
- </div>
+
+  </div>
+
 
 
   <div v-show = "showID">
@@ -45,7 +47,14 @@
 
       <section id="selectAvatar">
         <p id="select"> Avatar:  </p>
-        <span > <img id="selectedAvatar" src= "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg"> </span>
+
+
+        <span > <img id="selectedAvatar" src={{participantImg}}> </span>
+
+
+
+
+
 
       </section>
 
@@ -61,6 +70,8 @@
 
         </form>
     </div>
+      <button5 id="continueWaiting" v-on:click="newPage('/waiting/')"><span class='text'>Next</span></button5>
+
   </div>
 </div>
 
@@ -126,8 +137,11 @@ export default {
       document.getElementById("selectedAvatar").setAttribute('src', event)
     },
 
-    newPage: function() {
+    newPage: function(route) {
+      if (route === '/')
         this.$router.push( '/' )
+      else
+        this.$router.push( '/waiting/' + this.pollId )
 
     }
   }
@@ -293,6 +307,33 @@ button4 .text {
 
 button4:hover {
   background: #008000;
+}
+button5{
+  width: 100px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #006400;
+}
+
+button5 .text {
+  transform: translateX(25px);
+  color: white;
+  font-weight: bold;
+}
+
+button5:hover {
+  background: #008000;
+}
+#continueWaiting{
+  position: fixed;
+  bottom: 0.5em;
+  right: 0.5em;
+
 }
 
 </style>
