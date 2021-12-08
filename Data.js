@@ -79,6 +79,17 @@ Data.prototype.getAnswers = function(pollId) {
   }
   return {}
 }
+
+
+Data.prototype.removeQuestion = function(pollId, q) {
+  const poll = this.polls[pollId];
+  console.log("question added to", pollId, q);
+  if (typeof poll !== 'undefined') {
+    poll.questions.pop(q);
+  }
+}
+
+
 module.exports = Data;
 
 

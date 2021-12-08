@@ -37,6 +37,11 @@ function sockets(io, socket, data) {
   socket.on('resetAll', () => {
     data = new Data();
     data.initializeData();
+  });
+
+  socket.on('removeSlide', function(d){
+    data.removeQuestion(d.pollId, {q: d.q, a: d.a});
+    socket.emit('dataUpdate', data.getAnswers(d.pollId));
   })
 
 }

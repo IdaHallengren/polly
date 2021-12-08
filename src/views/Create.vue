@@ -189,10 +189,8 @@ export default {
       typeOfQuestion: "Quiz",
       timeForQuestion: "5s",
       pointsForQuestion: "5p",
-      showAnswerButton: true,
+      showAnswerButton: true
 
-      allQuestions: [],
-      allAnswers: []
     }
   },
   created: function () {
@@ -224,8 +222,6 @@ export default {
     },
     addQuestion: function () {
       this.addSlide();
-      this.allQuestions.push(this.question)
-      this.allAnswers.push(this.answers)
 
       this.questionNumber ++;
       socket.emit("dataUpdate", {questionNumber: this.questionNumber})
@@ -268,23 +264,11 @@ export default {
     removeSlide: function(){
       document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
       if (this.questionNumber != 0) {
-        this.allAnswers.pop(this.answers)
-        this.allQuestions.pop(this.question)
-
-
-        //this.question.$remove(this.questionNumber);
-        //this.question.pop();
-        //this.answers.pop();
-
-
-        //socket.emit("dataUpdate", {questionNumber: this.questionNumber, });
-        //this.data.q.$delete();
-        //this.data.a.$delete();
-        //this.answers.$remove(this.questionNumber);
-        delete(this.data.questions[this.questionNumber]);
-        delete(this.data.answers[this.questionNumber]);
+        socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
         this.questionNumber--;
-        socket.emit("dataUpdate", {questionNumber: this.questionNumber, q: this.question, a: this.answers});
+        socket.emit("dataUpdate", {questionNumber: this.questionNumber});
+        this.runQuestion();
+
       }
     }
 }}
