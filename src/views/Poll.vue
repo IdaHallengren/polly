@@ -124,16 +124,16 @@ export default {
     },
 
     changeAvatar: function (event) {
-      this.participantImg = event
+      this.participantImg=event
+
     },
 
     newPage: function(route) {
       if (route === '/')
         this.$router.push('/')
       else {
-        socket.emit("addParticipant", {
-          pollId: this.pollId,
-          participant: {
+        socket.emit("addParticipant", { pollId: this.pollId,
+          participantInfo: {
             participantName: this.participantName,
             participantImg: this.participantImg
           },
