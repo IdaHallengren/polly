@@ -7,6 +7,7 @@ function Data() {
   this.polls = {};
 }
 
+
 /***********************************************
 For performance reasons, methods are added to the
 prototype of the Data object/class
@@ -24,6 +25,7 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.lang = lang;  
     poll.questions = [];
     poll.answers = [];
+    poll.participants = [];
     poll.currentQuestion = 0;              
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
@@ -71,11 +73,28 @@ Data.prototype.submitAnswer = function(pollId, answer) {
 
 Data.prototype.getAnswers = function(pollId) {
   const poll = this.polls[pollId];
+
   if (typeof poll !== 'undefined') {
     const answers = poll.answers[poll.currentQuestion];
     if (typeof poll.questions[poll.currentQuestion] !== 'undefined') {
       return {q: poll.questions[poll.currentQuestion].q, a: answers};
     }
+  }
+  return {}
+}
+
+Data.prototype.addParticipant = function(pollId, participant) {
+  const poll = this.polls[pollId];
+  console.log("participant added to", pollId, participant);
+  if (typeof poll !== 'undefined') {
+    poll.participants.push(participant);
+  }
+}
+
+Data.prototype.getParticipants = function(pollId) {
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+      return poll.participants
   }
   return {}
 }

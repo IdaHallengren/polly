@@ -18,9 +18,14 @@
 </template>
 
 <script>
+
+
 export default {
   name: "Waiting"
 }
+
+
+
 </script>
 
 <style scoped>

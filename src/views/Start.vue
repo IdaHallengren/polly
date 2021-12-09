@@ -64,9 +64,9 @@ export default {
 
     newPage: function(route) {
       if (route === 'Create')
-        this.$router.push( '/create/' + this.lang)
+        this.$router.push(`/create/${this.lang}`)
       else
-        this.$router.push( '/poll/:id' )
+        this.$router.push(`/poll/${this.lang}`)
     }
   }
 }

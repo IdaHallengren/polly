@@ -19,5 +19,13 @@
 	"voting": "Voting",
 	"trueOrFalse": "True or false",
 	"writeYourQuestionHere": "Write your question here",
-	"writeYourPresentationHere": "Write your presentation here"
+	"writeYourPresentationHere": "Write your presentation here",
+	"enterPollId": "Enter your Poll-Id",
+	"enterName": "Enter your name",
+	"pollId": "Poll-Id: ",
+	"name": "Name: ",
+	"avatar": "Choose your avatar: ",
+	"cancelButton": "Cancel",
+	"backButton": "Back",
+	"continueButton": "Done"
 }

@@ -19,5 +19,13 @@
 	"voting": "Omröstning",
 	"trueOrFalse": "Sant eller falskt",
 	"writeYourQuestionHere": "Skriv din fråga här",
-	"writeYourPresentationHere": "Skriv din presentation här"
+	"writeYourPresentationHere": "Skriv din presentation här",
+	"enterPollId": "Skriv in Poll-Id",
+	"enterName": "Skriv in ditt namn",
+	"pollId": "Poll-Id: ",
+	"name": "Namn: ",
+	"avatar": "Välj din figur: ",
+	"cancelButton": "Avbryt",
+	"backButton": "Tillbaka",
+	"continueButton": "Klar!"
 }

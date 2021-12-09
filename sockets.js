@@ -34,10 +34,17 @@ function sockets(io, socket, data) {
     io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
   });
 
+  socket.on('addParticipant', function(d){
+     data.addParticipant(d.pollId, d.participant)
+     io.to(d.pollId).emit('participantsAdded', data.getParticipants(d.pollId));
+  });
+
   socket.on('resetAll', () => {
     data = new Data();
     data.initializeData();
   })
+
+
  
 }
 
