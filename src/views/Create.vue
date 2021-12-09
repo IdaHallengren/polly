@@ -28,15 +28,18 @@
 
       <div id="overviewPresentationSlide">
 
-
-        {{ fullPoll}}
+        {{fullPoll}}
 
 
       </div>
 <!--      </div>-->
 
-      <button v-on:click="removeSlide"> {{ uiLabels.removeSlide }} </button>
-      <button v-on:click="addSlide" > {{ uiLabels.addSlide }} </button>
+      <button v-on:click="removeSlide" class="icon-btn add-btn" >
+       <div class="btn-txt"> {{ uiLabels.removeSlide }} </div>
+     </button>
+      <button v-on:click="addSlide" class="icon-btn add-btn" >
+        <div class="add-icon"></div>
+        <div class="btn-txt"> {{ uiLabels.addSlide }} </div> </button>
 
 
 
@@ -227,7 +230,7 @@ PollId: {{pollId}}
 
 <div id="QRCode">
 
-  <qrcode-vue :value="qrValue" text="Hejhej"  :size="size" >
+  <qrcode-vue :value="qrValue" text="pollId"  :size="size" >
 
   </qrcode-vue>
 
@@ -315,6 +318,7 @@ export default {
     SlideShow,
     QrcodeVue
   },
+
   data: function () {
     return {
       lang: "",
@@ -331,7 +335,7 @@ export default {
       pointsForQuestion: "5p",
       showAnswerButton: true,
       startPoll: true,
-      qrValue: "https://old.utn.se/sv/bokningskalendern",
+      qrValue: "http://localhost:8080/#/poll/:id" +this.pollId,
       size: 300,
       letsPlayButton: true,
       fullPoll: {}
@@ -355,6 +359,7 @@ export default {
 
     socket.on('fullPoll', (myPoll) =>
         this.fullPoll = myPoll)
+
   },
   methods: {
     createPoll: function () {
@@ -473,7 +478,7 @@ export default {
 #overview{
   border:solid;
   border-radius: 2%;
-  background-color: lightpink;
+  background-color: lightslategray;
   overflow: scroll;
 
 }
@@ -486,7 +491,7 @@ export default {
 #editQuestion{
   border: solid;
   border-radius: 2%;
-  background-color: lightpink;
+  background-color: lightslategray;
 
 
 }
@@ -497,20 +502,32 @@ export default {
   grid-template-columns: 25% 50% 25%;
   font-size: 40px;
   font-family: AppleGothic;
+  font-weight: bold;
 
 }
 
 
 .questionInput{
-  height: 5em;
+  height: 10em;
+  max-height: 10em;
   width: 90%;
-  font-size: 2vw;
+  font-size: 1vw;
+  white-space: pre-wrap;
+  font-family: inherit;
+  border-radius: 5%;
+
+  overflow: auto;
+  overflow-wrap: break-word;
+
+
 }
 
 .presentationInput{
   height: 5em;
   width: 90%;
   font-size: 2em;
+  outline: none;
+
 }
 
 
@@ -521,6 +538,7 @@ export default {
 .typeOfQuestion{
   font-size: 20px;
   margin-bottom: 30px;
+
 }
 
 .timeForQuestion{
@@ -536,12 +554,14 @@ export default {
 
 .answers{
   font-size: 20px;
+
 }
 
 .answersStyle{
   height: 30px;
   width: 150px;
   font-size: 15px;
+  outline: none;
 }
 
 #overviewPresentationSlide{

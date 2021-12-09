@@ -1,4 +1,5 @@
 <template>
+<div class="wrapper">
 
   <div id="slides">
 
@@ -9,11 +10,15 @@
 Hejhej
 
   </div>
-
+</div>
 
 </template>
 
 <script>
+
+
+
+
 export default {
   name: "SlideShow"
 
@@ -28,13 +33,18 @@ export default {
 </script>
 
 <style scoped>
+.wrapper{
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 95% 5%;
+}
 
 #slides {
   border: solid;
   border-radius: 10%;
   background-color: white;
   height: 700px;
-  width: 90%;
+  width: 85%;
   margin: 10px;
 }
 
