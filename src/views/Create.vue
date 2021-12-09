@@ -277,6 +277,7 @@ PollId: {{pollId}}
 
   </SlideShow>
 
+  {{questions}}
 Timer:
   Amount of participants answerd
   <button v-on:click="nextQuestion"></button>
@@ -391,7 +392,7 @@ export default {
 
     },
     addSlide: function () {
-    this.addQuestion()
+     this.addQuestion()
      this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
       socket.emit('getPoll', this.pollId)
 
