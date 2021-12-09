@@ -24,6 +24,7 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.lang = lang;  
     poll.questions = [];
     poll.answers = [];
+    poll.participants = [];
     poll.currentQuestion = 0;              
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
@@ -76,6 +77,22 @@ Data.prototype.getAnswers = function(pollId) {
     if (typeof poll.questions[poll.currentQuestion] !== 'undefined') {
       return {q: poll.questions[poll.currentQuestion].q, a: answers};
     }
+  }
+  return {}
+}
+
+Data.prototype.addParticipant = function(pollId, participant) {
+  const poll = this.polls[pollId];
+  console.log("participant added to", pollId, participant);
+  if (typeof poll !== 'undefined') {
+    poll.participants.push(participant);
+  }
+}
+
+Data.prototype.getParticipants = function(pollId) {
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+    return poll.participants
   }
   return {}
 }

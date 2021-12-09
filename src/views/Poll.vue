@@ -15,7 +15,7 @@
   <div class = "wrapper1">
     <label><h2>Enter your Poll-Id</h2></label>
     <div class="contentCenter">
-      <input v-model = "PollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
+      <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
       <button4 v-on:click = "showID = !showID"><span class='text'>OK</span></button4>
     </div>
@@ -24,7 +24,7 @@
 
 <div v-if="!showID">
 
-<p class="YourName"> Poll-ID: {{PollId}} </p>
+<p class="YourName"> Poll-ID: {{pollId}} </p>
 
   <div v-show ="isThisVisible">
     <div class = "wrapper2">
@@ -99,7 +99,7 @@ export default {
         q: "",
         a: []
       },
-      PollId: "inactive poll"
+      pollId: "inactive poll"
     }
   },
 
@@ -117,6 +117,7 @@ export default {
     },
 
     changeAvatar: function (event) {
+      this.participantImg=event
       document.getElementById("selectedAvatar").setAttribute('src', event)
     },
 
@@ -124,13 +125,13 @@ export default {
       if (route === '/')
         this.$router.push('/')
       else {
-        socket.emit("addParticipant", {
+        socket.emit("addParticipant", { pollId: this.pollId,
           participantInfo: {
             participantName: this.participantName,
             participantImg: this.participantImg
           },
         },);
-        this.$router.push( '/waiting/' + this.PollId )}
+        this.$router.push( '/waiting/' + this.pollId )}
     },
   }
 }

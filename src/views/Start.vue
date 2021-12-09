@@ -56,6 +56,8 @@ export default {
       socket.emit("switchLanguage", this.lang)
     },
 
+
+
     switchToEnglishLanguage: function() {
       if (this.lang === "sv")
         this.lang = "en"
