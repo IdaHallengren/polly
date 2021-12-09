@@ -89,6 +89,7 @@ Data.prototype.getAnswers = function(pollId) {
   return {}
 }
 
+
 Data.prototype.removeQuestion = function(pollId, q) {
   const poll = this.polls[pollId];
   console.log("question removed", pollId, q);
@@ -96,6 +97,7 @@ Data.prototype.removeQuestion = function(pollId, q) {
     poll.questions.pop(q);
   }
 }
+
 
 module.exports = Data;
 

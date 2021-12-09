@@ -1,29 +1,26 @@
 
 <template>
-  <div id="cancel">
-    <button1 v-on:click="newPage('/')"><span class='text'>Cancel</span>
-    </button1>
-  </div>
+<div id="cancel">
+  <button1 v-on:click="newPage('/')"><span class='text'>Cancel</span>
+  </button1>
+</div>
 
- <div>
-    <Question v-bind:question="question"
-              v-on:answer="submitAnswer"/>
+<div>
+  <Question v-bind:question="question"
+            v-on:answer="submitAnswer"/>
 
-  </div>
+</div>
 
+<div v-show = "showID">
+  <div class = "wrapper1">
+    <label><h2>Enter your Poll-Id</h2></label>
+    <div class="contentCenter">
+      <input v-model = "PollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
-
-  <div v-show = "showID">
-    <div class = "wrapper1">
-      <label><h2>Enter your Poll-Id</h2></label>
-        <div class="contentCenter">
-          <input v-model = "PollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
-
-          <button4 v-on:click = "showID = !showID"><span class='text'>OK</span></button4>
-        </div>
+      <button4 v-on:click = "showID = !showID"><span class='text'>OK</span></button4>
     </div>
   </div>
-
+</div>
 
 <div v-if="!showID">
 
@@ -40,50 +37,39 @@
   </div>
 </div>
 
-
 <div id ="HideAvatars">
   <div v-if = "isThisVisible==false">
     <p class="YourName"> Name: {{participantName}} </p>
 
       <section id="selectAvatar">
         <p id="select"> Avatar:  </p>
-
-
-        <span > <img id="selectedAvatar" src={{participantImg}}> </span>
-
-
-
-
-
-
+        <span > <img id="selectedAvatar" src="https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg"> </span>
       </section>
 
     <div id="formsize">
-        <form class = "form">
-          <div class = "wrapper">
-           <AvatarLoop v-for="avatar in Avatars"
+      <form class = "form">
+        <div class = "wrapper">
+          <AvatarLoop v-for="avatar in Avatars"
                   v-bind:avatar="avatar"
                   v-bind:key="avatar.Name"
                   v-on:participantImg="changeAvatar($event)"
-           />
-           </div>
-
-        </form>
+          />
+        </div>
+      </form>
     </div>
-      <button5 id="continueWaiting" v-on:click="newPage('/waiting/')"><span class='text'>Next</span></button5>
-
+      <button5 id="continueWaiting" v-on:click="newPage('/waiting/')"><span class='text'>GO!</span></button5>
   </div>
 </div>
 
-  <div v-if=" isThisVisible==false">
+<div v-if=" isThisVisible==false">
     <button2 class = "backButton" v-on:click = "isThisVisible = !isThisVisible"><span class='text'>Back</span>
     </button2>
-  </div>
+</div>
 
-  <div v-else-if="showID==false">
+<div v-else-if="showID==false">
     <button2 class = "backButton" v-on:click = "showID = !showID"><span class='text'>Back</span>
     </button2>
-  </div>
+</div>
 
 </template>
 
@@ -108,18 +94,15 @@ export default {
       participantName: "",
       participantImg: "",
       isThisVisible: true,
-      participantInfo: {
-        participantName: "",
-        participantImg: ""
-      },
       showID: true,
       question: {
         q: "",
         a: []
       },
-      pollId: "inactive poll"
+      PollId: "inactive poll"
     }
   },
+
   created: function () {
     this.pollId = this.$route.params.id
     socket.emit('joinPoll', this.pollId)
@@ -139,11 +122,16 @@ export default {
 
     newPage: function(route) {
       if (route === '/')
-        this.$router.push( '/' )
-      else
-        this.$router.push( '/waiting/' + this.pollId )
-
-    }
+        this.$router.push('/')
+      else {
+        socket.emit("addParticipant", {
+          participantInfo: {
+            participantName: this.participantName,
+            participantImg: this.participantImg
+          },
+        },);
+        this.$router.push( '/waiting/' + this.PollId )}
+    },
   }
 }
 </script>
@@ -246,7 +234,7 @@ button1{
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: red;
+  background: #e62222;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
@@ -321,7 +309,7 @@ button5{
 }
 
 button5 .text {
-  transform: translateX(25px);
+  transform: translateX(30px);
   color: white;
   font-weight: bold;
 }
@@ -329,6 +317,7 @@ button5 .text {
 button5:hover {
   background: #008000;
 }
+
 #continueWaiting{
   position: fixed;
   bottom: 0.5em;

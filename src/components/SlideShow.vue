@@ -7,7 +7,7 @@
 <!--    </div>-->
 
 Hejhej
-{{this.$data.questions[this.$data.questionNumber]}}
+
   </div>
 
 
