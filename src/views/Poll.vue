@@ -1,7 +1,7 @@
 
 <template>
 <div id="cancel">
-  <button1 v-on:click="newPage('/')"><span class='text'>Cancel</span>
+  <button1 v-on:click="newPage('/')"><span class='text'>{{uiLabels.cancelButton}}</span>
   </button1>
 </div>
 
@@ -13,9 +13,9 @@
 
 <div v-show = "showID">
   <div class = "wrapper1">
-    <label><h2>Enter your Poll-Id</h2></label>
+    <label><h2>{{uiLabels.enterPollId}}</h2></label>
     <div class="contentCenter">
-      <input v-model = "PollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
+      <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
       <button4 v-on:click = "showID = !showID"><span class='text'>OK</span></button4>
     </div>
@@ -24,11 +24,11 @@
 
 <div v-if="!showID">
 
-<p class="YourName"> Poll-ID: {{PollId}} </p>
+<p class="YourName"> {{uiLabels.pollId}} {{pollId}} </p>
 
   <div v-show ="isThisVisible">
     <div class = "wrapper2">
-      <label><h2>Enter your name</h2></label>
+      <label><h2>{{uiLabels.enterName}}</h2></label>
         <div class="contentCenter">
           <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" required>
           <button4 v-on:click = "isThisVisible = !isThisVisible"><span class='text'>OK</span></button4>
@@ -39,11 +39,11 @@
 
 <div id ="HideAvatars">
   <div v-if = "isThisVisible==false">
-    <p class="YourName"> Name: {{participantName}} </p>
+    <p class="YourName">{{uiLabels.name}}{{participantName}} </p>
 
       <section id="selectAvatar">
-        <p id="select"> Avatar:  </p>
-        <span > <img id="selectedAvatar" src="https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg"> </span>
+        <p id="select"> {{uiLabels.avatar}}  </p>
+        <span > <img id="selectedAvatar" v-bind:src=this.participantImg> </span>
       </section>
 
     <div id="formsize">
@@ -57,17 +57,17 @@
         </div>
       </form>
     </div>
-      <button5 id="continueWaiting" v-on:click="newPage('/waiting/')"><span class='text'>GO!</span></button5>
+      <button5 id="continueWaiting" v-on:click="newPage('/waiting/')"><span class='text'>{{uiLabels.continueButton}}</span></button5>
   </div>
 </div>
 
 <div v-if=" isThisVisible==false">
-    <button2 class = "backButton" v-on:click = "isThisVisible = !isThisVisible"><span class='text'>Back</span>
+    <button2 class = "backButton" v-on:click = "isThisVisible = !isThisVisible"><span class='text'>{{uiLabels.backButton}}</span>
     </button2>
 </div>
 
 <div v-else-if="showID==false">
-    <button2 class = "backButton" v-on:click = "showID = !showID"><span class='text'>Back</span>
+    <button2 class = "backButton" v-on:click = "showID = !showID"><span class='text'>{{uiLabels.backButton}}</span>
     </button2>
 </div>
 
@@ -91,24 +91,31 @@ export default {
   data: function () {
     return {
       Avatars: avatar,
+      lang: "",
+      uiLabels: {},
       participantName: "",
-      participantImg: "",
+      participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
       isThisVisible: true,
       showID: true,
       question: {
         q: "",
         a: []
       },
-      PollId: "inactive poll"
+      pollId: "inactive poll"
     }
   },
 
   created: function () {
     this.pollId = this.$route.params.id
+    this.lang = this.$route.params.lang
     socket.emit('joinPoll', this.pollId)
     socket.on("newQuestion", q =>
         this.question = q
     )
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      this.uiLabels = labels
+    })
   },
 
   methods: {
@@ -117,20 +124,21 @@ export default {
     },
 
     changeAvatar: function (event) {
-      document.getElementById("selectedAvatar").setAttribute('src', event)
+      this.participantImg=event
+
     },
 
     newPage: function(route) {
       if (route === '/')
         this.$router.push('/')
       else {
-        socket.emit("addParticipant", {
+        socket.emit("addParticipant", { pollId: this.pollId,
           participantInfo: {
             participantName: this.participantName,
             participantImg: this.participantImg
           },
         },);
-        this.$router.push( '/waiting/' + this.PollId )}
+        this.$router.push( `/waiting/${this.pollId}/${this.lang}`)}
     },
   }
 }
@@ -180,11 +188,12 @@ export default {
   grid-template-columns: 25% 25% 25% 25%;
   padding-bottom: 1em;
   position: relative;
-  width: 50%;
-  left: 25%;
+  width: 60%;
+  left: 23%;
 }
 
 #selectedAvatar {
+  place-content: center;
   grid-column: 3;
   width: 7em;
   height: auto;
@@ -265,7 +274,7 @@ button2{
 }
 
 button2 .text {
-  transform: translateX(30px);
+  transform: translateX(25px);
   color: white;
   font-weight: bold;
 }

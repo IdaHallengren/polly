@@ -7,6 +7,18 @@
   </div>
 
   <section id="waitingSection">
+    <div>
+      <Participants v-for ="avatarImg in participants"
+                    v-bind:avatarImg="avatarImg"
+                    v-bind:key="avatarImg.participantImg"
+
+      />
+      <img class="participants" v-bind:src="participants.participantImg" >
+
+
+    </div>
+
+
 
 
   </section>
@@ -18,9 +30,37 @@
 </template>
 
 <script>
+
+import io from 'socket.io-client';
+const socket = io();
+
 export default {
-  name: "Waiting"
+  name: 'Waiting',
+
+
+data: function () {
+  return {
+    uiLabels: {},
+    lang: "",
+    participants: {},
+
+  }
+},
+
+created: function () {
+  this.pollId = this.$route.params.id
+  this.lang = this.$route.params.lang
+  socket.on("participantsAdded", (myParticipant) =>
+        this.participants = myParticipant
+  )
+  socket.emit("pageLoaded", this.lang);
+  socket.on("init", (labels) => {
+    this.uiLabels = labels
+  })
+
 }
+}
+
 </script>
 
 <style scoped>

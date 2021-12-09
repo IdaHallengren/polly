@@ -24,32 +24,42 @@ function sockets(io, socket, data) {
     socket.emit('dataUpdate', data.getAnswers(pollId));
   });
 
-  socket.on('runQuestion', function (d) {
-    io.to(d.pollId).emit('newQuestion', data.getQuestion(d.pollId, d.questionNumber));
-    io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
-  });
-
-  socket.on('submitAnswer', function (d) {
-    data.submitAnswer(d.pollId, d.answer);
-    io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
-  });
-
   socket.on('resetAll', () => {
     data = new Data();
     data.initializeData();
   })
 
+    socket.on('runQuestion', function (d) {
+      io.to(d.pollId).emit('newQuestion', data.getQuestion(d.pollId, d.questionNumber));
 
-  socket.on('getPoll', function (pollId) {
-    socket.emit('fullPoll', data.getPoll(pollId))
-  })
+      io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
+    });
 
+    socket.on('submitAnswer', function (d) {
+      data.submitAnswer(d.pollId, d.answer);
+      io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
+    });
 
-  socket.on('removeSlide', function (d) {
-    data.removeQuestion(d.pollId, {q: d.q, a: d.a});
-    socket.emit('dataUpdate', data.getAnswers(d.pollId));
-  })
+    socket.on('addParticipant', function (d) {
+      console.log(d)
 
+      data.addParticipant(d.pollId, d.participantInfo)
+      io.to(d.pollId).emit('participantsAdded', data.getParticipants(d.pollId));
+    })
+
+    socket.on('resetAll', () => {
+      data = new Data();
+      data.initializeData();
+    });
+
+    socket.on('getPoll', function (pollId) {
+      socket.emit('fullPoll', data.getPoll(pollId))
+    });
+
+    socket.on('removeSlide', function (d) {
+      data.removeQuestion(d.pollId, {q: d.q, a: d.a});
+      socket.emit('dataUpdate', data.getAnswers(d.pollId));
+    })
 
 }
 

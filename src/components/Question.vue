@@ -5,6 +5,8 @@
 </button>
 </template>
 <script>
+
+
 export default {
   name: 'Bars',
   props: {

@@ -56,6 +56,8 @@ export default {
       socket.emit("switchLanguage", this.lang)
     },
 
+
+
     switchToEnglishLanguage: function() {
       if (this.lang === "sv")
         this.lang = "en"
@@ -64,9 +66,9 @@ export default {
 
     newPage: function(route) {
       if (route === 'Create')
-        this.$router.push( '/create/' + this.lang)
+        this.$router.push(`/create/${this.lang}`)
       else
-        this.$router.push( '/poll/:id' )
+        this.$router.push(`/poll/${this.lang}`)
     }
   }
 }
