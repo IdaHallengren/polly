@@ -24,12 +24,16 @@
   <div class="wrapper">
     <div id="overview">
 
-      <div id="slides">
+<!--      <div id="slides">-->
 
       <div id="overviewPresentationSlide">
 
+
+        {{ fullPoll}}
+
+
       </div>
-      </div>
+<!--      </div>-->
 
       <button v-on:click="removeSlide"> {{ uiLabels.removeSlide }} </button>
       <button v-on:click="addSlide" > {{ uiLabels.addSlide }} </button>
@@ -266,6 +270,23 @@ PollId: {{pollId}}
 
 
 
+<div v-if="letsPlayButton==false">
+
+
+  <SlideShow>
+
+  </SlideShow>
+
+Timer:
+  Amount of participants answerd
+  <button v-on:click="nextQuestion"></button>
+</div>
+
+
+
+
+
+
 
 
 
@@ -276,11 +297,12 @@ PollId: {{pollId}}
 
 
 import QrcodeVue from 'qrcode.vue'
-import html2canvas from 'html2canvas'
+// import html2canvas from 'html2canvas'
 
 
 
 import io from 'socket.io-client';
+import SlideShow from "../components/SlideShow";
 const socket = io();
 
 
@@ -290,6 +312,7 @@ const socket = io();
 export default {
   name: 'Create',
   components: {
+    SlideShow,
     QrcodeVue
   },
   data: function () {
@@ -310,7 +333,8 @@ export default {
       startPoll: true,
       qrValue: "https://old.utn.se/sv/bokningskalendern",
       size: 300,
-      letsPlayButton: true
+      letsPlayButton: true,
+      fullPoll: {}
 
 
 
@@ -318,6 +342,7 @@ export default {
   },
   created: function () {
     this.lang = this.$route.params.lang;
+    this.setPollId(); //Fixa så att om den har ett pollId så återanvände den det
     socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
       this.uiLabels = labels
@@ -327,22 +352,25 @@ export default {
     )
     socket.on("pollCreated", (data) =>
         this.data = data)
+
+    socket.on('fullPoll', (myPoll) =>
+        this.fullPoll = myPoll)
   },
   methods: {
     createPoll: function () {
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
       console.log("Skickat info")
-      this.getPollId();
+
 
     },
-    getPollId: function () {
-      return this.pollId=Math.floor(Math.random() * 100000);
+    setPollId: function () {
+      this.pollId=Math.floor(Math.random() * 100000);
+      this.createPoll()
 
     },
 
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers});
-
     },
 
     addAnswer: function () {
@@ -359,22 +387,30 @@ export default {
 
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
+      this.questionNumber++; //Added this to increase the number for the question
 
     },
     addSlide: function () {
-      var p = document.createElement("DIV");
-      p.setAttribute("style", "margin:10px;border:solid;border-radius:10%; background-color:white;height:200px");
-      p.id="removeSlides"
-      document.getElementById("slides").appendChild(p);
+    this.addQuestion()
+     this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
+      socket.emit('getPoll', this.pollId)
 
 
 
-        var slides = html2canvas(document.querySelector('#presentation')).then(canvas => {
-        document.body.appendChild(canvas)
-        slides.id="removePictures"
+
+      // var p = document.createElement("DIV");
+      // p.setAttribute("style", "margin:10px;border:solid;border-radius:10%; background-color:white;height:200px");
+      // p.id="removeSlides"
+      // document.getElementById("slides").appendChild(p);
+      //
+      //
+      //
+      //   var slides = html2canvas(document.querySelector('#presentation')).then(canvas => {
+      //   document.body.appendChild(canvas)
+      //   slides.id="removePictures"
 
 
-      });
+    // });
 
 
       // this.slides.push("")
@@ -382,13 +418,23 @@ export default {
 
     removeSlide: function() {
 
-      document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
+      socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
+      this.questionNumber--;
+      socket.emit("dataUpdate", {questionNumber: this.questionNumber});
+      this.runQuestion();
 
 
-      document.getElementById('presentation').del(document.getElementById("removePictures"))
+      // document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
+
+
+      // document.getElementById('presentation').del(document.getElementById("removePictures"))
 
 
 
+
+    },
+
+    nextQuestion: function() {
 
     },
 
@@ -412,6 +458,8 @@ export default {
 </script>
 
 <style>
+
+
 
 .wrapper{
   display: grid;
