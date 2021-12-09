@@ -31,6 +31,15 @@ Data.prototype.createPoll = function(pollId, lang="en") {
   return this.polls[pollId];
 }
 
+Data.prototype.getPoll = function(pollId){
+  const poll = this.polls[pollId];
+  console.log("pollrequested", pollId);
+  if (typeof poll !== 'undefined') {
+  return poll
+  }
+  return {}
+}
+
 Data.prototype.addQuestion = function(pollId, q) {
   const poll = this.polls[pollId];
   console.log("question added to", pollId, q);
@@ -79,6 +88,15 @@ Data.prototype.getAnswers = function(pollId) {
   }
   return {}
 }
+
+Data.prototype.removeQuestion = function(pollId, q) {
+  const poll = this.polls[pollId];
+  console.log("question removed", pollId, q);
+  if (typeof poll !== 'undefined') {
+    poll.questions.pop(q);
+  }
+}
+
 module.exports = Data;
 
 
