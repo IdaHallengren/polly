@@ -453,7 +453,7 @@ export default {
     },
 
     letsPlay: function(){
-
+      this.$router.push(`/create/${this.lang}/${this.pollId}`)
     }
 
 }}

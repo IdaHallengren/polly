@@ -2,12 +2,19 @@
 <div class="wrapper">
 
   <div id="slides">
-    <div v-for="questions in question" v-bind:key="questions">
-      {{questions.q }} {{questions.a}}
+    <div v-for="questions in fullPoll" v-bind:key="questions">
+      {{questions}}
     </div>
+
+    {{fullPoll["questions"][0].q}}
+    {{fullPoll["questions"][0].a[0]}}
+
+
+
+
     <div id="test">
-      <button v-on:click="nextQuestion"> hej </button>
-      {{fullPoll}}
+      <button v-on:click="nextQuestion"> Next question </button>
+
     </div>
 
   </div>
@@ -50,7 +57,8 @@ export default {
   methods:{
   nextQuestion: function () {
     socket.emit("getPoll", this.pollId);  //Byt poll id till sträng med aktivt poll id så funkar det
-    this.questionNumber++;
+    this.questionNumber ++;
+
   }
 }}
 </script>
