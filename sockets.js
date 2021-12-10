@@ -41,8 +41,6 @@ function sockets(io, socket, data) {
     });
 
     socket.on('addParticipant', function (d) {
-      console.log(d)
-
       data.addParticipant(d.pollId, d.participantInfo)
       io.to(d.pollId).emit('participantsAdded', data.getParticipants(d.pollId));
     })

@@ -113,7 +113,8 @@ export default {
       if (route === '/')
         this.$router.push('/')
       else {
-        socket.emit("addParticipant", { pollId: this.pollId,
+        socket.emit("addParticipant", {
+          pollId: this.pollId,
           participantInfo: {
             participantName: this.participantName,
             participantImg: this.participantImg

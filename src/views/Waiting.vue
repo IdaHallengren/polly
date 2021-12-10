@@ -2,21 +2,25 @@
 
 <div id="wrapper">
   <div id="textColumn">
+    <h1> Wating room nr: {{this.pollId}}</h1>
     <h2> Waiting for participants</h2>
     <h4>Please wait for the questionmaster to start the game!</h4>
+    <h4> Entered players: </h4>
+    {{}}
   </div>
+
 
   <section id="waitingSection">
     <div>
-      <Participants v-for ="avatarImg in participants"
-                    v-bind:avatarImg="avatarImg"
-                    v-bind:key="avatarImg.participantImg"
-      />
-      <img class="participants" v-bind:src="participants.participantImg" >
+
+      <div v-for="(pollId, key) in participants" v-bind:key="'pollId'+key">
+
+      <img class="participants"
+           :src="pollId.participantInfo.participantImg" >
 
 
     </div>
-
+    </div>
   </section>
 
 </div>
@@ -40,7 +44,7 @@ data: function () {
     uiLabels: {},
     lang: "",
     participants: {},
-
+    pollId: "",
   }
 },
 
