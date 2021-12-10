@@ -81,8 +81,10 @@ export default {
     },
 
     newPage: function(route) {
-      if (route === 'Create')
-        this.$router.push(`/create/${this.lang}`)
+      if (route === 'Create'){
+
+        this.pollId=Math.floor(Math.random() * 100000);
+        this.$router.push(`/create/${this.pollId}/${this.lang}`)}
       else
         this.$router.push(`/poll/${this.pollId}/${this.lang}`)
     }
