@@ -6,17 +6,18 @@
     <h2> Waiting for participants</h2>
     <h4>Please wait for the questionmaster to start the game!</h4>
     <h4> Entered players: </h4>
-    {{}}
+    <span v-for="(participant, key) in participants" v-bind:key="'participant'+key">{{participant}} </span>
   </div>
 
 
   <section id="waitingSection">
     <div>
 
-      <div v-for="(pollId, key) in participants" v-bind:key="'pollId'+key">
+      <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
 
-      <img class="participants"
-           :src="pollId.participantInfo.participantImg" >
+        <img class="participants"
+             :src="participant.participantInfo.participantImg" >
+
 
 
     </div>
@@ -43,7 +44,7 @@ data: function () {
   return {
     uiLabels: {},
     lang: "",
-    participants: {},
+    participants: [],
     pollId: "",
   }
 },
@@ -51,8 +52,10 @@ data: function () {
 created: function () {
   this.pollId = this.$route.params.id
   this.lang = this.$route.params.lang
-  socket.on("participantsAdded", (myParticipant) =>
-        this.participants = myParticipant
+  socket.on("participantsAdded", (myParticipant) =>{
+
+        this.participants = myParticipant},
+      console.log(this.participants, 'här händer det något viktigt!')
   )
   socket.emit("pageLoaded", this.lang);
   socket.on("init", (labels) => {
@@ -83,6 +86,13 @@ created: function () {
   position: absolute;
   left: 40%;
   height: 90%
+}
+
+.participants{
+  border-radius: 100%;
+  padding: 15px;
+  position: relative;
+
 }
 
 
