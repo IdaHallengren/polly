@@ -10,7 +10,7 @@
     <div> </div>
     <div> </div>
     <buttonCancel1 class="noselect" v-on:click="cancelPage">
-      <span class='text'>Cancel</span>
+      <span class='text'>{{uiLabels.cancelButton}}</span>
     </buttonCancel1>
 
 
@@ -193,7 +193,7 @@
   </div>
 
     <buttonBack1 class="noselect" v-on:click="cancelPage">
-      <span class='text'> Back </span>
+      <span class='text'> {{ uiLabels.backButton }} </span>
     </buttonBack1>
   </div>
 
@@ -218,7 +218,7 @@
 
   <div>
   <buttonCancel2 class="noselect" v-on:click="cancelPage">
-    <span class='text'>Cancel</span>
+    <span class='text'>{{uiLabels.cancelButton}}</span>
   </buttonCancel2>
     </div>
 
@@ -242,7 +242,7 @@ PollId: {{pollId}}
 
 
 
-<div>  <h2> Waitingroom</h2>
+<div>  <h2> {{ uiLabels.waitingroom }}</h2>
 
   <form class = "waitingRoom">
     <div class = "wrapper">
@@ -256,13 +256,13 @@ PollId: {{pollId}}
 
 <div>
   <buttonBack2 class="noselect" v-on:click="startPoll=!startPoll">
-    <span class='text'> Back </span>
+    <span class='text'> {{ uiLabels.backButton }} </span>
   </buttonBack2>
 </div>
 
   <div v-on:click="letsPlayButton=!letsPlayButton">
     <buttonLetsPlay class="noselect" v-on:click="letsPlay">
-      <span class='text'> Let's play! </span>
+      <span class='text'> {{ uiLabels.letsPlay }} </span>
     </buttonLetsPlay>
   </div>
 

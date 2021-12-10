@@ -27,5 +27,7 @@
 	"avatar": "Choose your avatar: ",
 	"cancelButton": "Cancel",
 	"backButton": "Back",
-	"continueButton": "Done"
+	"continueButton": "Done",
+	"letsPlay": "Let´s play",
+	"waitingroom": "Waitingroom"
 }

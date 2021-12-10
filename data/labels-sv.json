@@ -27,5 +27,7 @@
 	"avatar": "Välj din figur: ",
 	"cancelButton": "Avbryt",
 	"backButton": "Tillbaka",
-	"continueButton": "Klar!"
+	"continueButton": "Klar!",
+	"letsPlay": "Kör igång!",
+	"waitingroom": "Vänterum"
 }
