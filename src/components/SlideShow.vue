@@ -6,15 +6,15 @@
       {{questions}}
     </div>
 
-    {{fullPoll["questions"][0].q}}
-    {{fullPoll["questions"][0].a[0]}}
+
 
 
 
 
     <div id="test">
       <button v-on:click="nextQuestion"> Next question </button>
-
+      {{fullPoll["questions"][questionNumber].q}}
+      {{fullPoll["questions"][questionNumber].a[0]}}
     </div>
 
   </div>
@@ -42,6 +42,9 @@ export default {
       lang: "",
       pollId: "",
       fullPoll: {},
+      a: ["", ""],
+      q: "",
+      questions: "",
       questionNumber: 1
   }},
   created: function () {
@@ -58,6 +61,7 @@ export default {
   nextQuestion: function () {
     socket.emit("getPoll", this.pollId);  //Byt poll id till sträng med aktivt poll id så funkar det
     this.questionNumber ++;
+    socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
 
   }
 }}
