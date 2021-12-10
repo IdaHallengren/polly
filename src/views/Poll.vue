@@ -11,7 +11,7 @@
 
 </div>
 
-<div v-show = "showID">
+<!--<div v-show = "showID">
   <div class = "wrapper1">
     <label><h2>{{uiLabels.enterPollId}}</h2></label>
     <div class="contentCenter">
@@ -20,9 +20,9 @@
       <button4 v-on:click = "showID = !showID"><span class='text'>OK</span></button4>
     </div>
   </div>
-</div>
+</div>-->
 
-<div v-if="!showID">
+<!--<div v-if="!showID">-->
 
 <p class="YourName"> {{uiLabels.pollId}} {{pollId}} </p>
 
@@ -35,7 +35,7 @@
         </div>
     </div>
   </div>
-</div>
+<!--</div>-->
 
 <div id ="HideAvatars">
   <div v-if = "isThisVisible==false">

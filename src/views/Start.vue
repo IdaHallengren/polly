@@ -1,5 +1,12 @@
 <template>
+  <div id="langDiv">
+    <img id="sweImg" src="../img/swe.jpg" v-on:click="switchToSwedishLanguage"/>
+
+    <img id="engImg" src="../img/eng.jpg" v-on:click="switchToEnglishLanguage"/>
+  </div>
+
 <main class="start">
+  <div v-show="showStart">
 
   <div id="wrapperHead">
     <div id="header">
@@ -9,24 +16,34 @@
       <h3> - Easy to create and participate</h3>
     </div>
 
-    <div id="langDiv">
-      <img id="sweImg" src="../img/swe.jpg" v-on:click="switchToSwedishLanguage"/>
 
-      <img id="engImg" src="../img/eng.jpg" v-on:click="switchToEnglishLanguage"/>
-    </div>
+
   </div>
 
 <section id="wrapperButtons">
+
 
    <button class="button" v-on:click="newPage('Create')">
      {{uiLabels.createPoll}}
    </button>
 
-   <button id="partButton" class="button" v-on:click="newPage('Poll')">
-     {{uiLabels.participatePoll}}
+   <button class="button" id="partButton" v-on:click = "showStart = !showStart">{{uiLabels.participatePoll}}
    </button>
 
 </section>
+  </div>
+  <div v-if="!showStart">
+  <div v-show = "showId">
+    <div class = "wrapper1">
+      <label><h2>{{uiLabels.enterPollId}}</h2></label>
+      <div class="contentCenter">
+        <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
+
+        <button4  v-on:click="newPage('Poll')"><span class='text'> OK</span> </button4>
+      </div>
+    </div>
+  </div>
+  </div>
 
 </main>
 
@@ -41,7 +58,10 @@ export default {
   data: function () {
     return {
       uiLabels: {},
-      lang: "en"
+      lang: "en",
+      showStart: true,
+      showId: true,
+      pollId: ""
     }
   },
   created: function () {
@@ -68,7 +88,7 @@ export default {
       if (route === 'Create')
         this.$router.push(`/create/${this.lang}`)
       else
-        this.$router.push(`/poll/${this.lang}`)
+        this.$router.push(`/poll/${this.pollId}/${this.lang}`)
     }
   }
 }
@@ -171,6 +191,34 @@ body{
 #partButton{
   grid-column: 3;
   grid-row: 1;
+}
+button4{
+  width: 45px;
+  height: 56px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: #006400;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #006400;
+}
+
+button4 .text {
+  transform: translateX(10px);
+  color: white;
+  font-weight: bold;
+}
+
+button4:hover {
+  background: #008000;
+}
+#PollId{
+  width: 150px;
+  height: 50px;
+  font-size: larger;
+  float:left;
 }
 
 </style>
