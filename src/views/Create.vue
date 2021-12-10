@@ -336,7 +336,7 @@ export default {
       pointsForQuestion: "5p",
       showAnswerButton: true,
       startPoll: true,
-      qrValue: "http://localhost:8080/#/poll/:id" +this.pollId,
+      qrValue: `http://localhost:8080/#/poll/${this.pollId}/${this.lang}`,
       size: 300,
       letsPlayButton: true,
       fullPoll: {}
@@ -347,7 +347,10 @@ export default {
   },
   created: function () {
     this.lang = this.$route.params.lang;
-    this.setPollId(); //Fixa så att om den har ett pollId så återanvände den det
+    this.pollId = this.$route.params.id;
+    this.createPoll();
+     //Fixa så att om den har ett pollId så återanvände den det
+
     socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
       this.uiLabels = labels
@@ -364,16 +367,17 @@ export default {
   },
   methods: {
     createPoll: function () {
+      this.addQuestion();
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
       console.log("Skickat info")
 
 
     },
-    setPollId: function () {
-      this.pollId=Math.floor(Math.random() * 100000);
-      this.createPoll()
-
-    },
+    // setPollId: function () {
+    //   this.pollId=Math.floor(Math.random() * 100000);
+    //   this.createPoll()
+    //
+    // },
 
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers});

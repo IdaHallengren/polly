@@ -11,17 +11,14 @@
       <Participants v-for ="avatarImg in participants"
                     v-bind:avatarImg="avatarImg"
                     v-bind:key="avatarImg.participantImg"
-
       />
       <img class="participants" v-bind:src="participants.participantImg" >
 
 
     </div>
 
-
-
-
   </section>
+
 </div>
 
 

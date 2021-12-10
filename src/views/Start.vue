@@ -1,12 +1,13 @@
 <template>
-  <div id="langDiv">
+<main class="start">
+
+<div id="langDiv">
     <img id="sweImg" src="../img/swe.jpg" v-on:click="switchToSwedishLanguage"/>
 
     <img id="engImg" src="../img/eng.jpg" v-on:click="switchToEnglishLanguage"/>
-  </div>
+</div>
 
-<main class="start">
-  <div v-show="showStart">
+<div v-show="showStart">
 
   <div id="wrapperHead">
     <div id="header">
@@ -15,35 +16,30 @@
       <h1> Welcome to Pollify</h1>
       <h3> - Easy to create and participate</h3>
     </div>
-
-
-
   </div>
 
-<section id="wrapperButtons">
+  <section id="wrapperButtons">
 
+    <button class="button" v-on:click="newPage('Create')">{{uiLabels.createPoll}}</button>
 
-   <button class="button" v-on:click="newPage('Create')">
-     {{uiLabels.createPoll}}
-   </button>
+    <button class="button" id="partButton" v-on:click = "showStart = !showStart">{{uiLabels.participatePoll}}</button>
 
-   <button class="button" id="partButton" v-on:click = "showStart = !showStart">{{uiLabels.participatePoll}}
-   </button>
+  </section>
+</div>
 
-</section>
-  </div>
-  <div v-if="!showStart">
+<div v-if="!showStart">
   <div v-show = "showId">
     <div class = "wrapper1">
       <label><h2>{{uiLabels.enterPollId}}</h2></label>
       <div class="contentCenter">
         <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
-        <button4  v-on:click="newPage('Poll')"><span class='text'> OK</span> </button4>
+        <button4  v-on:click="newPage('Poll')"><span class='text'> OK</span></button4>
       </div>
     </div>
+    <button2 class = "backButton" v-on:click = "showStart = !showStart"><span class='text'>{{uiLabels.backButton}}</span></button2>
   </div>
-  </div>
+</div>
 
 </main>
 
@@ -85,8 +81,10 @@ export default {
     },
 
     newPage: function(route) {
-      if (route === 'Create')
-        this.$router.push(`/create/${this.lang}`)
+      if (route === 'Create'){
+
+        this.pollId=Math.floor(Math.random() * 100000);
+        this.$router.push(`/create/${this.pollId}/${this.lang}`)}
       else
         this.$router.push(`/poll/${this.pollId}/${this.lang}`)
     }
@@ -192,6 +190,7 @@ body{
   grid-column: 3;
   grid-row: 1;
 }
+
 button4{
   width: 45px;
   height: 56px;
@@ -214,11 +213,49 @@ button4 .text {
 button4:hover {
   background: #008000;
 }
+
 #PollId{
   width: 150px;
   height: 50px;
   font-size: larger;
   float:left;
+}
+
+.contentCenter{
+  padding-left: 42%;
+}
+
+.wrapper1{
+  padding-top: 200px;
+}
+
+button2{
+  width: 100px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: #1E90FF;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #1E90FF;
+}
+
+button2 .text {
+  transform: translateX(25px);
+  color: white;
+  font-weight: bold;
+}
+
+button2:hover {
+  background: #00BFFF;
+}
+
+.backButton{
+  position: fixed;
+  bottom: 0.5em;
+  left: 0.5em;
 }
 
 </style>

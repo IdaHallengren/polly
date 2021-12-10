@@ -11,23 +11,10 @@
 
 </div>
 
-<!--<div v-show = "showID">
-  <div class = "wrapper1">
-    <label><h2>{{uiLabels.enterPollId}}</h2></label>
-    <div class="contentCenter">
-      <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
-
-      <button4 v-on:click = "showID = !showID"><span class='text'>OK</span></button4>
-    </div>
-  </div>
-</div>-->
-
-<!--<div v-if="!showID">-->
-
 <p class="YourName"> {{uiLabels.pollId}} {{pollId}} </p>
 
   <div v-show ="isThisVisible">
-    <div class = "wrapper2">
+    <div class = "wrapperName">
       <label><h2>{{uiLabels.enterName}}</h2></label>
         <div class="contentCenter">
           <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" required>
@@ -35,7 +22,6 @@
         </div>
     </div>
   </div>
-<!--</div>-->
 
 <div id ="HideAvatars">
   <div v-if = "isThisVisible==false">
@@ -63,11 +49,6 @@
 
 <div v-if=" isThisVisible==false">
     <button2 class = "backButton" v-on:click = "isThisVisible = !isThisVisible"><span class='text'>{{uiLabels.backButton}}</span>
-    </button2>
-</div>
-
-<div v-else-if="showID==false">
-    <button2 class = "backButton" v-on:click = "showID = !showID"><span class='text'>{{uiLabels.backButton}}</span>
     </button2>
 </div>
 
@@ -146,23 +127,12 @@ export default {
 
 <style>
 
-.wrapper1{
-  padding-top: 200px;
-}
-
-.wrapper2{
+.wrapperName{
   padding-top: 100px;
 }
 
 .contentCenter{
   padding-left: 42%;
-}
-
-#PollId{
-  width: 150px;
-  height: 50px;
-  font-size: larger;
-  float:left;
 }
 
 #participantName{
