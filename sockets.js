@@ -14,7 +14,9 @@ function sockets(io, socket, data) {
   });
 
   socket.on('addQuestion', function (d) {
-    data.addQuestion(d.pollId, {q: d.q, a: d.a});
+
+    data.addQuestion(d.pollId, {q: d.q, a: d.a, type: d.type, time: d.time});
+
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
   });
 
@@ -53,6 +55,12 @@ function sockets(io, socket, data) {
       data.removeQuestion(d.pollId, {q: d.q, a: d.a});
       socket.emit('dataUpdate', data.getAnswers(d.pollId));
     })
+
+
+  socket.on('startGame' , function(pollId){
+    console.log('FUNKA DÅÅ')
+     io.to(pollId).emit('gameStart')
+  })
 
 }
 

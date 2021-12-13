@@ -1,7 +1,9 @@
 <template>
+hej2
 
+  {{pollId}}
   <div>
-
+hejhejhej
     {{question}}
   </div>
   <Bars v-bind:data="data"/>
@@ -22,6 +24,7 @@ export default {
     return {
       question: "",
       data: {
+        pollId: ""
       }
     }
   },

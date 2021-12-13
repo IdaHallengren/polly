@@ -30,7 +30,7 @@
 <div v-if="!showStart">
   <div v-show = "showId">
     <div class = "wrapper1">
-      <label><h2>{{uiLabels.enterPollId}}</h2></label>
+      <label><h2 id="textFont">{{uiLabels.enterPollId}}</h2></label>
       <div class="contentCenter">
         <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
@@ -95,7 +95,7 @@ export default {
 <style>
 
 body{
-  background-color: #D57A66;
+  background-color: #317773;
 }
 
 #wrapperHead {
@@ -235,11 +235,10 @@ button2{
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: #1E90FF;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #1E90FF;
+  background: #5995ED;
 }
 
 button2 .text {
@@ -249,13 +248,18 @@ button2 .text {
 }
 
 button2:hover {
-  background: #00BFFF;
+  background: #1d72f0;
 }
 
 .backButton{
   position: fixed;
   bottom: 0.5em;
   left: 0.5em;
+}
+
+#textFont{
+  font-size: xx-large;
+  color: white;
 }
 
 </style>

@@ -60,11 +60,11 @@
     <div>
 <!--      {{uiLabels.question}}:-->
       <div v-if="typeOfQuestion!='Presentation'"> <!--This is to change the input area for when it is a presentation-->
-      <input class="questionInput" type="text" v-model="question" placeholder="Write your question here" >
+        <textarea class="questionInput" type="text"  v-model="question" placeholder="Write your question here" ></textarea>
       </div>
 
       <div v-if="typeOfQuestion==='Presentation'">
-        <input class="presentationInput" type="text" v-model="presentation" placeholder="Write your presentation here">
+        <textarea class="presentationInput" type="text" v-model="presentation" placeholder="Write your presentation here"></textarea>
       </div>
 
       <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
@@ -73,7 +73,7 @@
       <div >
         <br>
         {{ uiLabels.answers }}
-        <input v-for="(_, i) in answers" 
+        <input v-for="(_, i) in answers"
                v-model="answers[i]" 
                v-bind:key="'answer'+i"
             class="answersStyle"
@@ -380,7 +380,10 @@ export default {
     // },
 
     addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers});
+
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, type:this.typeOfQuestion, time:this.timeForQuestion});
+
+
     },
 
     addAnswer: function () {
@@ -401,18 +404,18 @@ export default {
 
     },
     addSlide: function () {
+
      this.addQuestion()
      this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
       socket.emit('getPoll', this.pollId)
-
-
 
 
       // var p = document.createElement("DIV");
       // p.setAttribute("style", "margin:10px;border:solid;border-radius:10%; background-color:white;height:200px");
       // p.id="removeSlides"
       // document.getElementById("slides").appendChild(p);
-      //
+
+
       //
       //
       //   var slides = html2canvas(document.querySelector('#presentation')).then(canvas => {
@@ -425,6 +428,9 @@ export default {
 
       // this.slides.push("")
     },
+
+
+
 
     removeSlide: function() {
 
@@ -457,7 +463,12 @@ export default {
     },
 
     letsPlay: function(){
+
       this.$router.push(`/create/${this.lang}/${this.pollId}`)
+
+socket.emit('startGame' ,this.pollId)
+
+
     }
 
 }}
@@ -483,7 +494,7 @@ export default {
 #overview{
   border:solid;
   border-radius: 2%;
-  background-color: lightslategray;
+  background-color: cadetblue;
   overflow: scroll;
 
 }
@@ -491,12 +502,13 @@ export default {
 #presentation{
   border: solid;
   border-radius: 2%;
+  background-color: white;
 }
 
 #editQuestion{
   border: solid;
   border-radius: 2%;
-  background-color: lightslategray;
+  background-color: cadetblue;
 
 
 }
@@ -521,8 +533,7 @@ export default {
   font-family: inherit;
   border-radius: 5%;
 
-  overflow: auto;
-  overflow-wrap: break-word;
+  white-space: pre-line
 
 
 }
@@ -532,6 +543,7 @@ export default {
   width: 90%;
   font-size: 2em;
   outline: none;
+  white-space: pre-line
 
 }
 
