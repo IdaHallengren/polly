@@ -1,55 +1,65 @@
 
 <template>
-<div id="cancel">
+<div class="cancel">
   <button1 v-on:click="newPage('/')"><span class='text'>{{uiLabels.cancelButton}}</span>
   </button1>
 </div>
 
-<div>
+<!--<div>
   <Question v-bind:question="question"
             v-on:answer="submitAnswer"/>
 
-</div>
+</div>-->
+<div v-if="showWaiting">
+  <p class="fontSize"> {{uiLabels.pollId}} {{pollId}} </p>
 
-<p class="YourName"> {{uiLabels.pollId}} {{pollId}} </p>
+    <div v-show ="showName">
+      <div class = "wrapperName">
+        <label><h2>{{uiLabels.enterName}}</h2></label>
+         <div class="contentCenter">
+           <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" required>
+           <button4 v-on:click = "showName = !showName"><span class='text'>OK</span></button4>
+         </div>
+      </div>
+     </div>
 
-  <div v-show ="isThisVisible">
-    <div class = "wrapperName">
-      <label><h2>{{uiLabels.enterName}}</h2></label>
-        <div class="contentCenter">
-          <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" required>
-          <button4 v-on:click = "isThisVisible = !isThisVisible"><span class='text'>OK</span></button4>
-        </div>
-    </div>
-  </div>
 
-<div id ="HideAvatars">
-  <div v-if = "isThisVisible==false">
-    <p class="YourName">{{uiLabels.name}}{{participantName}} </p>
+  <div id ="HideAvatars">
+    <div v-if = "showName==false">
+      <p class="fontSize">{{uiLabels.name}}{{participantName}} </p>
 
-      <section id="selectAvatar">
-        <p id="select"> {{uiLabels.avatar}}  </p>
-        <span > <img id="selectedAvatar" v-bind:src=this.participantImg> </span>
-      </section>
+        <section id="selectAvatar">
+          <p id="select"> {{uiLabels.avatar}}  </p>
+          <span > <img id="selectedAvatar" v-bind:src=this.participantImg> </span>
+        </section>
 
-    <div id="formsize">
-      <form class = "form">
-        <div class = "wrapper">
-          <AvatarLoop v-for="avatar in Avatars"
+      <div id="formsize">
+        <form class = "form">
+          <div class = "wrapper">
+           <AvatarLoop v-for="avatar in Avatars"
                   v-bind:avatar="avatar"
                   v-bind:key="avatar.Name"
                   v-on:participantImg="changeAvatar($event)"
-          />
-        </div>
-      </form>
+            />
+          </div>
+        </form>
+      </div>
+      <div v-on:click="showWaiting = !showWaiting">
+        <button5 id="continueWaiting" v-on:click="newPage('null')" ><span class='text'>{{uiLabels.continueButton}}</span></button5>
+     </div>
     </div>
-      <button5 id="continueWaiting" v-on:click="newPage('/waiting/')"><span class='text'>{{uiLabels.continueButton}}</span></button5>
   </div>
+    <button2 class = "backButton" v-on:click = "showName = !showName"><span class='text'>{{uiLabels.backButton}}</span>
+    </button2>
 </div>
 
-<div v-if=" isThisVisible==false">
-    <button2 class = "backButton" v-on:click = "isThisVisible = !isThisVisible"><span class='text'>{{uiLabels.backButton}}</span>
-    </button2>
+
+<div v-if="!showWaiting">
+
+  <Waiting v-bind:participants="participants" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels"></Waiting>
+
+  <button2 class = "backButton" v-on:click = "showWaiting = !showWaiting"><span class='text'>{{uiLabels.backButton}}</span>
+  </button2>
 </div>
 
 </template>
@@ -59,6 +69,7 @@
 import Question from '@/components/Question.vue';*/
 
 import AvatarLoop from '../components/AvatarLoop.vue'
+import Waiting from '../components/Waiting.vue'
 import io from 'socket.io-client'
 import avatar from '../data/avatar.json'
 
@@ -67,7 +78,8 @@ const socket = io();
 export default {
   name: 'Poll',
   components: {
-    AvatarLoop
+    AvatarLoop,
+    Waiting
   },
   data: function () {
     return {
@@ -76,13 +88,15 @@ export default {
       uiLabels: {},
       participantName: "",
       participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
-      isThisVisible: true,
+      showName: true,
       showID: true,
-      question: {
+/*      question: {
         q: "",
         a: []
-      },
-      pollId: "inactive poll"
+      },*/
+      pollId: "inactive poll",
+      showWaiting: true,
+      participants: []
     }
   },
 
@@ -97,16 +111,19 @@ export default {
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
+
+    socket.on('participantsAdded', (myParticipant) =>
+        this.participants = myParticipant
+    )
   },
 
   methods: {
-    submitAnswer: function (answer) {
+/*    submitAnswer: function (answer) {
       socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
-    },
+    },*/
 
     changeAvatar: function (event) {
       this.participantImg=event
-
     },
 
     newPage: function(route) {
@@ -120,9 +137,9 @@ export default {
             participantImg: this.participantImg
           },
         },);
-        this.$router.push( `/waiting/${this.pollId}/${this.lang}`)}
-    },
-  }
+    }
+  },
+}
 }
 </script>
 
@@ -150,7 +167,7 @@ export default {
 
 }
 
-.YourName{
+.fontSize{
   font-size: xx-large;
 }
 
@@ -202,7 +219,7 @@ export default {
   left: 0.5em;
 }
 
-#cancel {
+.cancel {
   position: absolute;
   top: 0.5em;
   right: 0.5em;

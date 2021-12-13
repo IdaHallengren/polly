@@ -105,6 +105,7 @@ Data.prototype.getParticipants = function(pollId) {
   const poll = this.polls[pollId];
   console.log('Här är poll i Data: ' , poll)
   if (typeof poll !== 'undefined') {
+    console.log('hit kommer jag iaf!', poll.participants)
       return poll.participants
   }
   return {}
