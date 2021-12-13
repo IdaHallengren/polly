@@ -16,6 +16,7 @@
 
           <img class="participants"
                :src="participant.participantImg" >
+
         </div>
     </section>
 

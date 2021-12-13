@@ -9,9 +9,9 @@
 
     <div> </div>
     <div> </div>
-    <buttonCancel1 class="cancel" v-on:click="cancelPage">
+    <buttonCancel class="cancel" v-on:click="cancelPage">
       <span class='text'>{{uiLabels.cancelButton}}</span>
-    </buttonCancel1>
+    </buttonCancel>
 
 
 
@@ -176,9 +176,9 @@
 
     <div v-on:click= "startPoll= !startPoll" >
 
-  <buttonCreatePoll class="continue" v-on:click="createPoll">
+  <buttonContinue class="continue" v-on:click="createPoll">
     <span class='text'>{{ uiLabels.createPoll }}</span>
-  </buttonCreatePoll>
+  </buttonContinue>
 
 
 
@@ -192,9 +192,9 @@
 
   </div>
 
-    <buttonBack1 class="noselect" v-on:click="cancelPage">
+    <buttonBack class="noselect" v-on:click="cancelPage">
       <span class='text'> {{ uiLabels.backButton }} </span>
-    </buttonBack1>
+    </buttonBack>
   </div>
 
 
@@ -217,9 +217,9 @@
   <div> </div>
 
   <div>
-  <buttonCancel2 class="cancel" v-on:click="cancelPage">
+  <buttonCancel class="cancel" v-on:click="cancelPage">
     <span class='text'>{{uiLabels.cancelButton}}</span>
-  </buttonCancel2>
+  </buttonCancel>
     </div>
 
 
@@ -266,15 +266,15 @@ PollId: {{pollId}}
 </div>
 
 <div>
-  <buttonBack2 class="noselect" v-on:click="startPoll=!startPoll">
+  <buttonBack class="noselect" v-on:click="startPoll=!startPoll">
     <span class='text'> {{ uiLabels.backButton }} </span>
-  </buttonBack2>
+  </buttonBack>
 </div>
 
   <div v-on:click="letsPlayButton=!letsPlayButton">
-    <buttonLetsPlay class="continue" v-on:click="letsPlay">
+    <buttonContinue class="continue" v-on:click="letsPlay">
       <span class='text'> {{ uiLabels.letsPlay }} </span>
-    </buttonLetsPlay>
+    </buttonContinue>
   </div>
 
 
@@ -504,7 +504,6 @@ socket.emit('startGame' ,this.pollId)
   position: fixed;
   bottom: 0.5em;
   left: 0.5em;
-
 }
 
 .cancel{
@@ -570,7 +569,6 @@ socket.emit('startGame' ,this.pollId)
   white-space: pre-wrap;
   font-family: inherit;
   border-radius: 5%;
-  white-space: pre-line
 
 
 }
@@ -625,10 +623,6 @@ socket.emit('startGame' ,this.pollId)
   height: 200px;
   margin: 10px;
 }
-
-/*#startButton{*/
-/*  margin-top: 31em ;*/
-/*}*/
 
 .pollIdStyle{
   background-color: lightblue;
@@ -766,10 +760,7 @@ margin-top: 2em;
 }
 
 
-
-
-
-buttonCancel1{
+buttonCancel{
   width: 150px;
   height: 50px;
   cursor: pointer;
@@ -785,63 +776,14 @@ buttonCancel1{
 
 }
 
-/*button1, button1 span {*/
-/*  transition: 200ms;*/
-/*}*/
 
-buttonCancel1 .text {
+buttonCancel .text {
   transform: translateX(35px);
   color: white;
   font-weight: bold;
 }
 
-
-
-buttonCancel2{
-  width: 150px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background: #ff3636;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #ff3636;
-  margin-left: 32em;
-
-}
-
-/*button1, button1 span {*/
-/*  transition: 200ms;*/
-/*}*/
-
-buttonCancel2 .text {
-  transform: translateX(35px);
-  color: white;
-  font-weight: bold;
-}
-
-/*button1 .icon {*/
-/*  position: absolute;*/
-/*  border-left: 1px solid #c41b1b;*/
-/*  transform: translateX(110px);*/
-/*  height: 40px;*/
-/*  width: 40px;*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*}*/
-
-/*button1 svg {*/
-/*  width: 15px;*/
-/*  fill: #eee;*/
-/*}*/
-
-
-
-
-buttonletsPlay{
+buttonContinue{
   width: 150px;
   height: 50px;
   cursor: pointer;
@@ -856,7 +798,7 @@ buttonletsPlay{
 
 }
 
-buttonletsPlay .text {
+buttonContinue .text {
   transform: translateX(35px);
   color: white;
   font-weight: bold;
@@ -864,43 +806,12 @@ buttonletsPlay .text {
 
 
 
-buttonletsPlay:hover {
+buttonContinue:hover {
   background: #008000;
 }
 
 
-
-buttonCreatePoll{
-  width: 150px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background: #006400;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #006400;
-  margin-top: 32em ;
-  margin-left: 12.5em;
-
-}
-
-buttonCreatePoll .text {
-  transform: translateX(35px);
-  color: white;
-  font-weight: bold;
-}
-
-
-
-buttonCreatePoll:hover {
-  background: #008000;
-}
-
-
-
-buttonBack1{
+buttonBack{
   width: 150px;
   height: 50px;
   cursor: pointer;
@@ -916,47 +827,17 @@ buttonBack1{
 
 }
 
-buttonBack1 .text {
+buttonBack .text {
   transform: translateX(35px);
   color: white;
   font-weight: bold;
 }
 
 
-
-buttonBack1:hover {
+buttonBack:hover {
   background: #00BFFF;
 }
 
 
-
-
-
-buttonBack2{
-  width: 150px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background: #1E90FF;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #1E90FF;
-  left: 0em;
-
-}
-
-buttonBack2 .text {
-  transform: translateX(35px);
-  color: white;
-  font-weight: bold;
-}
-
-
-
-buttonBack2:hover {
-  background: #00BFFF;
-}
 
 </style>
