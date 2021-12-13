@@ -223,7 +223,7 @@ export default {
   padding-bottom: 2em;
   background-color: #D3D3D3;
   border: 0.3em solid white;
-  overflow-y: auto;
+  /*overflow-y: auto;*/
 }
 
 .backButton{

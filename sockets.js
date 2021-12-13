@@ -38,6 +38,7 @@ function sockets(io, socket, data) {
     socket.on('addParticipant', function (d) {
       data.addParticipant(d.pollId, d.participantInfo)
       io.to(d.pollId).emit('participantsAdded', data.getParticipants(d.pollId));
+
     })
 
     socket.on('resetAll', () => {
@@ -56,7 +57,7 @@ function sockets(io, socket, data) {
 
 
   socket.on('startGame' , function(pollId){
-    console.log('FUNKA DÅÅ')
+
      io.to(pollId).emit('gameStart')
   })
 

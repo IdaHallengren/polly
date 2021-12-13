@@ -9,7 +9,7 @@
 
     <div> </div>
     <div> </div>
-    <buttonCancel1 class="noselect" v-on:click="cancelPage">
+    <buttonCancel1 class="cancel" v-on:click="cancelPage">
       <span class='text'>{{uiLabels.cancelButton}}</span>
     </buttonCancel1>
 
@@ -176,7 +176,7 @@
 
     <div v-on:click= "startPoll= !startPoll" >
 
-  <buttonCreatePoll class="noselect" v-on:click="createPoll">
+  <buttonCreatePoll class="continue" v-on:click="createPoll">
     <span class='text'>{{ uiLabels.createPoll }}</span>
   </buttonCreatePoll>
 
@@ -217,10 +217,12 @@
   <div> </div>
 
   <div>
-  <buttonCancel2 class="noselect" v-on:click="cancelPage">
+  <buttonCancel2 class="cancel" v-on:click="cancelPage">
     <span class='text'>{{uiLabels.cancelButton}}</span>
   </buttonCancel2>
     </div>
+
+
 
   <div>
   <div class="pollIdStyle">
@@ -241,18 +243,27 @@ PollId: {{pollId}}
 
 
 
+<div>
+ <h2 class="waitingroomHeadline"> {{ uiLabels.waitingroom }}</h2>
 
-<div>  <h2> {{ uiLabels.waitingroom }}</h2>
 
-  <form class = "waitingRoom">
-    <div class = "wrapper">
+<form class = "waitingRoom">
+<!--   <div class = "wrapper">-->
+     <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
 
-    </div>
+       <img class="participants"
+            :src="participant.participantImg" >
+       <br>
+       {{participant.participantName}}
+
+     </div>
+
+<!--  </div>-->
 
   </form>
 
-</div>
 
+</div>
 
 <div>
   <buttonBack2 class="noselect" v-on:click="startPoll=!startPoll">
@@ -261,7 +272,7 @@ PollId: {{pollId}}
 </div>
 
   <div v-on:click="letsPlayButton=!letsPlayButton">
-    <buttonLetsPlay class="noselect" v-on:click="letsPlay">
+    <buttonLetsPlay class="continue" v-on:click="letsPlay">
       <span class='text'> {{ uiLabels.letsPlay }} </span>
     </buttonLetsPlay>
   </div>
@@ -304,7 +315,7 @@ import QrcodeVue from 'qrcode.vue'
 // import html2canvas from 'html2canvas'
 
 
-
+// import Waiting from "../components/Waiting";
 import io from 'socket.io-client';
 import SlideShow from "../components/SlideShow";
 const socket = io();
@@ -317,6 +328,7 @@ export default {
   name: 'Create',
   components: {
     SlideShow,
+    // Waiting,
     QrcodeVue
   },
 
@@ -337,17 +349,19 @@ export default {
       showAnswerButton: true,
       startPoll: true,
       qrValue: `http://localhost:8080/#/poll/${this.pollId}/${this.lang}`,
-      size: 300,
+      size: 100,
       letsPlayButton: true,
-      fullPoll: {}
-
-
+      fullPoll: {},
+      participants: [],
+      participantName: "",
+      participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
 
     }
   },
   created: function () {
     this.lang = this.$route.params.lang;
     this.pollId = this.$route.params.id;
+    socket.emit('joinPoll', this.pollId)
     this.createPoll();
      //Fixa så att om den har ett pollId så återanvände den det
 
@@ -363,6 +377,12 @@ export default {
 
     socket.on('fullPoll', (myPoll) =>
         this.fullPoll = myPoll)
+
+    socket.on('participantsAdded', (myParticipant) =>
+    { console.log('kommer du hit')
+        this.participants = myParticipant}
+    )
+
 
   },
   methods: {
@@ -473,16 +493,37 @@ socket.emit('startGame' ,this.pollId)
 
 <style>
 
-
-
-.wrapper{
-  display: grid;
-  grid-template-rows: 100%;
-  grid-template-columns: 25% 50% 25%;
-  grid-gap: 2px;
-  font-family: AppleGothic;
-  height: 45em;
+.waitingroomHeadline{
+  right: 40%;
 }
+
+.noselect{
+  position: fixed;
+  bottom: 0.5em;
+  left: 0.5em;
+
+}
+
+.cancel{
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+}
+
+.continue{
+  position: fixed;
+  bottom: 0.5em;
+  right:0.5em;
+}
+
+/*.wrapper{*/
+/*  display: grid;*/
+/*  grid-template-rows: 100%;*/
+/*  grid-template-columns: 25% 50% 25%;*/
+/*  grid-gap: 2px;*/
+/*  font-family: AppleGothic;*/
+/*  height: 45em;*/
+/*}*/
 
 #overview{
   border:solid;
@@ -507,6 +548,7 @@ socket.emit('startGame' ,this.pollId)
 }
 
 .headlines{
+  margin-top: 1.5em;
   display: grid;
   grid-template-rows: 98% 2%;
   grid-template-columns: 25% 50% 25%;
@@ -605,27 +647,32 @@ margin-top: 2em;
 
 .wrapperWaitRoom{
   display: grid;
-  grid-gap: 3em;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 1% 79% 20%;
+  grid-template-rows: 1% 70% 20%;
 }
 
 .waitingRoom{
-  width: 8em;
-  height: 28em;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-top: 50px;
-  padding-right: 50px;
-  padding-left: 50px;
+  overflow: scroll;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 25% 25% 25% 25%;
+  grid-column: 2;
+  border: 5px solid black;
   background-color: cadetblue;
-  border: 0.3em solid black;
-  overflow-y: auto;
-  padding-left: 250px;
-  padding-right: 250px;
+  width: 50%;
+  position: absolute;
+  left: 40%;
+  height: 90%
 }
 
+.participants{
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  padding: 15px;
+  position: relative;
 
+}
 
 
 
@@ -760,6 +807,7 @@ buttonCancel2{
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #ff3636;
   margin-left: 32em;
+
 }
 
 /*button1, button1 span {*/
