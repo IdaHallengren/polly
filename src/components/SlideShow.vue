@@ -4,19 +4,38 @@
 
 
   <div id="slides">
+<!--
+    <div v-for="questions in question" v-bind:key="questions">
+      {{questions.q }}
+      {{questions.a}}
+      </div>
+      -->
 
-    <div v-for="(allQuestions) in fullPoll" v-bind:key="allQuestions">
-      {{allQuestions}}
-    </div>
+
+
 <!--{{fullPoll}}-->
 
     <div id="test">
-    <button v-on:click="nextQuestion"> hej </button>
+
+      <div v-show="this.questionNumber < this.number">
+      <button v-on:click="nextQuestion"> Next question </button>
+      </div>
+<!--        {{fullPoll}}-->
+      {{this.questionNumber}}
+        {{this.question}}
+     <div v-for= "answer in answers" v-bind:key="answer">
+      {{answer}}
+
+     </div>
+
+    
 
     </div>
+    <button v-show="this.questionNumber == this.number" v-on:click="finish ('/result/')">View Result</button>
 
   </div>
 </div>
+
 
 </template>
 
@@ -40,13 +59,17 @@ export default {
       lang: "",
       pollId: "",
       fullPoll: {},
-      questionNumber: 1
+      questionNumber: 0,
+      question: "",
+      answers: [],
+      number: 1
   }},
   created: function () {
 
     this.lang = this.$route.params.lang;
     this.pollId = this.$route.params.id;
 
+    socket.emit("getPoll", this.pollId);
     socket.on('fullPoll', (myPoll) =>
         this.fullPoll = myPoll)
 
@@ -55,10 +78,22 @@ export default {
 
   methods:{
   nextQuestion: function () {
-    socket.emit("getPoll", this.pollId);  //Byt poll id till sträng med aktivt poll id så funkar det
-    this.questionNumber++;
+    this.number = this.fullPoll.questions.length;
+    socket.emit("getPoll", this.pollId);
+    this.question = this.fullPoll["questions"][this.questionNumber].q
+    this.answers = this.fullPoll["questions"][this.questionNumber].a
+    if(this.questionNumber <= this.fullPoll["questions"].length)  {
+        this.questionNumber++;
+  }}
+},
+  finish: function(route) {
+    if (route === 'result') {
+      this.$router.push(`/result/${this.pollId}/${this.lang}`)
+    }
   }
-}}
+
+
+}
 </script>
 
 <style scoped>

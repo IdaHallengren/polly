@@ -400,7 +400,10 @@ export default {
     // },
 
     addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, type:this.typeOfQuestion , time: this.timeForQuestion});
+
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, type:this.typeOfQuestion, time:this.timeForQuestion});
+
+
     },
 
     addAnswer: function () {

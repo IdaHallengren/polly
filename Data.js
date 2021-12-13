@@ -104,9 +104,11 @@ Data.prototype.addParticipant = function(pollId, participant) {
 }
 
 Data.prototype.getParticipants = function(pollId) {
-  console.log('Här är pollId: ' , pollId)
+
+  console.log('Här är pollId: ',  pollId)
   const poll = this.polls[pollId];
-  console.log('Här är poll i Data: ' , poll)
+  console.log('Här är poll i Data: ',  poll)
+
   if (typeof poll !== 'undefined') {
     console.log('hit kommer jag iaf!', poll.participants)
       return poll.participants
