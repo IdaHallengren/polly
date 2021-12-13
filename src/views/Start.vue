@@ -95,7 +95,7 @@ export default {
 <style>
 
 body{
-  background-color: indigo;
+  background-color: #D57A66;
 }
 
 #wrapperHead {
