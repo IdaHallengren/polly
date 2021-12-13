@@ -380,11 +380,10 @@ export default {
     // },
 
     addQuestion: function () {
-<<<<<<< HEAD
+
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, type:this.typeOfQuestion, time:this.timeForQuestion});
-=======
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, type:this.typeOfQuestion , time: this.timeForQuestion});
->>>>>>> main
+
+
     },
 
     addAnswer: function () {

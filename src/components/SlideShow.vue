@@ -4,16 +4,15 @@
 
 
   <div id="slides">
-
+<!--
     <div v-for="questions in question" v-bind:key="questions">
       {{questions.q }}
       {{questions.a}}
+      </div>
+      -->
 
 
-    <div v-for="(allQuestions) in fullPoll" v-bind:key="allQuestions">
-      {{allQuestions}}
 
-    </div>
 <!--{{fullPoll}}-->
 
     <div id="test">
@@ -29,14 +28,14 @@
 
      </div>
 
-    <button v-on:click="nextQuestion"> hej </button>
+    
 
     </div>
     <button v-show="this.questionNumber == this.number" v-on:click="finish ('/result/')">View Result</button>
 
   </div>
 </div>
-</div>
+
 
 </template>
 
