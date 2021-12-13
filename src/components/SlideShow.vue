@@ -11,8 +11,9 @@
 
     <div id="test">
       <button v-on:click="nextQuestion"> Next question </button>
-      {{fullPoll["questions"][questionNumber].q}}
-      {{fullPoll["questions"][questionNumber].a[0]}}
+<!--      {{fullPoll["questions"][questionNumber].q}}
+      {{fullPoll["questions"][questionNumber].a[0]}}-->
+      {{fullPoll}}
     </div>
 
   </div>
