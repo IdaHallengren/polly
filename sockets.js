@@ -24,11 +24,6 @@ function sockets(io, socket, data) {
     socket.emit('dataUpdate', data.getAnswers(pollId));
   });
 
-  socket.on('resetAll', () => {
-    data = new Data();
-    data.initializeData();
-  })
-
     socket.on('runQuestion', function (d) {
       io.to(d.pollId).emit('newQuestion', data.getQuestion(d.pollId, d.questionNumber));
 
@@ -41,8 +36,6 @@ function sockets(io, socket, data) {
     });
 
     socket.on('addParticipant', function (d) {
-      console.log(d)
-
       data.addParticipant(d.pollId, d.participantInfo)
       io.to(d.pollId).emit('participantsAdded', data.getParticipants(d.pollId));
     })
