@@ -59,7 +59,6 @@
 
   <div v-on:click="deleteInfo('back')">
   <button2 class = "backButton" v-on:click = "showWaiting = !showWaiting, showName=!showName"><span class='text'>{{uiLabels.backButton}}</span>
-
   </button2>
   </div>
 

@@ -298,14 +298,6 @@ Timer:
 </div>
 
 
-
-
-
-
-
-
-
-
 </template>
 
 <script>
@@ -349,7 +341,7 @@ export default {
       showAnswerButton: true,
       startPoll: true,
       qrValue: `http://localhost:8080/#/poll/${this.pollId}/${this.lang}`,
-      size: 100,
+      size: 300,
       letsPlayButton: true,
       fullPoll: {},
       participants: [],
@@ -497,7 +489,7 @@ socket.emit('startGame' ,this.pollId)
 <style>
 
 .waitingroomHeadline{
-  right: 40%;
+  padding-right: 40%;
 }
 
 .noselect{
@@ -530,9 +522,8 @@ socket.emit('startGame' ,this.pollId)
 #overview{
   border:solid;
   border-radius: 2%;
-  background-color: cadetblue;
+  background-color: #D3D3D3;
   overflow: scroll;
-
 }
 
 #presentation{
@@ -545,8 +536,6 @@ socket.emit('startGame' ,this.pollId)
   border: solid;
   border-radius: 2%;
   background-color: #D3D3D3;
-
-
 }
 
 .headlines{
@@ -557,9 +546,7 @@ socket.emit('startGame' ,this.pollId)
   font-size: 40px;
   font-family: AppleGothic;
   font-weight: bold;
-
 }
-
 
 .questionInput{
   height: 10em;
@@ -569,8 +556,6 @@ socket.emit('startGame' ,this.pollId)
   white-space: pre-wrap;
   font-family: inherit;
   border-radius: 5%;
-
-
 }
 
 .presentationInput{
@@ -578,10 +563,8 @@ socket.emit('startGame' ,this.pollId)
   width: 90%;
   font-size: 2em;
   outline: none;
-  white-space: pre-line
-
+  white-space: pre-line;
 }
-
 
 .marginPresentation{
   margin-bottom: 20em;
@@ -590,7 +573,6 @@ socket.emit('startGame' ,this.pollId)
 .typeOfQuestion{
   font-size: 20px;
   margin-bottom: 30px;
-
 }
 
 .timeForQuestion{
@@ -598,15 +580,12 @@ socket.emit('startGame' ,this.pollId)
   margin-bottom: 30px;
 }
 
-
 .pointsForQuestion{
   font-size: 20px;
 }
 
-
 .answers{
   font-size: 20px;
-
 }
 
 .answersStyle{
@@ -652,8 +631,8 @@ margin-top: 2em;
   grid-template-columns: 33% 33% 33%;
   grid-template-rows: 25% 25% 25% 25%;
   grid-column: 2;
-  border: 5px solid black;
-  background-color: cadetblue;
+  border: 5px solid white;
+  background-color: #D3D3D3;
   width: 50%;
   position: absolute;
   left: 40%;
@@ -666,7 +645,6 @@ margin-top: 2em;
   border-radius: 100%;
   padding: 15px;
   position: relative;
-
 }
 
 .icon-btn {
@@ -754,7 +732,7 @@ margin-top: 2em;
 
 
 buttonCancel{
-  width: 150px;
+  width: 100px;
   height: 50px;
   cursor: pointer;
   display: flex;
@@ -762,72 +740,66 @@ buttonCancel{
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: red;
+  background: #EF6461;
   margin-left: 79.5em;
   margin-bottom: 0.5em;
-
 }
 
-
 buttonCancel .text {
-  transform: translateX(35px);
+  transform: translateX(25px);
   color: white;
   font-weight: bold;
+}
+
+buttonCancel:hover {
+  background: #ed3632;
 }
 
 buttonContinue{
-  width: 150px;
+  width: 100px;
   height: 50px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: #006400;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #006400;
+  background: #558564;
   margin-left: 32em;
-
 }
 
 buttonContinue .text {
-  transform: translateX(35px);
+  transform: translateX(15px);
   color: white;
   font-weight: bold;
 }
 
-
-
 buttonContinue:hover {
-  background: #008000;
+  background: #1d823c;
 }
 
-
 buttonBack{
-  width: 150px;
+  width: 100px;
   height: 50px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: #1E90FF;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #1E90FF;
+  background: #5995ED;
   left: 0em;
   margin-top:1.5em;
-
 }
 
 buttonBack .text {
-  transform: translateX(35px);
+  transform: translateX(25px);
   color: white;
   font-weight: bold;
 }
 
-
 buttonBack:hover {
-  background: #00BFFF;
+  background: #1d72f0;
 }
 
 
