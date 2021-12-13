@@ -1,12 +1,23 @@
 <template>
 <div class="wrapper">
 
+
+
   <div id="slides">
+
     <div v-for="questions in question" v-bind:key="questions">
       {{questions.q }}
       {{questions.a}}
+
+
+    <div v-for="(allQuestions) in fullPoll" v-bind:key="allQuestions">
+      {{allQuestions}}
+
     </div>
+<!--{{fullPoll}}-->
+
     <div id="test">
+
       <div v-show="this.questionNumber < this.number">
       <button v-on:click="nextQuestion"> Next question </button>
       </div>
@@ -17,10 +28,14 @@
       {{answer}}
 
      </div>
+
+    <button v-on:click="nextQuestion"> hej </button>
+
     </div>
     <button v-show="this.questionNumber == this.number" v-on:click="finish ('/result/')">View Result</button>
 
   </div>
+</div>
 </div>
 
 </template>
@@ -51,6 +66,7 @@ export default {
       number: 1
   }},
   created: function () {
+
     this.lang = this.$route.params.lang;
     this.pollId = this.$route.params.id;
 

@@ -26,7 +26,9 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.questions = [];
     poll.answers = [];
     poll.participants = [];
-    poll.currentQuestion = 0;              
+    poll.currentQuestion = 0;
+    poll.typeOfQuestion="";
+    poll.timeForQuestion=0;
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
   }
@@ -37,6 +39,7 @@ Data.prototype.getPoll = function(pollId){
   const poll = this.polls[pollId];
   console.log("pollrequested", pollId);
   if (typeof poll !== 'undefined') {
+    console.log(poll)
   return poll
   }
   return {}
@@ -86,7 +89,7 @@ Data.prototype.getAnswers = function(pollId) {
   if (typeof poll !== 'undefined') {
     const answers = poll.answers[poll.currentQuestion];
     if (typeof poll.questions[poll.currentQuestion] !== 'undefined') {
-      return {q: poll.questions[poll.currentQuestion].q, a: answers};
+      return {q: poll.questions[poll.currentQuestion].q, a: answers, type: poll.typeOfQuestion, time: poll.timeForQuestion};
     }
   }
   return {}
@@ -101,10 +104,13 @@ Data.prototype.addParticipant = function(pollId, participant) {
 }
 
 Data.prototype.getParticipants = function(pollId) {
+
   console.log('Här är pollId: ',  pollId)
   const poll = this.polls[pollId];
   console.log('Här är poll i Data: ',  poll)
+
   if (typeof poll !== 'undefined') {
+    console.log('hit kommer jag iaf!', poll.participants)
       return poll.participants
   }
   return {}

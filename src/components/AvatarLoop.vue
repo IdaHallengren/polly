@@ -1,7 +1,7 @@
 <template>
   <div class = "avatars">
 
-    <img v-on:click="avatarChange(avatar.url)"  v-bind:src="avatar.url"  style="width: 100px; height: 100px">
+    <img id="avatarImg" v-on:click="avatarChange(avatar.url)"  v-bind:src="avatar.url">
 
   </div>
 </template>
@@ -30,6 +30,11 @@ methods: {
 </script>
 
 <style scoped>
+
+#avatarImg{
+  width: 100px;
+  height: 100px;
+}
 
 .avatars img {
   border-radius: 100%;
