@@ -9,8 +9,6 @@
 
 
 
-
-
     <div id="test">
       <button v-on:click="nextQuestion"> Next question </button>
       {{fullPoll["questions"][questionNumber].q}}
