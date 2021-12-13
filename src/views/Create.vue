@@ -516,14 +516,14 @@ socket.emit('startGame' ,this.pollId)
   right:0.5em;
 }
 
-/*.wrapper{*/
-/*  display: grid;*/
-/*  grid-template-rows: 100%;*/
-/*  grid-template-columns: 25% 50% 25%;*/
-/*  grid-gap: 2px;*/
-/*  font-family: AppleGothic;*/
-/*  height: 45em;*/
-/*}*/
+.wrapper{
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 25% 50% 25%;
+  grid-gap: 2px;
+  font-family: AppleGothic;
+  height: 45em;
+}
 
 #overview{
   border:solid;
@@ -567,7 +567,6 @@ socket.emit('startGame' ,this.pollId)
   white-space: pre-wrap;
   font-family: inherit;
   border-radius: 5%;
-
   white-space: pre-line
 
 
