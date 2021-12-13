@@ -57,7 +57,8 @@
 
   <Waiting v-bind:participants="participants" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels"></Waiting>
 
-  <button2 class = "backButton" v-on:click = "showWaiting = !showWaiting"><span class='text'>{{uiLabels.backButton}}</span>
+<button2 class="backButton" v-on:click = "showWaiting = !showWaiting, showName = !showName">
+  <span class='text'>{{uiLabels.backButton}}</span>
   </button2>
 </div>
 
@@ -95,7 +96,7 @@ export default {
       },*/
       pollId: "inactive poll",
       showWaiting: true,
-      participants: []
+      participants: [],
     }
   },
 
@@ -116,8 +117,6 @@ export default {
     )
 
     socket.on('gameStart', () => {
-      console.log('SKICKA DÅÅÅ')
-          // this.pollId=startPoll
           this.$router.push(`/result/${this.pollId}/${this.lang}` )
         }
     )
@@ -223,7 +222,6 @@ export default {
   padding-bottom: 2em;
   background-color: #D3D3D3;
   border: 0.3em solid white;
-  overflow-y: auto;
 }
 
 .backButton{

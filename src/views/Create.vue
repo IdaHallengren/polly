@@ -501,7 +501,7 @@ socket.emit('startGame' ,this.pollId)
 #editQuestion{
   border: solid;
   border-radius: 2%;
-  background-color: cadetblue;
+  background-color: #D3D3D3;
 
 
 }
@@ -587,7 +587,6 @@ socket.emit('startGame' ,this.pollId)
 /*}*/
 
 .pollIdStyle{
-  background-color: lightblue;
   width: 10em;
   margin-left: 6em;
   margin-top: 4em;
@@ -618,8 +617,8 @@ margin-top: 2em;
   padding-top: 50px;
   padding-right: 50px;
   padding-left: 50px;
-  background-color: cadetblue;
-  border: 0.3em solid black;
+  background-color: #D3D3D3;
+  border: 0.3em solid white;
   overflow-y: auto;
   padding-left: 250px;
   padding-right: 250px;
@@ -726,7 +725,6 @@ buttonCancel1{
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: red;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);

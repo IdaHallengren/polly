@@ -1,35 +1,26 @@
 <template>
 
-  <div id="wrapper">
-    <div id="textColumn">
-      <h1> Waiting room nr: {{this.pollId}}</h1>
-      <h2> Waiting for participants</h2>
-      <h4>Please wait for the questionmaster to start the game!</h4>
-      <h4> Entered players: </h4>
-      <span v-for="(participant, key) in participants" v-bind:key="'participant'+key">{{participant.participantName}} <br> </span>
-    </div>
-
-
-    <section id="waitingSection">
-
-        <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
-
-          <img class="participants"
-               :src="participant.participantImg" >
-        </div>
-    </section>
-
+<div id="wrapper">
+  <div id="textColumn">
+    <h1> Waiting room nr: {{this.pollId}}</h1>
+    <h2> Waiting for participants</h2>
+    <h4>Please wait for the questionmaster to start the game!</h4>
   </div>
 
+  <section id="waitingSection">
 
+    <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
 
+      <img class="participants"
+           :src="participant.participantImg"><br>
+           {{participant.participantName}}
+    </div>
+  </section>
+</div>
 
 </template>
 
 <script>
-/*
-import io from 'socket.io-client';
-const socket = io();*/
 
 export default {
   name: "Waiting",
@@ -42,25 +33,11 @@ export default {
 
   data: function () {
     return {
-      // uiLabels: {},
       lang: "",
-/*      participants: [],
-      pollId: "",*/
     }
   },
 
   created: function () {
-/*    this.pollId = this.$route.params.id
-    this.lang = this.$route.params.lang
-
-    socket.on('participantsAdded', (myParticipants) =>
-        this.participants = myParticipants
-    )
-    socket.emit("pageLoaded", this.lang);
-    socket.on("init", (labels) => {
-      this.uiLabels = labels
-    })*/
-
   }
 }
 
@@ -82,21 +59,22 @@ export default {
   grid-template-columns: 33% 33% 33%;
   grid-template-rows: 25% 25% 25% 25%;
   grid-column: 2;
-  border: 5px solid black;
-  background-color: cadetblue;
+  padding-top: 1em;
+  padding-botttom: 1em;
+  border: 5px solid white;
+  background-color: #D3D3D3;
   width: 50%;
   position: absolute;
   left: 40%;
-  height: 90%
+  height: 90%;
+  overflow: scroll;
 }
 
 .participants{
-  width: 100px;
-  height: 100px;
+  width: 6em;
+  height: 6em;
   border-radius: 100%;
-  padding: 15px;
   position: relative;
-
 }
 
 

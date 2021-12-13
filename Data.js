@@ -29,6 +29,7 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.currentQuestion = 0;
     poll.typeOfQuestion="";
     poll.timeForQuestion=0;
+    poll.numberOfParticipants= 0;
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
   }
@@ -104,11 +105,8 @@ Data.prototype.addParticipant = function(pollId, participant) {
 }
 
 Data.prototype.getParticipants = function(pollId) {
-  console.log('Här är pollId: ' , pollId)
   const poll = this.polls[pollId];
-  console.log('Här är poll i Data: ' , poll)
   if (typeof poll !== 'undefined') {
-    console.log('hit kommer jag iaf!', poll.participants)
       return poll.participants
   }
   return {}
