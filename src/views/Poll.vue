@@ -15,7 +15,7 @@
 
     <div v-show ="showName">
       <div class = "wrapperName">
-        <label><h2>{{uiLabels.enterName}}</h2></label>
+        <label><h2 class="fontSize">{{uiLabels.enterName}}</h2></label>
          <div class="contentCenter">
            <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" required>
            <button4 v-on:click = "showName = !showName"><span class='text'>OK</span></button4>
@@ -47,10 +47,9 @@
       <div v-on:click="showWaiting = !showWaiting">
         <button5 id="continueWaiting" v-on:click="newPage('null')" ><span class='text'>{{uiLabels.continueButton}}</span></button5>
      </div>
+      <button2 class = "backButton" v-on:click = "showName = !showName"><span class='text'>{{uiLabels.backButton}}</span></button2>
     </div>
   </div>
-    <button2 class = "backButton" v-on:click = "showName = !showName"><span class='text'>{{uiLabels.backButton}}</span>
-    </button2>
 </div>
 
 
@@ -172,33 +171,38 @@ export default {
 #select {
   position: relative;
   font-size: xx-large;
-  grid-column: 2;
+  font-weight: bold;
+  color: White;
+  grid-column: 1;
+  top: -25%;
+  left: 35%;
 
 }
 
 .fontSize{
   font-size: xx-large;
+  font-weight: bold;
+  color: white;
 }
 
 #selectAvatar {
   display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-columns: 50% 50%;
   padding-bottom: 1em;
   position: relative;
-  width: 60%;
-  left: 23%;
+  width: 100%;
 }
 
 #selectedAvatar {
   place-content: center;
-  grid-column: 3;
+  grid-column: 2;
   width: 7em;
   height: auto;
+  right: 25%;
   border-radius: 100%;
-  padding-left: 2em;
-  padding-right: 2em;
   position: relative;
-  top: -10%
+  top: -10%;
+
 }
 
 #formsize {
@@ -217,8 +221,8 @@ export default {
 .form{
   padding-top: 2em;
   padding-bottom: 2em;
-  background-color: cadetblue;
-  border: 0.3em solid black;
+  background-color: #D3D3D3;
+  border: 0.3em solid white;
   overflow-y: auto;
 }
 
@@ -240,11 +244,10 @@ button1{
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: #e62222;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #e62222;
+  background: #EF6461;
 }
 
 button1 .text {
@@ -254,7 +257,7 @@ button1 .text {
 }
 
 button1:hover {
-  background: #ff3636;
+  background: #ed3632;
 }
 
 button2{
@@ -263,11 +266,10 @@ button2{
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: #1E90FF;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #1E90FF;
+  background: #5995ED;
 }
 
 button2 .text {
@@ -277,7 +279,7 @@ button2 .text {
 }
 
 button2:hover {
-  background: #00BFFF;
+  background: #1d72f0;
 }
 
 button4{
@@ -286,11 +288,10 @@ button4{
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: #006400;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #006400;
+  background: #558564;
 }
 
 button4 .text {
@@ -300,7 +301,7 @@ button4 .text {
 }
 
 button4:hover {
-  background: #008000;
+  background: #1d823c;
 }
 button5{
   width: 100px;
@@ -311,7 +312,7 @@ button5{
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #006400;
+  background: #558564;
 }
 
 button5 .text {
@@ -321,7 +322,7 @@ button5 .text {
 }
 
 button5:hover {
-  background: #008000;
+  background: #1d823c;
 }
 
 #continueWaiting{
