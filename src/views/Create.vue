@@ -460,6 +460,7 @@ export default {
     },
 
     letsPlay: function(){
+socket.emit('startGame' ,this.pollId)
 
     }
 

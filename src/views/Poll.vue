@@ -115,6 +115,15 @@ export default {
     socket.on('participantsAdded', (myParticipant) =>
         this.participants = myParticipant
     )
+
+    socket.on('gameStart', () => {
+      console.log('SKICKA DÅÅÅ')
+          // this.pollId=startPoll
+          this.$router.push(`/result/${this.pollId}/${this.lang}` )
+        }
+    )
+
+
   },
 
   methods: {

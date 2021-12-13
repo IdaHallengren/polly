@@ -54,6 +54,12 @@ function sockets(io, socket, data) {
       socket.emit('dataUpdate', data.getAnswers(d.pollId));
     })
 
+
+  socket.on('startGame' , function(pollId){
+    console.log('FUNKA DÅÅ')
+     io.to(pollId).emit('gameStart')
+  })
+
 }
 
 
