@@ -5,7 +5,6 @@
     <h1> Waiting room nr: {{this.pollId}}</h1>
     <h2> Waiting for participants</h2>
     <h4>Please wait for the questionmaster to start the game!</h4>
-  </div>
 
   <section id="waitingSection">
 
@@ -16,6 +15,7 @@
            {{participant.participantName}}
     </div>
   </section>
+  </div>
 </div>
 
 </template>

@@ -9,9 +9,9 @@
 
     <div> </div>
     <div> </div>
-    <buttonCancel1 class="noselect" v-on:click="cancelPage">
+    <buttonCancel class="cancel" v-on:click="cancelPage">
       <span class='text'>{{uiLabels.cancelButton}}</span>
-    </buttonCancel1>
+    </buttonCancel>
 
 
 
@@ -176,9 +176,9 @@
 
     <div v-on:click= "startPoll= !startPoll" >
 
-  <buttonCreatePoll class="noselect" v-on:click="createPoll">
+  <buttonContinue class="continue" v-on:click="createPoll">
     <span class='text'>{{ uiLabels.createPoll }}</span>
-  </buttonCreatePoll>
+  </buttonContinue>
 
 
 
@@ -192,9 +192,9 @@
 
   </div>
 
-    <buttonBack1 class="noselect" v-on:click="cancelPage">
+    <buttonBack class="noselect" v-on:click="cancelPage">
       <span class='text'> {{ uiLabels.backButton }} </span>
-    </buttonBack1>
+    </buttonBack>
   </div>
 
 
@@ -217,10 +217,12 @@
   <div> </div>
 
   <div>
-  <buttonCancel2 class="noselect" v-on:click="cancelPage">
+  <buttonCancel class="cancel" v-on:click="cancelPage">
     <span class='text'>{{uiLabels.cancelButton}}</span>
-  </buttonCancel2>
+  </buttonCancel>
     </div>
+
+
 
   <div>
   <div class="pollIdStyle">
@@ -241,29 +243,38 @@ PollId: {{pollId}}
 
 
 
+<div>
+ <h2 class="waitingroomHeadline"> {{ uiLabels.waitingroom }}</h2>
 
-<div>  <h2> {{ uiLabels.waitingroom }}</h2>
 
-  <form class = "waitingRoom">
-    <div class = "wrapper">
+<form class = "waitingRoom">
+<!--   <div class = "wrapper">-->
+     <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
 
-    </div>
+       <img class="participants"
+            :src="participant.participantImg" >
+       <br>
+       {{participant.participantName}}
+
+     </div>
+
+<!--  </div>-->
 
   </form>
 
+
 </div>
 
-
 <div>
-  <buttonBack2 class="noselect" v-on:click="startPoll=!startPoll">
+  <buttonBack class="noselect" v-on:click="startPoll=!startPoll">
     <span class='text'> {{ uiLabels.backButton }} </span>
-  </buttonBack2>
+  </buttonBack>
 </div>
 
   <div v-on:click="letsPlayButton=!letsPlayButton">
-    <buttonLetsPlay class="noselect" v-on:click="letsPlay">
+    <buttonContinue class="continue" v-on:click="letsPlay">
       <span class='text'> {{ uiLabels.letsPlay }} </span>
-    </buttonLetsPlay>
+    </buttonContinue>
   </div>
 
 
@@ -304,7 +315,7 @@ import QrcodeVue from 'qrcode.vue'
 // import html2canvas from 'html2canvas'
 
 
-
+// import Waiting from "../components/Waiting";
 import io from 'socket.io-client';
 import SlideShow from "../components/SlideShow";
 const socket = io();
@@ -317,6 +328,7 @@ export default {
   name: 'Create',
   components: {
     SlideShow,
+    // Waiting,
     QrcodeVue
   },
 
@@ -337,17 +349,19 @@ export default {
       showAnswerButton: true,
       startPoll: true,
       qrValue: `http://localhost:8080/#/poll/${this.pollId}/${this.lang}`,
-      size: 300,
+      size: 100,
       letsPlayButton: true,
-      fullPoll: {}
-
-
+      fullPoll: {},
+      participants: [],
+      participantName: "",
+      participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
 
     }
   },
   created: function () {
     this.lang = this.$route.params.lang;
     this.pollId = this.$route.params.id;
+    socket.emit('joinPoll', this.pollId)
     this.createPoll();
      //Fixa så att om den har ett pollId så återanvände den det
 
@@ -363,6 +377,12 @@ export default {
 
     socket.on('fullPoll', (myPoll) =>
         this.fullPoll = myPoll)
+
+    socket.on('participantsAdded', (myParticipant) =>
+    { console.log('kommer du hit')
+        this.participants = myParticipant}
+    )
+
 
   },
   methods: {
@@ -380,7 +400,10 @@ export default {
     // },
 
     addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, type:this.typeOfQuestion , time: this.timeForQuestion});
+
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, type:this.typeOfQuestion, time:this.timeForQuestion});
+
+
     },
 
     addAnswer: function () {
@@ -473,7 +496,27 @@ socket.emit('startGame' ,this.pollId)
 
 <style>
 
+.waitingroomHeadline{
+  right: 40%;
+}
 
+.noselect{
+  position: fixed;
+  bottom: 0.5em;
+  left: 0.5em;
+}
+
+.cancel{
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+}
+
+.continue{
+  position: fixed;
+  bottom: 0.5em;
+  right:0.5em;
+}
 
 .wrapper{
   display: grid;
@@ -507,6 +550,7 @@ socket.emit('startGame' ,this.pollId)
 }
 
 .headlines{
+  margin-top: 1.5em;
   display: grid;
   grid-template-rows: 98% 2%;
   grid-template-columns: 25% 50% 25%;
@@ -525,8 +569,6 @@ socket.emit('startGame' ,this.pollId)
   white-space: pre-wrap;
   font-family: inherit;
   border-radius: 5%;
-
-  white-space: pre-line
 
 
 }
@@ -582,10 +624,6 @@ socket.emit('startGame' ,this.pollId)
   margin: 10px;
 }
 
-/*#startButton{*/
-/*  margin-top: 31em ;*/
-/*}*/
-
 .pollIdStyle{
   width: 10em;
   margin-left: 6em;
@@ -604,33 +642,32 @@ margin-top: 2em;
 
 .wrapperWaitRoom{
   display: grid;
-  grid-gap: 3em;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 1% 79% 20%;
+  grid-template-rows: 1% 70% 20%;
 }
 
 .waitingRoom{
-  width: 8em;
-  height: 28em;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-top: 50px;
-  padding-right: 50px;
-  padding-left: 50px;
-  background-color: #D3D3D3;
-  border: 0.3em solid white;
-  overflow-y: auto;
-  padding-left: 250px;
-  padding-right: 250px;
+  overflow: scroll;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 25% 25% 25% 25%;
+  grid-column: 2;
+  border: 5px solid black;
+  background-color: cadetblue;
+  width: 50%;
+  position: absolute;
+  left: 40%;
+  height: 90%
 }
 
+.participants{
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  padding: 15px;
+  position: relative;
 
-
-
-
-
-
-
+}
 
 .icon-btn {
   width: 50px;
@@ -716,10 +753,7 @@ margin-top: 2em;
 }
 
 
-
-
-
-buttonCancel1{
+buttonCancel{
   width: 150px;
   height: 50px;
   cursor: pointer;
@@ -734,62 +768,14 @@ buttonCancel1{
 
 }
 
-/*button1, button1 span {*/
-/*  transition: 200ms;*/
-/*}*/
 
-buttonCancel1 .text {
+buttonCancel .text {
   transform: translateX(35px);
   color: white;
   font-weight: bold;
 }
 
-
-
-buttonCancel2{
-  width: 150px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background: #ff3636;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #ff3636;
-  margin-left: 32em;
-}
-
-/*button1, button1 span {*/
-/*  transition: 200ms;*/
-/*}*/
-
-buttonCancel2 .text {
-  transform: translateX(35px);
-  color: white;
-  font-weight: bold;
-}
-
-/*button1 .icon {*/
-/*  position: absolute;*/
-/*  border-left: 1px solid #c41b1b;*/
-/*  transform: translateX(110px);*/
-/*  height: 40px;*/
-/*  width: 40px;*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*}*/
-
-/*button1 svg {*/
-/*  width: 15px;*/
-/*  fill: #eee;*/
-/*}*/
-
-
-
-
-buttonletsPlay{
+buttonContinue{
   width: 150px;
   height: 50px;
   cursor: pointer;
@@ -804,7 +790,7 @@ buttonletsPlay{
 
 }
 
-buttonletsPlay .text {
+buttonContinue .text {
   transform: translateX(35px);
   color: white;
   font-weight: bold;
@@ -812,43 +798,12 @@ buttonletsPlay .text {
 
 
 
-buttonletsPlay:hover {
+buttonContinue:hover {
   background: #008000;
 }
 
 
-
-buttonCreatePoll{
-  width: 150px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background: #006400;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #006400;
-  margin-top: 32em ;
-  margin-left: 12.5em;
-
-}
-
-buttonCreatePoll .text {
-  transform: translateX(35px);
-  color: white;
-  font-weight: bold;
-}
-
-
-
-buttonCreatePoll:hover {
-  background: #008000;
-}
-
-
-
-buttonBack1{
+buttonBack{
   width: 150px;
   height: 50px;
   cursor: pointer;
@@ -864,47 +819,17 @@ buttonBack1{
 
 }
 
-buttonBack1 .text {
+buttonBack .text {
   transform: translateX(35px);
   color: white;
   font-weight: bold;
 }
 
 
-
-buttonBack1:hover {
+buttonBack:hover {
   background: #00BFFF;
 }
 
 
-
-
-
-buttonBack2{
-  width: 150px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background: #1E90FF;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #1E90FF;
-  left: 0em;
-
-}
-
-buttonBack2 .text {
-  transform: translateX(35px);
-  color: white;
-  font-weight: bold;
-}
-
-
-
-buttonBack2:hover {
-  background: #00BFFF;
-}
 
 </style>

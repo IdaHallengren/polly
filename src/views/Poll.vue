@@ -57,9 +57,17 @@
 
   <Waiting v-bind:participants="participants" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels"></Waiting>
 
-<button2 class="backButton" v-on:click = "showWaiting = !showWaiting, showName = !showName">
-  <span class='text'>{{uiLabels.backButton}}</span>
+  <div v-on:click="deleteInfo('back')">
+  <button2 class = "backButton" v-on:click = "showWaiting = !showWaiting, showName=!showName"><span class='text'>{{uiLabels.backButton}}</span>
+
   </button2>
+  </div>
+
+  <div class="cancel">
+    <button1 v-on:click="deleteInfo('delete')" ><span class='text'>{{uiLabels.cancelButton}}</span>
+    </button1>
+  </div>
+
 </div>
 
 </template>
@@ -88,6 +96,7 @@ export default {
       uiLabels: {},
       participantName: "",
       participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
+      participantId: 0,
       showName: true,
       showID: true,
 /*      question: {
@@ -103,6 +112,9 @@ export default {
   created: function () {
     this.pollId = this.$route.params.id
     this.lang = this.$route.params.lang
+    this.participantId=Math.floor(Math.random() * 1000);
+
+
     socket.emit('joinPoll', this.pollId)
     socket.on("newQuestion", q =>
         this.question = q
@@ -134,18 +146,34 @@ export default {
     },
 
     newPage: function(route) {
-      if (route === '/')
+      if (route === '/'){
         this.$router.push('/')
+      }
       else {
         socket.emit("addParticipant", {
           pollId: this.pollId,
           participantInfo: {
+            participantId: this.participantId,
             participantName: this.participantName,
             participantImg: this.participantImg
           },
         },);
     }
   },
+
+    deleteInfo: function(){
+/*      if (route === 'back') {
+        delete participantName,
+        delete participantImg
+      }
+      else {
+        delete participantName
+        delete participantImg
+        delete participantId
+      }*/
+    }
+
+
 }
 }
 </script>
