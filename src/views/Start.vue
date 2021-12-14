@@ -31,7 +31,7 @@
   <div v-show = "showId">
     <div class = "wrapper1">
       <label><h2 id="textFont">{{uiLabels.enterPollId}}</h2></label>
-      <div class="contentCenter">
+      <div >
         <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
         <button4  v-on:click="newPage('Poll')"><span class='text'> OK</span></button4>
@@ -96,6 +96,7 @@ export default {
 
 body{
   background-color: #317773;
+
 }
 
 #wrapperHead {
@@ -221,12 +222,15 @@ button4:hover {
   float:left;
 }
 
-.contentCenter{
-  padding-left: 42%;
-}
+
 
 .wrapper1{
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50% 50%;
   padding-top: 200px;
+  place-items: center
+;
 }
 
 button2{

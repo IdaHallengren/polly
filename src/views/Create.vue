@@ -341,7 +341,7 @@ export default {
       showAnswerButton: true,
       startPoll: true,
       qrValue: `http://localhost:8080/#/poll/${this.pollId}/${this.lang}`,
-      size: 300,
+      size: 200,
       letsPlayButton: true,
       fullPoll: {},
       participants: [],

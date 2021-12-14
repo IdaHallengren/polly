@@ -2,9 +2,9 @@
 
 <div id="wrapper">
   <div id="textColumn">
-    <h1> Waiting room nr: {{this.pollId}}</h1>
-    <h2> Waiting for participants</h2>
-    <h4>Please wait for the questionmaster to start the game!</h4>
+    <p style="font-size: 2.5vw ; font-weight: bold"> Waiting room nr: {{this.pollId}}</p>
+    <p style="font-size: 2vw ; font-weight: bold"> Waiting for participants</p>
+    <p style="font-size: 1vw ; font-weight: bold">Please wait for the questionmaster to start the game!</p>
   </div>
   <section id="waitingSection">
 
@@ -66,13 +66,13 @@ export default {
   width: 50%;
   position: absolute;
   left: 40%;
-  height: 90%;
+  height: 80%;
   overflow: scroll;
 }
 
 .participants{
-  width: 6em;
-  height: 6em;
+  width: 60%;
+  height: auto;
   border-radius: 100%;
   position: relative;
 }

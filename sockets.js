@@ -65,7 +65,7 @@ function sockets(io, socket, data) {
 
 
   socket.on('removeParticipant', function(d){
-    data.removeParticipant(d.pollId , {participantName: d.participantName, participantImg: d.participantImg, participantId: d.participantId })
+    data.removeParticipant(d.pollId , {participantName: d.participantName, participantId: d.participantId, participantImg: d.participantImg})
     io.to(d.pollId).emit('dataUpdate', data.getParticipants(d.pollId))
 
   })

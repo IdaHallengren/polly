@@ -1,9 +1,8 @@
 
 <template>
-<div class="cancel">
-  <button1 v-on:click="newPage('/')"><span class='text'>{{uiLabels.cancelButton}}</span>
-  </button1>
-</div>
+
+
+
 
 <!--<div>
   <Question v-bind:question="question"
@@ -11,12 +10,14 @@
 
 </div>-->
 <div v-if="showWaiting">
+  <button1 class="cancel" v-on:click="newPage('/')"><span class='text'>{{uiLabels.cancelButton}}</span>
+  </button1>
   <p class="fontSize"> {{uiLabels.pollId}} {{pollId}} </p>
 
     <div v-show ="showName">
       <div class = "wrapperName">
         <label><h2 class="fontSize">{{uiLabels.enterName}}</h2></label>
-         <div class="contentCenter">
+         <div>
            <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" required>
            <button4 v-on:click = "showName = !showName"><span class='text'>OK</span></button4>
          </div>
@@ -26,7 +27,7 @@
 
   <div id ="HideAvatars">
     <div v-if = "showName==false">
-      <p class="fontSize">{{uiLabels.name}}{{participantName}} </p>
+      <h1 class="fontSize">{{uiLabels.name}}{{participantName}} </h1>
 
         <section id="selectAvatar">
           <p id="select"> {{uiLabels.avatar}}  </p>
@@ -62,10 +63,8 @@
   </button2>
   </div>
 
-  <div class="cancel">
-    <button1 v-on:click="deleteInfo('delete')" ><span class='text'>{{uiLabels.cancelButton}}</span>
+    <button1 class="cancel" v-on:click="deleteInfo('delete')" ><span class='text'>{{uiLabels.cancelButton}}</span>
     </button1>
-  </div>
 
 </div>
 
@@ -168,6 +167,7 @@ export default {
 
     socket.emit('removeParticipant', {
       pollId: this.pollId, participantImg: this.participantImg, participantName: this.participantName, participantId: this.participantId
+
     })
 
     }
@@ -181,11 +181,14 @@ export default {
 
 .wrapperName{
   padding-top: 100px;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50% 50%;
+  place-items: center
+;
 }
 
-.contentCenter{
-  padding-left: 42%;
-}
+
 
 #participantName{
   width: 150px;
@@ -196,7 +199,7 @@ export default {
 
 #select {
   position: relative;
-  font-size: xx-large;
+  font-size: 2.5vw;
   font-weight: bold;
   color: White;
   grid-column: 1;
@@ -206,7 +209,7 @@ export default {
 }
 
 .fontSize{
-  font-size: xx-large;
+  font-size: 2.5vw;
   font-weight: bold;
   color: white;
 }
@@ -222,7 +225,7 @@ export default {
 #selectedAvatar {
   place-content: center;
   grid-column: 2;
-  width: 7em;
+  width: 17%;
   height: auto;
   right: 25%;
   border-radius: 100%;
@@ -258,14 +261,14 @@ export default {
 }
 
 .cancel {
-  position: absolute;
+  position: fixed;
   top: 0.5em;
   right: 0.5em;
 }
 
 button1{
-  width: 100px;
-  height: 50px;
+  width: 6%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -276,9 +279,10 @@ button1{
 }
 
 button1 .text {
-  transform: translateX(25px);
+  transform: translateX(30%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
 }
 
 button1:hover {
@@ -286,8 +290,8 @@ button1:hover {
 }
 
 button2{
-  width: 100px;
-  height: 50px;
+  width: 6%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -298,9 +302,10 @@ button2{
 }
 
 button2 .text {
-  transform: translateX(25px);
+  transform: translateX(50%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
 }
 
 button2:hover {
@@ -323,14 +328,15 @@ button4 .text {
   transform: translateX(10px);
   color: white;
   font-weight: bold;
+
 }
 
 button4:hover {
   background: #1d823c;
 }
 button5{
-  width: 100px;
-  height: 50px;
+  width: 6%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -341,9 +347,10 @@ button5{
 }
 
 button5 .text {
-  transform: translateX(30px);
+  transform: translateX(50%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
 }
 
 button5:hover {
