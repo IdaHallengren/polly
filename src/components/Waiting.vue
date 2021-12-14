@@ -2,9 +2,12 @@
 
 <div id="wrapper">
   <div id="textColumn">
-    <p style="font-size: 2.5vw ; font-weight: bold"> Waiting room nr: {{this.pollId}}</p>
-    <p style="font-size: 2vw ; font-weight: bold"> Waiting for participants</p>
-    <p style="font-size: 1vw ; font-weight: bold">Please wait for the questionmaster to start the game!</p>
+
+    <p style="font-size: 2.5vw ; font-weight: bold"> {{uiLabels.waitingRoomNr}}{{this.pollId}}</p>
+    <p style="font-size: 2vw ; font-weight: bold"> {{uiLabels.waitParticipant}}</p>
+    <p style="font-size: 1vw ; font-weight: bold">{{uiLabels.waitQuestionMaster}}</p>
+    
+
   </div>
   <section id="waitingSection">
 
@@ -60,7 +63,7 @@ export default {
   grid-template-rows: 25% 25% 25% 25%;
   grid-column: 2;
   padding-top: 1em;
-  padding-botttom: 1em;
+  padding-bottom: 1em;
   border: 5px solid white;
   background-color: #D3D3D3;
   width: 50%;
