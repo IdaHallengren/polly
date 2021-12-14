@@ -2,9 +2,9 @@
 
 <div id="wrapper">
   <div id="textColumn">
-    <h1> Waiting room nr: {{this.pollId}}</h1>
-    <h2> Waiting for participants</h2>
-    <h4>Please wait for the questionmaster to start the game!</h4>
+    <h1> {{uiLabels.waitingRoomNr}} {{this.pollId}}</h1>
+    <h2> {{uiLabels.waitParticipant}}</h2>
+    <h4>{{uiLabels.waitQuestionMaster}}</h4>
   </div>
   <section id="waitingSection">
 
@@ -60,7 +60,7 @@ export default {
   grid-template-rows: 25% 25% 25% 25%;
   grid-column: 2;
   padding-top: 1em;
-  padding-botttom: 1em;
+  padding-bottom: 1em;
   border: 5px solid white;
   background-color: #D3D3D3;
   width: 50%;

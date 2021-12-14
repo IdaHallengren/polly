@@ -244,7 +244,7 @@ PollId: {{pollId}}
 
 
 <div>
- <h2 class="waitingroomHeadline"> {{ uiLabels.waitingroom }}</h2>
+ <h2 class="waitingroomHeadline"> {{ uiLabels.waitingRoom }}</h2>
 
 
 <form class = "waitingRoom">
