@@ -164,12 +164,10 @@ export default {
   },
 
     deleteInfo: function(){
-
     socket.emit('removeParticipant', {
       pollId: this.pollId, participantImg: this.participantImg, participantName: this.participantName, participantId: this.participantId
-
     })
-
+      this.$router.push('/')
     }
 
 

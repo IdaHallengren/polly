@@ -125,12 +125,14 @@ Data.prototype.removeParticipant= function(pollId, participant){
   const poll = this.polls[pollId];
   console.log("participant removed", pollId, participant);
   if (typeof poll !== 'undefined') {
-    poll.participants.pop(participant);
-    console.log("participants left", poll.participants);
-
+    for (let i = 0; i<poll.participants.length; i++ ) {
+      if (poll.participants[i].participantId === participant.participantId) {
+        poll.participants.splice(i, 1)
+      }
+    }
   }
-
 }
+
 
 module.exports = Data;
 

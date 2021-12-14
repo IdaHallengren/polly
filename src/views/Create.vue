@@ -122,10 +122,10 @@
       <label class="labelsText"> {{ uiLabels.chooseTypeOfQuestion }} </label>
       <br>
       <select v-model="typeOfQuestion" style="width: 50%">
-        <option v-on="showAnswerButton" > Quiz </option>
-        <option v-on="showAnswerButton" > {{ uiLabels.voting }} </option>
-        <option v-on="showAnswerButton=!showAnswerButton" > {{ uiLabels.trueOrFalse }} </option>
-        <option v-on="showAnswerButton=!showAnswerButton" > Presentation </option>
+        <option value="quiz" > Quiz </option>
+        <option value="voting"> {{ uiLabels.voting }} </option>
+        <option value="trueorfalse" > {{ uiLabels.trueOrFalse }} </option>
+        <option value="presentation" > Presentation </option>
 
 
       </select>
@@ -349,6 +349,17 @@ export default {
 
     }
   },
+
+  watch: {
+    typeOfQuestion: function(newVal) {
+
+      if (newVal === "quiz" || newVal === "voting")
+        this.showAnswerButton = true
+      else
+        this.showAnswerButton = false
+    }
+  },
+
   created: function () {
     this.lang = this.$route.params.lang;
     this.pollId = this.$route.params.id;
