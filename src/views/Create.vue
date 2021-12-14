@@ -364,6 +364,11 @@ export default {
     socket.on("dataUpdate", (data) =>
         this.data = data
     )
+
+    socket.on("dataUpdate", (myParticipant) =>
+        this.participants = myParticipant
+    )
+
     socket.on("pollCreated", (data) =>
         this.data = data)
 
@@ -445,7 +450,6 @@ export default {
 
 
     removeSlide: function() {
-
       socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
       this.questionNumber--;
       socket.emit("dataUpdate", {questionNumber: this.questionNumber});

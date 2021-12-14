@@ -63,6 +63,13 @@ function sockets(io, socket, data) {
      io.to(pollId).emit('gameStart')
   })
 
+
+  socket.on('removeParticipant', function(d){
+    data.removeParticipant(d.pollId , {participantName: d.participantName, participantImg: d.participantImg, participantId: d.participantId })
+    io.to(d.pollId).emit('dataUpdate', data.getParticipants(d.pollId))
+
+  })
+
 }
 
 

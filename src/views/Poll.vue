@@ -132,6 +132,10 @@ export default {
         }
     )
 
+    socket.on("dataUpdate", (myParticipant) =>
+        this.participants = myParticipant
+    )
+
 
   },
 
@@ -161,15 +165,11 @@ export default {
   },
 
     deleteInfo: function(){
-/*      if (route === 'back') {
-        delete participantName,
-        delete participantImg
-      }
-      else {
-        delete participantName
-        delete participantImg
-        delete participantId
-      }*/
+
+    socket.emit('removeParticipant', {
+      pollId: this.pollId, participantImg: this.participantImg, participantName: this.participantName, participantId: this.participantId
+    })
+
     }
 
 

@@ -121,6 +121,17 @@ Data.prototype.removeQuestion = function(pollId, q) {
   }
 }
 
+Data.prototype.removeParticipant= function(pollId, participant){
+  const poll = this.polls[pollId];
+  console.log("participant removed", pollId, participant);
+  if (typeof poll !== 'undefined') {
+    poll.participants.pop(participant);
+    console.log("participants left", poll.participants);
+
+  }
+
+}
+
 module.exports = Data;
 
 
