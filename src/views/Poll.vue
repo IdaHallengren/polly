@@ -58,10 +58,10 @@
 
   <Waiting v-bind:participants="participants" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels"></Waiting>
 
-  <div v-on:click="deleteInfo('back')">
+<!--  <div v-on:click="deleteInfo('back')">
   <button2 class = "backButton" v-on:click = "showWaiting = !showWaiting, showName=!showName"><span class='text'>{{uiLabels.backButton}}</span>
   </button2>
-  </div>
+  </div>-->
 
     <button1 class="cancel" v-on:click="deleteInfo('delete')" ><span class='text'>{{uiLabels.cancelButton}}</span>
     </button1>
@@ -290,7 +290,7 @@ button1:hover {
 }
 
 button2{
-  width: 6%;
+  width: 7%;
   height: 6%;
   cursor: pointer;
   display: flex;
@@ -302,7 +302,7 @@ button2{
 }
 
 button2 .text {
-  transform: translateX(50%);
+  transform: translateX(30%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
@@ -328,7 +328,6 @@ button4 .text {
   transform: translateX(10px);
   color: white;
   font-weight: bold;
-
 }
 
 button4:hover {

@@ -13,13 +13,9 @@
     <div id="header">
 
       <img id="logo" src="../img/logo.jpg">
-      <h1> Welcome to Pollify</h1>
-      <h3> - Easy to create and participate</h3>
+      <p style="font-size: 2.5vw;"> {{uiLabels.welcome}}</p>
+      <p style="font-size: 2vw;">{{uiLabels.welcomeEasy}}</p>
     </div>
-  </div>
-
-  <div>
-
   </div>
 
   <section id="wrapperButtons">
@@ -100,7 +96,6 @@ export default {
 
 body{
   background-color: #317773;
-
 }
 
 #wrapperHead {
@@ -143,34 +138,31 @@ body{
 }
 
 #logo{
-  height:40vh;
-  width: 20vw;
+  height:60%;
+  width: 60%;
 }
 
 #header{
   font-weight: bold;
-  font-size: 90%;
   color: white;
-  padding-bottom: 6em;
+  padding-bottom: 10%;
   grid-column: 2;
   grid-row: 1;
 }
 
 #wrapperButtons{
-  font-size: 100%;
   display: grid;
   place-items: center;
   grid-template-columns: 25% 25% 25% 25%;
 }
 
 .start .button {
-
   height:10vh;
   width: 15vw;
   grid-column: 2;
   grid-row: 1;
   cursor: pointer;
-  font-size: 1.2em;
+  font-size: 2vw;
   font-weight: bold;
   color: black;
   background: white;
@@ -202,11 +194,10 @@ button4{
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: #006400;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #006400;
+  background: #558564;
 }
 
 button4 .text {
@@ -216,7 +207,7 @@ button4 .text {
 }
 
 button4:hover {
-  background: #008000;
+  background: #1d823c;
 }
 
 #PollId{
@@ -225,8 +216,6 @@ button4:hover {
   font-size: larger;
   float:left;
 }
-
-
 
 .wrapper1{
   display: grid;
@@ -238,8 +227,8 @@ button4:hover {
 }
 
 button2{
-  width: 100px;
-  height: 50px;
+  width: 7%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -250,9 +239,10 @@ button2{
 }
 
 button2 .text {
-  transform: translateX(25px);
+  transform: translateX(30%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
 }
 
 button2:hover {
