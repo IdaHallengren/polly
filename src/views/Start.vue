@@ -64,6 +64,7 @@ export default {
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
+    socket.emit('pageLoaded')
   },
   methods: {
     switchToSwedishLanguage: function() {
@@ -71,8 +72,6 @@ export default {
         this.lang = "sv"
       socket.emit("switchLanguage", this.lang)
     },
-
-
 
     switchToEnglishLanguage: function() {
       if (this.lang === "sv")

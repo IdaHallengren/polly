@@ -1,7 +1,7 @@
 function sockets(io, socket, data) {
   socket.emit('init', data.getUILabels());
 
-  socket.on('pageLoaded', function (lang) {
+  socket.on('pageLoaded', function (lang = 'en') {
     socket.emit('init', data.getUILabels(lang));
   });
 
