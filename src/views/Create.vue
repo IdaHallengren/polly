@@ -70,7 +70,7 @@
       <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
 
 <div v-if="typeOfQuestion!='Presentation'" class="answers" >
-      <div >
+      <div>
         <br>
         {{ uiLabels.answers }}
         <input v-for="(_, i) in answers"
@@ -80,7 +80,6 @@
         >
 
         <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
-
 
 
           <button v-on:click="removeAnswer" class="icon-btn add-btn">
@@ -120,9 +119,9 @@
   <div id="editQuestion">
     <div id="v-model-select-question" class="typeOfQuestion">
       <br>
-      <label> {{ uiLabels.chooseTypeOfQuestion }} </label>
+      <label class="labelsText"> {{ uiLabels.chooseTypeOfQuestion }} </label>
       <br>
-      <select v-model="typeOfQuestion" >
+      <select v-model="typeOfQuestion" style="width: 50%">
         <option v-on="showAnswerButton" > Quiz </option>
         <option v-on="showAnswerButton" > {{ uiLabels.voting }} </option>
         <option v-on="showAnswerButton=!showAnswerButton" > {{ uiLabels.trueOrFalse }} </option>
@@ -136,9 +135,9 @@
 
 
     <div id="v-model-select-time" class="timeForQuestion" v-if="typeOfQuestion!='Presentation'">
-      <label>{{uiLabels.chooseTimeForQuestion }} </label>
+      <label class="labelsText">{{uiLabels.chooseTimeForQuestion }} </label>
       <br>
-      <select v-model="timeForQuestion" >
+      <select v-model="timeForQuestion" style="width: 30%">
         <option > 5s </option>
         <option> 10s </option>
         <option > 15s </option>
@@ -156,9 +155,9 @@
     </div>
 
     <div v-if="typeOfQuestion!='Presentation'" id="v-model-select-points" class="pointsForQuestion">
-      <label> {{ uiLabels.choosePointsForQuestion}}</label>
+      <label class="labelsText"> {{ uiLabels.choosePointsForQuestion}}</label>
       <br>
-      <select v-model="pointsForQuestion" >
+      <select v-model="pointsForQuestion" style="width: 30%">
         <option > 5p </option>
         <option > 10p </option>
         <option > 15p </option>
@@ -496,6 +495,10 @@ socket.emit('startGame' ,this.pollId)
   padding-right: 40%;
 }
 
+.labelsText{
+  font-size: 2vw;
+}
+
 .noselect{
   position: fixed;
   bottom: 0.5em;
@@ -528,18 +531,21 @@ socket.emit('startGame' ,this.pollId)
   border-radius: 2%;
   background-color: #D3D3D3;
   overflow: scroll;
+  height: 65%;
 }
 
 #presentation{
   border: solid;
   border-radius: 2%;
   background-color: white;
+  height: 65%
 }
 
 #editQuestion{
   border: solid;
   border-radius: 2%;
   background-color: #D3D3D3;
+  height: 65%
 }
 
 .headlines{
@@ -547,7 +553,7 @@ socket.emit('startGame' ,this.pollId)
   display: grid;
   grid-template-rows: 98% 2%;
   grid-template-columns: 25% 50% 25%;
-  font-size: 40px;
+  font-size: 3vw;
   font-family: AppleGothic;
   font-weight: bold;
 }
@@ -565,37 +571,37 @@ socket.emit('startGame' ,this.pollId)
 .presentationInput{
   height: 5em;
   width: 90%;
-  font-size: 2em;
+  font-size: 2vw;
   outline: none;
   white-space: pre-line;
 }
 
 .marginPresentation{
-  margin-bottom: 20em;
+  margin-bottom: 20%;
 }
 
 .typeOfQuestion{
-  font-size: 20px;
-  margin-bottom: 30px;
+  font-size: 2vw;
+  margin-bottom: 10%;
 }
 
 .timeForQuestion{
-  font-size: 20px;
-  margin-bottom: 30px;
+  font-size: 2vw;
+  margin-bottom: 10%;
 }
 
 .pointsForQuestion{
-  font-size: 20px;
+  font-size: 2vw;
 }
 
 .answers{
-  font-size: 20px;
+  font-size: 1.5vw;
 }
 
 .answersStyle{
-  height: 30px;
-  width: 150px;
-  font-size: 15px;
+  height: 5vh;
+  width: 30%;
+  font-size: 1.5vw;
   outline: none;
 }
 
@@ -603,7 +609,7 @@ socket.emit('startGame' ,this.pollId)
   border:solid;
   border-radius: 10%;
   background-color: white;
-  height: 200px;
+  height: 30%;
   margin: 10px;
 }
 
@@ -613,15 +619,11 @@ socket.emit('startGame' ,this.pollId)
   margin-top: 4em;
   text-align: center;
   font-size: 2em;
-
 }
-
 
 #QRCode{
 margin-top: 2em;
 }
-
-
 
 .wrapperWaitRoom{
   display: grid;
@@ -734,10 +736,9 @@ margin-top: 2em;
   top: calc(50% - 2px);
 }
 
-
 buttonCancel{
-  width: 100px;
-  height: 50px;
+  width: 6%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -745,14 +746,15 @@ buttonCancel{
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #EF6461;
-  margin-left: 79.5em;
+  margin-right: 0.5%;
   margin-bottom: 0.5em;
 }
 
 buttonCancel .text {
-  transform: translateX(25px);
+  transform: translateX(30%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
 }
 
 buttonCancel:hover {
@@ -760,8 +762,8 @@ buttonCancel:hover {
 }
 
 buttonContinue{
-  width: 100px;
-  height: 50px;
+  width: 7%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -773,9 +775,10 @@ buttonContinue{
 }
 
 buttonContinue .text {
-  transform: translateX(15px);
+  transform: translateX(10%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
 }
 
 buttonContinue:hover {
@@ -783,8 +786,8 @@ buttonContinue:hover {
 }
 
 buttonBack{
-  width: 100px;
-  height: 50px;
+  width: 7%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -797,9 +800,10 @@ buttonBack{
 }
 
 buttonBack .text {
-  transform: translateX(25px);
+  transform: translateX(30%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
 }
 
 buttonBack:hover {

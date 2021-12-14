@@ -107,7 +107,7 @@ export default {
   border: solid;
   border-radius: 10%;
   background-color: white;
-  height: 700px;
+  height: 90%;
   width: 85%;
   margin: 10px;
 }
