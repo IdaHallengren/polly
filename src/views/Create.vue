@@ -531,21 +531,21 @@ socket.emit('startGame' ,this.pollId)
   border-radius: 2%;
   background-color: #D3D3D3;
   overflow: scroll;
-  height: 65%;
+  height: 70%;
 }
 
 #presentation{
   border: solid;
   border-radius: 2%;
   background-color: white;
-  height: 65%
+  height: 70%
 }
 
 #editQuestion{
   border: solid;
   border-radius: 2%;
   background-color: #D3D3D3;
-  height: 65%
+  height: 70%
 }
 
 .headlines{
@@ -559,7 +559,7 @@ socket.emit('startGame' ,this.pollId)
 }
 
 .questionInput{
-  height: 10em;
+  height: 7em;
   max-height: 10em;
   width: 90%;
   font-size: 1vw;
@@ -577,7 +577,7 @@ socket.emit('startGame' ,this.pollId)
 }
 
 .marginPresentation{
-  margin-bottom: 20%;
+  margin-bottom: 25%;
 }
 
 .typeOfQuestion{
