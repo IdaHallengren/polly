@@ -1,5 +1,7 @@
 <template>
 <div class="wrapper">
+
+
   <div class="bar" v-for="(item, key) in data" v-bind:key="key">
     <div v-bind:style="{height: item + 'px'}">
       <span> {{item}} </span>
@@ -12,6 +14,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Bars',
   props: {

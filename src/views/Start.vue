@@ -34,7 +34,7 @@
       <div >
         <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
-        <button4  v-on:click="newPage('Poll')"><span class='text'> OK</span></button4>
+        <button class="okButton" v-on:click="newPage('Poll')"><span class='text'> OK</span></button>
       </div>
     </div>
     <button2 class = "backButton" v-on:click = "showStart = !showStart"><span class='text'>{{uiLabels.backButton}}</span></button2>
@@ -187,31 +187,33 @@ body{
   grid-row: 1;
 }
 
-button4{
-  width: 45px;
-  height: 56px;
+.okButton{
+  width: 5vw;
+  height: 8vh;
   cursor: pointer;
   display: flex;
   align-items: center;
   border: none;
-  border-radius: 5px;
+  border-radius: 2px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #558564;
 }
 
-button4 .text {
-  transform: translateX(10px);
+.okButton .text {
+  transform: translateX(50%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-button4:hover {
+.okButton:hover {
   background: #1d823c;
 }
 
 #PollId{
-  width: 150px;
-  height: 50px;
+  width: 15vw;
+  height: 7.2vh;
   font-size: larger;
   float:left;
 }
@@ -221,11 +223,11 @@ button4:hover {
   grid-template-columns: 100%;
   grid-template-rows: 50% 50%;
   padding-top: 200px;
-  place-items: center
-;
+  place-items: center;
+  font-family: AppleGothic;
 }
 
-button2{
+.backButton{
   width: 7%;
   height: 6%;
   cursor: pointer;
@@ -235,24 +237,26 @@ button2{
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #5995ED;
+  font-family: AppleGothic;
+  position: fixed;
+  bottom: 0.5em;
+  left: 0.5em;
+
+
 }
 
-button2 .text {
+.backButton .text {
   transform: translateX(30%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
 }
 
-button2:hover {
+.backButton:hover {
   background: #1d72f0;
 }
 
-.backButton{
-  position: fixed;
-  bottom: 0.5em;
-  left: 0.5em;
-}
+
 
 #textFont{
   font-size: xx-large;

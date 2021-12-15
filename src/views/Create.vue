@@ -9,9 +9,9 @@
 
     <div> </div>
     <div> </div>
-    <buttonCancel class="cancel" v-on:click="cancelPage">
+    <button class="cancel" v-on:click="cancelPage">
       <span class='text'>{{uiLabels.cancelButton}}</span>
-    </buttonCancel>
+    </button>
 
 
 
@@ -79,8 +79,6 @@
 
 
         <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
-
-
           <button v-on:click="removeAnswer" class="icon-btn add-btn">
             <div class="btn-txt">{{ uiLabels.removeAlternative }}</div>
           </button>
@@ -88,8 +86,6 @@
             <div class="add-icon"></div>
             <div class="btn-txt">{{ uiLabels.addAlternative }}</div>
           </button>
-
-
         </div>
 
         <br>
@@ -178,111 +174,65 @@
     </div>
 
 
-
-
-
-
     <div v-on:click= "startPoll= !startPoll" >
-
-  <buttonContinue class="continue" v-on:click="createPoll">
+  <button class="continue" v-on:click="createPoll">
     <span class='text'>{{ uiLabels.createPoll }}</span>
-  </buttonContinue>
-
-
-
-
-
-      <!--    <button v-on:click="createPoll">-->
-<!--      {{ uiLabels.createPoll }}-->
-<!--    </button>-->
-</div>
-
-
-  </div>
-
-    <buttonBack class="noselect" v-on:click="cancelPage">
-      <span class='text'> {{ uiLabels.backButton }} </span>
-    </buttonBack>
-  </div>
-
-
-
-  Poll link:
-  <input type="text" v-model="pollId">
-
-
-
-
-
-  </div>
-
-
-
-<!--  NEXT PAGE  -->
-
-<div v-show="!startPoll" class="wrapperWaitRoom">
-
-  <div> </div>
-
-  <div>
-  <buttonCancel class="cancel" v-on:click="cancelPage">
-    <span class='text'>{{uiLabels.cancelButton}}</span>
-  </buttonCancel>
+  </button>
     </div>
 
 
+  </div>
+    <button class="noselect" v-on:click="cancelPage">
+      <span class='text'> {{ uiLabels.backButton }} </span>
+    </button>
+  </div>
+
+  Poll link:
+  <input type="text" v-model="pollId">
+  </div>
+
+
+<!--  NEXT PAGE  -->
+<div v-show="!startPoll" class="wrapperWaitRoom">
+  <div> </div>
+  <div>
+   <button class="cancel" v-on:click="cancelPage">
+    <span class='text'>{{uiLabels.cancelButton}}</span>
+    </button>
+  </div>
 
   <div>
   <div class="pollIdStyle">
 PollId: {{pollId}}
   </div>
-
-
 <div id="QRCode">
-
-  <qrcode-vue :value="qrValue" text="pollId"  :size="size" >
-
-  </qrcode-vue>
-
+  <qrcode-vue :value="qrValue" text="pollId"  :size="size" >  </qrcode-vue>
 </div>
-
   </div>
-
-
 
 
 <div>
  <h2 class="waitingroomHeadline"> {{ uiLabels.waitingRoom }}</h2>
-
-
 <form class = "waitingRoom">
-<!--   <div class = "wrapper">-->
      <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
-
        <img class="participants"
             :src="participant.participantImg" >
        <br>
        {{participant.participantName}}
-
      </div>
-
-<!--  </div>-->
-
   </form>
-
-
 </div>
 
 <div>
-  <buttonBack class="noselect" v-on:click="startPoll=!startPoll">
+  <button class="noselect" v-on:click="startPoll=!startPoll">
     <span class='text'> {{ uiLabels.backButton }} </span>
-  </buttonBack>
+  </button>
 </div>
 
   <div v-on:click="letsPlayButton=!letsPlayButton">
-    <buttonContinue class="continue" v-on:click="letsPlay">
+    <button class="continue" v-on:click="letsPlay">
       <span class='text'> {{ uiLabels.letsPlay }} </span>
-    </buttonContinue>
+    </button>
   </div>
 
 
@@ -377,7 +327,6 @@ export default {
   watch: {
     typeOfQuestion: function(newVal) {
 
-
       if (newVal === "quiz" || newVal === "voting")
         this.showAnswerButton = true
       else
@@ -397,12 +346,10 @@ export default {
       this.uiLabels = labels
     })
     socket.on("dataUpdate", (data) =>
-        this.data = data
-    )
+        this.data = data)
 
     socket.on("dataUpdate", (myParticipant) =>
-        this.participants = myParticipant
-    )
+        this.participants = myParticipant)
 
     socket.on("pollCreated", (data) =>
         this.data = data)
@@ -416,8 +363,7 @@ export default {
 
     socket.on('participantsAdded', (myParticipant) =>
     { console.log('kommer du hit')
-        this.participants = myParticipant}
-    )
+        this.participants = myParticipant})
 
 
   },
@@ -426,14 +372,7 @@ export default {
       this.addQuestion();
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
       console.log("Skickat info")
-
-
     },
-    // setPollId: function () {
-    //   this.pollId=Math.floor(Math.random() * 100000);
-    //   this.createPoll()
-    //
-    // },
 
     addQuestion: function () {
 
@@ -450,8 +389,8 @@ export default {
 
     addAnswer: function () {
       this.answers.push("")
-
     },
+
     removeAnswer: function () {
       if (this.answers.length === 1) {
         this.answers();
@@ -479,17 +418,10 @@ export default {
       // document.getElementById("slides").appendChild(p);
 
 
-      //
-      //
-      //   var slides = html2canvas(document.querySelector('#presentation')).then(canvas => {
-      //   document.body.appendChild(canvas)
-      //   slides.id="removePictures"
-
 
       // });
 
 
-      // this.slides.push("")
     },
      finish: function(route) {
       if (route === 'result') {
@@ -568,18 +500,6 @@ export default {
   left: 0.5em;
 }
 
-.cancel{
-  position: absolute;
-  top: 0.5em;
-  right: 0.5em;
-}
-
-.continue{
-  position: fixed;
-  bottom: 0.5em;
-  right:0.5em;
-}
-
 .wrapper{
   display: grid;
   grid-template-rows: 100%;
@@ -594,21 +514,21 @@ export default {
   border-radius: 2%;
   background-color: #D3D3D3;
   overflow: scroll;
-  height: 65%;
+  height: 70%;
 }
 
 #presentation{
   border: solid;
   border-radius: 2%;
   background-color: white;
-  height: 65%
+  height: 70%
 }
 
 #editQuestion{
   border: solid;
   border-radius: 2%;
   background-color: #D3D3D3;
-  height: 65%
+  height: 70%
 }
 
 .headlines{
@@ -622,7 +542,7 @@ export default {
 }
 
 .questionInput{
-  height: 10em;
+  height: 7em;
   max-height: 10em;
   width: 90%;
   font-size: 1vw;
@@ -640,7 +560,7 @@ export default {
 }
 
 .marginPresentation{
-  margin-bottom: 20%;
+  margin-bottom: 25%;
 }
 
 .typeOfQuestion{
@@ -806,7 +726,7 @@ margin-top: 2em;
   top: calc(50% - 2px);
 }
 
-buttonCancel{
+.cancel{
   width: 6%;
   height: 6%;
   cursor: pointer;
@@ -818,20 +738,25 @@ buttonCancel{
   background: #EF6461;
   margin-right: 0.5%;
   margin-bottom: 0.5em;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+
 }
 
-buttonCancel .text {
+.cancel .text {
   transform: translateX(30%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-buttonCancel:hover {
+.cancel:hover {
   background: #ed3632;
 }
 
-buttonContinue{
+.continue{
   width: 7%;
   height: 6%;
   cursor: pointer;
@@ -842,20 +767,25 @@ buttonContinue{
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #558564;
   margin-left: 32em;
+  position: fixed;
+  bottom: 0.5em;
+  right:0.5em;
+
 }
 
-buttonContinue .text {
-  transform: translateX(10%);
+.continue .text {
+  transform: translateX(5%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-buttonContinue:hover {
+.continue:hover {
   background: #1d823c;
 }
 
-buttonBack{
+.noselect{
   width: 7%;
   height: 6%;
   cursor: pointer;
@@ -865,18 +795,19 @@ buttonBack{
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #5995ED;
-  left: 0em;
+  left: 0.5em;
   margin-top:1.5em;
 }
 
-buttonBack .text {
-  transform: translateX(30%);
+.noselect .text {
+  transform: translateX(34%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-buttonBack:hover {
+.noselect:hover {
   background: #1d72f0;
 }
 
