@@ -246,7 +246,7 @@
   {{this.allQuestions}}
   {{this.allAnswers}}
   Timer:
-  Amount of participants answerd
+  Amount of participants answered
 
 </div>
 
@@ -264,7 +264,6 @@ export default {
   name: 'Create',
   components: {
     SlideShow,
-    // Waiting,
     QrcodeVue
   },
 
