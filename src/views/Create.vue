@@ -474,6 +474,7 @@ export default {
   font-size: 2.5vw;
   font-family: AppleGothic;
   color: white;
+
 }
 
 .labelsText{
