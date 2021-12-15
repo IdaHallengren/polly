@@ -188,21 +188,23 @@ body{
 }
 
 .okButton{
-  width: 45px;
-  height: 56px;
+  width: 5vw;
+  height: 8vh;
   cursor: pointer;
   display: flex;
   align-items: center;
   border: none;
-  border-radius: 5px;
+  border-radius: 2px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #558564;
 }
 
 .okButton .text {
-  transform: translateX(10px);
+  transform: translateX(50%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
 .okButton:hover {
@@ -210,8 +212,8 @@ body{
 }
 
 #PollId{
-  width: 150px;
-  height: 50px;
+  width: 15vw;
+  height: 7.2vh;
   font-size: larger;
   float:left;
 }
@@ -221,8 +223,8 @@ body{
   grid-template-columns: 100%;
   grid-template-rows: 50% 50%;
   padding-top: 200px;
-  place-items: center
-;
+  place-items: center;
+  font-family: AppleGothic;
 }
 
 .backButton{
