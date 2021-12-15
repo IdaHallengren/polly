@@ -50,6 +50,7 @@ function sockets(io, socket, data) {
 
     socket.on('getPoll', function (pollId) {
       socket.emit('fullPoll', data.getPoll(pollId))
+
     });
 
     socket.on('removeSlide', function (d) {
@@ -64,11 +65,18 @@ function sockets(io, socket, data) {
   })
 
 
+
+
+
+
+
+
   socket.on('removeParticipant', function(d){
     data.removeParticipant(d.pollId , {participantName: d.participantName, participantId: d.participantId, participantImg: d.participantImg})
     io.to(d.pollId).emit('dataUpdate', data.getParticipants(d.pollId))
 
   })
+
 
 }
 

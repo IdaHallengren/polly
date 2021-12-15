@@ -233,17 +233,25 @@ PollId: {{pollId}}
 
 
 
-<div v-if="letsPlayButton==false">
+<div v-if="letsPlayButton == false">
 
 
-  <SlideShow>
+  <SlideShow v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
+
+
+
 
   </SlideShow>
 
-  {{questions}}
+  <button v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
+  <button v-show="this.questionNumber == allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>-->
+<!--  {{this.questions}}-->
+<!--{{this.fullPoll['questions'][1].q}}-->
+{{this.allQuestions}}
+  {{this.allAnswers}}
 Timer:
   Amount of participants answerd
-  <button v-on:click="nextQuestion"></button>
+
 </div>
 
 
@@ -258,7 +266,7 @@ import QrcodeVue from 'qrcode.vue'
 
 // import Waiting from "../components/Waiting";
 import io from 'socket.io-client';
-import SlideShow from "../components/SlideShow";
+import SlideShow from "../components/SlideShow.vue";
 const socket = io();
 
 
@@ -293,6 +301,11 @@ export default {
       size: 200,
       letsPlayButton: true,
       fullPoll: {},
+
+      number: 1,
+      activeQuestion: {},
+      allQuestions:[],
+      allAnswers: [],
       participants: [],
       participantName: "",
       participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
@@ -315,7 +328,7 @@ export default {
     this.pollId = this.$route.params.id;
     socket.emit('joinPoll', this.pollId)
     this.createPoll();
-     //Fixa så att om den har ett pollId så återanvände den det
+    //Fixa så att om den har ett pollId så återanvände den det
 
     socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
@@ -331,7 +344,11 @@ export default {
         this.data = data)
 
     socket.on('fullPoll', (myPoll) =>
-        this.fullPoll = myPoll)
+        {this.fullPoll = myPoll
+        this.questions = myPoll['questions']
+          console.log(this.questions, "test alex")
+        })
+
 
     socket.on('participantsAdded', (myParticipant) =>
     { console.log('kommer du hit')
@@ -347,7 +364,16 @@ export default {
     },
 
     addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, type:this.typeOfQuestion, time:this.timeForQuestion});
+
+      socket.emit("addQuestion", {
+        pollId: this.pollId,
+        q: this.question,
+        a: this.answers,
+        type: this.typeOfQuestion,
+        time: this.timeForQuestion
+      });
+
+
     },
 
     addAnswer: function () {
@@ -369,8 +395,9 @@ export default {
     },
     addSlide: function () {
 
-     this.addQuestion()
-     this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
+      this.addQuestion()
+      this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
+      this.allQuestions.push(this.question)
       socket.emit('getPoll', this.pollId)
 
 
@@ -381,15 +408,37 @@ export default {
 
 
 
-    // });
+      // });
 
 
+    },
+     finish: function(route) {
+      if (route === 'result') {
+        this.$router.push(`/result/${this.pollId}/${this.lang}`)
+      }
+    },
+
+    nextQuestion: function () {
+      this.questionNumber++;
+      this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
+      socket.emit('dataUpdate', this.allAnswers, this.questionNumber)
+
+
+
+      /*  this.number = this.fullPoll.questions.length;
+      socket.emit("getPoll", this.pollId);
+      this.question = this.fullPoll["questions"][this.questionNumber].q
+      this.answers = this.fullPoll["questions"][this.questionNumber].a
+      if(this.questionNumber <= this.fullPoll["questions"].length)  {
+        this.questionNumber++;
+        }*/
     },
 
 
 
 
     removeSlide: function() {
+
       socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
       this.questionNumber--;
       socket.emit("dataUpdate", {questionNumber: this.questionNumber});
@@ -402,30 +451,24 @@ export default {
       // document.getElementById('presentation').del(document.getElementById("removePictures"))
 
 
-
-
-    },
-
-    nextQuestion: function() {
-
     },
 
 
-
-
-    cancelPage: function() {
-      this.$router.push( '/' )
+    cancelPage: function () {
+      this.$router.push('/')
 
     },
 
-    letsPlay: function(){
-socket.emit('startGame' ,this.pollId)
-
+    letsPlay: function () {
+      this.questionNumber = 0;
+      this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
+      socket.emit('dataUpdate', this.questionNumber, this.allAnswers)
+      socket.emit('startGame', this.pollId)
     }
 
-}}
+  }
 
-
+}
 
 
 </script>
