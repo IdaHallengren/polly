@@ -49,6 +49,7 @@ function sockets(io, socket, data) {
 
     socket.on('getPoll', function (pollId) {
       socket.emit('fullPoll', data.getPoll(pollId))
+
     });
 
     socket.on('removeSlide', function (d) {
@@ -61,6 +62,12 @@ function sockets(io, socket, data) {
     console.log('FUNKA DÅÅ')
      io.to(pollId).emit('gameStart')
   })
+
+
+
+
+
+
 
 }
 
