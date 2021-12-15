@@ -1,9 +1,8 @@
 
 <template>
-<div class="cancel">
-  <button1 v-on:click="newPage('/')"><span class='text'>{{uiLabels.cancelButton}}</span>
-  </button1>
-</div>
+
+
+
 
 <!--<div>
   <Question v-bind:question="question"
@@ -11,12 +10,14 @@
 
 </div>-->
 <div v-if="showWaiting">
+  <button1 class="cancel" v-on:click="newPage('/')"><span class='text'>{{uiLabels.cancelButton}}</span>
+  </button1>
   <p class="fontSize"> {{uiLabels.pollId}} {{pollId}} </p>
 
     <div v-show ="showName">
       <div class = "wrapperName">
         <label><h2 class="fontSize">{{uiLabels.enterName}}</h2></label>
-         <div class="contentCenter">
+         <div>
            <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" required>
            <button4 v-on:click = "showName = !showName"><span class='text'>OK</span></button4>
          </div>
@@ -26,7 +27,7 @@
 
   <div id ="HideAvatars">
     <div v-if = "showName==false">
-      <p class="fontSize">{{uiLabels.name}}{{participantName}} </p>
+      <h1 class="fontSize">{{uiLabels.name}}{{participantName}} </h1>
 
         <section id="selectAvatar">
           <p id="select"> {{uiLabels.avatar}}  </p>
@@ -57,8 +58,14 @@
 
   <Waiting v-bind:participants="participants" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels"></Waiting>
 
-  <button2 class = "backButton" v-on:click = "showWaiting = !showWaiting"><span class='text'>{{uiLabels.backButton}}</span>
+<!--  <div v-on:click="deleteInfo('back')">
+  <button2 class = "backButton" v-on:click = "showWaiting = !showWaiting, showName=!showName"><span class='text'>{{uiLabels.backButton}}</span>
   </button2>
+  </div>-->
+
+    <button1 class="cancel" v-on:click="deleteInfo('delete')" ><span class='text'>{{uiLabels.cancelButton}}</span>
+    </button1>
+
 </div>
 
 </template>
@@ -87,6 +94,7 @@ export default {
       uiLabels: {},
       participantName: "",
       participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
+      participantId: 0,
       showName: true,
       showID: true,
 /*      question: {
@@ -95,13 +103,16 @@ export default {
       },*/
       pollId: "inactive poll",
       showWaiting: true,
-      participants: []
+      participants: [],
     }
   },
 
   created: function () {
     this.pollId = this.$route.params.id
     this.lang = this.$route.params.lang
+    this.participantId=Math.floor(Math.random() * 1000);
+
+
     socket.emit('joinPoll', this.pollId)
     socket.on("newQuestion", q =>
         this.question = q
@@ -116,10 +127,12 @@ export default {
     )
 
     socket.on('gameStart', () => {
-      console.log('SKICKA DÅÅÅ')
-          // this.pollId=startPoll
           this.$router.push(`/result/${this.pollId}/${this.lang}` )
         }
+    )
+
+    socket.on("dataUpdate", (myParticipant) =>
+        this.participants = myParticipant
     )
 
 
@@ -135,18 +148,29 @@ export default {
     },
 
     newPage: function(route) {
-      if (route === '/')
+      if (route === '/'){
         this.$router.push('/')
+      }
       else {
         socket.emit("addParticipant", {
           pollId: this.pollId,
           participantInfo: {
+            participantId: this.participantId,
             participantName: this.participantName,
             participantImg: this.participantImg
           },
         },);
     }
   },
+
+    deleteInfo: function(){
+    socket.emit('removeParticipant', {
+      pollId: this.pollId, participantImg: this.participantImg, participantName: this.participantName, participantId: this.participantId
+    })
+      this.$router.push('/')
+    }
+
+
 }
 }
 </script>
@@ -155,11 +179,14 @@ export default {
 
 .wrapperName{
   padding-top: 100px;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50% 50%;
+  place-items: center
+;
 }
 
-.contentCenter{
-  padding-left: 42%;
-}
+
 
 #participantName{
   width: 150px;
@@ -170,7 +197,7 @@ export default {
 
 #select {
   position: relative;
-  font-size: xx-large;
+  font-size: 2.5vw;
   font-weight: bold;
   color: White;
   grid-column: 1;
@@ -180,7 +207,7 @@ export default {
 }
 
 .fontSize{
-  font-size: xx-large;
+  font-size: 2.5vw;
   font-weight: bold;
   color: white;
 }
@@ -196,7 +223,7 @@ export default {
 #selectedAvatar {
   place-content: center;
   grid-column: 2;
-  width: 7em;
+  width: 17%;
   height: auto;
   right: 25%;
   border-radius: 100%;
@@ -223,7 +250,6 @@ export default {
   padding-bottom: 2em;
   background-color: #D3D3D3;
   border: 0.3em solid white;
-  overflow-y: auto;
 }
 
 .backButton{
@@ -233,14 +259,14 @@ export default {
 }
 
 .cancel {
-  position: absolute;
+  position: fixed;
   top: 0.5em;
   right: 0.5em;
 }
 
 button1{
-  width: 100px;
-  height: 50px;
+  width: 6%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -251,9 +277,10 @@ button1{
 }
 
 button1 .text {
-  transform: translateX(25px);
+  transform: translateX(30%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
 }
 
 button1:hover {
@@ -261,8 +288,8 @@ button1:hover {
 }
 
 button2{
-  width: 100px;
-  height: 50px;
+  width: 7%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -273,9 +300,10 @@ button2{
 }
 
 button2 .text {
-  transform: translateX(25px);
+  transform: translateX(30%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
 }
 
 button2:hover {
@@ -304,8 +332,8 @@ button4:hover {
   background: #1d823c;
 }
 button5{
-  width: 100px;
-  height: 50px;
+  width: 6%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -316,9 +344,10 @@ button5{
 }
 
 button5 .text {
-  transform: translateX(30px);
+  transform: translateX(50%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
 }
 
 button5:hover {

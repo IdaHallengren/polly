@@ -29,7 +29,9 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.currentQuestion = 0;
     poll.typeOfQuestion="";
     poll.timeForQuestion=0;
+    poll.numberOfParticipants= 0;
     this.polls[pollId] = poll;
+
     console.log("poll created", pollId, poll);
   }
   return this.polls[pollId];
@@ -104,13 +106,8 @@ Data.prototype.addParticipant = function(pollId, participant) {
 }
 
 Data.prototype.getParticipants = function(pollId) {
-
-  console.log('Här är pollId: ',  pollId)
   const poll = this.polls[pollId];
-  console.log('Här är poll i Data: ',  poll)
-
   if (typeof poll !== 'undefined') {
-    console.log('hit kommer jag iaf!', poll.participants)
       return poll.participants
   }
   return {}
@@ -123,6 +120,19 @@ Data.prototype.removeQuestion = function(pollId, q) {
     poll.questions.pop(q);
   }
 }
+
+Data.prototype.removeParticipant= function(pollId, participant){
+  const poll = this.polls[pollId];
+  console.log("participant removed", pollId, participant);
+  if (typeof poll !== 'undefined') {
+    for (let i = 0; i<poll.participants.length; i++ ) {
+      if (poll.participants[i].participantId === participant.participantId) {
+        poll.participants.splice(i, 1)
+      }
+    }
+  }
+}
+
 
 module.exports = Data;
 

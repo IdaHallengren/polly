@@ -13,8 +13,8 @@
     <div id="header">
 
       <img id="logo" src="../img/logo.jpg">
-      <h1> Welcome to Pollify</h1>
-      <h3> - Easy to create and participate</h3>
+      <p style="font-size: 2.5vw;"> {{uiLabels.welcome}}</p>
+      <p style="font-size: 2vw;">{{uiLabels.welcomeEasy}}</p>
     </div>
   </div>
 
@@ -31,7 +31,7 @@
   <div v-show = "showId">
     <div class = "wrapper1">
       <label><h2 id="textFont">{{uiLabels.enterPollId}}</h2></label>
-      <div class="contentCenter">
+      <div >
         <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
         <button4  v-on:click="newPage('Poll')"><span class='text'> OK</span></button4>
@@ -64,6 +64,7 @@ export default {
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
+    socket.emit('pageLoaded')
   },
   methods: {
     switchToSwedishLanguage: function() {
@@ -71,8 +72,6 @@ export default {
         this.lang = "sv"
       socket.emit("switchLanguage", this.lang)
     },
-
-
 
     switchToEnglishLanguage: function() {
       if (this.lang === "sv")
@@ -138,49 +137,46 @@ body{
 }
 
 #logo{
-  height:40vh;
-  width: 20vw;
+  height:60%;
+  width: 60%;
 }
 
 #header{
   font-weight: bold;
-  font-size: 90%;
   color: white;
-  padding-bottom: 6em;
+  padding-bottom: 10%;
   grid-column: 2;
   grid-row: 1;
 }
 
 #wrapperButtons{
-  font-size: 100%;
   display: grid;
   place-items: center;
   grid-template-columns: 25% 25% 25% 25%;
 }
 
 .start .button {
-
   height:10vh;
   width: 15vw;
   grid-column: 2;
   grid-row: 1;
   cursor: pointer;
-  font-size: 1.2em;
+  font-size: 2vw;
   font-weight: bold;
   color: black;
   background: white;
-  border: 0.1em solid black;
-  box-shadow: 0.25em 0.25em 0 black,
-  -0.25em -0.25em 0 black,
-  -0.25em 0.25em 0 black,
-  0.25em -0.25em 0 black;
+  border: 0.1em solid #1d72f0;
+  box-shadow: 0.25em 0.25em 0 #5995ED,
+  -0.25em -0.25em 0 #5995ED,
+  -0.25em 0.25em 0 #5995ED,
+  0.25em -0.25em 0 #5995ED;
   transition: 500ms ease-in-out;
 }
 
 .start button:hover {
-  box-shadow: 2em 0.25em 0 black, -2em -0.25em 0 black;
-  background: palegreen;
-  color: indigo;
+  box-shadow: 2em 0.25em 0 #317773, -2em -0.25em 0 #317773;
+  background: #5995ED;
+  color: White;
 }
 
 .start button:focus {
@@ -197,11 +193,10 @@ button4{
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: #006400;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #006400;
+  background: #558564;
 }
 
 button4 .text {
@@ -211,7 +206,7 @@ button4 .text {
 }
 
 button4:hover {
-  background: #008000;
+  background: #1d823c;
 }
 
 #PollId{
@@ -221,17 +216,18 @@ button4:hover {
   float:left;
 }
 
-.contentCenter{
-  padding-left: 42%;
-}
-
 .wrapper1{
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50% 50%;
   padding-top: 200px;
+  place-items: center
+;
 }
 
 button2{
-  width: 100px;
-  height: 50px;
+  width: 7%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -242,9 +238,10 @@ button2{
 }
 
 button2 .text {
-  transform: translateX(25px);
+  transform: translateX(30%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
 }
 
 button2:hover {
@@ -261,5 +258,95 @@ button2:hover {
   font-size: xx-large;
   color: white;
 }
+
+.effect1 {
+  color: #222;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-size: 24px;
+  position: relative;
+  padding: 10px 50px 10px 20px;
+
+  -webkit-transition: all 0.3s;
+
+  -o-transition: all 0.3s;
+
+  transition: all 0.3s;
+
+  -webkit-transform: scale(1);
+
+  -ms-transform: scale(1);
+
+  transform: scale(1); /*change scale(3) to scale(1)*/
+}
+
+.effect1 .bg {
+  background: #222;
+  width: 30px;
+  height: 2px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -1px;
+  z-index: -1;
+
+  -webkit-transition: all 0.3s;
+
+  -o-transition: all 0.3s;
+
+  transition: all 0.3s;
+}
+
+.effect1:hover {
+  padding-right: 20px;
+  color: #fff;
+}
+
+.effect1:hover .bg {
+  height: 100%;
+  width: 100%;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+}
+
+.effect1 .bg:before, .effect1 .bg:after {
+  content: '';
+  height: 2px;
+  width: 10px;
+  background: #222;
+  position: absolute;
+  right: -2px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.effect1 .bg:before {
+  bottom: 3px;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.effect1 .bg:after{
+  top: 3px;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.effect1:hover .bg:before,
+.effect1:hover .bg:after{
+  right: 0;
+}
+
+.effect1:hover .bg:before{
+  bottom: 6px;
+}
+
+.effect1:hover .bg:after{
+  top: 6px;
+}
+
 
 </style>
