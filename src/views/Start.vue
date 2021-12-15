@@ -100,7 +100,7 @@ export default {
 <style>
 
 body{
-  /*background-color: #317773;*/
+  background-color: #317773;
 }
 
 #wrapperHead {

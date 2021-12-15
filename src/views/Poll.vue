@@ -158,7 +158,11 @@ export default {
       console.log(this.questions, "test alex")
     })
 
-
+    // socket.on("dataUpdate", (questionsAnswers) => {
+    //
+    //
+    // }
+    // )
 
   },
 
