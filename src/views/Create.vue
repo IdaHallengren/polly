@@ -427,6 +427,7 @@ export default {
       this.questionNumber++;
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
       socket.emit('dataUpdate', this.allAnswers, this.questionNumber)
+      socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
 
       /*  this.number = this.fullPoll.questions.length;
       socket.emit("getPoll", this.pollId);
@@ -453,10 +454,10 @@ export default {
     },
 
     letsPlay: function () {
-      socket.emit('startGame', this.pollId, this.showGameStart)
+      socket.emit('startGame', {pollId: this.pollId, boolean: this.showGameStart})
       this.questionNumber = 0;
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
-      socket.emit('dataUpdate', this.questionNumber, this.allAnswers)
+      socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
 
     }
 

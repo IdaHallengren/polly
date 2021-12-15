@@ -54,8 +54,8 @@ function sockets(io, socket, data) {
     })
 
 
-  socket.on('startGame' , function(pollId, boolean){
-     io.to(pollId).emit('gameStart', boolean)
+  socket.on('startGame' , function(d){
+     io.to(d.pollId).emit('gameStart', d.boolean)
   })
 
   socket.on('removeParticipant', function(d){
