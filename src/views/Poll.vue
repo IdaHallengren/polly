@@ -1,37 +1,33 @@
 
 <template>
-
-
-
-
 <!--<div>
   <Question v-bind:question="question"
             v-on:answer="submitAnswer"/>
 
 </div>-->
 <div v-if="showWaiting">
-  <button1 class="cancel" v-on:click="newPage('/')"><span class='text'>{{uiLabels.cancelButton}}</span>
-  </button1>
+  <button class="cancelButton" v-on:click="newPage('/')"><span class='text'>{{uiLabels.cancelButton}}</span>
+  </button>
   <p class="fontSize"> {{uiLabels.pollId}} {{pollId}} </p>
 
     <div v-show ="showName">
       <div class = "wrapperName">
-        <label><h2 class="fontSize">{{uiLabels.enterName}}</h2></label>
+        <p class="fontSize">{{uiLabels.enterName}}</p>
          <div>
            <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" required>
-           <button4 v-on:click = "showName = !showName"><span class='text'>OK</span></button4>
+           <button class="okButton" v-on:click = "showName = !showName"><span class='text'>OK</span></button>
          </div>
       </div>
-     </div>
+    </div>
 
 
   <div id ="HideAvatars">
-    <div v-if = "showName==false">
-      <h1 class="fontSize">{{uiLabels.name}}{{participantName}} </h1>
+    <div v-if = "showName===false">
+      <p class="fontSize">{{uiLabels.name}}{{participantName}} </p>
 
         <section id="selectAvatar">
           <p id="select"> {{uiLabels.avatar}}  </p>
-          <span > <img id="selectedAvatar" v-bind:src=this.participantImg> </span>
+          <span > <img id="selectedAvatar" v-bind:src=this.participantImg alt="Avatar"> </span>
         </section>
 
       <div id="formsize">
@@ -45,26 +41,20 @@
           </div>
         </form>
       </div>
+
       <div v-on:click="showWaiting = !showWaiting">
-        <button5 id="continueWaiting" v-on:click="newPage('null')" ><span class='text'>{{uiLabels.continueButton}}</span></button5>
-     </div>
-      <button2 class = "backButton" v-on:click = "showName = !showName"><span class='text'>{{uiLabels.backButton}}</span></button2>
+        <button class="continueButton" v-on:click="newPage('null')" ><span class='text'>{{uiLabels.continueButton}}</span></button>
+      </div>
+        <button class = "backButton" v-on:click = "showName = !showName"><span class='text'>{{uiLabels.backButton}}</span></button>
     </div>
   </div>
 </div>
-
 
 <div v-if="!showWaiting">
 
   <Waiting v-bind:participants="participants" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels"></Waiting>
 
-<!--  <div v-on:click="deleteInfo('back')">
-  <button2 class = "backButton" v-on:click = "showWaiting = !showWaiting, showName=!showName"><span class='text'>{{uiLabels.backButton}}</span>
-  </button2>
-  </div>-->
-
-    <button1 class="cancel" v-on:click="deleteInfo('delete')" ><span class='text'>{{uiLabels.cancelButton}}</span>
-    </button1>
+  <button class="cancelButton" v-on:click="deleteInfo('delete')" ><span class='text'>{{uiLabels.cancelButton}}</span></button>
 
 </div>
 
@@ -112,12 +102,14 @@ export default {
     this.lang = this.$route.params.lang
     this.participantId=Math.floor(Math.random() * 1000);
 
-
     socket.emit('joinPoll', this.pollId)
+
     socket.on("newQuestion", q =>
         this.question = q
     )
+
     socket.emit("pageLoaded", this.lang);
+
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
@@ -134,8 +126,6 @@ export default {
     socket.on("dataUpdate", (myParticipant) =>
         this.participants = myParticipant
     )
-
-
   },
 
   methods: {
@@ -150,7 +140,7 @@ export default {
     newPage: function(route) {
       if (route === '/'){
         this.$router.push('/')
-      }
+    }
       else {
         socket.emit("addParticipant", {
           pollId: this.pollId,
@@ -160,7 +150,7 @@ export default {
             participantImg: this.participantImg
           },
         },);
-    }
+      }
   },
 
     deleteInfo: function(){
@@ -169,8 +159,6 @@ export default {
     })
       this.$router.push('/')
     }
-
-
 }
 }
 </script>
@@ -182,17 +170,15 @@ export default {
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: 50% 50%;
-  place-items: center
-;
+  place-items: center;
 }
 
-
-
 #participantName{
-  width: 150px;
-  height: 50px;
+  width: 15vw;
+  height: 7.2vh;
   font-size: larger;
   float: left;
+  font-family: AppleGothic;
 }
 
 #select {
@@ -203,13 +189,14 @@ export default {
   grid-column: 1;
   top: -25%;
   left: 35%;
-
+  font-family: AppleGothic;
 }
 
 .fontSize{
   font-size: 2.5vw;
   font-weight: bold;
   color: white;
+  font-family: AppleGothic;
 }
 
 #selectAvatar {
@@ -252,19 +239,10 @@ export default {
   border: 0.3em solid white;
 }
 
-.backButton{
-  position: fixed;
-  bottom: 0.5em;
-  left: 0.5em;
-}
-
-.cancel {
+.cancelButton {
   position: fixed;
   top: 0.5em;
   right: 0.5em;
-}
-
-button1{
   width: 6%;
   height: 6%;
   cursor: pointer;
@@ -276,18 +254,22 @@ button1{
   background: #EF6461;
 }
 
-button1 .text {
-  transform: translateX(30%);
+.cancelButton .text {
+  transform: translateX(20%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-button1:hover {
+.cancelButton:hover {
   background: #ed3632;
 }
 
-button2{
+.backButton{
+  position: fixed;
+  bottom: 0.5em;
+  left: 0.5em;
   width: 7%;
   height: 6%;
   cursor: pointer;
@@ -299,20 +281,21 @@ button2{
   background: #5995ED;
 }
 
-button2 .text {
+.backButton .text {
   transform: translateX(30%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-button2:hover {
+.backButton:hover {
   background: #1d72f0;
 }
 
-button4{
-  width: 45px;
-  height: 56px;
+.okButton {
+  width: 5vw;
+  height: 8vh;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -322,16 +305,22 @@ button4{
   background: #558564;
 }
 
-button4 .text {
-  transform: translateX(10px);
+.okButton .text {
+  transform: translateX(50%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-button4:hover {
+.okButton button:hover {
   background: #1d823c;
 }
-button5{
+
+.continueButton{
+  position: fixed;
+  bottom: 0.5em;
+  right: 0.5em;
   width: 6%;
   height: 6%;
   cursor: pointer;
@@ -343,22 +332,16 @@ button5{
   background: #558564;
 }
 
-button5 .text {
-  transform: translateX(50%);
+.continueButton .text {
+  transform: translateX(40%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-button5:hover {
+.continueButton:hover {
   background: #1d823c;
-}
-
-#continueWaiting{
-  position: fixed;
-  bottom: 0.5em;
-  right: 0.5em;
-
 }
 
 </style>
