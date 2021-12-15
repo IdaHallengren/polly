@@ -1,4 +1,10 @@
 <template>
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+
+
+
 <main class="start">
 
 <div id="langDiv">
@@ -12,9 +18,11 @@
   <div id="wrapperHead">
     <div id="header">
 
-      <img id="logo" src="../img/logo.jpg">
-      <h1> Welcome to Pollify</h1>
-      <h3> - Easy to create and participate</h3>
+      <img id="logo" src="../img/logo1.svg">
+      <div id="headerText">
+      <p style="font-size: 1.5vw;"> {{uiLabels.welcome}}</p>
+      <p style="font-size: 1vw;">{{uiLabels.welcomeEasy}}</p>
+      </div>
     </div>
   </div>
 
@@ -31,10 +39,10 @@
   <div v-show = "showId">
     <div class = "wrapper1">
       <label><h2 id="textFont">{{uiLabels.enterPollId}}</h2></label>
-      <div class="contentCenter">
+      <div >
         <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
-        <button4  v-on:click="newPage('Poll')"><span class='text'> OK</span></button4>
+        <button class="okButton" v-on:click="newPage('Poll')"><span class='text'> OK</span></button>
       </div>
     </div>
     <button2 class = "backButton" v-on:click = "showStart = !showStart"><span class='text'>{{uiLabels.backButton}}</span></button2>
@@ -64,6 +72,7 @@ export default {
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
+    socket.emit('pageLoaded')
   },
   methods: {
     switchToSwedishLanguage: function() {
@@ -71,8 +80,6 @@ export default {
         this.lang = "sv"
       socket.emit("switchLanguage", this.lang)
     },
-
-
 
     switchToEnglishLanguage: function() {
       if (this.lang === "sv")
@@ -138,49 +145,57 @@ body{
 }
 
 #logo{
-  height:40vh;
-  width: 20vw;
+  height:80%;
+  width: 80%;
 }
 
 #header{
+  position: relative;
+  top: 5%;
   font-weight: bold;
-  font-size: 90%;
   color: white;
-  padding-bottom: 6em;
   grid-column: 2;
   grid-row: 1;
 }
 
+#headerText{
+  position: relative;
+  bottom: 22%;
+  font-weight: bold;
+  color: lightskyblue;
+  padding-top: 10%;
+}
+
 #wrapperButtons{
-  font-size: 100%;
   display: grid;
   place-items: center;
   grid-template-columns: 25% 25% 25% 25%;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .start .button {
-
   height:10vh;
   width: 15vw;
   grid-column: 2;
   grid-row: 1;
   cursor: pointer;
-  font-size: 1.2em;
+  font-size: 2vw;
   font-weight: bold;
-  color: black;
+  color: dimgrey;
+  font-family: AppleGothic;
   background: white;
-  border: 0.1em solid black;
-  box-shadow: 0.25em 0.25em 0 black,
-  -0.25em -0.25em 0 black,
-  -0.25em 0.25em 0 black,
-  0.25em -0.25em 0 black;
+  border: 0.1em solid #1d72f0;
+  box-shadow: 0.1em 0.1em 0 #5995ED,
+  -0.1em -0.1em 0 #5995ED,
+  -0.1em 0.1em 0 #5995ED,
+  0.1em -0.1em 0 #5995ED;
   transition: 500ms ease-in-out;
 }
 
 .start button:hover {
-  box-shadow: 2em 0.25em 0 black, -2em -0.25em 0 black;
-  background: palegreen;
-  color: indigo;
+  /*box-shadow: 2em 0.25em 0 #317773, -2em -0.25em 0 #317773;*/
+  background: lightskyblue;
+  color: White;
 }
 
 .start button:focus {
@@ -191,47 +206,51 @@ body{
   grid-row: 1;
 }
 
-button4{
-  width: 45px;
-  height: 56px;
+/* Personal altered buttons with source code from Chance Squires*/
+.okButton{
+  width: 5vw;
+  height: 8vh;
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: #006400;
   border: none;
-  border-radius: 5px;
+  border-radius: 2px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #006400;
+  background: #558564;
 }
 
-button4 .text {
-  transform: translateX(10px);
+.okButton .text {
+  transform: translateX(50%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-button4:hover {
-  background: #008000;
+.okButton:hover {
+  background: #1d823c;
 }
 
 #PollId{
-  width: 150px;
-  height: 50px;
+  width: 15vw;
+  height: 7.2vh;
   font-size: larger;
   float:left;
 }
 
-.contentCenter{
-  padding-left: 42%;
-}
-
 .wrapper1{
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50% 50%;
   padding-top: 200px;
+  place-items: center;
+  font-family: AppleGothic;
 }
 
-button2{
-  width: 100px;
-  height: 50px;
+/* Personal altered buttons with source code from Chance Squires*/
+.backButton{
+  width: 7%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -239,27 +258,55 @@ button2{
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #5995ED;
-}
-
-button2 .text {
-  transform: translateX(25px);
-  color: white;
-  font-weight: bold;
-}
-
-button2:hover {
-  background: #1d72f0;
-}
-
-.backButton{
+  font-family: AppleGothic;
   position: fixed;
   bottom: 0.5em;
   left: 0.5em;
+}
+
+.backButton .text {
+  transform: translateX(30%);
+  color: white;
+  font-weight: bold;
+  font-size: 1.2vw;
+}
+
+.backButton:hover {
+  background: #1d72f0;
 }
 
 #textFont{
   font-size: xx-large;
   color: white;
 }
+
+/*Created by Chris Smith */
+.bg {
+  animation:slide 12s ease-in-out infinite alternate;
+  background-image: linear-gradient(-60deg, #772D8B 50%, #e2725b 50%);
+  bottom:0;
+  left:-50%;
+  opacity:.5;
+  position:fixed;
+  right:-50%;
+  top:0;
+  z-index:-1;
+}
+.bg2 {
+  animation-direction:alternate-reverse;
+  animation-duration:12s;
+}
+.bg3 {
+  animation-duration:12s;
+}
+@keyframes slide {
+  0% {
+    transform:translateX(-25%);
+  }
+  100% {
+    transform:translateX(25%);
+  }
+}
+
 
 </style>

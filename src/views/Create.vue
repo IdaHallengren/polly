@@ -9,9 +9,9 @@
 
     <div> </div>
     <div> </div>
-    <buttonCancel1 class="noselect" v-on:click="cancelPage">
+    <button class="cancel" v-on:click="cancelPage">
       <span class='text'>{{uiLabels.cancelButton}}</span>
-    </buttonCancel1>
+    </button>
 
 
 
@@ -23,94 +23,100 @@
 
   <div class="wrapper">
     <div id="overview">
-
 <!--      <div id="slides">-->
-
-      <div id="overviewPresentationSlide">
-
-        {{fullPoll}}
+<!--      <SlideShow id="overviewPresentationSlide" v-for="(question, i) in allQuestions" v-bind="question:allQuestions[i]">-->
+        <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']" v-bind:key="question" v-bind:questions="fullPoll['questions'][i].q" v-bind:answers="fullPoll['questions'][i].a" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels">
 
 
-      </div>
+      </SlideShow>
 <!--      </div>-->
 
       <button v-on:click="removeSlide" class="icon-btn add-btn" >
        <div class="btn-txt"> {{ uiLabels.removeSlide }} </div>
-     </button>
+      </button>
       <button v-on:click="addSlide" class="icon-btn add-btn" >
         <div class="add-icon"></div>
         <div class="btn-txt"> {{ uiLabels.addSlide }} </div> </button>
 
-
-
     </div>
 
+    <div id="presentation" >
+      <div>
+      </div>
+      <br>
+      <br>
 
-<div id="presentation" >
-    <div>
-
-    </div>
-  <br>
-  <br>
-
-
-    <div></div>
-    <div></div>
+      <div></div>
+      <div></div>
 
     <div>
 <!--      {{uiLabels.question}}:-->
-      <div v-if="typeOfQuestion!='Presentation'"> <!--This is to change the input area for when it is a presentation-->
-        <textarea class="questionInput" type="text"  v-model="question" placeholder="Write your question here" ></textarea>
-      </div>
+    <div v-if="typeOfQuestion!='Presentation'"> <!--This is to change the input area for when it is a presentation-->
+      <textarea class="questionInput" type="text"  v-model="question" placeholder="Write your question here" ></textarea>
+    </div>
 
-      <div v-if="typeOfQuestion==='Presentation'">
-        <textarea class="presentationInput" type="text" v-model="presentation" placeholder="Write your presentation here"></textarea>
-      </div>
+    <div v-if="typeOfQuestion==='Presentation'">
+      <textarea class="presentationInput" type="text" v-model="presentation" placeholder="Write your presentation here"></textarea>
+    </div>
 
-      <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
+    <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
 
-<div v-if="typeOfQuestion!='Presentation'" class="answers" >
-      <div >
+
+    <div v-if="typeOfQuestion!='Presentation'" class="answers" >
+      <div>
         <br>
         {{ uiLabels.answers }}
+      </div>
+        <div class="answerBox">
         <input v-for="(_, i) in answers"
-               v-model="answers[i]" 
+               v-model="answers[i]"
                v-bind:key="'answer'+i"
-            class="answersStyle"
-        >
+               class="answersStyle">
+
 
         <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
-
-
 
           <button v-on:click="removeAnswer" class="icon-btn add-btn">
             <div class="btn-txt">{{ uiLabels.removeAlternative }}</div>
           </button>
+
           <button  v-on:click="addAnswer" class="icon-btn add-btn" >
             <div class="add-icon"></div>
             <div class="btn-txt">{{ uiLabels.addAlternative }}</div>
           </button>
-
-
         </div>
 
         <br>
       </div>
+  <div>
 
-  <br>
+    <span>{{ uiLabels.correctAnswer }}:</span>
+<!--  <templete  class="selectRightAnswer">-->
 
-    <div>
-    <button v-on:click="addQuestion">
-      Add question
-    </button>
-    <input type="number" v-model="questionNumber">
-    <button v-on:click="runQuestion">
-      Run question
-    </button>
-    {{data}}
+
+    <label v-for="(answer, i) in answers" v-bind:key="'answer' + i">
+      <input type="radio" name="test" v-bind:id="answer" v-bind:value="answer" v-model="selectedAnswer">
+      {{answerOptions[i]}}<br></label>
+
+    {{answer}}
+    {{selectedAnswer}}
+
+
+<!--  </templete>-->
+  </div>
+
+        <br>
+
+      <div>
+        <button v-on:click="addQuestion">Add question</button>
+
+        <input type="number" v-model="questionNumber">
+
+        <button v-on:click="runQuestion">Run question</button>
+        {{data}}
+      </div>
     </div>
-    </div>
-    </div>
+  </div>
 
 
     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
@@ -120,13 +126,14 @@
   <div id="editQuestion">
     <div id="v-model-select-question" class="typeOfQuestion">
       <br>
-      <label> {{ uiLabels.chooseTypeOfQuestion }} </label>
+      <label class="labelsText"> {{ uiLabels.chooseTypeOfQuestion }} </label>
       <br>
-      <select v-model="typeOfQuestion" >
-        <option v-on="showAnswerButton" > Quiz </option>
-        <option v-on="showAnswerButton" > {{ uiLabels.voting }} </option>
-        <option v-on="showAnswerButton=!showAnswerButton" > {{ uiLabels.trueOrFalse }} </option>
-        <option v-on="showAnswerButton=!showAnswerButton" > Presentation </option>
+      <select v-model="typeOfQuestion" style="width: 50%">
+
+        <option value="Quiz" > Quiz </option>
+        <option value="Voting"> {{ uiLabels.voting }} </option>
+        <option value="TrueOrFalse" > {{ uiLabels.trueOrFalse }} </option>
+        <option value="Presentation" > Presentation </option>
 
 
       </select>
@@ -134,11 +141,10 @@
 
     </div>
 
-
     <div id="v-model-select-time" class="timeForQuestion" v-if="typeOfQuestion!='Presentation'">
-      <label>{{uiLabels.chooseTimeForQuestion }} </label>
+      <label class="labelsText">{{uiLabels.chooseTimeForQuestion }} </label>
       <br>
-      <select v-model="timeForQuestion" >
+      <select v-model="timeForQuestion" style="width: 30%">
         <option > 5s </option>
         <option> 10s </option>
         <option > 15s </option>
@@ -156,9 +162,9 @@
     </div>
 
     <div v-if="typeOfQuestion!='Presentation'" id="v-model-select-points" class="pointsForQuestion">
-      <label> {{ uiLabels.choosePointsForQuestion}}</label>
+      <label class="labelsText"> {{ uiLabels.choosePointsForQuestion}}</label>
       <br>
-      <select v-model="pointsForQuestion" >
+      <select v-model="pointsForQuestion" style="width: 30%">
         <option > 5p </option>
         <option > 10p </option>
         <option > 15p </option>
@@ -169,148 +175,99 @@
 <!--      <span> Selected: {{ pointsForQuestion }}</span>-->
     </div>
 
-
-
-
-
-
     <div v-on:click= "startPoll= !startPoll" >
+      <button class="continue" v-on:click="createPoll">
+        <span class='text'>{{ uiLabels.createPoll }}</span>
+      </button>
+    </div>
 
-  <buttonCreatePoll class="noselect" v-on:click="createPoll">
-    <span class='text'>{{ uiLabels.createPoll }}</span>
-  </buttonCreatePoll>
+    </div>
 
-
-
-
-
-      <!--    <button v-on:click="createPoll">-->
-<!--      {{ uiLabels.createPoll }}-->
-<!--    </button>-->
-</div>
-
-
-  </div>
-
-    <buttonBack1 class="noselect" v-on:click="cancelPage">
+    <button class="noselect" v-on:click="cancelPage">
       <span class='text'> {{ uiLabels.backButton }} </span>
-    </buttonBack1>
+    </button>
   </div>
-
-
 
   Poll link:
   <input type="text" v-model="pollId">
-
-
-
-
-
-  </div>
-
+</div>
 
 
 <!--  NEXT PAGE  -->
-
-<div v-show="!startPoll" class="wrapperWaitRoom">
-
-  <div> </div>
-
-  <div>
-  <buttonCancel2 class="noselect" v-on:click="cancelPage">
-    <span class='text'>{{uiLabels.cancelButton}}</span>
-  </buttonCancel2>
+  <div v-show="!startPoll" class="wrapperWaitRoom">
+    <div> </div>
+    <div>
+      <button class="cancel" v-on:click="cancelPage"><span class='text'>{{uiLabels.cancelButton}}</span></button>
     </div>
 
-  <div>
-  <div class="pollIdStyle">
-PollId: {{pollId}}
-  </div>
+    <div>
+      <div class="pollIdStyle">
+        PollId: {{pollId}}
+      </div>
+      <div id="QRCode">
+        <qrcode-vue :value="`http://localhost:8080/#/poll/${this.pollId}/${this.lang}`"  :size="size" >  </qrcode-vue>
+      </div>
+    </div>
 
 
-<div id="QRCode">
+    <div>
+      <h2 class="waitingroomHeadline"> {{ uiLabels.waitingRoom }}</h2>
+      <form class = "waitingRoom">
+        <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
+          <span v-if="participants.length>0">
+          <img class="participants"
+            :src="participant.participantImg">
+        <br>
+          {{participant.participantName}}
+            </span>
+        </div>
+      </form>
+    </div>
 
-  <qrcode-vue :value="qrValue" text="pollId"  :size="size" >
+    <div>
+      <button class="noselect" v-on:click="startPoll=!startPoll">
+        <span class='text'> {{ uiLabels.backButton }} </span>
+      </button>
+    </div>
 
-  </qrcode-vue>
-
-</div>
-
-  </div>
-
-
-
-
-
-<div>  <h2> {{ uiLabels.waitingroom }}</h2>
-
-  <form class = "waitingRoom">
-    <div class = "wrapper">
+    <div v-on:click="letsPlayButton=!letsPlayButton">
+      <button class="continue" v-on:click="letsPlay">
+        <span class='text'> {{ uiLabels.letsPlay }} </span>
+      </button>
+    </div>
 
     </div>
 
-  </form>
-
-</div>
-
-
-<div>
-  <buttonBack2 class="noselect" v-on:click="startPoll=!startPoll">
-    <span class='text'> {{ uiLabels.backButton }} </span>
-  </buttonBack2>
-</div>
-
-  <div v-on:click="letsPlayButton=!letsPlayButton">
-    <buttonLetsPlay class="noselect" v-on:click="letsPlay">
-      <span class='text'> {{ uiLabels.letsPlay }} </span>
-    </buttonLetsPlay>
-  </div>
-
-
-</div>
-
 </div>
 
 
 
-<div v-if="letsPlayButton==false">
+<div v-if="letsPlayButton == false">
 
+  <SlideShow v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
 
-  <SlideShow>
 
   </SlideShow>
 
-  {{questions}}
-Timer:
-  Amount of participants answerd
-  <button v-on:click="nextQuestion"></button>
+  <button v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
+  <button v-show="this.questionNumber == allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>
+<!--  {{this.questions}}-->
+<!--{{this.fullPoll['questions'][1].q}}-->
+  {{this.allQuestions}}
+  {{this.allAnswers}}
+  Timer:
+  Amount of participants answered
+
 </div>
-
-
-
-
-
-
-
-
 
 
 </template>
 
 <script>
-
-
 import QrcodeVue from 'qrcode.vue'
-// import html2canvas from 'html2canvas'
-
-
-
 import io from 'socket.io-client';
-import SlideShow from "../components/SlideShow";
+import SlideShow from "../components/SlideShow.vue";
 const socket = io();
-
-
-
 
 
 export default {
@@ -336,33 +293,72 @@ export default {
       pointsForQuestion: "5p",
       showAnswerButton: true,
       startPoll: true,
-      qrValue: `http://localhost:8080/#/poll/${this.pollId}/${this.lang}`,
       size: 300,
       letsPlayButton: true,
-      fullPoll: {}
+      fullPoll: {},
 
+      number: 1,
+      activeQuestion: {},
+      allQuestions:[],
+      allAnswers: [],
+      participants: [],
+      participantName: "",
+      participantImg: "",
+      answerOptions: ['A','B','C','D'],
+      selectedAnswer: "",
+
+      showGameStart: true,
 
 
     }
   },
+
+  watch: {
+    typeOfQuestion: function(newVal) {
+
+      if (newVal === "Quiz" || newVal === "Voting")
+        this.showAnswerButton = true
+      else if (newVal ==='Presentation'){
+        this.showAnswerButton = false
+      }
+      else
+        this.answers.length=2
+        this.showAnswerButton = false
+    }
+  },
+
   created: function () {
     this.lang = this.$route.params.lang;
+    console.log(this.lang)
     this.pollId = this.$route.params.id;
+    console.log(this.pollId)
+    socket.emit('joinPoll', this.pollId)
     this.createPoll();
-     //Fixa så att om den har ett pollId så återanvände den det
+    //Fixa så att om den har ett pollId så återanvände den det
 
     socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
     socket.on("dataUpdate", (data) =>
-        this.data = data
-    )
+        this.data = data)
+
+    socket.on("dataUpdate", (myParticipant) =>
+        this.participants = myParticipant)
+
     socket.on("pollCreated", (data) =>
         this.data = data)
 
     socket.on('fullPoll', (myPoll) =>
-        this.fullPoll = myPoll)
+        {this.fullPoll = myPoll
+        this.questions = myPoll['questions']
+          console.log(this.questions, "test alex")
+        })
+
+    socket.on('participantsAdded', (myParticipant) =>
+        this.participants = myParticipant
+    )
+
 
   },
   methods: {
@@ -370,26 +366,32 @@ export default {
       this.addQuestion();
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
       console.log("Skickat info")
-
-
     },
-    // setPollId: function () {
-    //   this.pollId=Math.floor(Math.random() * 100000);
-    //   this.createPoll()
-    //
-    // },
 
     addQuestion: function () {
+      socket.emit("addQuestion", {
+        pollId: this.pollId,
+        q: this.question,
+        a: this.answers,
+        type: this.typeOfQuestion,
+        time: this.timeForQuestion,
+        correctAnswer: this.selectedAnswer
+      });
 
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, type:this.typeOfQuestion, time:this.timeForQuestion});
-
+      this.question = "";
+      for(let i= 0; i < this.answers.length; i++){
+        this.answers[i]= "";
+      }
 
     },
 
     addAnswer: function () {
-      this.answers.push("")
-
+      if(this.answers.length<4){
+      this.answers.push("")}
+      else
+        this.answers
     },
+
     removeAnswer: function () {
       if (this.answers.length === 1) {
         this.answers();
@@ -401,86 +403,95 @@ export default {
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
       this.questionNumber++; //Added this to increase the number for the question
-
     },
-    addSlide: function () {
 
-     this.addQuestion()
-     this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
+    addSlide: function () {
+      this.allQuestions.push(this.question)
+      
+
+      this.addQuestion()
+      this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
       socket.emit('getPoll', this.pollId)
 
-
+      
       // var p = document.createElement("DIV");
       // p.setAttribute("style", "margin:10px;border:solid;border-radius:10%; background-color:white;height:200px");
       // p.id="removeSlides"
       // document.getElementById("slides").appendChild(p);
-
-
-      //
-      //
-      //   var slides = html2canvas(document.querySelector('#presentation')).then(canvas => {
-      //   document.body.appendChild(canvas)
-      //   slides.id="removePictures"
-
-
-    // });
-
-
-      // this.slides.push("")
+      // });
     },
 
+     finish: function(route) {
+      if (route === 'result') {
+        this.$router.push(`/result/${this.pollId}/${this.lang}`)
+      }
+    },
 
+    nextQuestion: function () {
+      this.questionNumber++;
+      this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
+      socket.emit('dataUpdate', this.allAnswers, this.questionNumber)
+      socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
 
+      /*  this.number = this.fullPoll.questions.length;
+      socket.emit("getPoll", this.pollId);
+      this.question = this.fullPoll["questions"][this.questionNumber].q
+      this.answers = this.fullPoll["questions"][this.questionNumber].a
+      if(this.questionNumber <= this.fullPoll["questions"].length)  {
+        this.questionNumber++;
+        }*/
+    },
 
     removeSlide: function() {
-
       socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
+      this.allQuestions.pop();
       this.questionNumber--;
       socket.emit("dataUpdate", {questionNumber: this.questionNumber});
       this.runQuestion();
 
-
       // document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
-
-
       // document.getElementById('presentation').del(document.getElementById("removePictures"))
-
-
-
-
     },
 
-    nextQuestion: function() {
-
+    cancelPage: function () {
+      this.$router.push('/')
     },
 
 
-
-
-    cancelPage: function() {
-      this.$router.push( '/' )
-
-    },
-
-    letsPlay: function(){
-
-      this.$router.push(`/create/${this.lang}/${this.pollId}`)
-
-socket.emit('startGame' ,this.pollId)
-
+    letsPlay: function () {
+      socket.emit('startGame', {pollId: this.pollId, boolean: this.showGameStart})
+      this.questionNumber = 0;
+      this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
+      socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
 
     }
 
-}}
+  }
 
-
+}
 
 
 </script>
 
 <style>
 
+.waitingroomHeadline{
+  padding-right: 10%;
+  font-size: 2.5vw;
+  font-family: AppleGothic;
+  color: white;
 
+}
+
+.labelsText{
+  font-size: 2vw;
+}
+
+.noselect{
+  position: fixed;
+  bottom: 0.5em;
+  left: 0.5em;
+}
 
 .wrapper{
   display: grid;
@@ -494,151 +505,142 @@ socket.emit('startGame' ,this.pollId)
 #overview{
   border:solid;
   border-radius: 2%;
-  background-color: cadetblue;
+  background-color: #D3D3D3;
   overflow: scroll;
-
+  height: 70%;
 }
 
 #presentation{
   border: solid;
   border-radius: 2%;
   background-color: white;
+  height: 70%
 }
 
 #editQuestion{
   border: solid;
   border-radius: 2%;
-  background-color: cadetblue;
-
-
+  background-color: #D3D3D3;
+  height: 70%
 }
 
 .headlines{
+  margin-top: 1.5em;
   display: grid;
   grid-template-rows: 98% 2%;
   grid-template-columns: 25% 50% 25%;
-  font-size: 40px;
+  font-size: 3vw;
   font-family: AppleGothic;
   font-weight: bold;
-
 }
 
-
 .questionInput{
-  height: 10em;
+  height: 7em;
   max-height: 10em;
   width: 90%;
   font-size: 1vw;
   white-space: pre-wrap;
   font-family: inherit;
   border-radius: 5%;
-
-  white-space: pre-line
-
-
 }
 
 .presentationInput{
-  height: 5em;
+  height: 7em;
+  max-height: 10em;
   width: 90%;
-  font-size: 2em;
-  outline: none;
-  white-space: pre-line
-
+  font-size: 1vw;
+  white-space: pre-wrap;
+  font-family: inherit;
+  border-radius: 5%;
 }
 
-
 .marginPresentation{
-  margin-bottom: 20em;
+  margin-bottom: 25%;
 }
 
 .typeOfQuestion{
-  font-size: 20px;
-  margin-bottom: 30px;
-
+  font-size: 2vw;
+  margin-bottom: 10%;
 }
 
 .timeForQuestion{
-  font-size: 20px;
-  margin-bottom: 30px;
+  font-size: 2vw;
+  margin-bottom: 10%;
 }
-
 
 .pointsForQuestion{
-  font-size: 20px;
+  font-size: 2vw;
 }
 
-
 .answers{
-  font-size: 20px;
-
+  font-size: 1.5vw;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 15% 60% 25%;
 }
 
 .answersStyle{
-  height: 30px;
-  width: 150px;
-  font-size: 15px;
+  height: 5vh;
+  width: 40%;
+  font-size: 1.5vw;
   outline: none;
+}
+
+.selectCorrectAnswer:hover{
+  background: green;
 }
 
 #overviewPresentationSlide{
   border:solid;
   border-radius: 10%;
   background-color: white;
-  height: 200px;
+  height: 30%;
   margin: 10px;
 }
 
-/*#startButton{*/
-/*  margin-top: 31em ;*/
-/*}*/
-
 .pollIdStyle{
-  background-color: lightblue;
   width: 10em;
-  margin-left: 6em;
-  margin-top: 4em;
+  margin-left: 20%;
+  margin-top: 25%;
   text-align: center;
-  font-size: 2em;
-
+  font-size: 2.5vw;
+  font-weight: bold;
+  font-family: AppleGothic;
+  color: white;
 }
-
 
 #QRCode{
-margin-top: 2em;
+  margin-top: 2em;
+
 }
-
-
 
 .wrapperWaitRoom{
   display: grid;
-  grid-gap: 3em;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 1% 79% 20%;
+  grid-template-columns: 40% 60%;
+  grid-template-rows: 1% 70% 20%;
 }
 
 .waitingRoom{
-  width: 8em;
-  height: 28em;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-top: 50px;
-  padding-right: 50px;
-  padding-left: 50px;
-  background-color: cadetblue;
-  border: 0.3em solid black;
-  overflow-y: auto;
-  padding-left: 250px;
-  padding-right: 250px;
+  overflow: scroll;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 25% 25% 25% 25%;
+  grid-column: 2;
+  border: 5px solid white;
+  background-color: #D3D3D3;
+  width: 50%;
+  position: absolute;
+  left: 40%;
+  height: 80%
 }
 
-
-
-
-
-
-
-
+.participants{
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  padding: 15px;
+  position: relative;
+}
 
 .icon-btn {
   width: 50px;
@@ -723,197 +725,98 @@ margin-top: 2em;
   top: calc(50% - 2px);
 }
 
-
-
-
-
-buttonCancel1{
-  width: 150px;
-  height: 50px;
+/* Personal altered buttons with source code from Chance Squires*/
+.cancel{
+  width: 6%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: red;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: red;
-  margin-left: 79.5em;
+  background: #EF6461;
+  margin-right: 0.5%;
   margin-bottom: 0.5em;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
 
 }
 
-/*button1, button1 span {*/
-/*  transition: 200ms;*/
-/*}*/
-
-buttonCancel1 .text {
-  transform: translateX(35px);
+.cancel .text {
+  transform: translateX(20%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
+.cancel:hover {
+  background: #ed3632;
+}
 
-
-buttonCancel2{
-  width: 150px;
-  height: 50px;
+/* Personal altered buttons with source code from Chance Squires*/
+.continue{
+  width: 7%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: #ff3636;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #ff3636;
+  background: #558564;
   margin-left: 32em;
+  position: fixed;
+  bottom: 0.5em;
+  right:0.5em;
+
 }
 
-/*button1, button1 span {*/
-/*  transition: 200ms;*/
-/*}*/
-
-buttonCancel2 .text {
-  transform: translateX(35px);
+.continue .text {
+  transform: translateX(5%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-/*button1 .icon {*/
-/*  position: absolute;*/
-/*  border-left: 1px solid #c41b1b;*/
-/*  transform: translateX(110px);*/
-/*  height: 40px;*/
-/*  width: 40px;*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*}*/
+.continue:hover {
+  background: #1d823c;
+}
 
-/*button1 svg {*/
-/*  width: 15px;*/
-/*  fill: #eee;*/
-/*}*/
-
-
-
-
-buttonletsPlay{
-  width: 150px;
-  height: 50px;
+/* Personal altered buttons with source code from Chance Squires*/
+.noselect{
+  width: 7%;
+  height: 6%;
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: #006400;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #006400;
-  margin-left: 32em;
-
-}
-
-buttonletsPlay .text {
-  transform: translateX(35px);
-  color: white;
-  font-weight: bold;
-}
-
-
-
-buttonletsPlay:hover {
-  background: #008000;
-}
-
-
-
-buttonCreatePoll{
-  width: 150px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background: #006400;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #006400;
-  margin-top: 32em ;
-  margin-left: 12.5em;
-
-}
-
-buttonCreatePoll .text {
-  transform: translateX(35px);
-  color: white;
-  font-weight: bold;
-}
-
-
-
-buttonCreatePoll:hover {
-  background: #008000;
-}
-
-
-
-buttonBack1{
-  width: 150px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background: #1E90FF;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #1E90FF;
-  left: 0em;
+  background: #5995ED;
+  left: 0.5em;
   margin-top:1.5em;
-
 }
 
-buttonBack1 .text {
-  transform: translateX(35px);
+.noselect .text {
+  transform: translateX(34%);
   color: white;
   font-weight: bold;
+  font-size: 1.2vw;
+  font-family: AppleGothic;
+}
+
+.noselect:hover {
+  background: #1d72f0;
+}
+
+.selectRightAnswer:hover{
+
 }
 
 
-
-buttonBack1:hover {
-  background: #00BFFF;
-}
-
-
-
-
-
-buttonBack2{
-  width: 150px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background: #1E90FF;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #1E90FF;
-  left: 0em;
-
-}
-
-buttonBack2 .text {
-  transform: translateX(35px);
-  color: white;
-  font-weight: bold;
-}
-
-
-
-buttonBack2:hover {
-  background: #00BFFF;
-}
 
 </style>

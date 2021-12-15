@@ -25,10 +25,12 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.lang = lang;  
     poll.questions = [];
     poll.answers = [];
+    poll.correctAnswer= "";
     poll.participants = [];
     poll.currentQuestion = 0;
     poll.typeOfQuestion="";
     poll.timeForQuestion=0;
+    poll.numberOfParticipants= 0;
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
   }
@@ -53,7 +55,7 @@ Data.prototype.addQuestion = function(pollId, q) {
   }
 }
 
-Data.prototype.getQuestion = function(pollId, qId=null) {
+Data.prototype.getQuestion = function(pollId, qId=0) {
   const poll = this.polls[pollId];
   console.log("question requested for ", pollId, qId);
   if (typeof poll !== 'undefined') {
@@ -89,7 +91,7 @@ Data.prototype.getAnswers = function(pollId) {
   if (typeof poll !== 'undefined') {
     const answers = poll.answers[poll.currentQuestion];
     if (typeof poll.questions[poll.currentQuestion] !== 'undefined') {
-      return {q: poll.questions[poll.currentQuestion].q, a: answers, type: poll.typeOfQuestion, time: poll.timeForQuestion};
+      return {q: poll.questions[poll.currentQuestion].q, a: answers, type: poll.typeOfQuestion, time: poll.timeForQuestion, correctAnswer: poll.correctAnswer};
     }
   }
   return {}
@@ -104,13 +106,8 @@ Data.prototype.addParticipant = function(pollId, participant) {
 }
 
 Data.prototype.getParticipants = function(pollId) {
-
-  console.log('Här är pollId: ',  pollId)
   const poll = this.polls[pollId];
-  console.log('Här är poll i Data: ',  poll)
-
   if (typeof poll !== 'undefined') {
-    console.log('hit kommer jag iaf!', poll.participants)
       return poll.participants
   }
   return {}
@@ -120,9 +117,25 @@ Data.prototype.removeQuestion = function(pollId, q) {
   const poll = this.polls[pollId];
   console.log("question removed", pollId, q);
   if (typeof poll !== 'undefined') {
-    poll.questions.pop(q);
+    poll.questions.pop();
   }
 }
+
+Data.prototype.removeParticipant= function(pollId, participant){
+  const poll = this.polls[pollId];
+  console.log("participant removed", pollId, participant);
+  if (typeof poll !== 'undefined') {
+    for (let i = 0; i<poll.participants.length; i++ ) {
+      if (poll.participants[i].participantId === participant.participantId) {
+        poll.participants.splice(i, 1)
+      }
+    }
+  }
+}
+
+
+
+
 
 module.exports = Data;
 

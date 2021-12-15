@@ -32,8 +32,8 @@ methods: {
 <style scoped>
 
 #avatarImg{
-  width: 100px;
-  height: 100px;
+  width: 50%;
+  height: auto;
 }
 
 .avatars img {

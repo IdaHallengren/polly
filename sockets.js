@@ -1,7 +1,7 @@
 function sockets(io, socket, data) {
   socket.emit('init', data.getUILabels());
 
-  socket.on('pageLoaded', function (lang) {
+  socket.on('pageLoaded', function (lang = 'en') {
     socket.emit('init', data.getUILabels(lang));
   });
 
@@ -14,9 +14,7 @@ function sockets(io, socket, data) {
   });
 
   socket.on('addQuestion', function (d) {
-
-    data.addQuestion(d.pollId, {q: d.q, a: d.a, type: d.type, time: d.time});
-
+    data.addQuestion(d.pollId, {q: d.q, a: d.a, type: d.type, time: d.time, correctAnswer: d.correctAnswer});
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
   });
 
@@ -28,7 +26,6 @@ function sockets(io, socket, data) {
 
     socket.on('runQuestion', function (d) {
       io.to(d.pollId).emit('newQuestion', data.getQuestion(d.pollId, d.questionNumber));
-
       io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
     });
 
@@ -57,10 +54,15 @@ function sockets(io, socket, data) {
     })
 
 
-  socket.on('startGame' , function(pollId){
-    console.log('FUNKA DÅÅ')
-     io.to(pollId).emit('gameStart')
+  socket.on('startGame' , function(d){
+     io.to(d.pollId).emit('gameStart', d.boolean)
   })
+
+  socket.on('removeParticipant', function(d){
+    data.removeParticipant(d.pollId , {participantName: d.participantName, participantId: d.participantId, participantImg: d.participantImg})
+    io.to(d.pollId).emit('dataUpdate', data.getParticipants(d.pollId))
+  })
+
 
 }
 
