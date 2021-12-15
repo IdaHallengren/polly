@@ -34,5 +34,6 @@
 	"waitingRoom": "Waiting room",
 	"waitingRoomNr": "Wating room nr: ",
 	"waitParticipant": "Wait for more Participants to arrive",
-	"waitQuestionMaster": "Please wait for the poll-creator to start the game!"
+	"waitQuestionMaster": "Please wait for the poll-creator to start the game!",
+	"correctAnswer": "Correct answer"
 }
