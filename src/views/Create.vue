@@ -23,65 +23,61 @@
 
   <div class="wrapper">
     <div id="overview">
-
 <!--      <div id="slides">-->
-
       <div id="overviewPresentationSlide">
-
         {{fullPoll}}
-
-
       </div>
 <!--      </div>-->
 
       <button v-on:click="removeSlide" class="icon-btn add-btn" >
        <div class="btn-txt"> {{ uiLabels.removeSlide }} </div>
-     </button>
+      </button>
       <button v-on:click="addSlide" class="icon-btn add-btn" >
         <div class="add-icon"></div>
         <div class="btn-txt"> {{ uiLabels.addSlide }} </div> </button>
 
-
-
     </div>
 
+    <div id="presentation" >
+      <div>
+      </div>
+      <br>
+      <br>
 
-<div id="presentation" >
-    <div>
-
-    </div>
-  <br>
-  <br>
-
+      <div></div>
+      <div></div>
 
     <div>
 <!--      {{uiLabels.question}}:-->
-      <div v-if="typeOfQuestion!='Presentation'"> <!--This is to change the input area for when it is a presentation-->
-        <textarea class="questionInput" type="text"  v-model="question" placeholder="Write your question here" ></textarea>
-      </div>
+    <div v-if="typeOfQuestion!='Presentation'"> <!--This is to change the input area for when it is a presentation-->
+      <textarea class="questionInput" type="text"  v-model="question" placeholder="Write your question here" ></textarea>
+    </div>
 
-      <div v-if="typeOfQuestion==='Presentation'">
-        <textarea class="presentationInput" type="text" v-model="presentation" placeholder="Write your presentation here"></textarea>
-      </div>
+    <div v-if="typeOfQuestion==='Presentation'">
+      <textarea class="presentationInput" type="text" v-model="presentation" placeholder="Write your presentation here"></textarea>
+    </div>
 
-      <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
+    <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
 
-<div v-if="typeOfQuestion!='Presentation'" class="answers" >
-      <div >
+
+    <div v-if="typeOfQuestion!='Presentation'" class="answers" >
+      <div>
+        <br>
         {{ uiLabels.answers }}
       </div>
         <div class="answerBox">
         <input v-for="(_, i) in answers"
                v-model="answers[i]"
                v-bind:key="'answer'+i"
-            class="answersStyle"
-        >
+               class="answersStyle">
 
 
         <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
+
           <button v-on:click="removeAnswer" class="icon-btn add-btn">
             <div class="btn-txt">{{ uiLabels.removeAlternative }}</div>
           </button>
+
           <button  v-on:click="addAnswer" class="icon-btn add-btn" >
             <div class="add-icon"></div>
             <div class="btn-txt">{{ uiLabels.addAlternative }}</div>
@@ -91,30 +87,30 @@
         <br>
       </div>
   <div>
+
     <span>{{ uiLabels.correctAnswer }}:</span>
   <div v-for="(answer, i) in answers" v-bind:key="'answer' + i" class="selectRightAnswer">
     <input type="radio" id="{{answer}}" v-bind="selectedAnswer" value="{{answers[i]}}">
     <label for="{{answer}}"> {{answerOptions[i]}}</label>
 
+    
 
 
   </div>
   </div>
 
-  <br>
+        <br>
 
-    <div>
-    <button v-on:click="addQuestion">
-      Add question
-    </button>
-    <input type="number" v-model="questionNumber">
-    <button v-on:click="runQuestion">
-      Run question
-    </button>
-    {{data}}
+      <div>
+        <button v-on:click="addQuestion">Add question</button>
+
+        <input type="number" v-model="questionNumber">
+
+        <button v-on:click="runQuestion">Run question</button>
+        {{data}}
+      </div>
     </div>
-    </div>
-    </div>
+  </div>
 
 
     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
@@ -127,17 +123,17 @@
       <label class="labelsText"> {{ uiLabels.chooseTypeOfQuestion }} </label>
       <br>
       <select v-model="typeOfQuestion" style="width: 50%">
-        <option value="quiz" > Quiz </option>
-        <option value="voting"> {{ uiLabels.voting }} </option>
-        <option value="trueorfalse" > {{ uiLabels.trueOrFalse }} </option>
-        <option value="presentation" > Presentation </option>
+
+        <option value="Quiz" > Quiz </option>
+        <option value="Voting"> {{ uiLabels.voting }} </option>
+        <option value="TrueOrFalse" > {{ uiLabels.trueOrFalse }} </option>
+        <option value="Presentation" > Presentation </option>
 
 
       </select>
 <!--  <span> Selected: {{ showAnswerButton }}</span>-->
 
     </div>
-
 
     <div id="v-model-select-time" class="timeForQuestion" v-if="typeOfQuestion!='Presentation'">
       <label class="labelsText">{{uiLabels.chooseTimeForQuestion }} </label>
@@ -173,15 +169,14 @@
 <!--      <span> Selected: {{ pointsForQuestion }}</span>-->
     </div>
 
-
     <div v-on:click= "startPoll= !startPoll" >
-  <button class="continue" v-on:click="createPoll">
-    <span class='text'>{{ uiLabels.createPoll }}</span>
-  </button>
+      <button class="continue" v-on:click="createPoll">
+        <span class='text'>{{ uiLabels.createPoll }}</span>
+      </button>
     </div>
 
+    </div>
 
-  </div>
     <button class="noselect" v-on:click="cancelPage">
       <span class='text'> {{ uiLabels.backButton }} </span>
     </button>
@@ -189,54 +184,51 @@
 
   Poll link:
   <input type="text" v-model="pollId">
-  </div>
+</div>
 
 
 <!--  NEXT PAGE  -->
-<div v-show="!startPoll" class="wrapperWaitRoom">
-  <div> </div>
-  <div>
-   <button class="cancel" v-on:click="cancelPage">
-    <span class='text'>{{uiLabels.cancelButton}}</span>
-    </button>
-  </div>
+  <div v-show="!startPoll" class="wrapperWaitRoom">
+    <div> </div>
+    <div>
+      <button class="cancel" v-on:click="cancelPage"><span class='text'>{{uiLabels.cancelButton}}</span></button>
+    </div>
 
-  <div>
-  <div class="pollIdStyle">
-PollId: {{pollId}}
-  </div>
-<div id="QRCode">
-  <qrcode-vue :value="qrValue" text="pollId"  :size="size" >  </qrcode-vue>
-</div>
-  </div>
+    <div>
+      <div class="pollIdStyle">
+        PollId: {{pollId}}
+      </div>
+      <div id="QRCode">
+        <qrcode-vue :value="qrValue" text="pollId"  :size="size" >  </qrcode-vue>
+      </div>
+    </div>
 
 
-<div>
- <h2 class="waitingroomHeadline"> {{ uiLabels.waitingRoom }}</h2>
-<form class = "waitingRoom">
-     <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
-       <img class="participants"
+    <div>
+      <h2 class="waitingroomHeadline"> {{ uiLabels.waitingRoom }}</h2>
+      <form class = "waitingRoom">
+        <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
+          <img class="participants"
             :src="participant.participantImg" >
-       <br>
-       {{participant.participantName}}
-     </div>
-  </form>
-</div>
+        <br>
+          {{participant.participantName}}
+        </div>
+      </form>
+    </div>
 
-<div>
-  <button class="noselect" v-on:click="startPoll=!startPoll">
-    <span class='text'> {{ uiLabels.backButton }} </span>
-  </button>
-</div>
+    <div>
+      <button class="noselect" v-on:click="startPoll=!startPoll">
+        <span class='text'> {{ uiLabels.backButton }} </span>
+      </button>
+    </div>
 
-  <div v-on:click="letsPlayButton=!letsPlayButton">
-    <button class="continue" v-on:click="letsPlay">
-      <span class='text'> {{ uiLabels.letsPlay }} </span>
-    </button>
-  </div>
+    <div v-on:click="letsPlayButton=!letsPlayButton">
+      <button class="continue" v-on:click="letsPlay">
+        <span class='text'> {{ uiLabels.letsPlay }} </span>
+      </button>
+    </div>
 
-
- </div>
+    </div>
 
 </div>
 
@@ -244,10 +236,7 @@ PollId: {{pollId}}
 
 <div v-if="letsPlayButton == false">
 
-
   <SlideShow v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
-
-
 
 
   </SlideShow>
@@ -256,10 +245,10 @@ PollId: {{pollId}}
   <button v-show="this.questionNumber == allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>-->
 <!--  {{this.questions}}-->
 <!--{{this.fullPoll['questions'][1].q}}-->
-{{this.allQuestions}}
+  {{this.allQuestions}}
   {{this.allAnswers}}
-Timer:
-  Amount of participants answerd
+  Timer:
+  Amount of participants answered
 
 </div>
 
@@ -267,26 +256,16 @@ Timer:
 </template>
 
 <script>
-
-
 import QrcodeVue from 'qrcode.vue'
-// import html2canvas from 'html2canvas'
-
-
-// import Waiting from "../components/Waiting";
 import io from 'socket.io-client';
 import SlideShow from "../components/SlideShow.vue";
 const socket = io();
-
-
-
 
 
 export default {
   name: 'Create',
   components: {
     SlideShow,
-    // Waiting,
     QrcodeVue
   },
 
@@ -321,15 +300,22 @@ export default {
       answerOptions: ['A','B','C','D'],
       selectedAnswer: "",
 
+      showGameStart: true,
+
+
     }
   },
 
   watch: {
     typeOfQuestion: function(newVal) {
 
-      if (newVal === "quiz" || newVal === "voting")
+      if (newVal === "Quiz" || newVal === "Voting")
         this.showAnswerButton = true
+      else if (newVal ==='Presentation'){
+        this.showAnswerButton = false
+      }
       else
+        this.answers.length=2
         this.showAnswerButton = false
     }
   },
@@ -359,7 +345,6 @@ export default {
         this.questions = myPoll['questions']
           console.log(this.questions, "test alex")
         })
-
 
     socket.on('participantsAdded', (myParticipant) =>
     { console.log('kommer du hit')
@@ -478,10 +463,11 @@ export default {
     },
 
     letsPlay: function () {
+      socket.emit('startGame', this.pollId, this.showGameStart)
       this.questionNumber = 0;
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
       socket.emit('dataUpdate', this.questionNumber, this.allAnswers)
-      socket.emit('startGame', this.pollId)
+
     }
 
   }
@@ -559,11 +545,13 @@ export default {
 }
 
 .presentationInput{
-  height: 5em;
+  height: 7em;
+  max-height: 10em;
   width: 90%;
-  font-size: 2vw;
-  outline: none;
-  white-space: pre-line;
+  font-size: 1vw;
+  white-space: pre-wrap;
+  font-family: inherit;
+  border-radius: 5%;
 }
 
 .marginPresentation{

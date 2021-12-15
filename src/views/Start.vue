@@ -1,4 +1,10 @@
 <template>
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+
+
+
 <main class="start">
 
 <div id="langDiv">
@@ -94,7 +100,7 @@ export default {
 <style>
 
 body{
-  background-color: #317773;
+  /*background-color: #317773;*/
 }
 
 #wrapperHead {
@@ -174,7 +180,9 @@ body{
 }
 
 .start button:hover {
-  box-shadow: 2em 0.25em 0 #317773, -2em -0.25em 0 #317773;
+
+  /*box-shadow: 2em 0.25em 0 #317773, -2em -0.25em 0 #317773;*/
+
   background: #5995ED;
   color: White;
 }
@@ -241,8 +249,6 @@ body{
   position: fixed;
   bottom: 0.5em;
   left: 0.5em;
-
-
 }
 
 .backButton .text {
@@ -256,100 +262,36 @@ body{
   background: #1d72f0;
 }
 
-
-
 #textFont{
   font-size: xx-large;
   color: white;
 }
 
-.effect1 {
-  color: #222;
-  text-decoration: none;
-  font-family: sans-serif;
-  font-size: 24px;
-  position: relative;
-  padding: 10px 50px 10px 20px;
-
-  -webkit-transition: all 0.3s;
-
-  -o-transition: all 0.3s;
-
-  transition: all 0.3s;
-
-  -webkit-transform: scale(1);
-
-  -ms-transform: scale(1);
-
-  transform: scale(1); /*change scale(3) to scale(1)*/
+.bg {
+  animation:slide 12s ease-in-out infinite alternate;
+  background-image: linear-gradient(-60deg, #772D8B 50%, #e2725b 50%);
+  bottom:0;
+  left:-50%;
+  opacity:.5;
+  position:fixed;
+  right:-50%;
+  top:0;
+  z-index:-1;
 }
-
-.effect1 .bg {
-  background: #222;
-  width: 30px;
-  height: 2px;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  margin-top: -1px;
-  z-index: -1;
-
-  -webkit-transition: all 0.3s;
-
-  -o-transition: all 0.3s;
-
-  transition: all 0.3s;
+.bg2 {
+  animation-direction:alternate-reverse;
+  animation-duration:12s;
 }
-
-.effect1:hover {
-  padding-right: 20px;
-  color: #fff;
+.bg3 {
+  animation-duration:12s;
 }
-
-.effect1:hover .bg {
-  height: 100%;
-  width: 100%;
-  -webkit-transform: translate(0, -50%);
-  -ms-transform: translate(0, -50%);
-  transform: translate(0, -50%);
-}
-
-.effect1 .bg:before, .effect1 .bg:after {
-  content: '';
-  height: 2px;
-  width: 10px;
-  background: #222;
-  position: absolute;
-  right: -2px;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-}
-
-.effect1 .bg:before {
-  bottom: 3px;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-.effect1 .bg:after{
-  top: 3px;
-  -webkit-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-
-.effect1:hover .bg:before,
-.effect1:hover .bg:after{
-  right: 0;
-}
-
-.effect1:hover .bg:before{
-  bottom: 6px;
-}
-
-.effect1:hover .bg:after{
-  top: 6px;
+@keyframes slide {
+  0% {
+    transform:translateX(-25%);
+  }
+  100% {
+    transform:translateX(25%);
+  }
 }
 
 
