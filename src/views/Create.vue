@@ -462,6 +462,7 @@ export default {
 
 .waitingroomHeadline{
   padding-right: 40%;
+  font-size: 2.5vw;
 }
 
 .labelsText{
@@ -593,7 +594,7 @@ margin-top: 2em;
 
 .wrapperWaitRoom{
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 40% 60%;
   grid-template-rows: 1% 70% 20%;
 }
 
