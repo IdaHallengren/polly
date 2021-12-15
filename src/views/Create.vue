@@ -59,14 +59,18 @@
 
     <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
 
+
     <div v-if="typeOfQuestion!='Presentation'" class="answers" >
       <div>
         <br>
         {{ uiLabels.answers }}
+      </div>
+        <div class="answerBox">
         <input v-for="(_, i) in answers"
-               v-model="answers[i]" 
+               v-model="answers[i]"
                v-bind:key="'answer'+i"
                class="answersStyle">
+
 
         <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
 
@@ -82,6 +86,16 @@
 
         <br>
       </div>
+  <div>
+    <span>Correct answer:</span>
+  <div v-for="(answer, i) in answers" v-bind:key="answer" class="selectRightAnswer">
+    <input type="radio" id="selectCorrectAnswer" v-model="selectedAnswer" value="answer">
+    <label for="selectCorrectAnswer"> {{answerOptions[i]}}</label>
+
+
+
+  </div>
+  </div>
 
         <br>
 
@@ -209,7 +223,6 @@
       </button>
     </div>
 
-
     </div>
 
 </div>
@@ -280,6 +293,8 @@ export default {
       participants: [],
       participantName: "",
       participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
+      answerOptions: ['A','B','C','D'],
+      selectedAnswer: "",
 
     }
   },
@@ -539,13 +554,20 @@ export default {
 
 .answers{
   font-size: 1.5vw;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 15% 60% 25%;
+
 }
 
 .answersStyle{
   height: 5vh;
-  width: 30%;
+  width: 40%;
   font-size: 1.5vw;
   outline: none;
+}
+.selectCorrectAnswer:hover{
+  background: green;
 }
 
 #overviewPresentationSlide{
@@ -762,6 +784,10 @@ margin-top: 2em;
 
 .noselect:hover {
   background: #1d72f0;
+}
+
+.selectRightAnswer:hover{
+
 }
 
 
