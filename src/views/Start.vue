@@ -161,6 +161,7 @@ body{
   grid-template-columns: 25% 25% 25% 25%;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .start .button {
   height:10vh;
   width: 15vw;
@@ -180,9 +181,7 @@ body{
 }
 
 .start button:hover {
-
   /*box-shadow: 2em 0.25em 0 #317773, -2em -0.25em 0 #317773;*/
-
   background: #5995ED;
   color: White;
 }
@@ -195,6 +194,7 @@ body{
   grid-row: 1;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .okButton{
   width: 5vw;
   height: 8vh;
@@ -235,6 +235,7 @@ body{
   font-family: AppleGothic;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .backButton{
   width: 7%;
   height: 6%;
@@ -267,6 +268,7 @@ body{
   color: white;
 }
 
+/*Created by Chris Smith */
 .bg {
   animation:slide 12s ease-in-out infinite alternate;
   background-image: linear-gradient(-60deg, #772D8B 50%, #e2725b 50%);

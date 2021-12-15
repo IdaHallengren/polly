@@ -32,7 +32,6 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.timeForQuestion=0;
     poll.numberOfParticipants= 0;
     this.polls[pollId] = poll;
-
     console.log("poll created", pollId, poll);
   }
   return this.polls[pollId];
@@ -118,7 +117,7 @@ Data.prototype.removeQuestion = function(pollId, q) {
   const poll = this.polls[pollId];
   console.log("question removed", pollId, q);
   if (typeof poll !== 'undefined') {
-    poll.questions.pop(q);
+    poll.questions.pop();
   }
 }
 
