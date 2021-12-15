@@ -30,7 +30,7 @@ export default {
   props: {
     uiLabels: Object,
     participants: Array,
-    pollId: Number
+    pollId: String
   },
 
   data: function () {

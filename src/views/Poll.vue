@@ -5,12 +5,15 @@
             v-on:answer="submitAnswer"/>
 
 </div>-->
-<div v-if="showWaiting">
+
+<div v-if="!showGameStart">
+
+<div v-if="!showWaiting">
   <button class="cancelButton" v-on:click="newPage('/')"><span class='text'>{{uiLabels.cancelButton}}</span>
   </button>
   <p class="fontSize"> {{uiLabels.pollId}} {{pollId}} </p>
 
-    <div v-show ="showName">
+    <div v-show ="!showName">
       <div class = "wrapperName">
         <p class="fontSize">{{uiLabels.enterName}}</p>
          <div>
@@ -22,7 +25,7 @@
 
 
   <div id ="HideAvatars">
-    <div v-if = "showName===false">
+    <div v-if = "showName">
       <p class="fontSize">{{uiLabels.name}}{{participantName}} </p>
 
         <section id="selectAvatar">
@@ -42,21 +45,35 @@
         </form>
       </div>
 
-      <div v-on:click="showWaiting = !showWaiting">
-        <button class="continueButton" v-on:click="newPage('null')" ><span class='text'>{{uiLabels.continueButton}}</span></button>
-      </div>
+        <div  v-on:click="showWaiting=true">
+        <button class="continueButton"  v-on:click="newPage('add')"><span class='text'>{{uiLabels.continueButton}}</span></button>
+        </div>
         <button class = "backButton" v-on:click = "showName = !showName"><span class='text'>{{uiLabels.backButton}}</span></button>
     </div>
   </div>
 </div>
 
-<div v-if="!showWaiting">
+<div v-if="showWaiting">
 
   <Waiting v-bind:participants="participants" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels"></Waiting>
 
   <button class="cancelButton" v-on:click="deleteInfo('delete')" ><span class='text'>{{uiLabels.cancelButton}}</span></button>
 
 </div>
+</div>
+
+<div v-if="showGameStart">
+
+ <SlideShow v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
+
+ </SlideShow>
+
+</div>
+
+
+
+
+
 
 </template>
 
@@ -68,12 +85,14 @@ import AvatarLoop from '../components/AvatarLoop.vue'
 import Waiting from '../components/Waiting.vue'
 import io from 'socket.io-client'
 import avatar from '../data/avatar.json'
+import SlideShow from "../components/SlideShow";
 
 const socket = io();
 
 export default {
   name: 'Poll',
   components: {
+    SlideShow,
     AvatarLoop,
     Waiting
   },
@@ -85,15 +104,21 @@ export default {
       participantName: "",
       participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
       participantId: 0,
-      showName: true,
-      showID: true,
+      showName: false,
+      showID: false,
 /*      question: {
         q: "",
         a: []
       },*/
       pollId: "inactive poll",
-      showWaiting: true,
+      showWaiting: false,
       participants: [],
+      showGameStart: false,
+
+      fullPoll: {},
+      allAnswers: [],
+      questionNumber:0,
+      allQuestions:[],
     }
   },
 
@@ -118,14 +143,23 @@ export default {
         this.participants = myParticipant
     )
 
-    socket.on('gameStart', () => {
-          this.$router.push(`/result/${this.pollId}/${this.lang}` )
-        }
-    )
+    socket.on('gameStart', (myBoolean) => {
+      console.log('SHOW GAME START')
+        this.showGameStart= myBoolean
+        })
 
     socket.on("dataUpdate", (myParticipant) =>
         this.participants = myParticipant
     )
+
+    socket.on('fullPoll', (myPoll) =>
+    {this.fullPoll = myPoll
+      this.questions = myPoll['questions']
+      console.log(this.questions, "test alex")
+    })
+
+
+
   },
 
   methods: {

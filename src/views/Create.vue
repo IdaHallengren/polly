@@ -310,6 +310,9 @@ export default {
       participantName: "",
       participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
 
+      showGameStart: true,
+
+
     }
   },
 
@@ -348,7 +351,6 @@ export default {
         this.questions = myPoll['questions']
           console.log(this.questions, "test alex")
         })
-
 
     socket.on('participantsAdded', (myParticipant) =>
     { console.log('kommer du hit')
@@ -460,10 +462,11 @@ export default {
     },
 
     letsPlay: function () {
+      socket.emit('startGame', this.pollId, this.showGameStart)
       this.questionNumber = 0;
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
       socket.emit('dataUpdate', this.questionNumber, this.allAnswers)
-      socket.emit('startGame', this.pollId)
+
     }
 
   }
