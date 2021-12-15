@@ -9,9 +9,9 @@
 
     <div> </div>
     <div> </div>
-    <buttonCancel class="cancel" v-on:click="cancelPage">
+    <button class="cancel" v-on:click="cancelPage">
       <span class='text'>{{uiLabels.cancelButton}}</span>
-    </buttonCancel>
+    </button>
 
 
 
@@ -80,8 +80,6 @@
         >
 
         <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
-
-
           <button v-on:click="removeAnswer" class="icon-btn add-btn">
             <div class="btn-txt">{{ uiLabels.removeAlternative }}</div>
           </button>
@@ -89,8 +87,6 @@
             <div class="add-icon"></div>
             <div class="btn-txt">{{ uiLabels.addAlternative }}</div>
           </button>
-
-
         </div>
 
         <br>
@@ -169,111 +165,65 @@
     </div>
 
 
-
-
-
-
     <div v-on:click= "startPoll= !startPoll" >
-
-  <buttonContinue class="continue" v-on:click="createPoll">
+  <button class="continue" v-on:click="createPoll">
     <span class='text'>{{ uiLabels.createPoll }}</span>
-  </buttonContinue>
-
-
-
-
-
-      <!--    <button v-on:click="createPoll">-->
-<!--      {{ uiLabels.createPoll }}-->
-<!--    </button>-->
-</div>
-
-
-  </div>
-
-    <buttonBack class="noselect" v-on:click="cancelPage">
-      <span class='text'> {{ uiLabels.backButton }} </span>
-    </buttonBack>
-  </div>
-
-
-
-  Poll link:
-  <input type="text" v-model="pollId">
-
-
-
-
-
-  </div>
-
-
-
-<!--  NEXT PAGE  -->
-
-<div v-show="!startPoll" class="wrapperWaitRoom">
-
-  <div> </div>
-
-  <div>
-  <buttonCancel class="cancel" v-on:click="cancelPage">
-    <span class='text'>{{uiLabels.cancelButton}}</span>
-  </buttonCancel>
+  </button>
     </div>
 
 
+  </div>
+    <button class="noselect" v-on:click="cancelPage">
+      <span class='text'> {{ uiLabels.backButton }} </span>
+    </button>
+  </div>
+
+  Poll link:
+  <input type="text" v-model="pollId">
+  </div>
+
+
+<!--  NEXT PAGE  -->
+<div v-show="!startPoll" class="wrapperWaitRoom">
+  <div> </div>
+  <div>
+   <button class="cancel" v-on:click="cancelPage">
+    <span class='text'>{{uiLabels.cancelButton}}</span>
+    </button>
+  </div>
 
   <div>
   <div class="pollIdStyle">
 PollId: {{pollId}}
   </div>
-
-
 <div id="QRCode">
-
-  <qrcode-vue :value="qrValue" text="pollId"  :size="size" >
-
-  </qrcode-vue>
-
+  <qrcode-vue :value="qrValue" text="pollId"  :size="size" >  </qrcode-vue>
 </div>
-
   </div>
-
-
 
 
 <div>
  <h2 class="waitingroomHeadline"> {{ uiLabels.waitingRoom }}</h2>
-
-
 <form class = "waitingRoom">
-<!--   <div class = "wrapper">-->
      <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
-
        <img class="participants"
             :src="participant.participantImg" >
        <br>
        {{participant.participantName}}
-
      </div>
-
-<!--  </div>-->
-
   </form>
-
-
 </div>
 
 <div>
-  <buttonBack class="noselect" v-on:click="startPoll=!startPoll">
+  <button class="noselect" v-on:click="startPoll=!startPoll">
     <span class='text'> {{ uiLabels.backButton }} </span>
-  </buttonBack>
+  </button>
 </div>
 
   <div v-on:click="letsPlayButton=!letsPlayButton">
-    <buttonContinue class="continue" v-on:click="letsPlay">
+    <button class="continue" v-on:click="letsPlay">
       <span class='text'> {{ uiLabels.letsPlay }} </span>
-    </buttonContinue>
+    </button>
   </div>
 
 
@@ -283,17 +233,25 @@ PollId: {{pollId}}
 
 
 
-<div v-if="letsPlayButton==false">
+<div v-if="letsPlayButton == false">
 
 
-  <SlideShow>
+  <SlideShow v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
+
+
+
 
   </SlideShow>
 
-  {{questions}}
+  <button v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
+  <button v-show="this.questionNumber == allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>-->
+<!--  {{this.questions}}-->
+<!--{{this.fullPoll['questions'][1].q}}-->
+{{this.allQuestions}}
+  {{this.allAnswers}}
 Timer:
   Amount of participants answerd
-  <button v-on:click="nextQuestion"></button>
+
 </div>
 
 
@@ -308,7 +266,7 @@ import QrcodeVue from 'qrcode.vue'
 
 // import Waiting from "../components/Waiting";
 import io from 'socket.io-client';
-import SlideShow from "../components/SlideShow";
+import SlideShow from "../components/SlideShow.vue";
 const socket = io();
 
 
@@ -343,6 +301,11 @@ export default {
       size: 200,
       letsPlayButton: true,
       fullPoll: {},
+
+      number: 1,
+      activeQuestion: {},
+      allQuestions:[],
+      allAnswers: [],
       participants: [],
       participantName: "",
       participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
@@ -365,30 +328,31 @@ export default {
     this.pollId = this.$route.params.id;
     socket.emit('joinPoll', this.pollId)
     this.createPoll();
-     //Fixa så att om den har ett pollId så återanvände den det
+    //Fixa så att om den har ett pollId så återanvände den det
 
     socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
     socket.on("dataUpdate", (data) =>
-        this.data = data
-    )
+        this.data = data)
 
     socket.on("dataUpdate", (myParticipant) =>
-        this.participants = myParticipant
-    )
+        this.participants = myParticipant)
 
     socket.on("pollCreated", (data) =>
         this.data = data)
 
     socket.on('fullPoll', (myPoll) =>
-        this.fullPoll = myPoll)
+        {this.fullPoll = myPoll
+        this.questions = myPoll['questions']
+          console.log(this.questions, "test alex")
+        })
+
 
     socket.on('participantsAdded', (myParticipant) =>
     { console.log('kommer du hit')
-        this.participants = myParticipant}
-    )
+        this.participants = myParticipant})
 
 
   },
@@ -397,26 +361,25 @@ export default {
       this.addQuestion();
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
       console.log("Skickat info")
-
-
     },
-    // setPollId: function () {
-    //   this.pollId=Math.floor(Math.random() * 100000);
-    //   this.createPoll()
-    //
-    // },
 
     addQuestion: function () {
 
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers, type:this.typeOfQuestion, time:this.timeForQuestion});
+      socket.emit("addQuestion", {
+        pollId: this.pollId,
+        q: this.question,
+        a: this.answers,
+        type: this.typeOfQuestion,
+        time: this.timeForQuestion
+      });
 
 
     },
 
     addAnswer: function () {
       this.answers.push("")
-
     },
+
     removeAnswer: function () {
       if (this.answers.length === 1) {
         this.answers();
@@ -432,8 +395,9 @@ export default {
     },
     addSlide: function () {
 
-     this.addQuestion()
-     this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
+      this.addQuestion()
+      this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
+      this.allQuestions.push(this.question)
       socket.emit('getPoll', this.pollId)
 
 
@@ -443,23 +407,38 @@ export default {
       // document.getElementById("slides").appendChild(p);
 
 
-      //
-      //
-      //   var slides = html2canvas(document.querySelector('#presentation')).then(canvas => {
-      //   document.body.appendChild(canvas)
-      //   slides.id="removePictures"
+
+      // });
 
 
-    // });
+    },
+     finish: function(route) {
+      if (route === 'result') {
+        this.$router.push(`/result/${this.pollId}/${this.lang}`)
+      }
+    },
+
+    nextQuestion: function () {
+      this.questionNumber++;
+      this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
+      socket.emit('dataUpdate', this.allAnswers, this.questionNumber)
 
 
-      // this.slides.push("")
+
+      /*  this.number = this.fullPoll.questions.length;
+      socket.emit("getPoll", this.pollId);
+      this.question = this.fullPoll["questions"][this.questionNumber].q
+      this.answers = this.fullPoll["questions"][this.questionNumber].a
+      if(this.questionNumber <= this.fullPoll["questions"].length)  {
+        this.questionNumber++;
+        }*/
     },
 
 
 
 
     removeSlide: function() {
+
       socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
       this.questionNumber--;
       socket.emit("dataUpdate", {questionNumber: this.questionNumber});
@@ -472,30 +451,24 @@ export default {
       // document.getElementById('presentation').del(document.getElementById("removePictures"))
 
 
-
-
-    },
-
-    nextQuestion: function() {
-
     },
 
 
-
-
-    cancelPage: function() {
-      this.$router.push( '/' )
+    cancelPage: function () {
+      this.$router.push('/')
 
     },
 
-    letsPlay: function(){
-socket.emit('startGame' ,this.pollId)
-
+    letsPlay: function () {
+      this.questionNumber = 0;
+      this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
+      socket.emit('dataUpdate', this.questionNumber, this.allAnswers)
+      socket.emit('startGame', this.pollId)
     }
 
-}}
+  }
 
-
+}
 
 
 </script>
@@ -516,18 +489,6 @@ socket.emit('startGame' ,this.pollId)
   left: 0.5em;
 }
 
-.cancel{
-  position: absolute;
-  top: 0.5em;
-  right: 0.5em;
-}
-
-.continue{
-  position: fixed;
-  bottom: 0.5em;
-  right:0.5em;
-}
-
 .wrapper{
   display: grid;
   grid-template-rows: 100%;
@@ -542,21 +503,21 @@ socket.emit('startGame' ,this.pollId)
   border-radius: 2%;
   background-color: #D3D3D3;
   overflow: scroll;
-  height: 65%;
+  height: 70%;
 }
 
 #presentation{
   border: solid;
   border-radius: 2%;
   background-color: white;
-  height: 65%
+  height: 70%
 }
 
 #editQuestion{
   border: solid;
   border-radius: 2%;
   background-color: #D3D3D3;
-  height: 65%
+  height: 70%
 }
 
 .headlines{
@@ -570,7 +531,7 @@ socket.emit('startGame' ,this.pollId)
 }
 
 .questionInput{
-  height: 10em;
+  height: 7em;
   max-height: 10em;
   width: 90%;
   font-size: 1vw;
@@ -588,7 +549,7 @@ socket.emit('startGame' ,this.pollId)
 }
 
 .marginPresentation{
-  margin-bottom: 20%;
+  margin-bottom: 25%;
 }
 
 .typeOfQuestion{
@@ -747,7 +708,7 @@ margin-top: 2em;
   top: calc(50% - 2px);
 }
 
-buttonCancel{
+.cancel{
   width: 6%;
   height: 6%;
   cursor: pointer;
@@ -759,20 +720,25 @@ buttonCancel{
   background: #EF6461;
   margin-right: 0.5%;
   margin-bottom: 0.5em;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+
 }
 
-buttonCancel .text {
+.cancel .text {
   transform: translateX(30%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-buttonCancel:hover {
+.cancel:hover {
   background: #ed3632;
 }
 
-buttonContinue{
+.continue{
   width: 7%;
   height: 6%;
   cursor: pointer;
@@ -783,20 +749,25 @@ buttonContinue{
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #558564;
   margin-left: 32em;
+  position: fixed;
+  bottom: 0.5em;
+  right:0.5em;
+
 }
 
-buttonContinue .text {
-  transform: translateX(10%);
+.continue .text {
+  transform: translateX(5%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-buttonContinue:hover {
+.continue:hover {
   background: #1d823c;
 }
 
-buttonBack{
+.noselect{
   width: 7%;
   height: 6%;
   cursor: pointer;
@@ -806,18 +777,19 @@ buttonBack{
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #5995ED;
-  left: 0em;
+  left: 0.5em;
   margin-top:1.5em;
 }
 
-buttonBack .text {
-  transform: translateX(30%);
+.noselect .text {
+  transform: translateX(34%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
+  font-family: AppleGothic;
 }
 
-buttonBack:hover {
+.noselect:hover {
   background: #1d72f0;
 }
 

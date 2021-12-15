@@ -34,7 +34,7 @@
       <div >
         <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
-        <button4  v-on:click="newPage('Poll')"><span class='text'> OK</span></button4>
+        <button class="okButton" v-on:click="newPage('Poll')"><span class='text'> OK</span></button>
       </div>
     </div>
     <button2 class = "backButton" v-on:click = "showStart = !showStart"><span class='text'>{{uiLabels.backButton}}</span></button2>
@@ -187,7 +187,7 @@ body{
   grid-row: 1;
 }
 
-button4{
+.okButton{
   width: 45px;
   height: 56px;
   cursor: pointer;
@@ -199,13 +199,13 @@ button4{
   background: #558564;
 }
 
-button4 .text {
+.okButton .text {
   transform: translateX(10px);
   color: white;
   font-weight: bold;
 }
 
-button4:hover {
+.okButton:hover {
   background: #1d823c;
 }
 
@@ -225,7 +225,7 @@ button4:hover {
 ;
 }
 
-button2{
+.backButton{
   width: 7%;
   height: 6%;
   cursor: pointer;
@@ -235,24 +235,26 @@ button2{
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #5995ED;
+  font-family: AppleGothic;
+  position: fixed;
+  bottom: 0.5em;
+  left: 0.5em;
+
+
 }
 
-button2 .text {
+.backButton .text {
   transform: translateX(30%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
 }
 
-button2:hover {
+.backButton:hover {
   background: #1d72f0;
 }
 
-.backButton{
-  position: fixed;
-  bottom: 0.5em;
-  left: 0.5em;
-}
+
 
 #textFont{
   font-size: xx-large;

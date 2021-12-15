@@ -3,7 +3,7 @@ hej2
 
   {{pollId}}
   <div>
-hejhejhej
+
     {{question}}
   </div>
   <Bars v-bind:data="data"/>
@@ -30,6 +30,8 @@ export default {
   },
   created: function () {
     this.pollId = this.$route.params.id
+    this.lang = this.$route.params.lang;
+
     socket.emit('joinPoll', this.pollId)
     socket.on("dataUpdate", (update) => {
       this.data = update.a;
