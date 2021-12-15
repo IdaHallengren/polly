@@ -92,8 +92,8 @@
       </div>
   <div>
     <span>Correct answer:</span>
-  <div v-for="(answer, i) in answers" v-bind:key="answer" class="selectRightAnswer">
-    <input type="radio" id="selectCorrectAnswer" v-model="selectedAnswer" value="answer">
+  <div v-for="(answer, i) in answers" v-bind:key="answer[i]" class="selectRightAnswer">
+    <input type="radio" id="selectCorrectAnswer" v-bind="selectedAnswer" value="value">
     <label for="selectCorrectAnswer"> {{answerOptions[i]}}</label>
 
 
@@ -127,10 +127,10 @@
       <label class="labelsText"> {{ uiLabels.chooseTypeOfQuestion }} </label>
       <br>
       <select v-model="typeOfQuestion" style="width: 50%">
-        <option value="quiz" > Quiz </option>
-        <option value="voting"> {{ uiLabels.voting }} </option>
-        <option value="trueorfalse" > {{ uiLabels.trueOrFalse }} </option>
-        <option value="presentation" > Presentation </option>
+        <option value="Quiz" > Quiz </option>
+        <option value="Voting"> {{ uiLabels.voting }} </option>
+        <option value="TrueOrFalse" > {{ uiLabels.trueOrFalse }} </option>
+        <option value="Presentation" > Presentation </option>
 
 
       </select>
@@ -330,9 +330,13 @@ export default {
   watch: {
     typeOfQuestion: function(newVal) {
 
-      if (newVal === "quiz" || newVal === "voting")
+      if (newVal === "Quiz" || newVal === "Voting")
         this.showAnswerButton = true
+      else if (newVal ==='Presentation'){
+        this.showAnswerButton = false
+      }
       else
+        this.answers.length=2
         this.showAnswerButton = false
     }
   },
@@ -555,11 +559,13 @@ export default {
 }
 
 .presentationInput{
-  height: 5em;
+  height: 7em;
+  max-height: 10em;
   width: 90%;
-  font-size: 2vw;
-  outline: none;
-  white-space: pre-line;
+  font-size: 1vw;
+  white-space: pre-wrap;
+  font-family: inherit;
+  border-radius: 5%;
 }
 
 .marginPresentation{
