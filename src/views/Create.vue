@@ -738,7 +738,7 @@ export default {
 }
 
 .cancel .text {
-  transform: translateX(30%);
+  transform: translateX(20%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
