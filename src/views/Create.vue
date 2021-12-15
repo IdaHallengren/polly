@@ -25,7 +25,7 @@
     <div id="overview">
 <!--      <div id="slides">-->
 <!--      <SlideShow id="overviewPresentationSlide" v-for="(question, i) in allQuestions" v-bind="question:allQuestions[i]">-->
-        <SlideShow id="overviewPresentationSlide" v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
+        <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']" v-bind:key="question" v-bind:questions="fullPoll['questions'][i].q" v-bind:answers="fullPoll['questions'][i].a" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels">
 
 
       </SlideShow>
@@ -91,14 +91,18 @@
   <div>
 
     <span>{{ uiLabels.correctAnswer }}:</span>
-  <div v-for="(answer, i) in answers" v-bind:key="'answer' + i" class="selectRightAnswer">
-    <input type="radio" id="{{answer}}" v-bind="selectedAnswer" value="{{answers[i]}}">
-    <label for="{{answer}}"> {{answerOptions[i]}}</label>
-
-    
+<!--  <templete  class="selectRightAnswer">-->
 
 
-  </div>
+    <label v-for="(answer, i) in answers" v-bind:key="'answer' + i">
+      <input type="radio" name="test" v-bind:id="answer" v-bind:value="answer" v-model="selectedAnswer">
+      {{answerOptions[i]}}<br></label>
+
+    {{answer}}
+    {{selectedAnswer}}
+
+
+<!--  </templete>-->
   </div>
 
         <br>
