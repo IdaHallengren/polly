@@ -91,10 +91,10 @@
         <br>
       </div>
   <div>
-    <span>Correct answer:</span>
-  <div v-for="(answer, i) in answers" v-bind:key="answer" class="selectRightAnswer">
-    <input type="radio" id="selectCorrectAnswer" v-model="selectedAnswer" value="answer">
-    <label for="selectCorrectAnswer"> {{answerOptions[i]}}</label>
+    <span>{{ uiLabels.correctAnswer }}:</span>
+  <div v-for="(answer, i) in answers" v-bind:key="'answer' + i" class="selectRightAnswer">
+    <input type="radio" id="{{answer}}" v-bind="selectedAnswer" value="{{answers[i]}}">
+    <label for="{{answer}}"> {{answerOptions[i]}}</label>
 
 
 
@@ -381,9 +381,14 @@ export default {
         q: this.question,
         a: this.answers,
         type: this.typeOfQuestion,
-        time: this.timeForQuestion
+        time: this.timeForQuestion,
+        correctAnswer: this.selectedAnswer
       });
 
+      this.question = "";
+      for(let i= 0; i < this.answers.length; i++){
+        this.answers[i]= "";
+      }
 
     },
 
@@ -410,6 +415,8 @@ export default {
       this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
       this.allQuestions.push(this.question)
       socket.emit('getPoll', this.pollId)
+
+
 
 
       // var p = document.createElement("DIV");
