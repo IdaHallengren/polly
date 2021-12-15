@@ -25,6 +25,7 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.lang = lang;  
     poll.questions = [];
     poll.answers = [];
+    poll.correctAnswer= "";
     poll.participants = [];
     poll.currentQuestion = 0;
     poll.typeOfQuestion="";
@@ -90,7 +91,7 @@ Data.prototype.getAnswers = function(pollId) {
   if (typeof poll !== 'undefined') {
     const answers = poll.answers[poll.currentQuestion];
     if (typeof poll.questions[poll.currentQuestion] !== 'undefined') {
-      return {q: poll.questions[poll.currentQuestion].q, a: answers, type: poll.typeOfQuestion, time: poll.timeForQuestion};
+      return {q: poll.questions[poll.currentQuestion].q, a: answers, type: poll.typeOfQuestion, time: poll.timeForQuestion, correctAnswer: poll.correctAnswer};
     }
   }
   return {}
@@ -116,7 +117,7 @@ Data.prototype.removeQuestion = function(pollId, q) {
   const poll = this.polls[pollId];
   console.log("question removed", pollId, q);
   if (typeof poll !== 'undefined') {
-    poll.questions.pop(q);
+    poll.questions.pop();
   }
 }
 

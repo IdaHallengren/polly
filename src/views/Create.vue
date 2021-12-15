@@ -24,9 +24,11 @@
   <div class="wrapper">
     <div id="overview">
 <!--      <div id="slides">-->
-      <div id="overviewPresentationSlide">
-        {{fullPoll}}
-      </div>
+<!--      <SlideShow id="overviewPresentationSlide" v-for="(question, i) in allQuestions" v-bind="question:allQuestions[i]">-->
+        <SlideShow id="overviewPresentationSlide" v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
+
+
+      </SlideShow>
 <!--      </div>-->
 
       <button v-on:click="removeSlide" class="icon-btn add-btn" >
@@ -87,11 +89,13 @@
         <br>
       </div>
   <div>
-    <span>Correct answer:</span>
-  <div v-for="(answer, i) in answers" v-bind:key="answer[i]" class="selectRightAnswer">
-    <input type="radio" id="selectCorrectAnswer" v-bind="selectedAnswer" value="value">
-    <label for="selectCorrectAnswer"> {{answerOptions[i]}}</label>
 
+    <span>{{ uiLabels.correctAnswer }}:</span>
+  <div v-for="(answer, i) in answers" v-bind:key="'answer' + i" class="selectRightAnswer">
+    <input type="radio" id="{{answer}}" v-bind="selectedAnswer" value="{{answers[i]}}">
+    <label for="{{answer}}"> {{answerOptions[i]}}</label>
+
+    
 
 
   </div>
@@ -197,7 +201,7 @@
         PollId: {{pollId}}
       </div>
       <div id="QRCode">
-        <qrcode-vue :value="qrValue" text="pollId"  :size="size" >  </qrcode-vue>
+        <qrcode-vue :value="`http://localhost:8080/#/poll/${this.pollId}/${this.lang}`"  :size="size" >  </qrcode-vue>
       </div>
     </div>
 
@@ -242,7 +246,7 @@
   </SlideShow>
 
   <button v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
-  <button v-show="this.questionNumber == allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>-->
+  <button v-show="this.questionNumber == allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>
 <!--  {{this.questions}}-->
 <!--{{this.fullPoll['questions'][1].q}}-->
   {{this.allQuestions}}
@@ -285,7 +289,6 @@ export default {
       pointsForQuestion: "5p",
       showAnswerButton: true,
       startPoll: true,
-      qrValue: `http://localhost:8080/#/poll/${this.pollId}/${this.lang}`,
       size: 300,
       letsPlayButton: true,
       fullPoll: {},
@@ -362,20 +365,27 @@ export default {
     },
 
     addQuestion: function () {
-
       socket.emit("addQuestion", {
         pollId: this.pollId,
         q: this.question,
         a: this.answers,
         type: this.typeOfQuestion,
-        time: this.timeForQuestion
+        time: this.timeForQuestion,
+        correctAnswer: this.selectedAnswer
       });
 
+      this.question = "";
+      for(let i= 0; i < this.answers.length; i++){
+        this.answers[i]= "";
+      }
 
     },
 
     addAnswer: function () {
-      this.answers.push("")
+      if(this.answers.length<4){
+      this.answers.push("")}
+      else
+        this.answers
     },
 
     removeAnswer: function () {
@@ -389,27 +399,24 @@ export default {
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
       this.questionNumber++; //Added this to increase the number for the question
-
     },
+
     addSlide: function () {
+      this.allQuestions.push(this.question)
+      
 
       this.addQuestion()
       this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
-      this.allQuestions.push(this.question)
       socket.emit('getPoll', this.pollId)
 
-
+      
       // var p = document.createElement("DIV");
       // p.setAttribute("style", "margin:10px;border:solid;border-radius:10%; background-color:white;height:200px");
       // p.id="removeSlides"
       // document.getElementById("slides").appendChild(p);
-
-
-
       // });
-
-
     },
+
      finish: function(route) {
       if (route === 'result') {
         this.$router.push(`/result/${this.pollId}/${this.lang}`)
@@ -421,8 +428,6 @@ export default {
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
       socket.emit('dataUpdate', this.allAnswers, this.questionNumber)
 
-
-
       /*  this.number = this.fullPoll.questions.length;
       socket.emit("getPoll", this.pollId);
       this.question = this.fullPoll["questions"][this.questionNumber].q
@@ -432,29 +437,19 @@ export default {
         }*/
     },
 
-
-
-
     removeSlide: function() {
-
       socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
+      this.allQuestions.pop();
       this.questionNumber--;
       socket.emit("dataUpdate", {questionNumber: this.questionNumber});
       this.runQuestion();
 
-
       // document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
-
-
       // document.getElementById('presentation').del(document.getElementById("removePictures"))
-
-
     },
-
 
     cancelPage: function () {
       this.$router.push('/')
-
     },
 
     letsPlay: function () {
