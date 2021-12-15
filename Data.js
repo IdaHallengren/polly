@@ -31,7 +31,6 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.timeForQuestion=0;
     poll.numberOfParticipants= 0;
     this.polls[pollId] = poll;
-
     console.log("poll created", pollId, poll);
   }
   return this.polls[pollId];

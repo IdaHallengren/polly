@@ -273,6 +273,7 @@ export default {
   border: 0.3em solid white;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .cancelButton {
   position: fixed;
   top: 0.5em;
@@ -300,6 +301,7 @@ export default {
   background: #ed3632;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .backButton{
   position: fixed;
   bottom: 0.5em;
@@ -327,6 +329,7 @@ export default {
   background: #1d72f0;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .okButton {
   width: 5vw;
   height: 8vh;
@@ -351,6 +354,7 @@ export default {
   background: #1d823c;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .continueButton{
   position: fixed;
   bottom: 0.5em;
