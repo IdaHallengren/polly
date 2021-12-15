@@ -18,9 +18,11 @@
   <div id="wrapperHead">
     <div id="header">
 
-      <img id="logo" src="../img/logo.jpg">
-      <p style="font-size: 2.5vw;"> {{uiLabels.welcome}}</p>
-      <p style="font-size: 2vw;">{{uiLabels.welcomeEasy}}</p>
+      <img id="logo" src="../img/logo1.svg">
+      <div id="headerText">
+      <p style="font-size: 1.5vw;"> {{uiLabels.welcome}}</p>
+      <p style="font-size: 1vw;">{{uiLabels.welcomeEasy}}</p>
+      </div>
     </div>
   </div>
 
@@ -143,16 +145,25 @@ body{
 }
 
 #logo{
-  height:60%;
-  width: 60%;
+  height:80%;
+  width: 80%;
 }
 
 #header{
+  position: relative;
+  top: 5%;
   font-weight: bold;
   color: white;
-  padding-bottom: 10%;
   grid-column: 2;
   grid-row: 1;
+}
+
+#headerText{
+  position: relative;
+  bottom: 22%;
+  font-weight: bold;
+  color: lightskyblue;
+  padding-top: 10%;
 }
 
 #wrapperButtons{
@@ -161,6 +172,7 @@ body{
   grid-template-columns: 25% 25% 25% 25%;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .start .button {
   height:10vh;
   width: 15vw;
@@ -169,21 +181,20 @@ body{
   cursor: pointer;
   font-size: 2vw;
   font-weight: bold;
-  color: black;
+  color: dimgrey;
+  font-family: AppleGothic;
   background: white;
   border: 0.1em solid #1d72f0;
-  box-shadow: 0.25em 0.25em 0 #5995ED,
-  -0.25em -0.25em 0 #5995ED,
-  -0.25em 0.25em 0 #5995ED,
-  0.25em -0.25em 0 #5995ED;
+  box-shadow: 0.1em 0.1em 0 #5995ED,
+  -0.1em -0.1em 0 #5995ED,
+  -0.1em 0.1em 0 #5995ED,
+  0.1em -0.1em 0 #5995ED;
   transition: 500ms ease-in-out;
 }
 
 .start button:hover {
-
   /*box-shadow: 2em 0.25em 0 #317773, -2em -0.25em 0 #317773;*/
-
-  background: #5995ED;
+  background: lightskyblue;
   color: White;
 }
 
@@ -195,6 +206,7 @@ body{
   grid-row: 1;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .okButton{
   width: 5vw;
   height: 8vh;
@@ -235,6 +247,7 @@ body{
   font-family: AppleGothic;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .backButton{
   width: 7%;
   height: 6%;
@@ -267,6 +280,7 @@ body{
   color: white;
 }
 
+/*Created by Chris Smith */
 .bg {
   animation:slide 12s ease-in-out infinite alternate;
   background-image: linear-gradient(-60deg, #772D8B 50%, #e2725b 50%);

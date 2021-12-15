@@ -64,7 +64,7 @@
 
 <div v-if="showGameStart">
 
- <SlideShow v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
+ <SlideShow v-bind:questions="question.q" v-bind:answers="question.a" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" index="1">
 
  </SlideShow>
 
@@ -118,7 +118,8 @@ export default {
       fullPoll: {},
       allAnswers: [],
       questionNumber:0,
-      allQuestions:[],
+      question:{},
+
     }
   },
 
@@ -148,15 +149,15 @@ export default {
         this.showGameStart= myBoolean
         })
 
-    socket.on("dataUpdate", (myParticipant) =>
+  /*  socket.on("dataUpdate", (myParticipant) =>
         this.participants = myParticipant
-    )
+    )*/
 
-    socket.on('fullPoll', (myPoll) =>
-    {this.fullPoll = myPoll
-      this.questions = myPoll['questions']
-      console.log(this.questions, "test alex")
-    })
+    // socket.on('fullPoll', (myPoll) =>
+    // {this.fullPoll = myPoll
+    //   this.questions = myPoll['questions']
+    //   console.log(this.questions, "test alex")
+    // })
 
     // socket.on("dataUpdate", (questionsAnswers) => {
     //
@@ -202,6 +203,10 @@ export default {
 </script>
 
 <style>
+
+/*body{*/
+/*  background-color: #772D8B;*/
+/*}*/
 
 .wrapperName{
   padding-top: 100px;
@@ -277,6 +282,7 @@ export default {
   border: 0.3em solid white;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .cancelButton {
   position: fixed;
   top: 0.5em;
@@ -304,6 +310,7 @@ export default {
   background: #ed3632;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .backButton{
   position: fixed;
   bottom: 0.5em;
@@ -331,6 +338,7 @@ export default {
   background: #1d72f0;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .okButton {
   width: 5vw;
   height: 8vh;
@@ -355,6 +363,7 @@ export default {
   background: #1d823c;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .continueButton{
   position: fixed;
   bottom: 0.5em;

@@ -32,7 +32,6 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.timeForQuestion=0;
     poll.numberOfParticipants= 0;
     this.polls[pollId] = poll;
-
     console.log("poll created", pollId, poll);
   }
   return this.polls[pollId];
@@ -56,7 +55,7 @@ Data.prototype.addQuestion = function(pollId, q) {
   }
 }
 
-Data.prototype.getQuestion = function(pollId, qId=null) {
+Data.prototype.getQuestion = function(pollId, qId=0) {
   const poll = this.polls[pollId];
   console.log("question requested for ", pollId, qId);
   if (typeof poll !== 'undefined') {

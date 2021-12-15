@@ -214,10 +214,12 @@
       <h2 class="waitingroomHeadline"> {{ uiLabels.waitingRoom }}</h2>
       <form class = "waitingRoom">
         <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
+          <span v-if="participants.length>0">
           <img class="participants"
-            :src="participant.participantImg" >
+            :src="participant.participantImg">
         <br>
           {{participant.participantName}}
+            </span>
         </div>
       </form>
     </div>
@@ -291,7 +293,7 @@ export default {
       pointsForQuestion: "5p",
       showAnswerButton: true,
       startPoll: true,
-      size: 200,
+      size: 300,
       letsPlayButton: true,
       fullPoll: {},
 
@@ -301,7 +303,7 @@ export default {
       allAnswers: [],
       participants: [],
       participantName: "",
-      participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
+      participantImg: "",
       answerOptions: ['A','B','C','D'],
       selectedAnswer: "",
 
@@ -327,7 +329,9 @@ export default {
 
   created: function () {
     this.lang = this.$route.params.lang;
+    console.log(this.lang)
     this.pollId = this.$route.params.id;
+    console.log(this.pollId)
     socket.emit('joinPoll', this.pollId)
     this.createPoll();
     //Fixa så att om den har ett pollId så återanvände den det
@@ -352,8 +356,8 @@ export default {
         })
 
     socket.on('participantsAdded', (myParticipant) =>
-    { console.log('kommer du hit')
-        this.participants = myParticipant})
+        this.participants = myParticipant
+    )
 
 
   },
@@ -427,6 +431,7 @@ export default {
       this.questionNumber++;
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
       socket.emit('dataUpdate', this.allAnswers, this.questionNumber)
+      socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
 
       /*  this.number = this.fullPoll.questions.length;
       socket.emit("getPoll", this.pollId);
@@ -453,10 +458,10 @@ export default {
     },
 
     letsPlay: function () {
-      socket.emit('startGame', this.pollId, this.showGameStart)
+      socket.emit('startGame', {pollId: this.pollId, boolean: this.showGameStart})
       this.questionNumber = 0;
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
-      socket.emit('dataUpdate', this.questionNumber, this.allAnswers)
+      socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
 
     }
 
@@ -470,7 +475,11 @@ export default {
 <style>
 
 .waitingroomHeadline{
-  padding-right: 40%;
+  padding-right: 10%;
+  font-size: 2.5vw;
+  font-family: AppleGothic;
+  color: white;
+
 }
 
 .labelsText{
@@ -567,7 +576,6 @@ export default {
   display: grid;
   grid-template-rows: 100%;
   grid-template-columns: 15% 60% 25%;
-
 }
 
 .answersStyle{
@@ -576,6 +584,7 @@ export default {
   font-size: 1.5vw;
   outline: none;
 }
+
 .selectCorrectAnswer:hover{
   background: green;
 }
@@ -590,19 +599,23 @@ export default {
 
 .pollIdStyle{
   width: 10em;
-  margin-left: 6em;
-  margin-top: 4em;
+  margin-left: 20%;
+  margin-top: 25%;
   text-align: center;
-  font-size: 2em;
+  font-size: 2.5vw;
+  font-weight: bold;
+  font-family: AppleGothic;
+  color: white;
 }
 
 #QRCode{
-margin-top: 2em;
+  margin-top: 2em;
+
 }
 
 .wrapperWaitRoom{
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 40% 60%;
   grid-template-rows: 1% 70% 20%;
 }
 
@@ -617,7 +630,7 @@ margin-top: 2em;
   width: 50%;
   position: absolute;
   left: 40%;
-  height: 90%
+  height: 80%
 }
 
 .participants{
@@ -711,6 +724,7 @@ margin-top: 2em;
   top: calc(50% - 2px);
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .cancel{
   width: 6%;
   height: 6%;
@@ -730,7 +744,7 @@ margin-top: 2em;
 }
 
 .cancel .text {
-  transform: translateX(30%);
+  transform: translateX(20%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
@@ -741,6 +755,7 @@ margin-top: 2em;
   background: #ed3632;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .continue{
   width: 7%;
   height: 6%;
@@ -770,6 +785,7 @@ margin-top: 2em;
   background: #1d823c;
 }
 
+/* Personal altered buttons with source code from Chance Squires*/
 .noselect{
   width: 7%;
   height: 6%;

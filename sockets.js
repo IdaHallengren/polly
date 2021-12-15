@@ -26,7 +26,6 @@ function sockets(io, socket, data) {
 
     socket.on('runQuestion', function (d) {
       io.to(d.pollId).emit('newQuestion', data.getQuestion(d.pollId, d.questionNumber));
-
       io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
     });
 
@@ -47,7 +46,6 @@ function sockets(io, socket, data) {
 
     socket.on('getPoll', function (pollId) {
       socket.emit('fullPoll', data.getPoll(pollId))
-
     });
 
     socket.on('removeSlide', function (d) {
@@ -56,8 +54,8 @@ function sockets(io, socket, data) {
     })
 
 
-  socket.on('startGame' , function(pollId, boolean){
-     io.to(pollId).emit('gameStart', boolean)
+  socket.on('startGame' , function(d){
+     io.to(d.pollId).emit('gameStart', d.boolean)
   })
 
   socket.on('removeParticipant', function(d){
