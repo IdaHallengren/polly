@@ -118,7 +118,7 @@ Data.prototype.removeQuestion = function(pollId, q) {
   const poll = this.polls[pollId];
   console.log("question removed", pollId, q);
   if (typeof poll !== 'undefined') {
-    poll.questions.pop(q);
+    poll.questions.pop();
   }
 }
 

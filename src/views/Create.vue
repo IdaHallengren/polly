@@ -24,9 +24,11 @@
   <div class="wrapper">
     <div id="overview">
 <!--      <div id="slides">-->
-      <div id="overviewPresentationSlide">
-        {{fullPoll}}
-      </div>
+<!--      <SlideShow id="overviewPresentationSlide" v-for="(question, i) in allQuestions" v-bind="question:allQuestions[i]">-->
+        <SlideShow id="overviewPresentationSlide" v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
+
+
+      </SlideShow>
 <!--      </div>-->
 
       <button v-on:click="removeSlide" class="icon-btn add-btn" >
@@ -242,7 +244,7 @@
   </SlideShow>
 
   <button v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
-  <button v-show="this.questionNumber == allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>-->
+  <button v-show="this.questionNumber == allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>
 <!--  {{this.questions}}-->
 <!--{{this.fullPoll['questions'][1].q}}-->
   {{this.allQuestions}}
@@ -395,10 +397,9 @@ export default {
 
     },
     addSlide: function () {
-
+      this.allQuestions.push(this.question)
       this.addQuestion()
       this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
-      this.allQuestions.push(this.question)
       socket.emit('getPoll', this.pollId)
 
 
@@ -443,6 +444,7 @@ export default {
     removeSlide: function() {
 
       socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
+      this.allQuestions.pop();
       this.questionNumber--;
       socket.emit("dataUpdate", {questionNumber: this.questionNumber});
       this.runQuestion();
