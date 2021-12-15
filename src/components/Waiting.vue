@@ -6,9 +6,9 @@
     <p style="font-size: 2.5vw ; font-weight: bold"> {{uiLabels.waitingRoomNr}}{{this.pollId}}</p>
     <p style="font-size: 2vw ; font-weight: bold"> {{uiLabels.waitParticipant}}</p>
     <p style="font-size: 1vw ; font-weight: bold">{{uiLabels.waitQuestionMaster}}</p>
-    
 
   </div>
+
   <section id="waitingSection">
 
     <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
@@ -18,6 +18,7 @@
            {{participant.participantName}}
     </div>
   </section>
+
 </div>
 
 </template>
@@ -30,7 +31,7 @@ export default {
   props: {
     uiLabels: Object,
     participants: Array,
-    pollId: Number
+    pollId: String
   },
 
   data: function () {
