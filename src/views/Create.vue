@@ -201,7 +201,7 @@
         PollId: {{pollId}}
       </div>
       <div id="QRCode">
-        <qrcode-vue :value="qrValue" text="pollId"  :size="size" >  </qrcode-vue>
+        <qrcode-vue :value="`http://localhost:8080/#/poll/${this.pollId}/${this.lang}`"  :size="size" >  </qrcode-vue>
       </div>
     </div>
 
@@ -287,7 +287,6 @@ export default {
       pointsForQuestion: "5p",
       showAnswerButton: true,
       startPoll: true,
-      qrValue: `http://localhost:8080/#/poll/${this.pollId}/${this.lang}`,
       size: 200,
       letsPlayButton: true,
       fullPoll: {},
@@ -362,7 +361,6 @@ export default {
     },
 
     addQuestion: function () {
-
       socket.emit("addQuestion", {
         pollId: this.pollId,
         q: this.question,
@@ -380,7 +378,10 @@ export default {
     },
 
     addAnswer: function () {
-      this.answers.push("")
+      if(this.answers.length<4){
+      this.answers.push("")}
+      else
+        this.answers
     },
 
     removeAnswer: function () {
@@ -394,28 +395,24 @@ export default {
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
       this.questionNumber++; //Added this to increase the number for the question
-
     },
+
     addSlide: function () {
       this.allQuestions.push(this.question)
+      
+
       this.addQuestion()
       this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
       socket.emit('getPoll', this.pollId)
 
-
-
-
+      
       // var p = document.createElement("DIV");
       // p.setAttribute("style", "margin:10px;border:solid;border-radius:10%; background-color:white;height:200px");
       // p.id="removeSlides"
       // document.getElementById("slides").appendChild(p);
-
-
-
       // });
-
-
     },
+
      finish: function(route) {
       if (route === 'result') {
         this.$router.push(`/result/${this.pollId}/${this.lang}`)
@@ -427,8 +424,6 @@ export default {
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
       socket.emit('dataUpdate', this.allAnswers, this.questionNumber)
 
-
-
       /*  this.number = this.fullPoll.questions.length;
       socket.emit("getPoll", this.pollId);
       this.question = this.fullPoll["questions"][this.questionNumber].q
@@ -438,30 +433,19 @@ export default {
         }*/
     },
 
-
-
-
     removeSlide: function() {
-
       socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
       this.allQuestions.pop();
       this.questionNumber--;
       socket.emit("dataUpdate", {questionNumber: this.questionNumber});
       this.runQuestion();
 
-
       // document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
-
-
       // document.getElementById('presentation').del(document.getElementById("removePictures"))
-
-
     },
-
 
     cancelPage: function () {
       this.$router.push('/')
-
     },
 
     letsPlay: function () {

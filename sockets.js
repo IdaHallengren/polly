@@ -14,9 +14,7 @@ function sockets(io, socket, data) {
   });
 
   socket.on('addQuestion', function (d) {
-
     data.addQuestion(d.pollId, {q: d.q, a: d.a, type: d.type, time: d.time, correctAnswer: d.correctAnswer});
-
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
   });
 
@@ -40,7 +38,6 @@ function sockets(io, socket, data) {
     socket.on('addParticipant', function (d) {
       data.addParticipant(d.pollId, d.participantInfo)
       io.to(d.pollId).emit('participantsAdded', data.getParticipants(d.pollId));
-
     })
 
     socket.on('resetAll', () => {
@@ -63,17 +60,9 @@ function sockets(io, socket, data) {
      io.to(pollId).emit('gameStart', boolean)
   })
 
-
-
-
-
-
-
-
   socket.on('removeParticipant', function(d){
     data.removeParticipant(d.pollId , {participantName: d.participantName, participantId: d.participantId, participantImg: d.participantImg})
     io.to(d.pollId).emit('dataUpdate', data.getParticipants(d.pollId))
-
   })
 
 
