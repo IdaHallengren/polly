@@ -25,7 +25,7 @@
     <div id="overview">
 <!--      <div id="slides">-->
 <!--      <SlideShow id="overviewPresentationSlide" v-for="(question, i) in allQuestions" v-bind="question:allQuestions[i]">-->
-        <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']" v-bind:key="question" v-bind:questions="fullPoll['questions'][i].q" v-bind:answers="fullPoll['questions'][i].a" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels">
+        <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']" v-bind:key="question" v-bind:questions="fullPoll['questions'][i].q" v-bind:answers="fullPoll['questions'][i].a" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:questionMaster="questionMaster" v-bind:overviewUser="overviewUser">
 
 
       </SlideShow>
@@ -230,7 +230,7 @@
       </button>
     </div>
 
-    <div v-on:click="letsPlayButton=!letsPlayButton">
+    <div v-on:click="letsPlayButton=!letsPlayButton, overviewUser=!overviewUser  ">
       <button class="continue" v-on:click="letsPlay">
         <span class='text'> {{ uiLabels.letsPlay }} </span>
       </button>
@@ -244,7 +244,7 @@
 
 <div v-if="letsPlayButton == false">
 
-  <SlideShow v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
+  <SlideShow class="overviewSlideShow" v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber" v-bind:questionMaster="questionMaster" v-bind:overviewUser="overviewUser">
 
 
   </SlideShow>
@@ -308,6 +308,9 @@ export default {
       selectedAnswer: "",
 
       showGameStart: true,
+      questionMaster: true,
+      overviewUser: true
+
 
 
     }
@@ -461,7 +464,8 @@ export default {
       socket.emit('startGame', {pollId: this.pollId, boolean: this.showGameStart})
       this.questionNumber = 0;
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
-      socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
+      socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber})
+
 
     }
 
@@ -473,6 +477,10 @@ export default {
 </script>
 
 <style>
+
+.overviewSlideShow{
+
+}
 
 .waitingroomHeadline{
   padding-right: 10%;
@@ -590,11 +598,12 @@ export default {
 }
 
 #overviewPresentationSlide{
-  border:solid;
-  border-radius: 10%;
-  background-color: white;
-  height: 30%;
+  /*border:solid;*/
+  /*border-radius: 10%;*/
+  /*background-color: white;*/
+  height: 35%;
   margin: 10px;
+
 }
 
 .pollIdStyle{

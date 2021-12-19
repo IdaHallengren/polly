@@ -1,51 +1,34 @@
 <template>
+
 <div class="wrapper">
 
   <div id="slides">
 
-
-      <div id="questionHeader">{{questions}}<br>
-
-      </div>
-    <div class="answerLayout">
-
-
-      <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key">
-
-
-          <div>
-
-
-
-         <button class="selectedAnswer">{{answer}} </button>
-          </div>
-
-
-      </div>
-      </div>
-
-
-
-      <div> </div>
-
-
-
+    <div v-show="overviewUser" class="overview">{{questions}}<br>
     </div>
 
+      <div id="questionHeader" v-show="!overviewUser">{{questions}}<br>
+      </div>
 
+    <div class="answerLayout">
+      <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key">
+          <div v-show="!questionMaster" >
+         <button class="selectedAnswer">{{answer}} </button>
+          </div>
+        <div v-show="questionMaster" class="AnswerQuestionMaster">
+          {{answer}}
+        </div>
+
+
+      </div>
+    </div>
+    <div> </div>
   </div>
-
-
+</div>
 
 </template>
 
 <script>
-
-
-
-
-
-
 import io from 'socket.io-client'
 const socket = io();
 
@@ -60,7 +43,9 @@ export default {
     questions: Array,
     pollId: Number,
     index: Number,
-    answers: Array
+    answers: Array,
+    questionMaster: Boolean,
+    overviewUser: Boolean
   },
 
 
@@ -69,7 +54,9 @@ export default {
       lang: "",
       fullPoll: {},
       questionNumber: 0,
-      number: 1
+      number: 1,
+
+
   }},
   created: function () {
 
@@ -118,42 +105,50 @@ export default {
 }
 
 #questionHeader {
-  font-size: 5vw;
+  font-size: 4vw;
   margin-top: 5%;
-
 }
+
+.overview{
+  font-size: 0.8vw;
+  margin-top: 5%;
+  place-content: center;
+}
+
 .selectedAnswer{
   height: 5vw;
   width: 25vw;
   font-size: 1.5vw;
-
 }
 
 .selectedAnswer:hover{
   background: green;
-
 }
+
 .answerLayout{
   display: grid;
   margin-bottom: 25%;
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
   margin-top: 15%;
-
-
-
-
 }
+
 #oneQuestion{
   margin-bottom:10%;
   margin-left:8%;
   margin-right:8%;
+}
 
-
-
-
-
-
+.AnswerQuestionMaster{
+  display: grid;
+  margin-bottom: 25%;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto;
+  margin-top: 15%;
+place-content: center;
+  /*border:solid;*/
+  /*height: 5vw;*/
+  /*width: 25vw;*/
 
 }
 

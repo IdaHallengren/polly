@@ -64,7 +64,7 @@
 
 <div v-if="showGameStart">
 
- <SlideShow v-bind:questions="question.q" v-bind:answers="question.a" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" index="1">
+ <SlideShow v-bind:questions="question.q" v-bind:answers="question.a" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" index="1" v-bind:questionMaster="questionMaster">
 
  </SlideShow>
 
@@ -119,6 +119,7 @@ export default {
       allAnswers: [],
       questionNumber:0,
       question:{},
+      questionMaster: false
 
     }
   },
