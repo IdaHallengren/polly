@@ -62,11 +62,26 @@
 </div>
 </div>
 
+
 <div v-if="showGameStart">
-
- <SlideShow v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
-
+ 
+ <SlideShow v-bind:questions="question.q"
+            v-bind:answers="question.a"
+            v-bind:pollId="pollId"
+            v-bind:uiLabels="uiLabels"
+            index="1"
+            v-bind:questionMaster="questionMaster"
+            v-bind:pointsForQuestion="question.pointsForQuestion"
+            v-bind:timeForQuestion="question.timeForQuestion"
+            v-bind:typeOfQuestion="question.typeOfQuestion"
+            v-bind:correctAnswer="question.correctAnswer"
+            >
  </SlideShow>
+  Type of question is: {{question.typeOfQuestion}} ,
+  Time for question is: {{question.timeForQuestion}},
+  Points for question are: {{question.pointsForQuestion}},
+  The correct answer is: {{question.correctAnswer}}
+
 
 </div>
 
@@ -116,9 +131,19 @@ export default {
       showGameStart: false,
 
       fullPoll: {},
-      allAnswers: [],
-      questionNumber:0,
-      allQuestions:[],
+      // allAnswers: [],
+      // questionNumber:0,
+      question:{},
+      questionMaster: false,
+
+      // correctAnswer:[],
+       timeForQuestion: [],
+      typeOfQuestion: [],
+      pointsForQuestion: [],
+       infoQuestions:{}
+
+
+
     }
   },
 
@@ -148,15 +173,33 @@ export default {
         this.showGameStart= myBoolean
         })
 
-    socket.on("dataUpdate", (myParticipant) =>
-        this.participants = myParticipant
-    )
+    // socket.on('fullPoll' , (myPoll) => {
+    //  this.fullPoll=myPoll
+    // })
 
-    socket.on('fullPoll', (myPoll) =>
-    {this.fullPoll = myPoll
-      this.questions = myPoll['questions']
-      console.log(this.questions, "test alex")
-    })
+   /* socket.on('dataUpdate', (data) =>{
+     this.infoQuestions=data.questions
+
+    })*/
+
+  // socket.on("dataUpdate", (infoQuestions) =>{
+  //
+  //       this.correctAnswer = infoQuestions.correctAnswer
+  //       this.timeForQuestion=infoQuestions.time
+  //       this.typeOfQuestion=infoQuestions.type
+  //       this.pointsForQuestion=infoQuestions.points
+  //       console.log("visar info")
+  //       console.log(this.correctAnswer)
+  //       console.log(this.typeOfQuestion)
+  //
+  //     }
+  //   )
+
+    // socket.on('fullPoll', (myPoll) =>
+    // {
+    //   this.typeOfQuestion=myPoll.typeOfQuestion
+    //   this.timeForQuestion=myPoll.timeForQuestion
+    // })
 
     // socket.on("dataUpdate", (questionsAnswers) => {
     //
@@ -202,6 +245,10 @@ export default {
 </script>
 
 <style>
+
+/*body{*/
+/*  background-color: #772D8B;*/
+/*}*/
 
 .wrapperName{
   padding-top: 100px;

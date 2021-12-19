@@ -13,8 +13,6 @@
       <span class='text'>{{uiLabels.cancelButton}}</span>
     </button>
 
-
-
   <div class="headlines">
     <div> {{uiLabels.overview}} </div>
     <div> {{uiLabels.presentation}} </div>
@@ -25,7 +23,7 @@
     <div id="overview">
 <!--      <div id="slides">-->
 <!--      <SlideShow id="overviewPresentationSlide" v-for="(question, i) in allQuestions" v-bind="question:allQuestions[i]">-->
-        <SlideShow id="overviewPresentationSlide" v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
+        <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']" v-bind:key="question" v-bind:questions="fullPoll['questions'][i].q" v-bind:answers="fullPoll['questions'][i].a" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:questionMaster="questionMaster" v-bind:overviewUser="overviewUser">
 
 
       </SlideShow>
@@ -91,31 +89,35 @@
   <div>
 
     <span>{{ uiLabels.correctAnswer }}:</span>
-  <div v-for="(answer, i) in answers" v-bind:key="'answer' + i" class="selectRightAnswer">
-    <input type="radio" id="{{answer}}" v-bind="selectedAnswer" value="{{answers[i]}}">
-    <label for="{{answer}}"> {{answerOptions[i]}}</label>
-
-    
+<!--  <templete  class="selectRightAnswer">-->
 
 
-  </div>
+    <label v-for="(answer, i) in answers" v-bind:key="'answer' + i">
+      <input type="radio" name="test" v-bind:id="answer" v-bind:value="answer" v-model="selectedAnswer">
+      {{answerOptions[i]}}<br></label>
+
+    {{answer}}
+    {{selectedAnswer}}
+
+
+<!--  </templete>-->
   </div>
 
         <br>
 
       <div>
-        <button v-on:click="addQuestion">Add question</button>
+<!--        <button v-on:click="addQuestion">Add question</button>-->
 
-        <input type="number" v-model="questionNumber">
+<!--        <input type="number" v-model="questionNumber">-->
 
-        <button v-on:click="runQuestion">Run question</button>
-        {{data}}
+<!--        <button v-on:click="runQuestion">Run question</button>-->
+<!--        {{data}}-->
       </div>
     </div>
   </div>
 
 
-    <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
+<!--    <router-link v-bind:to="'/result/'+pollId">Check result</router-link>-->
   </div>
 
 
@@ -226,7 +228,7 @@
       </button>
     </div>
 
-    <div v-on:click="letsPlayButton=!letsPlayButton">
+    <div v-on:click="letsPlayButton=!letsPlayButton, overviewUser=!overviewUser  ">
       <button class="continue" v-on:click="letsPlay">
         <span class='text'> {{ uiLabels.letsPlay }} </span>
       </button>
@@ -240,10 +242,24 @@
 
 <div v-if="letsPlayButton == false">
 
-  <SlideShow v-bind:questions="allQuestions[this.questionNumber]" v-bind:answers="allAnswers" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:index="questionNumber">
+  <SlideShow class="overviewSlideShow"
+             v-bind:questions="allQuestions[this.questionNumber]"
+             v-bind:answers="allAnswers"
+             v-bind:pollId="pollId"
+             v-bind:uiLabels="uiLabels"
+             v-bind:index="questionNumber"
+             v-bind:questionMaster="questionMaster"
+             v-bind:overviewUser="overviewUser"
+             v-bind:pointsForQuestion="pointsForQuestions"
+             v-bind:typeOfQuestion="typeOfQuestions"
+             v-bind:timeForQuestion="timeForQuestions"
+             v-bind:correctAnswer="selectedAnswer"
+              >
 
 
   </SlideShow>
+
+
 
   <button v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
   <button v-show="this.questionNumber == allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>
@@ -251,6 +267,11 @@
 <!--{{this.fullPoll['questions'][1].q}}-->
   {{this.allQuestions}}
   {{this.allAnswers}}
+  {{this.typeOfQuestions}}
+  {{this.timeForQuestions}}
+  {{this.correctAnswers}}
+  {{this.pointsForQuestions}}
+
   Timer:
   Amount of participants answered
 
@@ -284,9 +305,14 @@ export default {
       questionNumber: 0,
       data: {},
       uiLabels: {},
-      typeOfQuestion: "Quiz",
-      timeForQuestion: "5s",
-      pointsForQuestion: "5p",
+      typeOfQuestion: 'Quiz',
+      timeForQuestion: '5s',
+      pointsForQuestion:'5p' ,
+
+      typeOfQuestions: [],
+      timeForQuestions:[],
+      pointsForQuestions:[],
+
       showAnswerButton: true,
       startPoll: true,
       size: 300,
@@ -301,9 +327,14 @@ export default {
       participantName: "",
       participantImg: "",
       answerOptions: ['A','B','C','D'],
+
       selectedAnswer: "",
+      correctAnswers:[],
 
       showGameStart: true,
+      questionMaster: true,
+      overviewUser: true
+
 
 
     }
@@ -347,8 +378,6 @@ export default {
 
     socket.on('fullPoll', (myPoll) =>
         {this.fullPoll = myPoll
-        this.questions = myPoll['questions']
-          console.log(this.questions, "test alex")
         })
 
     socket.on('participantsAdded', (myParticipant) =>
@@ -362,6 +391,9 @@ export default {
       this.addQuestion();
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
       console.log("Skickat info")
+      socket.emit('getPoll', this.pollId)
+
+
     },
 
     addQuestion: function () {
@@ -369,8 +401,9 @@ export default {
         pollId: this.pollId,
         q: this.question,
         a: this.answers,
-        type: this.typeOfQuestion,
-        time: this.timeForQuestion,
+        typeOfQuestion: this.typeOfQuestion,
+        timeForQuestion: this.timeForQuestion,
+        pointsForQuestion: this.pointsForQuestion,
         correctAnswer: this.selectedAnswer
       });
 
@@ -378,7 +411,6 @@ export default {
       for(let i= 0; i < this.answers.length; i++){
         this.answers[i]= "";
       }
-
     },
 
     addAnswer: function () {
@@ -403,18 +435,14 @@ export default {
 
     addSlide: function () {
       this.allQuestions.push(this.question)
-      
-
+      this.typeOfQuestions.push(this.typeOfQuestion)
+      this.timeForQuestions.push(this.timeForQuestion)
+      this.pointsForQuestions.push(this.pointsForQuestion)
+      this.correctAnswers.push(this.selectedAnswer)
       this.addQuestion()
       this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
       socket.emit('getPoll', this.pollId)
 
-      
-      // var p = document.createElement("DIV");
-      // p.setAttribute("style", "margin:10px;border:solid;border-radius:10%; background-color:white;height:200px");
-      // p.id="removeSlides"
-      // document.getElementById("slides").appendChild(p);
-      // });
     },
 
      finish: function(route) {
@@ -426,26 +454,16 @@ export default {
     nextQuestion: function () {
       this.questionNumber++;
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
-      socket.emit('dataUpdate', this.allAnswers, this.questionNumber)
-
-      /*  this.number = this.fullPoll.questions.length;
-      socket.emit("getPoll", this.pollId);
-      this.question = this.fullPoll["questions"][this.questionNumber].q
-      this.answers = this.fullPoll["questions"][this.questionNumber].a
-      if(this.questionNumber <= this.fullPoll["questions"].length)  {
-        this.questionNumber++;
-        }*/
+      // socket.emit('dataUpdate', this.allAnswers, this.questionNumber)
+      socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
     },
 
     removeSlide: function() {
       socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
       this.allQuestions.pop();
       this.questionNumber--;
-      socket.emit("dataUpdate", {questionNumber: this.questionNumber});
+      // socket.emit("dataUpdate", {questionNumber: this.questionNumber});
       this.runQuestion();
-
-      // document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
-      // document.getElementById('presentation').del(document.getElementById("removePictures"))
     },
 
     cancelPage: function () {
@@ -453,10 +471,11 @@ export default {
     },
 
     letsPlay: function () {
-      socket.emit('startGame', this.pollId, this.showGameStart)
+      socket.emit('startGame', {pollId: this.pollId, boolean: this.showGameStart})
       this.questionNumber = 0;
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
-      socket.emit('dataUpdate', this.questionNumber, this.allAnswers)
+      socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber})
+
 
     }
 
@@ -468,6 +487,10 @@ export default {
 </script>
 
 <style>
+
+.overviewSlideShow{
+
+}
 
 .waitingroomHeadline{
   padding-right: 10%;
@@ -549,7 +572,7 @@ export default {
 }
 
 .marginPresentation{
-  margin-bottom: 25%;
+  margin-bottom: 28%;
 }
 
 .typeOfQuestion{
@@ -585,11 +608,12 @@ export default {
 }
 
 #overviewPresentationSlide{
-  border:solid;
-  border-radius: 10%;
-  background-color: white;
-  height: 30%;
+  /*border:solid;*/
+  /*border-radius: 10%;*/
+  /*background-color: white;*/
+  height: 35%;
   margin: 10px;
+
 }
 
 .pollIdStyle{

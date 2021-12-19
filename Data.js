@@ -25,12 +25,13 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.lang = lang;  
     poll.questions = [];
     poll.answers = [];
-    poll.correctAnswer= "";
+    poll.correctAnswer= [];
     poll.participants = [];
     poll.currentQuestion = 0;
-    poll.typeOfQuestion="";
-    poll.timeForQuestion=0;
-    poll.numberOfParticipants= 0;
+    poll.typeOfQuestion=[];
+    poll.timeForQuestion=[];
+    poll.pointsForQuestion=[];
+    poll.numberOfParticipants= "";
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
   }
@@ -52,10 +53,14 @@ Data.prototype.addQuestion = function(pollId, q) {
   console.log("question added to", pollId, q);
   if (typeof poll !== 'undefined') {
     poll.questions.push(q);
+     // console.log('testar testar NU', q)
+     // poll.typeOfQuestion.push(q.type);
+     // poll.timeForQuestion.push(q.time);
+
   }
 }
 
-Data.prototype.getQuestion = function(pollId, qId=null) {
+Data.prototype.getQuestion = function(pollId, qId=0) {
   const poll = this.polls[pollId];
   console.log("question requested for ", pollId, qId);
   if (typeof poll !== 'undefined') {
@@ -91,7 +96,12 @@ Data.prototype.getAnswers = function(pollId) {
   if (typeof poll !== 'undefined') {
     const answers = poll.answers[poll.currentQuestion];
     if (typeof poll.questions[poll.currentQuestion] !== 'undefined') {
-      return {q: poll.questions[poll.currentQuestion].q, a: answers, type: poll.typeOfQuestion, time: poll.timeForQuestion, correctAnswer: poll.correctAnswer};
+      return {q: poll.questions[poll.currentQuestion].q,
+        a: answers,
+        type: poll.typeOfQuestion[poll.currentQuestion],
+        time: poll.timeForQuestion[poll.currentQuestion],
+        points: poll.pointsForQuestion[poll.currentQuestion],
+        correctAnswer: poll.correctAnswer[poll.currentQuestion]};
     }
   }
   return {}
