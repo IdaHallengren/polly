@@ -115,7 +115,7 @@ export default {
 }
 .selectedAnswer{
   height: 5vw;
-  width: 25vw;
+  width: 20vw;
   font-size: 1.5vw;
 
 }

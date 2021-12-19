@@ -31,6 +31,7 @@
       </SlideShow>
 <!--      </div>-->
 
+
       <button v-on:click="removeSlide" class="icon-btn add-btn" >
        <div class="btn-txt"> {{ uiLabels.removeSlide }} </div>
       </button>
@@ -39,6 +40,10 @@
         <div class="btn-txt"> {{ uiLabels.addSlide }} </div> </button>
 
     </div>
+
+
+
+
 
     <div id="presentation" >
       <div>
@@ -447,7 +452,10 @@ export default {
       this.allQuestions.pop();
       this.questionNumber--;
       socket.emit("dataUpdate", {questionNumber: this.questionNumber});
-      this.runQuestion();
+
+
+      socket.emit('getPoll', this.pollId);
+
 
       // document.getElementById("slides").removeChild(document.getElementById("removeSlides"));
       // document.getElementById('presentation').del(document.getElementById("removePictures"))
@@ -508,6 +516,7 @@ export default {
   background-color: #D3D3D3;
   overflow: scroll;
   height: 70%;
+
 }
 
 #presentation{
@@ -591,11 +600,13 @@ export default {
 }
 
 #overviewPresentationSlide{
-  border:solid;
-  border-radius: 10%;
-  background-color: white;
-  height: 30%;
-  margin: 10px;
+  width: 240%;
+  height: 94%;
+  margin-top: -30%;
+  margin-bottom: -67%;
+  transform: scale(0.5);
+
+  transform-origin: left;
 }
 
 .pollIdStyle{
@@ -816,6 +827,7 @@ export default {
 .selectRightAnswer:hover{
 
 }
+
 
 
 
