@@ -207,7 +207,7 @@
 
 
     <div>
-      <h2 class="waitingroomHeadline"> {{ uiLabels.waitingRoom }}</h2>
+      <p class="waitingroomHeadline"> {{ uiLabels.waitingRoom }}</p>
       <form class = "waitingRoom">
         <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
           <span v-if="participants.length>0">
@@ -473,8 +473,8 @@ export default {
   padding-right: 10%;
   font-size: 2.5vw;
   font-family: AppleGothic;
+  font-weight: bold;
   color: white;
-
 }
 
 .labelsText{
