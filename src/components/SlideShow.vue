@@ -1,5 +1,6 @@
 <template>
 
+
 <div class="wrapper">
 
   <div id="slides">
@@ -10,18 +11,22 @@
       <div id="questionHeader" v-show="!overviewUser">{{questions}}<br>
       </div>
 
+
     <div class="answerLayout">
       <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key">
           <div v-show="!questionMaster" >
-         <button class="selectedAnswer">{{answer}} </button>
-          </div>
-        <div v-show="questionMaster" class="AnswerQuestionMaster">
-          {{answer}}
-        </div>
+         <button class="selectedAnswer" v-on:click="saveAnswer">
+           {{answer}}
 
+         </button>
+          </div>
+          <div v-show="questionMaster" class="AnswerQuestionMaster">
+            {{answer}}
+           </div>
 
       </div>
     </div>
+
     <div> </div>
   </div>
 </div>
@@ -45,7 +50,10 @@ export default {
     index: Number,
     answers: Array,
     questionMaster: Boolean,
-    overviewUser: Boolean
+    overviewUser: Boolean,
+    timeForQuestion: Array,
+    typeOfQuestion: Array,
+    pointsForQuestion: Array
   },
 
 
@@ -77,6 +85,11 @@ export default {
     if(this.questionNumber <= this.fullPoll["questions"].length)  {
         this.questionNumber++;
   }}*/
+
+    saveAnswer: function (){
+
+    }
+
 },
  /* finish: function(route) {
     if (route === 'result') {
@@ -110,7 +123,7 @@ export default {
 }
 
 .overview{
-  font-size: 0.8vw;
+  font-size: 1vw;
   margin-top: 5%;
   place-content: center;
 }
@@ -145,7 +158,8 @@ export default {
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
   margin-top: 15%;
-place-content: center;
+  font-size: 0.8vw;
+  place-content: center;
   /*border:solid;*/
   /*height: 5vw;*/
   /*width: 25vw;*/
