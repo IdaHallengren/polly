@@ -4,6 +4,9 @@
 <div class="wrapper">
 
   <div id="slides">
+    {{pointsForQuestion}}
+    {{typeOfQuestion}}
+    {{timeForQuestion}}
 
     <div v-show="overviewUser" class="overview">{{questions}}<br>
     </div>
@@ -20,9 +23,16 @@
 
          </button>
           </div>
-          <div v-show="questionMaster" class="AnswerQuestionMaster">
+
+        <div v-show="questionMaster && !overviewUser" class="AnswerQuestionMasterOverView">
+          {{answer}}
+        </div>
+          <div v-show="questionMaster && overviewUser" class="AnswerQuestionMaster">
             {{answer}}
            </div>
+
+
+
 
       </div>
     </div>
@@ -154,16 +164,25 @@ export default {
 
 .AnswerQuestionMaster{
   display: grid;
-  margin-bottom: 25%;
+  margin-bottom: 15%;
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
-  margin-top: 15%;
+  margin-top: 5%;
   font-size: 0.8vw;
   place-content: center;
   /*border:solid;*/
   /*height: 5vw;*/
   /*width: 25vw;*/
+}
 
+.AnswerQuestionMasterOverView{
+  display: grid;
+  margin-bottom: 15%;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto;
+  margin-top: 5%;
+  font-size: 4vw;
+  place-content: center;
 }
 
 </style>

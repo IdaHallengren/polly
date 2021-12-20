@@ -93,8 +93,8 @@
 
 
     <label v-for="(answer, i) in answers" v-bind:key="'answer' + i">
-      <input type="radio" name="test" v-bind:id="answer" v-bind:value="answer" v-model="selectedAnswer">
-      {{answerOptions[i]}}<br></label>
+      <input type="radio" name="test" v-bind:id="answer" v-bind:value="answer" v-model="selectedAnswer" required="required" checked="checked">
+      {{answerOptions[i]}}<br> </label>
 
     {{answer}}
     {{selectedAnswer}}
@@ -240,7 +240,7 @@
 
 
 
-<div v-if="letsPlayButton == false">
+<div v-if="letsPlayButton == false" class="layoutQuestionmaster">
 
   <SlideShow class="overviewSlideShow"
              v-bind:questions="allQuestions[this.questionNumber]"
@@ -255,14 +255,12 @@
              v-bind:timeForQuestion="timeForQuestions"
              v-bind:correctAnswer="selectedAnswer"
               >
-
-
   </SlideShow>
 
 
 
-  <button v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
-  <button v-show="this.questionNumber == allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>
+  <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
+  <button  class="nextQuestion" v-show="this.questionNumber == allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>
 <!--  {{this.questions}}-->
 <!--{{this.fullPoll['questions'][1].q}}-->
   {{this.allQuestions}}
@@ -347,6 +345,10 @@ export default {
         this.showAnswerButton = true
       else if (newVal ==='Presentation'){
         this.showAnswerButton = false
+        //this.answers.length=0
+        // this.timeForQuestion='60s'
+        // this.pointsForQuestion='0p'
+        // this.correctAnswers='null'
       }
       else
         this.answers.length=2
@@ -439,6 +441,7 @@ export default {
       this.timeForQuestions.push(this.timeForQuestion)
       this.pointsForQuestions.push(this.pointsForQuestion)
       this.correctAnswers.push(this.selectedAnswer)
+      this.selectedAnswer=""
       this.addQuestion()
       this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
       socket.emit('getPoll', this.pollId)
@@ -488,8 +491,37 @@ export default {
 
 <style>
 
-.overviewSlideShow{
+.nextQuestion {
+  width: 10%;
+  height: 7%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  background: #558564;
+  margin-left: 32em;
+  position: fixed;
+  bottom: 0.5em;
+  right: 5em;
 
+  transform: translateX(5%);
+  color: white;
+  font-weight: bold;
+  font-size: 1.2vw;
+  font-family: AppleGothic;
+}
+
+.nextQuestion:hover {
+  background: #1d823c;
+}
+
+
+.layoutQuestionmaster{
+  display: grid;
+  grid-template-columns: 95% 5%;
+  grid-template-rows: auto;
 }
 
 .waitingroomHeadline{
