@@ -136,7 +136,7 @@ export default {
       question:{},
       questionMaster: false,
 
-      // correctAnswer:[],
+       correctAnswer:[],
        timeForQuestion: [],
       typeOfQuestion: [],
       pointsForQuestion: [],

@@ -163,12 +163,12 @@
       <label class="labelsText"> {{ uiLabels.choosePointsForQuestion}}</label>
       <br>
       <select v-model="pointsForQuestion" style="width: 30%">
-        <option > 5p </option>
-        <option > 10p </option>
-        <option > 15p </option>
-        <option > 20p </option>
-        <option > 25p </option>
-        <option > 30p </option>
+        <option > 5 </option>
+        <option > 10 </option>
+        <option > 15 </option>
+        <option > 20 </option>
+        <option > 25 </option>
+        <option > 30 </option>
       </select>
 <!--      <span> Selected: {{ pointsForQuestion }}</span>-->
     </div>
@@ -305,7 +305,7 @@ export default {
       uiLabels: {},
       typeOfQuestion: 'Quiz',
       timeForQuestion: '5s',
-      pointsForQuestion:'5p' ,
+      pointsForQuestion: 5 ,
 
       typeOfQuestions: [],
       timeForQuestions:[],
@@ -441,7 +441,7 @@ export default {
       this.timeForQuestions.push(this.timeForQuestion)
       this.pointsForQuestions.push(this.pointsForQuestion)
       this.correctAnswers.push(this.selectedAnswer)
-      this.selectedAnswer=""
+      // this.selectedAnswer=""
       this.addQuestion()
       this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
       socket.emit('getPoll', this.pollId)
