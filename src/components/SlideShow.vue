@@ -99,12 +99,12 @@ export default {
       socket.emit('changingBoolean', this.isClicked)
       console.log("testar om svar kommer", this.answer)
        if(this.answer===this.correctAnswer){
-         console.log("korrekt svar idiot" )
+         console.log("KORREKT SVAR" )
           this.pointsCollected=this.pointsCollected+this.pointsForQuestion
          console.log("testar poang", this.pointsCollected)
        }
        else{
-         console.log("EHHHHHHHH")
+         console.log("FEL SVAR")
        }
 
     }

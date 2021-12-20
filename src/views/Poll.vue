@@ -177,12 +177,14 @@ export default {
 
     socket.on("pleaseRemoveThem", (myBoolean) =>{
       this.isClicked = myBoolean
-      console.log("PLS WORK BITCH",this.isClicked)
+      console.log("trying to remove boolean isClicked",this.isClicked)
     }
     )
 
     socket.on('booleanChange' , (myBoolean) =>{
       this.isClicked=myBoolean
+      console.log("trying to change back boolean isClicked",this.isClicked)
+
     })
 
     // socket.on('fullPoll' , (myPoll) => {
