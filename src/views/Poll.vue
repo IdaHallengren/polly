@@ -75,8 +75,10 @@
             v-bind:timeForQuestion="question.timeForQuestion"
             v-bind:typeOfQuestion="question.typeOfQuestion"
             v-bind:correctAnswer="question.correctAnswer"
+            v-bind:isClicked="this.isClicked"
             >
  </SlideShow>
+
   Type of question is: {{question.typeOfQuestion}} ,
   Time for question is: {{question.timeForQuestion}},
   Points for question are: {{question.pointsForQuestion}},
@@ -172,6 +174,16 @@ export default {
       console.log('SHOW GAME START')
         this.showGameStart= myBoolean
         })
+
+    socket.on("pleaseRemoveThem", (myBoolean) =>{
+      this.isClicked = myBoolean
+      console.log("PLS WORK BITCH",this.isClicked)
+    }
+    )
+
+    socket.on('booleanChange' , (myBoolean) =>{
+      this.isClicked=myBoolean
+    })
 
     // socket.on('fullPoll' , (myPoll) => {
     //  this.fullPoll=myPoll

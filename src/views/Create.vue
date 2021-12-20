@@ -21,20 +21,22 @@
 
   <div class="wrapper">
     <div id="overview">
-<!--      <div id="slides">-->
-<!--      <SlideShow id="overviewPresentationSlide" v-for="(question, i) in allQuestions" v-bind="question:allQuestions[i]">-->
-        <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']" v-bind:key="question" v-bind:questions="fullPoll['questions'][i].q" v-bind:answers="fullPoll['questions'][i].a" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels" v-bind:questionMaster="questionMaster" v-bind:overviewUser="overviewUser">
-
-
+        <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
+                   v-bind:key="question"
+                   v-bind:questions="fullPoll['questions'][i].q"
+                   v-bind:answers="fullPoll['questions'][i].a"
+                   v-bind:pollId="pollId"
+                   v-bind:uiLabels="uiLabels"
+                   v-bind:questionMaster="questionMaster"
+                   v-bind:overviewUser="overviewUser">
       </SlideShow>
-<!--      </div>-->
 
       <button v-on:click="removeSlide" class="icon-btn add-btn" >
-       <div class="btn-txt"> {{ uiLabels.removeSlide }} </div>
+       <span class="btn-txt"> {{ uiLabels.removeSlide }} </span>
       </button>
       <button v-on:click="addSlide" class="icon-btn add-btn" >
-        <div class="add-icon"></div>
-        <div class="btn-txt"> {{ uiLabels.addSlide }} </div> </button>
+        <span class="add-icon"></span>
+        <span class="btn-txt"> {{ uiLabels.addSlide }} </span> </button>
 
     </div>
 
@@ -49,18 +51,18 @@
 
     <div>
 <!--      {{uiLabels.question}}:-->
-    <div v-if="typeOfQuestion!='Presentation'"> <!--This is to change the input area for when it is a presentation-->
-      <textarea class="questionInput" type="text"  v-model="question" placeholder="Write your question here" ></textarea>
+    <div v-if="typeOfQuestion!=='Presentation'"> <!--This is to change the input area for when it is a presentation-->
+      <textarea class="questionInput"   v-model="question" :placeholder= "'Write your question here'" ></textarea>
     </div>
 
     <div v-if="typeOfQuestion==='Presentation'">
-      <textarea class="presentationInput" type="text" v-model="presentation" placeholder="Write your presentation here"></textarea>
+      <textarea class="presentationInput" v-model="presentation" :placeholder=" 'Write your presentation here'" ></textarea>
     </div>
 
     <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
 
 
-    <div v-if="typeOfQuestion!='Presentation'" class="answers" >
+    <div v-if="typeOfQuestion!=='Presentation'" class="answers" >
       <div>
         <br>
         {{ uiLabels.answers }}
@@ -75,22 +77,19 @@
         <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
 
           <button v-on:click="removeAnswer" class="icon-btn add-btn">
-            <div class="btn-txt">{{ uiLabels.removeAlternative }}</div>
+            <span class="btn-txt">{{ uiLabels.removeAlternative }}</span>
           </button>
 
           <button  v-on:click="addAnswer" class="icon-btn add-btn" >
-            <div class="add-icon"></div>
-            <div class="btn-txt">{{ uiLabels.addAlternative }}</div>
+            <span class="add-icon"></span>
+            <span class="btn-txt">{{ uiLabels.addAlternative }}</span>
           </button>
         </div>
-
         <br>
       </div>
   <div>
 
     <span>{{ uiLabels.correctAnswer }}:</span>
-<!--  <templete  class="selectRightAnswer">-->
-
 
     <label v-for="(answer, i) in answers" v-bind:key="'answer' + i">
       <input type="radio" name="test" v-bind:id="answer" v-bind:value="answer" v-model="selectedAnswer" required="required" checked="checked">
@@ -99,78 +98,64 @@
     {{answer}}
     {{selectedAnswer}}
 
-
-<!--  </templete>-->
   </div>
-
         <br>
-
       <div>
 <!--        <button v-on:click="addQuestion">Add question</button>-->
-
 <!--        <input type="number" v-model="questionNumber">-->
-
 <!--        <button v-on:click="runQuestion">Run question</button>-->
 <!--        {{data}}-->
       </div>
     </div>
   </div>
-
-
 <!--    <router-link v-bind:to="'/result/'+pollId">Check result</router-link>-->
   </div>
-
-
   <div id="editQuestion">
     <div id="v-model-select-question" class="typeOfQuestion">
       <br>
       <label class="labelsText"> {{ uiLabels.chooseTypeOfQuestion }} </label>
       <br>
       <select v-model="typeOfQuestion" style="width: 50%">
-
         <option value="Quiz" > Quiz </option>
         <option value="Voting"> {{ uiLabels.voting }} </option>
         <option value="TrueOrFalse" > {{ uiLabels.trueOrFalse }} </option>
         <option value="Presentation" > Presentation </option>
-
-
       </select>
 <!--  <span> Selected: {{ showAnswerButton }}</span>-->
-
     </div>
 
-    <div id="v-model-select-time" class="timeForQuestion" v-if="typeOfQuestion!='Presentation'">
+    <div id="v-model-select-time" class="timeForQuestion" v-if="typeOfQuestion!=='Presentation'">
       <label class="labelsText">{{uiLabels.chooseTimeForQuestion }} </label>
       <br>
-      <select v-model="timeForQuestion" style="width: 30%">
-        <option > 5s </option>
-        <option> 10s </option>
-        <option > 15s </option>
-        <option > 20s </option>
-        <option > 25s </option>
-        <option > 30s </option>
-        <option > 35s </option>
-        <option > 40s </option>
-        <option > 45s </option>
-        <option > 50s </option>
-        <option > 55s </option>
-        <option > 60s </option>
+      <select v-model.number="timeForQuestion" style="width: 30%">
+        <option > 5 </option>
+        <option> 10 </option>
+        <option > 15 </option>
+        <option > 20 </option>
+        <option > 25 </option>
+        <option > 30 </option>
+        <option > 35 </option>
+        <option > 40 </option>
+        <option > 45 </option>
+        <option > 50 </option>
+        <option > 55 </option>
+        <option > 60 </option>
       </select>
+      seconds
 <!--       <span> Selected: {{ timeForQuestion }}</span>-->
     </div>
 
-    <div v-if="typeOfQuestion!='Presentation'" id="v-model-select-points" class="pointsForQuestion">
+    <div v-if="typeOfQuestion!=='Presentation'" id="v-model-select-points" class="pointsForQuestion">
       <label class="labelsText"> {{ uiLabels.choosePointsForQuestion}}</label>
       <br>
-      <select v-model="pointsForQuestion" style="width: 30%">
-        <option > 5 </option>
+      <select v-model.number="pointsForQuestion" style="width: 30%" >
+        <option  > 5 </option>
         <option > 10 </option>
         <option > 15 </option>
         <option > 20 </option>
         <option > 25 </option>
         <option > 30 </option>
       </select>
-<!--      <span> Selected: {{ pointsForQuestion }}</span>-->
     </div>
 
     <div v-on:click= "startPoll= !startPoll" >
@@ -178,10 +163,9 @@
         <span class='text'>{{ uiLabels.createPoll }}</span>
       </button>
     </div>
+  </div>
 
-    </div>
-
-    <button class="noselect" v-on:click="cancelPage">
+    <button class="noSelect" v-on:click="cancelPage">
       <span class='text'> {{ uiLabels.backButton }} </span>
     </button>
   </div>
@@ -223,24 +207,22 @@
     </div>
 
     <div>
-      <button class="noselect" v-on:click="startPoll=!startPoll">
+      <button class="noSelect" v-on:click="startPoll=!startPoll">
         <span class='text'> {{ uiLabels.backButton }} </span>
       </button>
     </div>
 
-    <div v-on:click="letsPlayButton=!letsPlayButton, overviewUser=!overviewUser  ">
+    <div v-on:click="letsPlayButton=!letsPlayButton , overviewUser=!overviewUser  ">
       <button class="continue" v-on:click="letsPlay">
         <span class='text'> {{ uiLabels.letsPlay }} </span>
       </button>
     </div>
-
     </div>
-
 </div>
 
+<!--NEXT PAGE-->
 
-
-<div v-if="letsPlayButton == false" class="layoutQuestionmaster">
+<div v-if="letsPlayButton === false" class="layoutQuestionmaster">
 
   <SlideShow class="overviewSlideShow"
              v-bind:questions="allQuestions[this.questionNumber]"
@@ -258,11 +240,8 @@
   </SlideShow>
 
 
-
   <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
-  <button  class="nextQuestion" v-show="this.questionNumber == allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>
-<!--  {{this.questions}}-->
-<!--{{this.fullPoll['questions'][1].q}}-->
+  <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>
   {{this.allQuestions}}
   {{this.allAnswers}}
   {{this.typeOfQuestions}}
@@ -305,7 +284,7 @@ export default {
       uiLabels: {},
       typeOfQuestion: 'Quiz',
       timeForQuestion: '5s',
-      pointsForQuestion: 5 ,
+      pointsForQuestion: 5,
 
       typeOfQuestions: [],
       timeForQuestions:[],
@@ -330,11 +309,12 @@ export default {
       correctAnswers:[],
 
       showGameStart: true,
+
+      // For the SlideShow
       questionMaster: true,
-      overviewUser: true
+      overviewUser: true,
 
-
-
+      isClicked: false
     }
   },
 
@@ -358,12 +338,10 @@ export default {
 
   created: function () {
     this.lang = this.$route.params.lang;
-    console.log(this.lang)
     this.pollId = this.$route.params.id;
-    console.log(this.pollId)
+
     socket.emit('joinPoll', this.pollId)
     this.createPoll();
-    //Fixa så att om den har ett pollId så återanvände den det
 
     socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
@@ -385,17 +363,14 @@ export default {
     socket.on('participantsAdded', (myParticipant) =>
         this.participants = myParticipant
     )
-
-
   },
+
   methods: {
     createPoll: function () {
       this.addQuestion();
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
       console.log("Skickat info")
       socket.emit('getPoll', this.pollId)
-
-
     },
 
     addQuestion: function () {
@@ -429,7 +404,6 @@ export default {
       this.answers.pop();
     },
 
-
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
       this.questionNumber++; //Added this to increase the number for the question
@@ -445,7 +419,6 @@ export default {
       this.addQuestion()
       this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
       socket.emit('getPoll', this.pollId)
-
     },
 
      finish: function(route) {
@@ -459,6 +432,7 @@ export default {
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
       // socket.emit('dataUpdate', this.allAnswers, this.questionNumber)
       socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
+      socket.emit('removeButtons', {pollId: this.pollId, isClicked: this.isClicked})
     },
 
     removeSlide: function() {
@@ -478,12 +452,8 @@ export default {
       this.questionNumber = 0;
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
       socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber})
-
-
     }
-
   }
-
 }
 
 
@@ -517,7 +487,6 @@ export default {
   background: #1d823c;
 }
 
-
 .layoutQuestionmaster{
   display: grid;
   grid-template-columns: 95% 5%;
@@ -529,14 +498,13 @@ export default {
   font-size: 2.5vw;
   font-family: AppleGothic;
   color: white;
-
 }
 
 .labelsText{
   font-size: 2vw;
 }
 
-.noselect{
+.noSelect{
   position: fixed;
   bottom: 0.5em;
   left: 0.5em;
@@ -645,7 +613,6 @@ export default {
   /*background-color: white;*/
   height: 35%;
   margin: 10px;
-
 }
 
 .pollIdStyle{
@@ -661,7 +628,6 @@ export default {
 
 #QRCode{
   margin-top: 2em;
-
 }
 
 .wrapperWaitRoom{
@@ -702,6 +668,7 @@ export default {
   position: relative;
   transition: width 0.2s ease-in-out;
 }
+
 .add-btn:hover {
   width: 120px;
 }
@@ -715,24 +682,29 @@ export default {
   top: calc(50% - 2px);
   background: plum;
 }
+
 .add-btn::after {
   right: 14px;
   overflow: hidden;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
 }
+
 .add-btn::before {
   left: 14px;
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
 }
+
 .icon-btn:focus {
   outline: none;
 }
+
 .btn-txt {
   opacity: 0;
   transition: opacity 0.2s;
 }
+
 .add-btn:hover::before,
 .add-btn:hover::after {
   width: 4px;
@@ -743,6 +715,7 @@ export default {
 .add-btn:hover .btn-txt {
   opacity: 1;
 }
+
 .add-icon::after,
 .add-icon::before {
   transition: all 0.2s ease-in-out;
@@ -754,6 +727,7 @@ export default {
   background: plum;
   overflow: hidden;
 }
+
 .add-icon::before {
   left: 22px;
   border-top-left-radius: 2px;
@@ -791,7 +765,6 @@ export default {
   position: absolute;
   top: 0.5em;
   right: 0.5em;
-
 }
 
 .cancel .text {
@@ -837,7 +810,7 @@ export default {
 }
 
 /* Personal altered buttons with source code from Chance Squires*/
-.noselect{
+.noSelect{
   width: 7%;
   height: 6%;
   cursor: pointer;
@@ -851,7 +824,7 @@ export default {
   margin-top:1.5em;
 }
 
-.noselect .text {
+.noSelect .text {
   transform: translateX(34%);
   color: white;
   font-weight: bold;
@@ -859,7 +832,7 @@ export default {
   font-family: AppleGothic;
 }
 
-.noselect:hover {
+.noSelect:hover {
   background: #1d72f0;
 }
 

@@ -19,9 +19,16 @@
     <div class="answerLayout">
       <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key">
           <div v-show="!questionMaster" >
-         <button class="selectedAnswer" v-on:click="saveAnswer(answer)">
-           {{answer}}
-         </button>
+            <div v-if="!isClicked">
+
+             <button id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">
+               {{answer}}
+             </button>
+
+            </div>
+            <div v-if="isClicked">
+              {{answer}}
+            </div>
           </div>
 
         <div v-show="questionMaster && !overviewUser" class="AnswerQuestionMasters">
@@ -64,7 +71,9 @@ export default {
     timeForQuestion: Array,
     typeOfQuestion: Array,
     pointsForQuestion: Array,
-    correctAnswer: Array
+    correctAnswer: Array,
+
+
   },
 
 
@@ -74,33 +83,30 @@ export default {
       fullPoll: {},
       questionNumber: 0,
       number: 1,
-      pointsCollected: 0
-
+      pointsCollected: 0,
+      isClicked:false
 
   }},
   created: function () {
 
-    console.log("test om det funkar", this.question)
-   /* socket.emit("getPoll", this.pollId);
-    socket.on('fullPoll', (myPoll) =>
-        this.fullPoll = myPoll)
-
-    console.log(this.fullPoll)*/
   },
 
   methods:{
 
     saveAnswer: function (answer){
       this.answer=answer
+
+      socket.emit('changingBoolean', this.isClicked)
       console.log("testar om svar kommer", this.answer)
        if(this.answer===this.correctAnswer){
          console.log("korrekt svar idiot" )
-          this.pointsCollected+=this.pointsForQuestion
+          this.pointsCollected=this.pointsCollected+this.pointsForQuestion
          console.log("testar poang", this.pointsCollected)
        }
        else{
          console.log("EHHHHHHHH")
        }
+
     }
 
 },

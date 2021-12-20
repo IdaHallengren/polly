@@ -38,14 +38,14 @@
 <div v-if="!showStart">
   <div v-show = "showId">
     <div class = "wrapper1">
-      <label><h2 id="textFont">{{uiLabels.enterPollId}}</h2></label>
+      <label id="textFont">{{uiLabels.enterPollId}}</label>
       <div >
         <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
         <button class="okButton" v-on:click="newPage('Poll')"><span class='text'> OK</span></button>
       </div>
     </div>
-    <button2 class = "backButton" v-on:click = "showStart = !showStart"><span class='text'>{{uiLabels.backButton}}</span></button2>
+    <button class = "backButton" v-on:click = "showStart = !showStart"><span class='text'>{{uiLabels.backButton}}</span></button>
   </div>
 </div>
 
