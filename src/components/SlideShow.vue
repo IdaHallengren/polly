@@ -63,7 +63,7 @@ export default {
   props: {
     uiLabels: Object,
     questions: String,
-    pollId: Number,
+    pollId: String,
     index: Number,
     answers: Array,
     questionMaster: Boolean,
