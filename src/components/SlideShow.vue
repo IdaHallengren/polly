@@ -17,16 +17,16 @@
 
 
     <div class="answerLayout">
-      <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key">
+      <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key" >
           <div v-show="!questionMaster" >
-            <div v-if="!isClicked">
+            <div v-if="canClick()">
 
              <button id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">
                {{answer}}
              </button>
 
             </div>
-            <div v-if="isClicked">
+            <div v-if="!canClick()" >
               {{answer}}
             </div>
           </div>
@@ -62,7 +62,7 @@ export default {
 
   props: {
     uiLabels: Object,
-    questions: Array,
+    questions: String,
     pollId: Number,
     index: Number,
     answers: Array,
@@ -84,7 +84,7 @@ export default {
       questionNumber: 0,
       number: 1,
       pointsCollected: 0,
-      isClicked:false
+      isClicked:{}
 
   }},
   created: function () {
@@ -93,10 +93,14 @@ export default {
 
   methods:{
 
+    canClick: function(){
+      return !this.isClicked[this.questions]
+    },
+
     saveAnswer: function (answer){
       this.answer=answer
-
-      socket.emit('changingBoolean', this.isClicked)
+      this.isClicked[this.questions]=true
+      // socket.emit('changingBoolean', this.isClicked)
       console.log("testar om svar kommer", this.answer)
        if(this.answer===this.correctAnswer){
          console.log("KORREKT SVAR" )
@@ -106,7 +110,6 @@ export default {
        else{
          console.log("FEL SVAR")
        }
-
     }
 
 },

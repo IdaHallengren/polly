@@ -182,7 +182,8 @@ body{
   font-size: 2vw;
   font-weight: bold;
   color: dimgrey;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
+
   background: white;
   border: 0.1em solid #1d72f0;
   box-shadow: 0.1em 0.1em 0 #5995ED,
@@ -224,7 +225,7 @@ body{
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
 }
 
 .okButton:hover {
@@ -244,7 +245,7 @@ body{
   grid-template-rows: 50% 50%;
   padding-top: 200px;
   place-items: center;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
 }
 
 /* Personal altered buttons with source code from Chance Squires*/
@@ -258,7 +259,7 @@ body{
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #5995ED;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
   position: fixed;
   bottom: 0.5em;
   left: 0.5em;

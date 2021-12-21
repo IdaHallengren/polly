@@ -92,10 +92,10 @@
     <span>{{ uiLabels.correctAnswer }}:</span>
 
     <label v-for="(answer, i) in answers" v-bind:key="'answer' + i">
-      <input type="radio" name="test" v-bind:id="answer" v-bind:value="answer" v-model="selectedAnswer" required="required" checked="checked">
+      <input type="radio" name="test" v-bind:id="answer" v-bind:value="i" v-model="correctIndex" >
       {{answerOptions[i]}}<br> </label>
 
-    {{answer}}
+    {{correctIndex}}
     {{selectedAnswer}}
 
   </div>
@@ -314,7 +314,9 @@ export default {
       questionMaster: true,
       overviewUser: true,
 
-      isClicked: false
+      isClicked: false,
+
+      correctIndex:0
     }
   },
 
@@ -381,7 +383,7 @@ export default {
         typeOfQuestion: this.typeOfQuestion,
         timeForQuestion: this.timeForQuestion,
         pointsForQuestion: this.pointsForQuestion,
-        correctAnswer: this.selectedAnswer
+        correctAnswer: this.answers[this.correctIndex]
       });
 
       this.question = "";
@@ -414,7 +416,9 @@ export default {
       this.typeOfQuestions.push(this.typeOfQuestion)
       this.timeForQuestions.push(this.timeForQuestion)
       this.pointsForQuestions.push(this.pointsForQuestion)
-      this.correctAnswers.push(this.selectedAnswer)
+      this.correctAnswers.push(this.answers[this.correctIndex])
+      console.log(this.correctIndex, this.answers, this.correctAnswers)
+      console.log(this.answers[this.correctIndex])
       // this.selectedAnswer=""
       this.addQuestion()
       this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
@@ -480,7 +484,7 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
 }
 
 .nextQuestion:hover {
@@ -496,7 +500,7 @@ export default {
 .waitingroomHeadline{
   padding-right: 10%;
   font-size: 2.5vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
   color: white;
 }
 
@@ -515,7 +519,8 @@ export default {
   grid-template-rows: 100%;
   grid-template-columns: 25% 50% 25%;
   grid-gap: 2px;
-  font-family: AppleGothic;
+  font-family:   font-family: AppleGothic,sans-serif;
+
   height: 45em;
 }
 
@@ -547,7 +552,8 @@ export default {
   grid-template-rows: 98% 2%;
   grid-template-columns: 25% 50% 25%;
   font-size: 3vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
+
   font-weight: bold;
 }
 
@@ -622,7 +628,8 @@ export default {
   text-align: center;
   font-size: 2.5vw;
   font-weight: bold;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
+
   color: white;
 }
 
@@ -772,7 +779,8 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
+
 }
 
 .cancel:hover {
@@ -802,7 +810,8 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
+
 }
 
 .continue:hover {
@@ -829,7 +838,8 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
+
 }
 
 .noSelect:hover {
