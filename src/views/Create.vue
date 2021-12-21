@@ -519,7 +519,7 @@ export default {
   grid-template-rows: 100%;
   grid-template-columns: 25% 50% 25%;
   grid-gap: 2px;
-  font-family:   font-family: AppleGothic,sans-serif;
+  font-family:  AppleGothic,sans-serif;
 
   height: 45em;
 }
