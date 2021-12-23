@@ -129,7 +129,7 @@
       <br>
       <select v-model.number="timeForQuestion" style="width: 30%">
         <option > 5 </option>
-        <option> 10 </option>
+        <option > 10 </option>
         <option > 15 </option>
         <option > 20 </option>
         <option > 25 </option>
@@ -149,7 +149,7 @@
       <label class="labelsText"> {{ uiLabels.choosePointsForQuestion}}</label>
       <br>
       <select v-model.number="pointsForQuestion" style="width: 30%" >
-        <option  > 5 </option>
+        <option > 5 </option>
         <option > 10 </option>
         <option > 15 </option>
         <option > 20 </option>
