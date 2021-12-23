@@ -75,8 +75,12 @@
             v-bind:timeForQuestion="question.timeForQuestion"
             v-bind:typeOfQuestion="question.typeOfQuestion"
             v-bind:correctAnswer="question.correctAnswer"
+
             >
+<!--            v-bind:isClicked="this.isClicked"-->
+
  </SlideShow>
+
   Type of question is: {{question.typeOfQuestion}} ,
   Time for question is: {{question.timeForQuestion}},
   Points for question are: {{question.pointsForQuestion}},
@@ -136,7 +140,7 @@ export default {
       question:{},
       questionMaster: false,
 
-      // correctAnswer:[],
+       correctAnswer:[],
        timeForQuestion: [],
       typeOfQuestion: [],
       pointsForQuestion: [],
@@ -173,39 +177,18 @@ export default {
         this.showGameStart= myBoolean
         })
 
-    // socket.on('fullPoll' , (myPoll) => {
-    //  this.fullPoll=myPoll
-    // })
+    socket.on("pleaseRemoveThem", (myBoolean) =>{
+      this.isClicked = myBoolean
+      console.log("trying to remove boolean isClicked",this.isClicked)
+    }
+    )
 
-   /* socket.on('dataUpdate', (data) =>{
-     this.infoQuestions=data.questions
+    socket.on('booleanChange' , (myBoolean) =>{
+      this.isClicked=myBoolean
+      console.log("trying to change back boolean isClicked",this.isClicked)
 
-    })*/
+    })
 
-  // socket.on("dataUpdate", (infoQuestions) =>{
-  //
-  //       this.correctAnswer = infoQuestions.correctAnswer
-  //       this.timeForQuestion=infoQuestions.time
-  //       this.typeOfQuestion=infoQuestions.type
-  //       this.pointsForQuestion=infoQuestions.points
-  //       console.log("visar info")
-  //       console.log(this.correctAnswer)
-  //       console.log(this.typeOfQuestion)
-  //
-  //     }
-  //   )
-
-    // socket.on('fullPoll', (myPoll) =>
-    // {
-    //   this.typeOfQuestion=myPoll.typeOfQuestion
-    //   this.timeForQuestion=myPoll.timeForQuestion
-    // })
-
-    // socket.on("dataUpdate", (questionsAnswers) => {
-    //
-    //
-    // }
-    // )
 
   },
 
@@ -263,7 +246,7 @@ export default {
   height: 7.2vh;
   font-size: larger;
   float: left;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
 }
 
 #select {
@@ -274,14 +257,14 @@ export default {
   grid-column: 1;
   top: -25%;
   left: 35%;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
 }
 
 .fontSize{
   font-size: 2.5vw;
   font-weight: bold;
   color: white;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
 }
 
 #selectAvatar {
@@ -345,7 +328,7 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
 }
 
 .cancelButton:hover {
@@ -373,7 +356,7 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
 }
 
 .backButton:hover {
@@ -398,7 +381,7 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
 }
 
 .okButton button:hover {
@@ -426,7 +409,7 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic,sans-serif;
 }
 
 .continueButton:hover {

@@ -32,6 +32,7 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.timeForQuestion=[];
     poll.pointsForQuestion=[];
     poll.numberOfParticipants= "";
+    poll.booleanClicked=true
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
   }
@@ -143,7 +144,13 @@ Data.prototype.removeParticipant= function(pollId, participant){
   }
 }
 
-
+Data.prototype.changeBooleanClick = function(pollId, myBoolean){
+  const poll = this.polls[pollId];
+  console.log("participant removed", pollId, myBoolean);
+  if (typeof poll !== 'undefined') {
+    myBoolean.booleanClicked=true
+  }
+}
 
 
 

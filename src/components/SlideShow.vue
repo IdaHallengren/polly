@@ -4,6 +4,10 @@
 <div class="wrapper">
 
   <div id="slides">
+    {{pointsForQuestion}}
+    {{typeOfQuestion}}
+    {{timeForQuestion}}
+    {{correctAnswer}}
 
     <div v-show="overviewUser" class="overview">{{questions}}<br>
     </div>
@@ -13,16 +17,29 @@
 
 
     <div class="answerLayout">
-      <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key">
+      <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key" >
           <div v-show="!questionMaster" >
-         <button class="selectedAnswer" v-on:click="saveAnswer">
-           {{answer}}
+            <div v-if="canClick()">
 
-         </button>
+             <button id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">
+               {{answer}}
+             </button>
+
+            </div>
+            <div v-if="!canClick()" >
+              {{answer}}
+            </div>
           </div>
-          <div v-show="questionMaster" class="AnswerQuestionMaster">
+
+        <div v-show="questionMaster && !overviewUser" class="AnswerQuestionMasters">
+          {{answer}}
+        </div>
+          <div v-show="questionMaster && overviewUser" class="AnswerQuestionMasterOverview">
             {{answer}}
            </div>
+
+
+
 
       </div>
     </div>
@@ -45,15 +62,18 @@ export default {
 
   props: {
     uiLabels: Object,
-    questions: Array,
-    pollId: Number,
+    questions: String,
+    pollId: String,
     index: Number,
     answers: Array,
     questionMaster: Boolean,
     overviewUser: Boolean,
     timeForQuestion: Array,
     typeOfQuestion: Array,
-    pointsForQuestion: Array
+    pointsForQuestion: Array,
+    correctAnswer: Array,
+
+
   },
 
 
@@ -63,31 +83,33 @@ export default {
       fullPoll: {},
       questionNumber: 0,
       number: 1,
-
+      pointsCollected: 0,
+      isClicked:{}
 
   }},
   created: function () {
 
-    console.log("test om det funkar", this.question)
-   /* socket.emit("getPoll", this.pollId);
-    socket.on('fullPoll', (myPoll) =>
-        this.fullPoll = myPoll)
-
-    console.log(this.fullPoll)*/
   },
 
   methods:{
-/*  nextQuestion: function () {
-    this.number = this.fullPoll.questions.length;
-    socket.emit("getPoll", this.pollId);
-    this.question = this.fullPoll["questions"][this.questionNumber].q
-    this.answers = this.fullPoll["questions"][this.questionNumber].a
-    if(this.questionNumber <= this.fullPoll["questions"].length)  {
-        this.questionNumber++;
-  }}*/
 
-    saveAnswer: function (){
+    canClick: function(){
+      return !this.isClicked[this.questions]
+    },
 
+    saveAnswer: function (answer){
+      this.answer=answer
+      this.isClicked[this.questions]=true
+      // socket.emit('changingBoolean', this.isClicked)
+      console.log("testar om svar kommer", this.answer)
+       if(this.answer===this.correctAnswer){
+         console.log("KORREKT SVAR" )
+          this.pointsCollected=this.pointsCollected+this.pointsForQuestion
+         console.log("testar poang", this.pointsCollected)
+       }
+       else{
+         console.log("FEL SVAR")
+       }
     }
 
 },
@@ -152,18 +174,34 @@ export default {
   margin-right:8%;
 }
 
-.AnswerQuestionMaster{
+.AnswerQuestionMasterOverview{
   display: grid;
-  margin-bottom: 25%;
+  margin-bottom: 15%;
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
-  margin-top: 15%;
+  margin-top: 5%;
   font-size: 0.8vw;
   place-content: center;
   /*border:solid;*/
   /*height: 5vw;*/
   /*width: 25vw;*/
+}
 
+.AnswerQuestionMasters{
+
+  display: grid;
+  margin-bottom: 15%;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto;
+  margin-top: 5%;
+  font-size: 4vw;
+  place-content: center;
+  padding-right: 5vw;
+}
+
+.AnswerQuestionMasters:before {
+  content:"•";
+  padding-left: 10vw;
 }
 
 </style>
