@@ -64,13 +64,13 @@ export default {
     uiLabels: Object,
     questions: String,
     pollId: String,
-    index: Number,
+    index: String,
     answers: Array,
     questionMaster: Boolean,
     overviewUser: Boolean,
-    timeForQuestion: Array,
-    typeOfQuestion: Array,
-    pointsForQuestion: Array,
+    timeForQuestion: Number,
+    typeOfQuestion: String,
+    pointsForQuestion: Number,
     correctAnswer: Array,
 
 

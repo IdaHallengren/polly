@@ -69,7 +69,7 @@
             v-bind:answers="question.a"
             v-bind:pollId="pollId"
             v-bind:uiLabels="uiLabels"
-            index="1"
+            index=1
             v-bind:questionMaster="questionMaster"
             v-bind:pointsForQuestion="question.pointsForQuestion"
             v-bind:timeForQuestion="question.timeForQuestion"

@@ -58,18 +58,14 @@ function sockets(io, socket, data) {
      io.to(d.pollId).emit('gameStart', d.boolean)
   })
 
-  socket.on('removeButtons' , function(d){
-    io.to(d.pollId).emit('pleaseRemoveThem', d.isClicked)
-  })
+
 
   socket.on('removeParticipant', function(d){
     data.removeParticipant(d.pollId , {participantName: d.participantName, participantId: d.participantId, participantImg: d.participantImg})
     io.to(d.pollId).emit('dataUpdate', data.getParticipants(d.pollId))
   })
 
-socket.on('changingBoolean', function(d) {
-      socket.emit('booleanChange', data.changeBooleanClick(d.pollId))
-  })
+
 
 }
 
