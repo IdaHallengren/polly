@@ -144,13 +144,7 @@ Data.prototype.removeParticipant= function(pollId, participant){
   }
 }
 
-Data.prototype.changeBooleanClick = function(pollId, myBoolean){
-  const poll = this.polls[pollId];
-  console.log("participant removed", pollId, myBoolean);
-  if (typeof poll !== 'undefined') {
-    myBoolean.booleanClicked=true
-  }
-}
+
 
 
 

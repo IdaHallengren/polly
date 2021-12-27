@@ -314,7 +314,7 @@ export default {
       questionMaster: true,
       overviewUser: true,
 
-      isClicked: false,
+
 
       correctIndex:0
     }
