@@ -127,8 +127,10 @@
     <div id="v-model-select-time" class="timeForQuestion" v-if="typeOfQuestion!=='Presentation'">
       <label class="labelsText">{{uiLabels.chooseTimeForQuestion }} </label>
       <br>
+
       <select v-model="timeForQuestion" style="width: 30%">
         <option v-for="index in 10" :key="index" v-bind:value="5*index" > {{5*index}} </option>
+
       </select>
       seconds
 <!--       <span> Selected: {{ timeForQuestion }}</span>-->
@@ -138,7 +140,7 @@
       <label class="labelsText"> {{ uiLabels.choosePointsForQuestion}}</label>
       <br>
       <select v-model.number="pointsForQuestion" style="width: 30%" >
-        <option  > 5 </option>
+        <option > 5 </option>
         <option > 10 </option>
         <option > 15 </option>
         <option > 20 </option>
@@ -182,7 +184,7 @@
 
 
     <div>
-      <h2 class="waitingroomHeadline"> {{ uiLabels.waitingRoom }}</h2>
+      <p class="waitingroomHeadline"> {{ uiLabels.waitingRoom }}</p>
       <form class = "waitingRoom">
         <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
           <span v-if="participants.length>0">
@@ -489,7 +491,8 @@ export default {
 .waitingroomHeadline{
   padding-right: 10%;
   font-size: 2.5vw;
-  font-family: AppleGothic,sans-serif;
+  font-family: AppleGothic;
+  font-weight: bold;
   color: white;
 }
 
