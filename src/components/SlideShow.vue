@@ -2,12 +2,16 @@
 
 
 <div class="wrapper">
-
   <div id="slides">
-    {{pointsForQuestion}}
-    {{typeOfQuestion}}
+
     {{timeForQuestion}}
-    {{correctAnswer}}
+
+
+    <div id="app">
+
+      <Timer :time-left="timeLeft"></Timer>
+    </div>
+
 
     <div v-show="overviewUser" class="overview">{{questions}}<br>
     </div>
@@ -47,18 +51,22 @@
     <div> </div>
   </div>
 </div>
-
+{{fullPoll}}
 </template>
 
 <script>
 import io from 'socket.io-client'
+import Timer from "../components//Timer";
 const socket = io();
 
-socket.on("sendQuestions", (activeQuestion) =>
-    this.question = activeQuestion)
+
 
 export default {
   name: "SlideShow",
+   components: {
+     Timer
+   },
+
 
   props: {
     uiLabels: Object,
@@ -72,8 +80,6 @@ export default {
     typeOfQuestion: String,
     pointsForQuestion: Number,
     correctAnswer: Array,
-
-
   },
 
 
@@ -84,14 +90,29 @@ export default {
       questionNumber: 0,
       number: 1,
       pointsCollected: 0,
-      isClicked:{}
+      isClicked:{},
+      timePassed: 0,
+      timerInterval: null,
 
   }},
+  computed: {
+    timeLeft() {
+      return this.timeForQuestion - this.timePassed
+    }
+  },
   created: function () {
+    socket.on("sendQuestions", (activeQuestion) =>
+        this.question = activeQuestion)
+  },
 
+  mounted() {
+    this.startTimer();
   },
 
   methods:{
+    startTimer() {
+      this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
+    },
 
     canClick: function(){
       return !this.isClicked[this.questions]

@@ -127,19 +127,8 @@
     <div id="v-model-select-time" class="timeForQuestion" v-if="typeOfQuestion!=='Presentation'">
       <label class="labelsText">{{uiLabels.chooseTimeForQuestion }} </label>
       <br>
-      <select v-model.number="timeForQuestion" style="width: 30%">
-        <option > 5 </option>
-        <option> 10 </option>
-        <option > 15 </option>
-        <option > 20 </option>
-        <option > 25 </option>
-        <option > 30 </option>
-        <option > 35 </option>
-        <option > 40 </option>
-        <option > 45 </option>
-        <option > 50 </option>
-        <option > 55 </option>
-        <option > 60 </option>
+      <select v-model="timeForQuestion" style="width: 30%">
+        <option v-for="index in 10" :key="index" v-bind:value="5*index" > {{5*index}} </option>
       </select>
       seconds
 <!--       <span> Selected: {{ timeForQuestion }}</span>-->
@@ -219,26 +208,25 @@
     </div>
     </div>
 </div>
-
+  {{fullPoll["timeForQuestion"]}}
 <!--NEXT PAGE-->
 
 <div v-if="letsPlayButton === false" class="layoutQuestionmaster">
 
   <SlideShow class="overviewSlideShow"
-             v-bind:questions="allQuestions[this.questionNumber]"
-             v-bind:answers="allAnswers"
+             v-bind:questions="allQuestions[questionNumber]"
+             v-bind:answers="allAnswers[questionNumber]"
              v-bind:pollId="pollId"
              v-bind:uiLabels="uiLabels"
              v-bind:index="questionNumber"
              v-bind:questionMaster="questionMaster"
              v-bind:overviewUser="overviewUser"
-             v-bind:pointsForQuestion="pointsForQuestions"
-             v-bind:typeOfQuestion="typeOfQuestions"
-             v-bind:timeForQuestion="timeForQuestions"
-             v-bind:correctAnswer="selectedAnswer"
+             v-bind:pointsForQuestion="pointsForQuestions[questionNumber]"
+             v-bind:typeOfQuestion="typeOfQuestions[questionNumber]"
+             v-bind:timeForQuestion="timeForQuestions[questionNumber]"
+             v-bind:correctAnswer="correctAnswers[questionNumber]"
               >
   </SlideShow>
-
 
   <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
   <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>
@@ -283,7 +271,7 @@ export default {
       data: {},
       uiLabels: {},
       typeOfQuestion: 'Quiz',
-      timeForQuestion: '5s',
+      timeForQuestion: 5,
       pointsForQuestion: 5,
 
       typeOfQuestions: [],
@@ -445,6 +433,7 @@ export default {
       this.questionNumber--;
       // socket.emit("dataUpdate", {questionNumber: this.questionNumber});
       this.runQuestion();
+      socket.emit('getPoll', this.pollId)
     },
 
     cancelPage: function () {
