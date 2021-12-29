@@ -304,8 +304,6 @@ export default {
       questionMaster: true,
       overviewUser: true,
 
-
-
       correctIndex:0
     }
   },
@@ -447,7 +445,7 @@ export default {
       this.questionNumber = 0;
       this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
       socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber})
-    }
+    },
   }
 }
 

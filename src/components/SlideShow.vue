@@ -6,7 +6,6 @@
 
     {{timeForQuestion}}
 
-
     <div id="app">
 
       <Timer :time-left="timeLeft"></Timer>
@@ -93,8 +92,7 @@ export default {
       isClicked:{},
       timePassed: 0,
       timerInterval: null,
-
-  }},
+    }},
   computed: {
     timeLeft() {
       return this.timeForQuestion - this.timePassed
