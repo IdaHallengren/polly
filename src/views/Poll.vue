@@ -1,10 +1,17 @@
 
 <template>
-<!--<div>
-  <Question v-bind:question="question"
-            v-on:answer="submitAnswer"/>
 
-</div>-->
+
+
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+
+  <!--<div>
+    <Question v-bind:question="question"
+              v-on:answer="submitAnswer"/>
+
+  </div>-->
 
 <div v-if="!showGameStart">
 
@@ -415,5 +422,43 @@ export default {
 .continueButton:hover {
   background: #1d823c;
 }
+
+
+
+
+
+
+
+/*testar ändra bakgrund även på create */
+
+.bg {
+  animation:slide 40s ease-in-out infinite alternate;
+  background-image: linear-gradient(-60deg, #c1b7f7 50%, #7496db 50%);
+  bottom:0;
+  left:-50%;
+  opacity:.5;
+  position:fixed;
+  right:-50%;
+  top:0;
+  z-index:-1;
+}
+.bg2 {
+  animation-direction:alternate-reverse;
+  animation-duration:20s;
+}
+.bg3 {
+  animation-duration:20s;
+}
+@keyframes slide {
+  0% {
+    transform:translateX(-25%);
+  }
+  100% {
+    transform:translateX(25%);
+  }
+}
+
+
+
 
 </style>
