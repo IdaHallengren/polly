@@ -1,7 +1,7 @@
 <template>
   <div class="base-timer">
     <svg
-        class="base-timer__svg"
+        class="svg"
         viewBox="0 0 100 100"
         xmlns="http://www.w3.org/2000/svg"
     >
@@ -46,25 +46,24 @@ export default {
 </script>
 
 <style scoped>
-/* Sets the containers height and width */
+
 .base-timer {
   position: relative;
   width: 300px;
   height: 300px;
 }
-  /* Removes SVG styling that would hide the time label */
-  .circle {
+
+.circle {
     fill: none;
     stroke: none;
-  }
+}
 
-  /* The SVG path that displays the timer's progress */
-  .path-elapsed {
+.path-elapsed {
     stroke-width: 7px;
     stroke: grey;
-  }
+}
 
- .label {
+.label {
    position: absolute;
    width: 300px;
    height: 300px;
@@ -73,7 +72,8 @@ export default {
    align-items: center;
    justify-content: center;
    font-size: 48px;
- }
+}
+
 
 
 </style>

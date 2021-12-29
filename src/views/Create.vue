@@ -853,7 +853,7 @@ export default {
 /*testar ändra bakgrund även på create */
 
 .bg {
-  animation:slide 40s ease-in-out infinite alternate;
+  animation:slide 23s ease-in-out infinite alternate;
   background-image: linear-gradient(-60deg, #1a8489 50%, #5EAC9B 50%);
   bottom:0;
   left:-50%;
@@ -865,10 +865,10 @@ export default {
 }
 .bg2 {
   animation-direction:alternate-reverse;
-  animation-duration:20s;
+  animation-duration:23s;
 }
 .bg3 {
-  animation-duration:20s;
+  animation-duration:23s;
 }
 @keyframes slide {
   0% {
