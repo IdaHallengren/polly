@@ -614,7 +614,7 @@ export default {
   /*border-radius: 10%;*/
   /*background-color: white;*/
   height: 35%;
-  margin: 10px;
+  margin: 2em;
 }
 
 .pollIdStyle{

@@ -10,7 +10,7 @@
             class="path-elapsed"
             cx="50"
             cy="50"
-            r="46.5"
+            r="45"
         />
         <path
             :stroke-dasharray="circleDasharray"
@@ -35,6 +35,7 @@
 export default {
   name: "Timer.vue",
   props: {
+    timeLimit: Number,
     timeLeft: {
       type: Number,
       required: true
@@ -48,6 +49,7 @@ export default {
       default: 10
     },
   },
+
   computed: {
     circleDasharray() {
       return `${(this.timeFraction * 283).toFixed(0)} 283`;
@@ -131,7 +133,7 @@ export default {
 }
 
 .path-remaining {
-   stroke-width: 10px;
+   stroke-width: 7px;
    stroke-linecap: round;
    transform: rotate(90deg);
    transform-origin: center;

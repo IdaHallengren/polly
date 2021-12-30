@@ -4,66 +4,56 @@
 <div class="wrapper">
   <div id="slides">
 
-    {{timeForQuestion}}
+    <div v-show="overviewUser" class="overview">{{questions}}<br></div>
 
-    <div id="app">
-
-      <Timer :time-left="timeLeft"></Timer>
-    </div>
-
-
-    <div v-show="overviewUser" class="overview">{{questions}}<br>
-    </div>
-
-      <div id="questionHeader" v-show="!overviewUser">{{questions}}<br>
-      </div>
-
+      <div id="questionHeader" v-show="!overviewUser">{{questions}}<br></div>
 
     <div class="answerLayout">
       <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key" >
-          <div v-show="!questionMaster" >
-            <div v-if="canClick()">
+        <div v-show="!questionMaster" >
+           <div v-if="canClick()">
 
-             <button id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">
-               {{answer}}
-             </button>
+            <button id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">
+              {{answer}}
+            </button>
 
             </div>
             <div v-if="!canClick()" >
               {{answer}}
             </div>
-          </div>
+        </div>
 
         <div v-show="questionMaster && !overviewUser" class="AnswerQuestionMasters">
           {{answer}}
         </div>
-          <div v-show="questionMaster && overviewUser" class="AnswerQuestionMasterOverview">
-            {{answer}}
-           </div>
-
-
-
+        <div v-show="questionMaster && overviewUser" class="AnswerQuestionMasterOverview">
+           {{answer}}
+        </div>
 
       </div>
     </div>
-
-    <div> </div>
+  </div>
+  <div id="app" v-show="!overviewUser">
+    <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
   </div>
 </div>
+
+
+
 {{fullPoll}}
 </template>
 
 <script>
-import io from 'socket.io-client'
-import Timer from "../components//Timer";
-const socket = io();
+// import io from 'socket.io-client'
+ import Timer from "../components//Timer";
+// const socket = io();
 
 
 
 export default {
   name: "SlideShow",
    components: {
-     Timer
+      Timer
    },
 
 
@@ -95,12 +85,15 @@ export default {
     }},
   computed: {
     timeLeft() {
-      return this.timeForQuestion - this.timePassed
+      if(this.timeForQuestion - this.timePassed <= 0)
+        return 0
+      else
+        return this.timeForQuestion - this.timePassed
     }
   },
   created: function () {
-    socket.on("sendQuestions", (activeQuestion) =>
-        this.question = activeQuestion)
+/*    socket.on("sendQuestions", (activeQuestion) =>
+        this.question = activeQuestion)*/
   },
 
   mounted() {
@@ -146,16 +139,16 @@ export default {
 .wrapper{
   display: grid;
   grid-template-rows: 100%;
-  grid-template-columns: 95% 5%;
+  grid-template-columns: 80% 20%;
 }
 
 #slides {
   border: solid;
   border-radius: 10%;
   background-color: white;
-  height: 90%;
+  height: 80%;
   width: 85%;
-  margin: 10px;
+  margin: 2em;
 }
 
 #questionHeader {
@@ -221,6 +214,12 @@ export default {
 .AnswerQuestionMasters:before {
   content:"•";
   padding-left: 10vw;
+}
+
+#app {
+  position: absolute;
+  right: 5%;
+  top: 15%;
 }
 
 </style>
