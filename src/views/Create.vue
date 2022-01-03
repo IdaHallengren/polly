@@ -29,7 +29,7 @@
 
     <div id="overview">
       <button class="editDragAndDrop">
-        <span class="text"> Edit  </span>
+        <span class="text"> {{uiLabels.edit}}  </span>
       </button>
         <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
                    v-bind:key="question"
@@ -473,7 +473,7 @@ export default {
 <style>
 
 .editDragAndDrop{
-  width: 14%;
+  width: 20%;
   margin-left:70%;
   margin-top: 0.5em;
   position: relative;
