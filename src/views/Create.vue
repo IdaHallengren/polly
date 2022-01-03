@@ -223,7 +223,7 @@
 
   <SlideShow class="overviewSlideShow"
              v-bind:questions="allQuestions[questionNumber]"
-             v-bind:answers="allAnswers[questionNumber]"
+             v-bind:answers="allAnswers"
              v-bind:pollId="pollId"
              v-bind:uiLabels="uiLabels"
              v-bind:index="questionNumber"
@@ -237,7 +237,7 @@
   </SlideShow>
 
   <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
-  <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('/result/')">View Result</button>
+  <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('result')">View Result</button>
   {{this.allQuestions}}
   {{this.allAnswers}}
   {{this.typeOfQuestions}}
@@ -310,7 +310,12 @@ export default {
       questionMaster: true,
       overviewUser: true,
 
-      correctIndex:0
+      correctIndex:0,
+
+      endgame: true
+
+
+
     }
   },
 
@@ -422,6 +427,7 @@ export default {
      finish: function(route) {
       if (route === 'result') {
         this.$router.push(`/result/${this.pollId}/${this.lang}`)
+        socket.emit('viewResult', {pollId: this.pollId, endGame: this.endGame})
       }
     },
 

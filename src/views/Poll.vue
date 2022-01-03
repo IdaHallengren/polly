@@ -151,9 +151,9 @@ export default {
        timeForQuestion: [],
       typeOfQuestion: [],
       pointsForQuestion: [],
-       infoQuestions:{}
+       infoQuestions:{},
 
-
+endGame: false
 
     }
   },
@@ -194,6 +194,13 @@ export default {
       this.isClicked=myBoolean
       console.log("trying to change back boolean isClicked",this.isClicked)
 
+    })
+
+    socket.on('endGame',(d)=>{
+      //de första två raderna är lite onödiga men fick det inte att funka annars
+      console.log('End Game Now')
+      this.endGame= d
+      this.$router.push(`/result/${this.pollId}/${this.lang}`)
     })
 
 
