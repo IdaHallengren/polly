@@ -26,7 +26,11 @@
   </div>
 
   <div class="wrapper">
+
     <div id="overview">
+      <button class="editDragAndDrop">
+        <span class="text"> Edit  </span>
+      </button>
         <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
                    v-bind:key="question"
                    v-bind:questions="fullPoll['questions'][i].q"
@@ -468,6 +472,24 @@ export default {
 
 <style>
 
+.editDragAndDrop{
+  width: 14%;
+  margin-left:70%;
+  margin-top: 0.5em;
+  position: relative;
+  cursor: pointer;
+  background-color: lightslategray;
+  border-radius: 10%;
+}
+
+.editDragAndDrop .text{
+  transform: translateX(20%);
+  color: white;
+  font-weight: bold;
+  font-size: 1vw;
+  font-family: AppleGothic,sans-serif;
+}
+
 .removeSlides{
   width: 40%;
   height: 8%;
@@ -477,7 +499,6 @@ export default {
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: lightslategray;
-
   margin-bottom: 0.5em;
 }
 
