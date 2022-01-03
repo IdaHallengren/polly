@@ -69,7 +69,6 @@
 </div>
 </div>
 
-
 <div v-if="showGameStart">
  
  <SlideShow v-bind:questions="question.q"
@@ -82,7 +81,6 @@
             v-bind:timeForQuestion="question.timeForQuestion"
             v-bind:typeOfQuestion="question.typeOfQuestion"
             v-bind:correctAnswer="question.correctAnswer"
-
             >
 <!--            v-bind:isClicked="this.isClicked"-->
 
@@ -95,10 +93,6 @@
 
 
 </div>
-
-
-
-
 
 
 </template>

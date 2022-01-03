@@ -5,7 +5,7 @@
 
 
 
-<main class="start">
+<main>
 
 <div id="langDiv">
     <img id="sweImg" src="../img/swe.jpg" v-on:click="switchToSwedishLanguage"/>
@@ -28,9 +28,9 @@
 
   <section id="wrapperButtons">
 
-    <button class="button" v-on:click="newPage('Create')">{{uiLabels.createPoll}}</button>
+    <button class="startButton" v-on:click="newPage('Create')">{{uiLabels.createPoll}}</button>
 
-    <button class="button" id="partButton" v-on:click = "showStart = !showStart">{{uiLabels.participatePoll}}</button>
+    <button class="startButton" id="partButton" v-on:click = "showStart = !showStart">{{uiLabels.participatePoll}}</button>
 
   </section>
 </div>
@@ -173,7 +173,7 @@ body{
 }
 
 /* Personal altered buttons with source code from Chance Squires*/
-.start .button {
+.startButton {
   height:10vh;
   width: 15vw;
   grid-column: 2;
@@ -193,13 +193,13 @@ body{
   transition: 500ms ease-in-out;
 }
 
-.start button:hover {
+.startButton:hover {
   /*box-shadow: 2em 0.25em 0 #317773, -2em -0.25em 0 #317773;*/
   background: lightskyblue;
   color: White;
 }
 
-.start button:focus {
+.startButton:focus {
   outline: none;
 }
 #partButton{
@@ -243,7 +243,7 @@ body{
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: 50% 50%;
-  padding-top: 200px;
+  padding-top: 15vw;
   place-items: center;
   font-family: AppleGothic,sans-serif;
 }

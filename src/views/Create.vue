@@ -613,8 +613,9 @@ export default {
   /*border:solid;*/
   /*border-radius: 10%;*/
   /*background-color: white;*/
-  height: 35%;
-  margin: 2em;
+  height: 50%;
+  width: 100%;
+  margin: 1em;
 }
 
 .pollIdStyle{

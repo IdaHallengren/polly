@@ -1,10 +1,14 @@
 <template>
 
 
-<div class="wrapper">
-  <div id="slides">
+<div class="wrapper"      @drop="onDrop($event, questions)"
+     @dragenter.prevent
+     @dragover.prevent>
+  <div id="slides" draggable="true" @dragstart="startDrag($event, questions)">
+
 
     <div v-show="overviewUser" class="overview">{{questions}}<br></div>
+
 
       <div id="questionHeader" v-show="!overviewUser">{{questions}}<br></div>
 
@@ -32,28 +36,23 @@
 
       </div>
     </div>
-  </div>
-  <div id="app" v-show="!overviewUser">
+  </div><div id="app" v-if="!overviewUser">
     <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
   </div>
 </div>
-
-
-
-{{fullPoll}}
 </template>
 
 <script>
-// import io from 'socket.io-client'
- import Timer from "../components//Timer";
-// const socket = io();
+ //import io from 'socket.io-client'
+ import Timer from "../components/Timer";
+ //const socket = io();
 
 
 
 export default {
   name: "SlideShow",
    components: {
-      Timer
+       Timer
    },
 
 
@@ -101,6 +100,21 @@ export default {
   },
 
   methods:{
+
+    startDrag: function(event, item){
+      console.log(item)
+      event.dataTransfer.dropEffect='move'
+      event.dataTransfer.effectAllowed = 'move'
+      event.dataTransfer.setData('itemId', item.id)
+    },
+
+     onDrop: function(event, list){
+      const itemId = event.dataTransfer.getData('itemId')
+      const item = this.item.find(list = item.id === itemId)
+       item.list = list
+
+     },
+
     startTimer() {
       this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
     },
