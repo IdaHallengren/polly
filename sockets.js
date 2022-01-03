@@ -65,6 +65,10 @@ function sockets(io, socket, data) {
     io.to(d.pollId).emit('dataUpdate', data.getParticipants(d.pollId))
   })
 
+  socket.on('viewResult', function(d){
+    io.to(d.pollId).emit('endGame', d.endGame)
+  })
+
 
 
 }

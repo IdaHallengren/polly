@@ -1,10 +1,11 @@
 <template>
-hej2
+
 
   {{pollId}}
   <div>
 
     {{question}}
+
   </div>
   <Bars v-bind:data="data"/>
 </template>
