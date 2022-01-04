@@ -84,8 +84,8 @@
             v-on:pointsCollected="pointsTot($event)"
             >
 <!--            v-bind:isClicked="this.isClicked"-->
-
  </SlideShow>
+  {{participants.pointsCollected}}
 
   Type of question is: {{question.typeOfQuestion}} ,
   Time for question is: {{question.timeForQuestion}},
@@ -109,6 +109,7 @@ import avatar from '../data/avatar.json'
 import SlideShow from "../components/SlideShow";
 
 const socket = io();
+
 
 export default {
   name: 'Poll',

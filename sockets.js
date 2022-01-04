@@ -39,6 +39,7 @@ function sockets(io, socket, data) {
       io.to(d.pollId).emit('participantsAdded', data.getParticipants(d.pollId));
     })
 
+
     socket.on('resetAll', () => {
       data = new Data();
       data.initializeData();
