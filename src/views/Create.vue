@@ -144,13 +144,8 @@
     <div v-if="typeOfQuestion!=='Presentation'" id="v-model-select-points" class="pointsForQuestion">
       <label class="labelsText"> {{ uiLabels.choosePointsForQuestion}}</label>
       <br>
-      <select v-model.number="pointsForQuestion" style="width: 30%" >
-        <option > 5 </option>
-        <option > 10 </option>
-        <option > 15 </option>
-        <option > 20 </option>
-        <option > 25 </option>
-        <option > 30 </option>
+      <select v-model="pointsForQuestion" style="width: 30%" >
+        <option v-for="index in 6" :key="index" v-bind:value="5*index"> {{5*index}} </option>
       </select>
     </div>
 
