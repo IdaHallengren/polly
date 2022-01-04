@@ -239,6 +239,7 @@
              v-bind:typeOfQuestion="typeOfQuestions[questionNumber]"
              v-bind:timeForQuestion="timeForQuestions[questionNumber]"
              v-bind:correctAnswer="correctAnswers[questionNumber]"
+
               >
   </SlideShow>
 

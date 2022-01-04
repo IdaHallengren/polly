@@ -32,7 +32,8 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.timeForQuestion=[];
     poll.pointsForQuestion=[];
     poll.numberOfParticipants= "";
-    poll.booleanClicked=true
+    poll.booleanClicked=true;
+    poll.totPointsForQuestion=0;
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
   }
@@ -141,6 +142,16 @@ Data.prototype.removeParticipant= function(pollId, participant){
         poll.participants.splice(i, 1)
       }
     }
+  }
+}
+
+Data.prototype.getPoints= function(points, pollId){
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+    console.log('registreras poängen?', poll.totPointsForQuestion)
+     return poll.totPointsForQuestion+=points;
+
+
   }
 }
 

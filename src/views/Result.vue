@@ -6,6 +6,9 @@
 
     {{question}}
 
+    <button> hej </button>
+
+
   </div>
   <Bars v-bind:data="data"/>
 </template>
@@ -24,24 +27,29 @@ export default {
   data: function () {
     return {
       question: "",
-      data: {
-        pollId: ""
-      }
+      pointsForPoll:0,
+
     }
   },
   created: function () {
     this.pollId = this.$route.params.id
     this.lang = this.$route.params.lang;
 
-    socket.emit('joinPoll', this.pollId)
-    socket.on("dataUpdate", (update) => {
-      this.data = update.a;
-      this.question = update.q;
-    });
-    socket.on("newQuestion", update => {
-      this.question = update.q;
-      this.data = {};
+     socket.emit('joinPoll', this.pollId)
+    // socket.on("dataUpdate", (update) => {
+    //   this.data = update.a;
+    //   this.question = update.q;
+    // });
+    // socket.on("newQuestion", update => {
+    //   this.question = update.q;
+    //   this.data = {};
+    // })
+
+    socket.on('pointsForQuestion', (d) => {
+      console.log('Have the points sent to result?');
+      this.pointsForPoll=d.totPointsForQuestion;
     })
+
   }
 }
 </script>

@@ -6,9 +6,7 @@
      @dragover.prevent>
   <div id="slides" draggable="true" @dragstart="startDrag($event, questions)">
 
-
     <div v-show="overviewUser" class="overview">{{questions}}<br></div>
-
 
       <div id="questionHeader" v-show="!overviewUser">{{questions}}<br></div>
 
@@ -82,6 +80,7 @@ export default {
       timePassed: 0,
       timerInterval: null,
     }},
+
   computed: {
     timeLeft() {
       if(this.timeForQuestion - this.timePassed <= 0)
@@ -136,17 +135,13 @@ export default {
        else{
          console.log("FEL SVAR")
        }
+       this.$emit('pointsCollected', this.pointsForQuestion)
+
     }
 
 },
- /* finish: function(route) {
-    if (route === 'result') {
-      this.$router.push(`/result/${this.pollId}/${this.lang}`)
-    }
-  }*/
-
-
 }
+
 </script>
 
 <style scoped>
