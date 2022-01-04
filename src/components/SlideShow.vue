@@ -132,7 +132,9 @@ export default {
     },
 
     canClick: function(){
-      return !this.isClicked[this.questions]
+       if (this.timePassed < this.timeForQuestion) {
+         return !this.isClicked[this.questions]
+       }
     },
 
     saveAnswer: function (answer){
