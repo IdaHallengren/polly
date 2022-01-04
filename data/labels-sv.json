@@ -35,5 +35,6 @@
 	"waitingRoomNr": "Väntrum nummer: ",
 	"waitParticipant": "Vänta tills fler deltagare har anslutit",
 	"waitQuestionMaster": "Vänta tills poll-skaparen startar spelet!",
-	"correctAnswer": "Rätt svar"
+	"correctAnswer": "Rätt svar",
+	"edit": "Redigera"
 }

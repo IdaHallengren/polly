@@ -144,11 +144,11 @@ export default {
 
        correctAnswer:[],
        timeForQuestion: [],
-      typeOfQuestion: [],
-      pointsForQuestion: [],
+       typeOfQuestion: [],
+       pointsForQuestion: [],
        infoQuestions:{},
 
-endGame: false
+      endGame: false
 
     }
   },
@@ -179,17 +179,7 @@ endGame: false
         this.showGameStart= myBoolean
         })
 
-    socket.on("pleaseRemoveThem", (myBoolean) =>{
-      this.isClicked = myBoolean
-      console.log("trying to remove boolean isClicked",this.isClicked)
-    }
-    )
 
-    socket.on('booleanChange' , (myBoolean) =>{
-      this.isClicked=myBoolean
-      console.log("trying to change back boolean isClicked",this.isClicked)
-
-    })
 
     socket.on('endGame',(d)=>{
       //de första två raderna är lite onödiga men fick det inte att funka annars

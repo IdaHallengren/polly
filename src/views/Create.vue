@@ -26,7 +26,11 @@
   </div>
 
   <div class="wrapper">
+
     <div id="overview">
+      <button class="editDragAndDrop">
+        <span class="text"> {{uiLabels.edit}}  </span>
+      </button>
         <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
                    v-bind:key="question"
                    v-bind:questions="fullPoll['questions'][i].q"
@@ -37,12 +41,7 @@
                    v-bind:overviewUser="overviewUser">
       </SlideShow>
 
-      <button v-on:click="removeSlide" class="icon-btn add-btn" >
-       <span class="btn-txt"> {{ uiLabels.removeSlide }} </span>
-      </button>
-      <button v-on:click="addSlide" class="icon-btn add-btn" >
-        <span class="add-icon"></span>
-        <span class="btn-txt"> {{ uiLabels.addSlide }} </span> </button>
+
 
     </div>
 
@@ -154,6 +153,13 @@
         <option > 30 </option>
       </select>
     </div>
+
+    <button v-on:click="removeSlide"  class="removeSlides">
+      <span class="text"> {{ uiLabels.removeSlide }} </span>
+    </button>
+    <button v-on:click="addSlide" class="addSlides" >
+      <span class="text"> {{ uiLabels.addSlide }} </span> </button>
+
 
     <div v-on:click= "startPoll= !startPoll" >
       <button class="continue" v-on:click="createPoll">
@@ -466,6 +472,74 @@ export default {
 
 <style>
 
+.editDragAndDrop{
+  width: 20%;
+  margin-left:70%;
+  margin-top: 0.5em;
+  position: relative;
+  cursor: pointer;
+  background-color: lightslategray;
+  border-radius: 10%;
+}
+
+.editDragAndDrop .text{
+  transform: translateX(20%);
+  color: white;
+  font-weight: bold;
+  font-size: 1vw;
+  font-family: AppleGothic,sans-serif;
+}
+
+.removeSlides{
+  width: 40%;
+  height: 8%;
+  cursor: pointer;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: lightslategray;
+  margin-bottom: 0.5em;
+}
+
+.removeSlides .text{
+  transform: translateX(20%);
+  color: white;
+  font-weight: bold;
+  font-size: 1vw;
+  font-family: AppleGothic,sans-serif;
+}
+
+.removeSlides:hover{
+  background: #ed3632;
+}
+
+.addSlides{
+  width: 40%;
+  height: 8%;
+  cursor: pointer;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: lightslategray;
+  margin-bottom: 0.5em;
+  margin-left: 0.5em;
+
+}
+
+.addSlides .text{
+  transform: translateX(20%);
+  color: white;
+  font-weight: bold;
+  font-size: 1vw;
+  font-family: AppleGothic,sans-serif;
+}
+
+.addSlides:hover{
+  background:darkgreen;
+}
+
 .nextQuestion {
   width: 10%;
   height: 7%;
@@ -595,6 +669,7 @@ export default {
 
 .pointsForQuestion{
   font-size: 2vw;
+  margin-bottom: 20%;
 }
 
 .answers{
