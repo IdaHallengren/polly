@@ -43,9 +43,9 @@
 </template>
 
 <script>
- //import io from 'socket.io-client'
+ // import io from 'socket.io-client'
  import Timer from "../components/Timer";
- //const socket = io();
+ // const socket = io();
 
 
 
@@ -82,6 +82,14 @@ export default {
       timePassed: 0,
       timerInterval: null,
     }},
+  watch: {
+    timeForQuestion: {
+      handler: function () {
+        this.startTimer();
+      },
+      immediate: true
+    }
+  },
   computed: {
     timeLeft() {
       if(this.timeForQuestion - this.timePassed <= 0)
@@ -96,7 +104,7 @@ export default {
   },
 
   mounted() {
-    this.startTimer();
+
   },
 
   methods:{
@@ -116,6 +124,10 @@ export default {
      },
 
     startTimer() {
+      if(this.timerInterval != null){
+        clearInterval(this.timerInterval)
+        this.timePassed = 0
+      }
       this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
     },
 
@@ -192,12 +204,12 @@ export default {
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
   margin-top: 15%;
+
 }
 
 #oneQuestion{
   margin-bottom:10%;
-  margin-left:8%;
-  margin-right:8%;
+  margin-left: 10%;
 }
 
 .AnswerQuestionMasterOverview{
@@ -220,9 +232,9 @@ export default {
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
   margin-top: 5%;
-  font-size: 4vw;
+  font-size: 1.3vw;
   place-content: center;
-  padding-right: 5vw;
+  padding-right: 4vw;
 }
 
 .AnswerQuestionMasters:before {
