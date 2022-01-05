@@ -84,7 +84,7 @@ export default {
 
 
   watch: {
-    timeForQuestion: {
+    questions: {
       handler: function () {
         this.startTimer();
       },
