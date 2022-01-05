@@ -94,8 +94,9 @@ export default {
 
   computed: {
     timeLeft() {
-      if(this.timeForQuestion - this.timePassed <= 0)
+      if(this.timeForQuestion - this.timePassed <= 0) {
         return 0
+      }
       else
         return this.timeForQuestion - this.timePassed
     }
@@ -139,19 +140,18 @@ export default {
     },
 
     saveAnswer: function (answer){
-      this.answer=answer
-      this.isClicked[this.questions]=true
-      // socket.emit('changingBoolean', this.isClicked)
-      console.log("testar om svar kommer", this.answer)
-       if(this.answer===this.correctAnswer){
-         console.log("KORREKT SVAR" )
-          this.pointsCollected=this.pointsCollected+this.pointsForQuestion
-         this.$emit('pointsCollected', this.pointsForQuestion)
-         console.log("testar poang", this.pointsCollected)
-       }
-       else{
-         console.log("FEL SVAR")
-       }
+        this.answer = answer
+        this.isClicked[this.questions] = true
+        // socket.emit('changingBoolean', this.isClicked)
+        console.log("testar om svar kommer", this.answer)
+        if (this.answer === this.correctAnswer) {
+          console.log("KORREKT SVAR")
+          this.pointsCollected = this.pointsCollected + this.pointsForQuestion
+          this.$emit('pointsCollected', this.pointsForQuestion)
+          console.log("testar poang", this.pointsCollected)
+        } else {
+          console.log("FEL SVAR")
+        }
 
 
     }

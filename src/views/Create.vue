@@ -226,8 +226,8 @@
 <div v-if="letsPlayButton === false" class="layoutQuestionmaster">
 
   <SlideShow class="overviewSlideShow"
-             v-bind:questions="allQuestions[questionNumber]"
-             v-bind:answers="allAnswers"
+             v-bind:questions="fullPoll['questions'][questionNumber].q"
+             v-bind:answers="fullPoll['questions'][questionNumber].a"
              v-bind:pollId="pollId"
              v-bind:uiLabels="uiLabels"
              v-bind:index="questionNumber"
@@ -244,7 +244,6 @@
   <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
   <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('result')">View Result</button>
   {{this.allQuestions}}
-  {{this.allAnswers}}
   {{this.typeOfQuestions}}
   {{this.timeForQuestions}}
   {{this.correctAnswers}}
@@ -300,7 +299,6 @@ export default {
       number: 1,
       activeQuestion: {},
       allQuestions:[],
-      allAnswers: [],
       participants: [],
       participantName: "",
       participantImg: "",
@@ -440,8 +438,6 @@ export default {
 
     nextQuestion: function () {
       this.questionNumber++;
-      this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
-      // socket.emit('dataUpdate', this.allAnswers, this.questionNumber)
       socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
       socket.emit('removeButtons', {pollId: this.pollId, isClicked: this.isClicked})
     },
@@ -462,7 +458,6 @@ export default {
     letsPlay: function () {
       socket.emit('startGame', {pollId: this.pollId, boolean: this.showGameStart})
       this.questionNumber = 0;
-      this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
       socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber})
     },
   }
