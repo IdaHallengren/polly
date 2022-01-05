@@ -68,15 +68,23 @@
 
 
     <div v-if="typeOfQuestion!=='Presentation'" class="answers" >
-      <div>
+
         <br>
-        {{ uiLabels.answers }}
-      </div>
+<!--        {{ uiLabels.answers }}-->
+
         <div class="answerBox">
-        <input v-for="(_, i) in answers"
-               v-model="answers[i]"
-               v-bind:key="'answer'+i"
-               class="answersStyle">
+
+<!--        <input v-for="(_, i) in answers"-->
+<!--               v-model="answers[i]"-->
+<!--               v-bind:key="'answer'+i"-->
+<!--               class="answersStyle"-->
+<!--          >-->
+
+          <label v-for="(answer, i) in answers" v-bind:key="'answer' + i"  class="answerBoxes">
+            {{answerOptions[i]}}
+            <input class="answersStyle" type="text" name="test"  v-bind:key="'answer'+i"
+                   >
+             </label>
 
 
         <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
@@ -94,14 +102,11 @@
       </div>
   <div>
 
-    <span>{{ uiLabels.correctAnswer }}:</span>
-
-    <label v-for="(answer, i) in answers" v-bind:key="'answer' + i">
+    <span class="correctAnswer">{{ uiLabels.correctAnswer }}:</span> <br>
+    <label v-for="(answer, i) in answers" v-bind:key="'answer' + i" class="correctAnswer">
       <input type="radio" name="test" v-bind:id="answer" v-bind:value="i" v-model="correctIndex" >
       {{answerOptions[i]}}<br> </label>
-
-    {{correctIndex}}
-    {{selectedAnswer}}
+<!--    {{correctIndex}}-->
 
   </div>
         <br>
@@ -672,7 +677,7 @@ export default {
   font-size: 1.5vw;
   display: grid;
   grid-template-rows: 100%;
-  grid-template-columns: 15% 60% 25%;
+  grid-template-columns: 0.1% 78% 20%;
 }
 
 .answersStyle{
@@ -680,16 +685,22 @@ export default {
   width: 40%;
   font-size: 1.5vw;
   outline: none;
+  border-radius: 10%;
+  margin-top: 1%;
 }
 
-.selectCorrectAnswer:hover{
-  background: green;
+.correctAnswer{
+  font-size: 1vw;
+  margin-right: 4%;
+
 }
+
+.answerBoxes{
+  margin-left: 4%;
+}
+
 
 #overviewPresentationSlide{
-  /*border:solid;*/
-  /*border-radius: 10%;*/
-  /*background-color: white;*/
   height: 50%;
   width: 100%;
   margin: 1em;
@@ -705,7 +716,6 @@ export default {
   font-family: AppleGothic,sans-serif;
   color: white;
 }
-
 
 .pollLink{
   margin-top: 5%;
@@ -757,11 +767,17 @@ export default {
   overflow: hidden;
   position: relative;
   transition: width 0.2s ease-in-out;
+
 }
+
+
+
+
 
 .add-btn:hover {
   width: 120px;
 }
+
 .add-btn::before,
 .add-btn::after {
   transition: width 0.2s ease-in-out, border-radius 0.2s ease-in-out;
@@ -771,6 +787,7 @@ export default {
   width: 10px;
   top: calc(50% - 2px);
   background: plum;
+
 }
 
 .add-btn::after {
