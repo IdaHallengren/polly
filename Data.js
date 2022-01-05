@@ -33,7 +33,8 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.pointsForQuestion=[];
     poll.numberOfParticipants= "";
     poll.booleanClicked=true;
-    poll.totPointsForQuestion=0;
+    poll.totPointsForQuestion=[];
+    poll.pointsForOne=0;
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
   }
@@ -114,6 +115,7 @@ Data.prototype.addParticipant = function(pollId, participant) {
   console.log("participant added to", pollId, participant);
   if (typeof poll !== 'undefined') {
     poll.participants.push(participant);
+
   }
 }
 
@@ -121,6 +123,7 @@ Data.prototype.addParticipant = function(pollId, participant) {
 Data.prototype.getParticipants = function(pollId) {
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
+    poll.totPointsForQuestion.push(0)
       return poll.participants
   }
   return {}
@@ -146,21 +149,24 @@ Data.prototype.removeParticipant= function(pollId, participant){
   }
 }
 
-Data.prototype.getPoints= function(points, pollId){
+Data.prototype.getPoints= function(pollId ,points,  participantId){
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
-    console.log('registreras poängen?', poll.totPointsForQuestion)
-     return poll.totPointsForQuestion+=points;
+    for (let i = 0; i<poll.totPointsForQuestion.length; i++ ) {
+      if (poll.participants[i].participantId === participantId) {
+        // poll.pointsForOne[i]=poll.pointsForOne[i] + points
+        poll.totPointsForQuestion[i] += points;
 
+        console.log(poll.totPointsForQuestion)
+        console.log('testar poang', points, poll.pointsForOne)
+        return poll.totPointsForQuestion
+
+      }
+    }
 
   }
 }
 
 
-
-
-
 module.exports = Data;
-
-
 

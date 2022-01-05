@@ -134,9 +134,8 @@ export default {
     },
 
     canClick: function(){
-       if (this.timePassed < this.timeForQuestion) {
          return !this.isClicked[this.questions]
-       }
+
     },
 
     saveAnswer: function (answer){
@@ -147,12 +146,13 @@ export default {
        if(this.answer===this.correctAnswer){
          console.log("KORREKT SVAR" )
           this.pointsCollected=this.pointsCollected+this.pointsForQuestion
+         this.$emit('pointsCollected', this.pointsForQuestion)
          console.log("testar poang", this.pointsCollected)
        }
        else{
          console.log("FEL SVAR")
        }
-       this.$emit('pointsCollected', this.pointsForQuestion)
+
 
     }
 

@@ -206,7 +206,7 @@ export default {
 
     pointsTot: function (event){
       console.log('har vi fått poängen?', event)
-      socket.emit( 'totPoints', {pollId: this.pollId, event: event})
+      socket.emit( 'totPoints', {pollId: this.pollId,event: event, participantId: this.participantId})
 
     },
 

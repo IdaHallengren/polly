@@ -69,7 +69,7 @@ function sockets(io, socket, data) {
   })
 
 socket.on('totPoints', function(d){
-  socket.emit('pointsForQuestion',  data.getPoints(d.event, d.pollId))
+  io.to(d.pollId).emit('pointsForQuestion', data.getPoints( d.pollId, d.event, d.participantId))
 })
 
 }
