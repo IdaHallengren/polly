@@ -39,6 +39,7 @@ function sockets(io, socket, data) {
       io.to(d.pollId).emit('participantsAdded', data.getParticipants(d.pollId));
     })
 
+
     socket.on('resetAll', () => {
       data = new Data();
       data.initializeData();
@@ -58,8 +59,6 @@ function sockets(io, socket, data) {
      io.to(d.pollId).emit('gameStart', d.boolean)
   })
 
-
-
   socket.on('removeParticipant', function(d){
     data.removeParticipant(d.pollId , {participantName: d.participantName, participantId: d.participantId, participantImg: d.participantImg})
     io.to(d.pollId).emit('dataUpdate', data.getParticipants(d.pollId))
@@ -69,7 +68,9 @@ function sockets(io, socket, data) {
     io.to(d.pollId).emit('endGame', d.endGame)
   })
 
-
+socket.on('totPoints', function(d){
+  io.to(d.pollId).emit('pointsForQuestion', data.getPoints( d.pollId, d.event, d.participantId))
+})
 
 }
 

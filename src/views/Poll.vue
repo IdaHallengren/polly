@@ -81,10 +81,11 @@
             v-bind:timeForQuestion="question.timeForQuestion"
             v-bind:typeOfQuestion="question.typeOfQuestion"
             v-bind:correctAnswer="question.correctAnswer"
+            v-on:pointsCollected="pointsTot($event)"
             >
 <!--            v-bind:isClicked="this.isClicked"-->
-
  </SlideShow>
+  {{participants.pointsCollected}}
 
   Type of question is: {{question.typeOfQuestion}} ,
   Time for question is: {{question.timeForQuestion}},
@@ -108,6 +109,7 @@ import avatar from '../data/avatar.json'
 import SlideShow from "../components/SlideShow";
 
 const socket = io();
+
 
 export default {
   name: 'Poll',
@@ -143,11 +145,12 @@ export default {
 
        correctAnswer:[],
        timeForQuestion: [],
-      typeOfQuestion: [],
-      pointsForQuestion: [],
+       typeOfQuestion: [],
+       pointsForQuestion: [],
        infoQuestions:{},
 
-endGame: false
+      endGame: false,
+      pointsCollected:0
 
     }
   },
@@ -160,7 +163,8 @@ endGame: false
     socket.emit('joinPoll', this.pollId)
 
     socket.on("newQuestion", q =>
-        this.question = q
+    { this.question = q
+        }
     )
 
     socket.emit("pageLoaded", this.lang);
@@ -178,23 +182,14 @@ endGame: false
         this.showGameStart= myBoolean
         })
 
-    socket.on("pleaseRemoveThem", (myBoolean) =>{
-      this.isClicked = myBoolean
-      console.log("trying to remove boolean isClicked",this.isClicked)
-    }
-    )
 
-    socket.on('booleanChange' , (myBoolean) =>{
-      this.isClicked=myBoolean
-      console.log("trying to change back boolean isClicked",this.isClicked)
-
-    })
 
     socket.on('endGame',(d)=>{
       //de första två raderna är lite onödiga men fick det inte att funka annars
       console.log('End Game Now')
       this.endGame= d
       this.$router.push(`/result/${this.pollId}/${this.lang}`)
+      this.pointsTot();
     })
 
 
@@ -207,6 +202,12 @@ endGame: false
 
     changeAvatar: function (event) {
       this.participantImg=event
+    },
+
+    pointsTot: function (event){
+      console.log('har vi fått poängen?', event)
+      socket.emit( 'totPoints', {pollId: this.pollId,event: event, participantId: this.participantId})
+
     },
 
     newPage: function(route) {

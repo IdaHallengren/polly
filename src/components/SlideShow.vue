@@ -40,9 +40,9 @@
 </template>
 
 <script>
- //import io from 'socket.io-client'
+ // import io from 'socket.io-client'
  import Timer from "../components/Timer";
- //const socket = io();
+ // const socket = io();
 
 export default {
   name: "SlideShow",
@@ -76,10 +76,20 @@ export default {
       timerInterval: null,
     }},
 
+  watch: {
+    questions: {
+      handler: function () {
+        this.startTimer();
+      },
+      immediate: true
+    }
+  },
+
   computed: {
     timeLeft() {
-      if(this.timeForQuestion - this.timePassed <= 0)
+      if(this.timeForQuestion - this.timePassed <= 0) {
         return 0
+      }
       else
         return this.timeForQuestion - this.timePassed
     }
@@ -89,43 +99,41 @@ export default {
   },
 
   mounted() {
-    this.startTimer();
+
   },
 
   methods:{
 
     startTimer() {
+      if(this.timerInterval != null){
+        clearInterval(this.timerInterval)
+        this.timePassed = 0
+      }
       this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
     },
 
     canClick: function(){
-      return !this.isClicked[this.questions]
+         return !this.isClicked[this.questions]
+
     },
 
     saveAnswer: function (answer){
-      this.answer=answer
-      this.isClicked[this.questions]=true
-      // socket.emit('changingBoolean', this.isClicked)
-      console.log("testar om svar kommer", this.answer)
-       if(this.answer===this.correctAnswer){
-         console.log("KORREKT SVAR" )
-          this.pointsCollected=this.pointsCollected+this.pointsForQuestion
-         console.log("testar poang", this.pointsCollected)
-       }
-       else{
-         console.log("FEL SVAR")
-       }
+        this.answer = answer
+        this.isClicked[this.questions] = true
+        // socket.emit('changingBoolean', this.isClicked)
+        console.log("testar om svar kommer", this.answer)
+        if (this.answer === this.correctAnswer) {
+          console.log("KORREKT SVAR")
+          this.pointsCollected = this.pointsCollected + this.pointsForQuestion
+          this.$emit('pointsCollected', this.pointsForQuestion)
+          console.log("testar poang", this.pointsCollected)
+        } else {
+          console.log("FEL SVAR")
+        }
     }
-
 },
- /* finish: function(route) {
-    if (route === 'result') {
-      this.$router.push(`/result/${this.pollId}/${this.lang}`)
-    }
-  }*/
-
-
 }
+
 </script>
 
 <style scoped>
@@ -171,12 +179,12 @@ export default {
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
   margin-top: 15%;
+
 }
 
 #oneQuestion{
   margin-bottom:10%;
-  margin-left:8%;
-  margin-right:8%;
+  margin-left: 10%;
 }
 
 .AnswerQuestionMasterOverview{
@@ -196,9 +204,9 @@ export default {
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
   margin-top: 5%;
-  font-size: 4vw;
+  font-size: 1.3vw;
   place-content: center;
-  padding-right: 5vw;
+  padding-right: 4vw;
 }
 
 .AnswerQuestionMasters:before {

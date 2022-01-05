@@ -23,19 +23,20 @@
   </div>
 
   <div class="wrapper">
+
     <div id="overview">
-                    <span
-                        @mouseover="hover = true"
-                        @mouseleave="hover = false"
-                        :class="{ active: hover }"
-                    >
-              </span>
+
+      <button class="editDragAndDrop">
+        <span class="text"> {{uiLabels.edit}}  </span>
+      </button>
+
       <draggable :list="fullPoll['questions']"
                  item-key="questionNumber"
                  @start="drag=true"
                  @end="drag=false" >
         <template #item="{}">
-        <SlideShow class="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
+        <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
+
                    v-bind:key="question"
                    v-bind:questions="fullPoll['questions'][i].q"
                    v-bind:answers="fullPoll['questions'][i].a"
@@ -55,6 +56,7 @@
       <button v-on:click="addSlide" class="icon-btn add-btn" >
         <span class="add-icon"></span>
         <span class="btn-txt"> {{ uiLabels.addSlide }} </span> </button>
+
 
     </div>
 
@@ -157,15 +159,17 @@
     <div v-if="typeOfQuestion!=='Presentation'" id="v-model-select-points" class="pointsForQuestion">
       <label class="labelsText"> {{ uiLabels.choosePointsForQuestion}}</label>
       <br>
-      <select v-model.number="pointsForQuestion" style="width: 30%" >
-        <option > 5 </option>
-        <option > 10 </option>
-        <option > 15 </option>
-        <option > 20 </option>
-        <option > 25 </option>
-        <option > 30 </option>
+      <select v-model="pointsForQuestion" style="width: 30%" >
+        <option v-for="index in 6" :key="index" v-bind:value="5*index"> {{5*index}} </option>
       </select>
     </div>
+
+    <button v-on:click="removeSlide"  class="removeSlides">
+      <span class="text"> {{ uiLabels.removeSlide }} </span>
+    </button>
+    <button v-on:click="addSlide" class="addSlides" >
+      <span class="text"> {{ uiLabels.addSlide }} </span> </button>
+
 
     <div v-on:click= "startPoll= !startPoll" >
       <button class="continue" v-on:click="createPoll">
@@ -194,6 +198,9 @@
     <div>
       <div class="pollIdStyle">
         PollId: {{pollId}}
+      </div>
+      <div class="pollLink">
+       Link: {{`http://localhost:8080/#/poll/${this.pollId}/${this.lang}`}}
       </div>
       <div id="QRCode">
         <qrcode-vue :value="`http://localhost:8080/#/poll/${this.pollId}/${this.lang}`"  :size="size" >  </qrcode-vue>
@@ -234,8 +241,8 @@
 <div v-if="letsPlayButton === false" class="layoutQuestionmaster">
 
   <SlideShow class="overviewSlideShow"
-             v-bind:questions="allQuestions[questionNumber]"
-             v-bind:answers="allAnswers"
+             v-bind:questions="fullPoll['questions'][questionNumber].q"
+             v-bind:answers="fullPoll['questions'][questionNumber].a"
              v-bind:pollId="pollId"
              v-bind:uiLabels="uiLabels"
              v-bind:index="questionNumber"
@@ -245,13 +252,13 @@
              v-bind:typeOfQuestion="typeOfQuestions[questionNumber]"
              v-bind:timeForQuestion="timeForQuestions[questionNumber]"
              v-bind:correctAnswer="correctAnswers[questionNumber]"
+
               >
   </SlideShow>
 
   <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
   <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('result')">View Result</button>
   {{this.allQuestions}}
-  {{this.allAnswers}}
   {{this.typeOfQuestions}}
   {{this.timeForQuestions}}
   {{this.correctAnswers}}
@@ -309,7 +316,6 @@ export default {
       number: 1,
       activeQuestion: {},
       allQuestions:[],
-      allAnswers: [],
       participants: [],
       participantName: "",
       participantImg: "",
@@ -380,6 +386,8 @@ export default {
     socket.on('participantsAdded', (myParticipant) =>
         this.participants = myParticipant
     )
+
+
   },
 
   methods: {
@@ -450,8 +458,6 @@ export default {
 
     nextQuestion: function () {
       this.questionNumber++;
-      this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
-      // socket.emit('dataUpdate', this.allAnswers, this.questionNumber)
       socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
       socket.emit('removeButtons', {pollId: this.pollId, isClicked: this.isClicked})
     },
@@ -472,7 +478,6 @@ export default {
     letsPlay: function () {
       socket.emit('startGame', {pollId: this.pollId, boolean: this.showGameStart})
       this.questionNumber = 0;
-      this.allAnswers = this.fullPoll["questions"][this.questionNumber].a
       socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber})
     },
   }
@@ -483,8 +488,73 @@ export default {
 
 <style>
 
-.active {
-  background: green;
+.editDragAndDrop{
+  width: 20%;
+  margin-left:70%;
+  margin-top: 0.5em;
+  position: relative;
+  cursor: pointer;
+  background-color: lightslategray;
+  border-radius: 10%;
+}
+
+.editDragAndDrop .text{
+  transform: translateX(20%);
+  color: white;
+  font-weight: bold;
+  font-size: 1vw;
+  font-family: AppleGothic,sans-serif;
+}
+
+.removeSlides{
+  width: 40%;
+  height: 8%;
+  cursor: pointer;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: lightslategray;
+  margin-bottom: 0.5em;
+}
+
+.removeSlides .text{
+  transform: translateX(20%);
+  color: white;
+  font-weight: bold;
+  font-size: 1vw;
+  font-family: AppleGothic,sans-serif;
+}
+
+.removeSlides:hover{
+  background: #ed3632;
+}
+
+.addSlides{
+  width: 40%;
+  height: 8%;
+  cursor: pointer;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: lightslategray;
+  margin-bottom: 0.5em;
+  margin-left: 0.5em;
+
+}
+
+.addSlides .text{
+  transform: translateX(20%);
+  color: white;
+  font-weight: bold;
+  font-size: 1vw;
+  font-family: AppleGothic,sans-serif;
+}
+
+.addSlides:hover{
+  background:darkgreen;
+>>>>>>> 12a258d9287e6557d5cfcb8972c82114540326b4
 }
 
 .nextQuestion {
@@ -616,6 +686,7 @@ export default {
 
 .pointsForQuestion{
   font-size: 2vw;
+  margin-bottom: 20%;
 }
 
 .answers{
@@ -653,7 +724,16 @@ export default {
   font-size: 2.5vw;
   font-weight: bold;
   font-family: AppleGothic,sans-serif;
+  color: white;
+}
 
+
+.pollLink{
+  margin-top: 5%;
+  text-align: center;
+  font-size: 1.5vw;
+  font-weight: bold;
+  font-family: AppleGothic,sans-serif;
   color: white;
 }
 
