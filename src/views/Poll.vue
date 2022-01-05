@@ -81,6 +81,7 @@
             v-bind:timeForQuestion="question.timeForQuestion"
             v-bind:typeOfQuestion="question.typeOfQuestion"
             v-bind:correctAnswer="question.correctAnswer"
+            v-on:pointsCollected="pointsTot($event)"
             >
 <!--            v-bind:isClicked="this.isClicked"-->
  </SlideShow>
@@ -148,7 +149,8 @@ export default {
        pointsForQuestion: [],
        infoQuestions:{},
 
-      endGame: false
+      endGame: false,
+      pointsCollected:0
 
     }
   },
@@ -161,7 +163,8 @@ export default {
     socket.emit('joinPoll', this.pollId)
 
     socket.on("newQuestion", q =>
-        this.question = q
+    { this.question = q
+        }
     )
 
     socket.emit("pageLoaded", this.lang);
@@ -186,6 +189,7 @@ export default {
       console.log('End Game Now')
       this.endGame= d
       this.$router.push(`/result/${this.pollId}/${this.lang}`)
+      this.pointsTot();
     })
 
 
@@ -198,6 +202,12 @@ export default {
 
     changeAvatar: function (event) {
       this.participantImg=event
+    },
+
+    pointsTot: function (event){
+      console.log('har vi fått poängen?', event)
+      socket.emit( 'totPoints', {pollId: this.pollId,event: event, participantId: this.participantId})
+
     },
 
     newPage: function(route) {

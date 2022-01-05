@@ -184,6 +184,9 @@
       <div class="pollIdStyle">
         PollId: {{pollId}}
       </div>
+      <div class="pollLink">
+       Link: {{`http://localhost:8080/#/poll/${this.pollId}/${this.lang}`}}
+      </div>
       <div id="QRCode">
         <qrcode-vue :value="`http://localhost:8080/#/poll/${this.pollId}/${this.lang}`"  :size="size" >  </qrcode-vue>
       </div>
@@ -234,6 +237,7 @@
              v-bind:typeOfQuestion="typeOfQuestions[questionNumber]"
              v-bind:timeForQuestion="timeForQuestions[questionNumber]"
              v-bind:correctAnswer="correctAnswers[questionNumber]"
+
               >
   </SlideShow>
 
@@ -365,6 +369,8 @@ export default {
     socket.on('participantsAdded', (myParticipant) =>
         this.participants = myParticipant
     )
+
+
   },
 
   methods: {
@@ -702,7 +708,16 @@ export default {
   font-size: 2.5vw;
   font-weight: bold;
   font-family: AppleGothic,sans-serif;
+  color: white;
+}
 
+
+.pollLink{
+  margin-top: 5%;
+  text-align: center;
+  font-size: 1.5vw;
+  font-weight: bold;
+  font-family: AppleGothic,sans-serif;
   color: white;
 }
 
