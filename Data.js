@@ -97,7 +97,8 @@ Data.prototype.getAnswers = function(pollId) {
   if (typeof poll !== 'undefined') {
     const answers = poll.answers[poll.currentQuestion];
     if (typeof poll.questions[poll.currentQuestion] !== 'undefined') {
-      return {q: poll.questions[poll.currentQuestion].q,
+      return {questionNumber: poll.questionNumber,
+        q: poll.questions[poll.currentQuestion].q,
         a: answers,
         type: poll.typeOfQuestion[poll.currentQuestion],
         time: poll.timeForQuestion[poll.currentQuestion],

@@ -7,9 +7,6 @@
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
 
-
-
-
 <div v-show="letsPlayButton">
   <div v-show="startPoll">
 
@@ -27,16 +24,31 @@
 
   <div class="wrapper">
     <div id="overview">
-        <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
+                    <span
+                        @mouseover="hover = true"
+                        @mouseleave="hover = false"
+                        :class="{ active: hover }"
+                    >
+              </span>
+      <draggable :list="fullPoll['questions']"
+                 item-key="questionNumber"
+                 @start="drag=true"
+                 @end="drag=false" >
+        <template #item="{}">
+        <SlideShow class="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
                    v-bind:key="question"
                    v-bind:questions="fullPoll['questions'][i].q"
                    v-bind:answers="fullPoll['questions'][i].a"
                    v-bind:pollId="pollId"
                    v-bind:uiLabels="uiLabels"
                    v-bind:questionMaster="questionMaster"
-                   v-bind:overviewUser="overviewUser">
-      </SlideShow>
+                   v-bind:overviewUser="overviewUser"
+                   v-bind:fullPoll="fullPoll">
 
+        </SlideShow>
+        </template>
+      </draggable>
+{{fullPoll['questions']}}
       <button v-on:click="removeSlide" class="icon-btn add-btn" >
        <span class="btn-txt"> {{ uiLabels.removeSlide }} </span>
       </button>
@@ -257,6 +269,7 @@
 import QrcodeVue from 'qrcode.vue'
 import io from 'socket.io-client';
 import SlideShow from "../components/SlideShow.vue";
+import draggable from "vuedraggable";
 const socket = io();
 
 
@@ -264,7 +277,8 @@ export default {
   name: 'Create',
   components: {
     SlideShow,
-    QrcodeVue
+    QrcodeVue,
+    draggable,
   },
 
   data: function () {
@@ -312,9 +326,10 @@ export default {
 
       correctIndex:0,
 
-      endgame: true
+      endgame: true,
 
-
+      drag: false,
+      hover: false,
 
     }
   },
@@ -359,6 +374,7 @@ export default {
 
     socket.on('fullPoll', (myPoll) =>
         {this.fullPoll = myPoll
+
         })
 
     socket.on('participantsAdded', (myParticipant) =>
@@ -367,6 +383,7 @@ export default {
   },
 
   methods: {
+
     createPoll: function () {
       this.addQuestion();
       socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
@@ -379,6 +396,7 @@ export default {
         pollId: this.pollId,
         q: this.question,
         a: this.answers,
+        questionNumber: this.questionNumber,
         typeOfQuestion: this.typeOfQuestion,
         timeForQuestion: this.timeForQuestion,
         pointsForQuestion: this.pointsForQuestion,
@@ -416,7 +434,6 @@ export default {
       this.timeForQuestions.push(this.timeForQuestion)
       this.pointsForQuestions.push(this.pointsForQuestion)
       this.correctAnswers.push(this.answers[this.correctIndex])
-      console.log(this.correctIndex, this.answers, this.correctAnswers)
       console.log(this.answers[this.correctIndex])
       // this.selectedAnswer=""
       this.addQuestion()
@@ -465,6 +482,10 @@ export default {
 </script>
 
 <style>
+
+.active {
+  background: green;
+}
 
 .nextQuestion {
   width: 10%;
@@ -615,7 +636,7 @@ export default {
   background: green;
 }
 
-#overviewPresentationSlide{
+.overviewPresentationSlide{
   /*border:solid;*/
   /*border-radius: 10%;*/
   /*background-color: white;*/

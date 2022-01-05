@@ -1,14 +1,11 @@
 <template>
 
 
-<div class="wrapper"      @drop="onDrop($event, questions)"
-     @dragenter.prevent
-     @dragover.prevent>
-  <div id="slides" draggable="true" @dragstart="startDrag($event, questions)">
+<div class="wrapper">
 
+  <div id="slides">
 
     <div v-show="overviewUser" class="overview">{{questions}}<br></div>
-
 
       <div id="questionHeader" v-show="!overviewUser">{{questions}}<br></div>
 
@@ -47,14 +44,11 @@
  import Timer from "../components/Timer";
  //const socket = io();
 
-
-
 export default {
   name: "SlideShow",
    components: {
        Timer
    },
-
 
   props: {
     uiLabels: Object,
@@ -68,13 +62,12 @@ export default {
     typeOfQuestion: String,
     pointsForQuestion: Number,
     correctAnswer: Array,
+    fullPoll: Object
   },
-
 
   data: function () {
     return {
       lang: "",
-      fullPoll: {},
       questionNumber: 0,
       number: 1,
       pointsCollected: 0,
@@ -82,6 +75,7 @@ export default {
       timePassed: 0,
       timerInterval: null,
     }},
+
   computed: {
     timeLeft() {
       if(this.timeForQuestion - this.timePassed <= 0)
@@ -90,9 +84,8 @@ export default {
         return this.timeForQuestion - this.timePassed
     }
   },
+
   created: function () {
-/*    socket.on("sendQuestions", (activeQuestion) =>
-        this.question = activeQuestion)*/
   },
 
   mounted() {
@@ -100,20 +93,6 @@ export default {
   },
 
   methods:{
-
-    startDrag: function(event, item){
-      console.log(item)
-      event.dataTransfer.dropEffect='move'
-      event.dataTransfer.effectAllowed = 'move'
-      event.dataTransfer.setData('itemId', item.id)
-    },
-
-     onDrop: function(event, list){
-      const itemId = event.dataTransfer.getData('itemId')
-      const item = this.item.find(list = item.id === itemId)
-       item.list = list
-
-     },
 
     startTimer() {
       this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
@@ -208,9 +187,6 @@ export default {
   margin-top: 5%;
   font-size: 0.8vw;
   place-content: center;
-  /*border:solid;*/
-  /*height: 5vw;*/
-  /*width: 25vw;*/
 }
 
 .AnswerQuestionMasters{
