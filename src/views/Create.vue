@@ -79,7 +79,6 @@
                v-model="answers[i]"
                v-bind:key="'answer'+i"
                class="answersStyle"
-               
           >
 
 

@@ -72,6 +72,8 @@ socket.on('totPoints', function(d){
   io.to(d.pollId).emit('pointsForQuestion', data.getPoints( d.pollId, d.event, d.participantId))
 })
 
+
+
 }
 
 
