@@ -75,40 +75,34 @@
         <div class="answerBox">
 
 
-<!--        <input v-for="(_, i) in answers"-->
-<!--               v-model="answers[i]"-->
-<!--               v-bind:key="'answer'+i"-->
-<!--               class="answersStyle"-->
-<!--          >-->
-
-          <label v-for="(answer, i) in answers" v-bind:key="'answer' + i"  class="answerBoxes">
-            {{answerOptions[i]}}
-            <input class="answersStyle" type="text" name="test"  v-bind:key="'answer'+i"
-                   >
-             </label>
+        <input v-for="(_, i) in answers"
+               v-model="answers[i]"
+               v-bind:key="'answer'+i"
+               class="answersStyle"
+               
+          >
 
 
+                    <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
 
-        <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
+                      <button v-on:click="removeAnswer" class="icon-btn add-btn">
+                        <span class="btn-txt">{{ uiLabels.removeAlternative }}</span>
+                      </button>
 
-          <button v-on:click="removeAnswer" class="icon-btn add-btn">
-            <span class="btn-txt">{{ uiLabels.removeAlternative }}</span>
-          </button>
+                      <button  v-on:click="addAnswer" class="icon-btn add-btn" >
+                        <span class="add-icon"></span>
+                        <span class="btn-txt">{{ uiLabels.addAlternative }}</span>
+                      </button>
+                    </div>
+                    <br>
+                  </div>
+              <div>
 
-          <button  v-on:click="addAnswer" class="icon-btn add-btn" >
-            <span class="add-icon"></span>
-            <span class="btn-txt">{{ uiLabels.addAlternative }}</span>
-          </button>
-        </div>
-        <br>
-      </div>
-  <div>
-
-    <span class="correctAnswer">{{ uiLabels.correctAnswer }}:</span> <br>
-    <label v-for="(answer, i) in answers" v-bind:key="'answer' + i" class="correctAnswer">
-      <input type="radio" name="test" v-bind:id="answer" v-bind:value="i" v-model="correctIndex" >
-      {{answerOptions[i]}}<br> </label>
-<!--    {{correctIndex}}-->
+                <span class="correctAnswer">{{ uiLabels.correctAnswer }}:</span> <br>
+                <label v-for="(answer, i) in answers" v-bind:key="'answer' + i" class="correctAnswer">
+                  <input type="radio" name="test" v-bind:id="answer" v-bind:value="i" v-model="correctIndex" >
+                  {{answerOptions[i]}}<br> </label>
+            <!--    {{correctIndex}}-->
 
   </div>
         <br>
@@ -123,10 +117,8 @@
 <!--    <router-link v-bind:to="'/result/'+pollId">Check result</router-link>-->
   </div>
   <div id="editQuestion">
-    <div id="v-model-select-question" class="typeOfQuestion">
-
     <span id="chooseHeadline"> {{uiLabels.choose}} </span>
-      <br>
+    <div id="v-model-select-question" class="typeOfQuestion">
 
       <label class="labelsText"> {{ uiLabels.chooseTypeOfQuestion }} </label>
       <br>
@@ -325,7 +317,9 @@ export default {
 
       correctIndex:0,
 
-      endgame: true
+      endgame: true,
+
+
 
 
 
@@ -669,6 +663,7 @@ export default {
 .typeOfQuestion{
   font-size: 2vw;
   margin-bottom: 10%;
+  margin-top: 5%;
 }
 
 .timeForQuestion{
