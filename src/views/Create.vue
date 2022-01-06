@@ -72,16 +72,18 @@
         <br>
 <!--        {{ uiLabels.answers }}-->
 
-        <div class="answerBox">
+        <div>
+          <div class="answerBox">
+          <span v-for="(answer, i) in answers"
+               v-bind:key="'answer'+i">
 
-
-        <input v-for="(_, i) in answers"
-               v-model="answers[i]"
-               v-bind:key="'answer'+i"
+              {{answerOptions[i]}}
+        <input v-model="answers[i]"
                class="answersStyle"
                
           >
-
+          </span>
+          </div>
 
                     <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
 
@@ -685,11 +687,12 @@ export default {
 
 .answersStyle{
   height: 5vh;
-  width: 40%;
+  width: 70%;
   font-size: 1.5vw;
   outline: none;
   border-radius: 10%;
   margin-top: 1%;
+  place-content: center;
 }
 
 .correctAnswer{
@@ -698,8 +701,11 @@ export default {
 
 }
 
-.answerBoxes{
-  margin-left: 4%;
+.answerBox{
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+
 }
 
 
