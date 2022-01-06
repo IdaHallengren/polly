@@ -51,7 +51,7 @@ export default {
 
     socket.on('pointsForQuestion', (d) => {
       console.log('Have the points sent to result?');
-      this.pointsForPoll=d;
+      this.pointsForPoll=d.totPoints;
     })
 
     socket.on('participantsAdded', (myParticipant) =>

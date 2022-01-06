@@ -14,9 +14,9 @@
 	"addSlide": "Add question to slide",
 	"removeAlternative": "Remove alternative",
 	"addAlternative": "Add alternative",
-	"chooseTypeOfQuestion": "Choose type of question",
-	"chooseTimeForQuestion": "Choose time for question",
-	"choosePointsForQuestion": "Choose points for question",
+	"chooseTypeOfQuestion": "Type of question",
+	"chooseTimeForQuestion": "Time for question (seconds",
+	"choosePointsForQuestion": "Points for question",
 	"answers": "Answers",
 	"voting": "Voting",
 	"trueOrFalse": "True or false",
@@ -35,6 +35,7 @@
 	"waitingRoomNr": "Wating room nr: ",
 	"waitParticipant": "Wait for more Participants to arrive",
 	"waitQuestionMaster": "Please wait for the poll-creator to start the game!",
-	"correctAnswer": "Correct answer",
-	"edit": "Edit"
+	"correctAnswer": "Choose the correct answer",
+	"edit": "Edit",
+	"choose": "Choose:"
 }
