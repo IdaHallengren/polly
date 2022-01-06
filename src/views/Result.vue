@@ -9,6 +9,8 @@
     <button> hej </button>
 {{pointsForPoll}}
 
+
+
   </div>
   <Bars v-bind:data="data"/>
 </template>
@@ -29,6 +31,8 @@ export default {
       question: "",
       pointsForPoll: [],
       participants:[],
+
+
 
       data:{
       pollId:""
@@ -51,8 +55,12 @@ export default {
 
     socket.on('pointsForQuestion', (d) => {
       console.log('Have the points sent to result?');
-      this.pointsForPoll=d.totPoints;
-    })
+
+        this.pointsForPoll = d
+
+
+      }
+    )
 
     socket.on('participantsAdded', (myParticipant) =>
         this.participants = myParticipant

@@ -87,11 +87,11 @@
 
                     <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
 
-                      <button v-on:click="removeAnswer" class="icon-btn add-btn">
+                      <button v-if="answers.length > 1" v-on:click="removeAnswer" class="icon-btn add-btn">
                         <span class="btn-txt">{{ uiLabels.removeAlternative }}</span>
                       </button>
 
-                      <button  v-on:click="addAnswer" class="icon-btn add-btn" >
+                      <button v-if="answers.length < 4" v-on:click="addAnswer" class="icon-btn add-btn" >
                         <span class="add-icon"></span>
                         <span class="btn-txt">{{ uiLabels.addAlternative }}</span>
                       </button>
