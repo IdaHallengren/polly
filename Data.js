@@ -34,6 +34,7 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.numberOfParticipants= "";
     poll.booleanClicked=true;
     poll.pointsForOne=0;
+    poll.allPoints=[];
     // poll.totPointsForQuestion=[];
 
     this.polls[pollId] = poll;
@@ -161,8 +162,7 @@ Data.prototype.getPoints= function(pollId ,points,  participantId){
         poll.pointsForOne+=points;
         poll.participants[i].totPoints=poll.pointsForOne ;
         console.log('participants and points', poll.participants[i].totPoints);
-
-
+        return poll.participants
 
         // poll.pointsForOne[i]=poll.pointsForOne[i] + points
         // poll.totPointsForQuestion[i] += points;
@@ -175,8 +175,11 @@ Data.prototype.getPoints= function(pollId ,points,  participantId){
     }
 
   }
-  return poll.participants
+
 }
+
+
+
 
 
 module.exports = Data;
