@@ -12,8 +12,10 @@
   {{participants[this.firstPlace]}}
   </div>
 
+
   <div>
   Good work everybody! The result is.....
+
   </div>
 
 
@@ -48,6 +50,8 @@ export default {
       thirdPlace:0,
       showWinner:false,
 
+
+
       data:{
       pollId:""
       }
@@ -80,6 +84,7 @@ export default {
       //Här måste vi nog skicka all info till socket för annars ligger det väl bara "lokalt"?
       return this.pointsForPoll
     })
+
 
     socket.on('participantsAdded', (myParticipant) =>
         this.participants = myParticipant

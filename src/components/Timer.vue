@@ -107,8 +107,8 @@ export default {
 
 .base-timer {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 21vw;
+  height: 21vw;
 }
 
 .circle {
@@ -123,13 +123,13 @@ export default {
 
 .label {
    position: absolute;
-   width: 300px;
-   height: 300px;
+   width: 21vw;
+   height: 21vw;
    top: 0;
    display: flex;
    align-items: center;
    justify-content: center;
-   font-size: 48px;
+   font-size: 3vw;
 }
 
 .path-remaining {
