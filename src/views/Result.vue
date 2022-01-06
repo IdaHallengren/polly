@@ -6,7 +6,6 @@
 
   <div v-on:click="showWinner=!showWinner">
 <button v-on:click="decideWinner()">
-
 </button>
   </div>
   <div v-show="showWinner">
