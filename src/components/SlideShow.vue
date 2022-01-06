@@ -15,14 +15,22 @@
         <div v-show="!questionMaster" >
            <div v-if="canClick()">
 
-            <button id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">
+            <button v-if="timePassed < timeForQuestion" id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">
               {{answer}}
             </button>
 
             </div>
-            <div v-if="!canClick()" >
+            <div class="hasAnswered" v-if="!canClick() && timePassed < timeForQuestion">
               {{answer}}
             </div>
+            <div class="correctAnswer" v-if="answer === correctAnswer && timePassed >= timeForQuestion">
+              {{answer}}
+            </div>
+            <div class="wrongAnswer" v-if="answer != correctAnswer && timePassed >= timeForQuestion">
+              {{answer}}
+            </div>
+
+
         </div>
 
         <div v-show="questionMaster && !overviewUser" class="AnswerQuestionMasters">
@@ -210,6 +218,7 @@ export default {
 #oneQuestion{
   margin-bottom:10%;
   margin-left: 10%;
+  margin-right: 10%;
 }
 
 .AnswerQuestionMasterOverview{
@@ -246,6 +255,34 @@ export default {
   position: absolute;
   right: 5%;
   top: 15%;
+}
+
+.correctAnswer {
+  background-color: green;
+  font-weight: bold;
+  font-size: xx-large;
+  animation: blinker 0.5s linear;
+  animation-iteration-count: 3;
+  border-radius: 1vw;
+
+}
+
+.wrongAnswer {
+  background-color: red;
+  font-size: xx-large;
+  border-radius: 1vw;
+}
+
+.hasAnswered{
+  background-color: gray;
+  font-size: xx-large;
+  border-radius: 1vw;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }
 
 </style>
