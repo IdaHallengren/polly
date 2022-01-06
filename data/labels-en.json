@@ -14,9 +14,9 @@
 	"addSlide": "Add question to slide",
 	"removeAlternative": "Remove alternative",
 	"addAlternative": "Add alternative",
-	"chooseTypeOfQuestion": "Choose type of question",
-	"chooseTimeForQuestion": "Choose time for question",
-	"choosePointsForQuestion": "Choose points for question",
+	"chooseTypeOfQuestion": "Type of question",
+	"chooseTimeForQuestion": "Time for question (seconds",
+	"choosePointsForQuestion": "Points for question",
 	"answers": "Answers",
 	"voting": "Voting",
 	"trueOrFalse": "True or false",
@@ -36,5 +36,6 @@
 	"waitParticipant": "Wait for more Participants to arrive",
 	"waitQuestionMaster": "Please wait for the poll-creator to start the game!",
 	"correctAnswer": "Choose the correct answer",
-	"edit": "Edit"
+	"edit": "Edit",
+	"choose": "Choose:"
 }

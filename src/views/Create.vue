@@ -124,7 +124,10 @@
   </div>
   <div id="editQuestion">
     <div id="v-model-select-question" class="typeOfQuestion">
+
+    <span id="chooseHeadline"> {{uiLabels.choose}} </span>
       <br>
+
       <label class="labelsText"> {{ uiLabels.chooseTypeOfQuestion }} </label>
       <br>
       <select v-model="typeOfQuestion" style="width: 50%">
@@ -144,7 +147,7 @@
         <option v-for="index in 10" :key="index" v-bind:value="5*index" > {{5*index}} </option>
 
       </select>
-      seconds
+
 <!--       <span> Selected: {{ timeForQuestion }}</span>-->
     </div>
 
@@ -585,6 +588,9 @@ export default {
 
 .labelsText{
   font-size: 2vw;
+}
+#chooseHeadline{
+  font-size: 3vw;
 }
 
 .noSelect{

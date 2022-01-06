@@ -14,9 +14,9 @@
 	"addSlide": "Lägg till fråga till slide",
 	"removeAlternative": "Ta bort alternativ",
 	"addAlternative": "Lägg till alternativ",
-	"chooseTypeOfQuestion": "Välj typ av fråga",
-	"chooseTimeForQuestion": "Välj tid för frågan",
-	"choosePointsForQuestion": "Välj poäng för frågan",
+	"chooseTypeOfQuestion": "Typ av fråga",
+	"chooseTimeForQuestion": "Tid för frågan (sekunder)",
+	"choosePointsForQuestion": "Poäng för frågan",
 	"answers": "Svar",
 	"voting": "Omröstning",
 	"trueOrFalse": "Sant eller falskt",
@@ -36,5 +36,6 @@
 	"waitParticipant": "Vänta tills fler deltagare har anslutit",
 	"waitQuestionMaster": "Vänta tills poll-skaparen startar spelet!",
 	"correctAnswer": "Välj rätt svar",
-	"edit": "Redigera"
+	"edit": "Redigera",
+	"choose": "Välj:"
 }
