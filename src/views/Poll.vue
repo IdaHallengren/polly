@@ -150,7 +150,9 @@ export default {
        infoQuestions:{},
 
       endGame: false,
-      pointsCollected:0
+      pointsCollected:0,
+
+      totPoints:0
 
     }
   },
@@ -220,7 +222,8 @@ export default {
           participantInfo: {
             participantId: this.participantId,
             participantName: this.participantName,
-            participantImg: this.participantImg
+            participantImg: this.participantImg,
+            totPoints: this.totPoints
           },
         },);
       }

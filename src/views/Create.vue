@@ -75,7 +75,10 @@
         <div class="answerBox">
         <input v-for="(_, i) in answers"
                v-model="answers[i]"
+
                v-bind:key="'answer'+i"
+
+
                class="answersStyle">
 
 
@@ -827,6 +830,7 @@ export default {
   left: 22px;
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
+
 }
 .add-icon::after {
   right: 22px;

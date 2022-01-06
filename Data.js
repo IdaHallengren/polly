@@ -33,8 +33,9 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.pointsForQuestion=[];
     poll.numberOfParticipants= "";
     poll.booleanClicked=true;
-    poll.totPointsForQuestion=[];
     poll.pointsForOne=0;
+    // poll.totPointsForQuestion=[];
+
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
   }
@@ -123,7 +124,7 @@ Data.prototype.addParticipant = function(pollId, participant) {
 Data.prototype.getParticipants = function(pollId) {
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
-    poll.totPointsForQuestion.push(0)
+    // poll.totPointsForQuestion.push(0)
       return poll.participants
   }
   return {}
@@ -152,19 +153,29 @@ Data.prototype.removeParticipant= function(pollId, participant){
 Data.prototype.getPoints= function(pollId ,points,  participantId){
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
-    for (let i = 0; i<poll.totPointsForQuestion.length; i++ ) {
+    for (let i = 0; i<poll.participants.length; i++ ) {
       if (poll.participants[i].participantId === participantId) {
-        // poll.pointsForOne[i]=poll.pointsForOne[i] + points
-        poll.totPointsForQuestion[i] += points;
+        console.log('points', poll.participants[i].totPoints);
+        console.log('points and Id', points, participantId);
+        poll.pointsForOne=poll.participants[i].totPoints;
+        poll.pointsForOne+=points;
+        poll.participants[i].totPoints=poll.pointsForOne ;
+        console.log('participants and points', poll.participants[i].totPoints);
 
-        console.log(poll.totPointsForQuestion)
-        console.log('testar poang', points, poll.pointsForOne)
-        return poll.totPointsForQuestion
+
+
+        // poll.pointsForOne[i]=poll.pointsForOne[i] + points
+        // poll.totPointsForQuestion[i] += points;
+        //
+        // console.log(poll.totPointsForQuestion)
+        // console.log('testar poang', points, poll.pointsForOne)
+        // return poll.totPointsForQuestion
 
       }
     }
 
   }
+  return poll.participants
 }
 
 
