@@ -44,6 +44,8 @@
     </div>
   </div><div id="app" v-if="!overviewUser">
     <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
+  <div class="showPoints"> Points for this question is:  <br> {{this.pointsForQuestion}} </div>
+
   </div>
 </div>
 </template>
@@ -170,6 +172,18 @@ export default {
 </script>
 
 <style scoped>
+
+.showPoints{
+  width: 15vw;
+  height: 7.2vh;
+  font-size: 2em;
+  font-family: AppleGothic,sans-serif;
+  font-weight: bold;
+
+  margin-left: 17%;
+  margin-top: 6%;
+}
+
 .wrapper{
   display: grid;
   grid-template-rows: 100%;

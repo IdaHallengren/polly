@@ -35,7 +35,7 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.booleanClicked=true;
     poll.pointsForOne=0;
     // poll.allPoints=[];
-    poll.pointsForPoll=[];
+    // poll.pointsForPoll=[];
     // poll.totPointsForQuestion=[];
 
     this.polls[pollId] = poll;
@@ -185,19 +185,19 @@ Data.prototype.getPoints= function(pollId ,points,  participantId){
 }
 
 
-Data.prototype.findPointsForPoll=function(pollId) {
-  const poll = this.polls[pollId];
-  if (typeof poll !== 'undefined') {
-    for (let i = 0; i < poll.participants.length; i++) {
-      poll.pointsForPoll[i] = poll.participants[i].totPoints
-
-    }
-    console.log('registerd points in list', poll.pointsForPoll)
-    //Här måste vi nog skicka all info till socket för annars ligger det väl bara "lokalt"?
-    return poll.pointsForPoll
-  }
-
-}
+// Data.prototype.findPointsForPoll=function(pollId) {
+//   const poll = this.polls[pollId];
+//   if (typeof poll !== 'undefined') {
+//     for (let i = 0; i < poll.participants.length; i++) {
+//       poll.pointsForPoll[i] = poll.participants[i].totPoints
+//
+//     }
+//     console.log('registerd points in list', poll.pointsForPoll)
+//     //Här måste vi nog skicka all info till socket för annars ligger det väl bara "lokalt"?
+//     return poll.pointsForPoll
+//   }
+//
+// }
 
 
 

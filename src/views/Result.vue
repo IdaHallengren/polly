@@ -1,27 +1,20 @@
 <template>
   {{pollId}}
-  {{allParticipants}}
+  {{this.allParticipants}}
   <div>
-<<<<<<< HEAD
+
 {{this.pointsForPoll}}
-=======
-{{pointsForPoll}}
->>>>>>> main
+
 
   </div>
 
   <div v-on:click="showWinner=!showWinner">
-<button v-on:click="getPoints()">
+<button v-on:click="decideWinner()">
 </button>
   </div>
   <div v-show="showWinner">
-<<<<<<< HEAD
-  {{pointsForPoll}}
-    {{participants}}
-=======
-    {{participants}}
-  {{participants[this.firstPlace]}}
->>>>>>> main
+
+
   </div>
 
 
@@ -92,7 +85,7 @@ export default {
     //   this.data = {};
     // })
 
-/*    socket.on('pointsForQuestion', (d) => {
+    /*    socket.on('pointsForQuestion', (d) => {
       console.log('Have the points sent to result?');
       this.participants = d;
 
@@ -110,16 +103,7 @@ export default {
         this.participants = myParticipant
     )*/
 
-    socket.on('pointsForQuestionAll', (d)=>{
-          console.log('Will all get the result?')
-          this.pointsForPoll=d
-          console.log(this.pointsForPoll)
 
-  })
-
-    socket.on('participantsAll', (d) => {
-      this.participants=d
-    })
   },
 
 
@@ -132,11 +116,7 @@ export default {
          }
        }
   },
-    getPoints: function(){
-      console.log('Is this working?')
-      socket.emit('sendPointsToAll', this.pollId)
-      socket.emit('participants', this.pollId)
-    }
+
 }
 
 }
