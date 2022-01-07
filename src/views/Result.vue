@@ -1,8 +1,42 @@
 <template>
   {{pollId}}
-  {{allParticipants}}
+
+
   <div>
 {{pointsForPoll}}
+    {{allParticipants[this.firstPlace]}}
+    <br>
+<div class="showResult">
+  <div id="secondPlace" v-if="pointsForPoll.length >= 2">
+    <img class="winnerImg" v-bind:src="allParticipants[secondPlace].participantImg">
+    <br>
+    <div id="podiumSecond">
+
+    </div>
+    <span>{{allParticipants[secondPlace].participantName}}</span>
+
+  </div>
+    <div id="firstPlace">
+      <img class="winnerImg" v-bind:src="allParticipants[firstPlace].participantImg">
+      <br>
+      <div id="podiumFirst">
+
+      </div>
+      <span>{{allParticipants[firstPlace].participantName}}</span>
+
+    </div>
+
+    <div id="thirdPlace" v-if="pointsForPoll.length >= 3">
+      <img class="winnerImg" v-bind:src="allParticipants[thirdPlace].participantImg">
+      <br>
+      <div id="podiumThird">
+
+      </div>
+      <span>{{allParticipants[thirdPlace].participantName}}</span>
+    </div>
+</div>
+
+
 
   </div>
 
@@ -12,8 +46,8 @@
 </button>
   </div>
   <div v-show="showWinner">
-    {{participants}}
-  {{participants[this.firstPlace]}}
+
+  <img class="winnerImg" v-bind:src="allParticipants[firstPlace].participantImg">
   </div>
 
 
@@ -65,7 +99,6 @@ export default {
     this.pollId = this.$route.params.id
     this.lang = this.$route.params.lang;
 
-
     socket.emit('joinPoll', this.pollId)
     socket.emit('getAllParticipants', this.pollId)
     socket.on('collectParticipants', (d) => {
@@ -73,8 +106,30 @@ export default {
       for (let i = 0; i < this.allParticipants.length; i++) {
         this.pointsForPoll[i] = this.allParticipants[i].totPoints
       }
+      for(let i = 0; i < this.pointsForPoll.length; i++
+      ) {
+        if (this.pointsForPoll[i] > this.pointsForPoll[this.firstPlace] || i === 0) {
+          this.thirdPlace = i
+          let tempSecond = this.secondPlace
+          this.thirdPlace = tempSecond
+          this.secondPlace = i
+          let tempFirst = this.firstPlace
+          this.secondPlace = tempFirst
+          this.firstPlace = i
+        } else if (this.pointsForPoll[i] <= this.pointsForPoll[this.firstPlace] && (this.pointsForPoll[i] > this.pointsForPoll[this.secondPlace]
+            || i === 1)) {
+          this.thirdPlace = i;
+          let tempSecond = this.secondPlace;
+          this.thirdPlace = tempSecond;
+          this.secondPlace = i;
+        } else if (this.pointsForPoll[i] <= this.pointsForPoll[this.secondPlace] && (this.pointsForPoll[i] >= this.pointsForPoll[this.thirdPlace]
+            || i === 2)) {
+          this.thirdPlace = i;
+        }
+      }
         }
     )
+
     // socket.on("dataUpdate", (update) => {
     //   this.data = update.a;
     //   this.question = update.q;
@@ -106,15 +161,78 @@ export default {
     decideWinner: function () {
 
 
-    for(let i = 0; i < this.pointsForPoll.length; i++
-)
-{
-  if (this.pointsForPoll > this.firstPlace) {
-    this.firstPlace = i;
-  }
+      for(let i = 0; i < this.pointsForPoll.length; i++
+      )
+      {
+        if (this.pointsForPoll[i] > this.pointsForPoll[this.firstPlace] || i === 0) {
+          this.thirdPlace = i
+          let tempSecond = this.secondPlace
+          this.thirdPlace = tempSecond
+          this.secondPlace = i
+          let tempFirst = this.firstPlace
+          this.secondPlace = tempFirst
+          this.firstPlace = i
+        }
+
+        else if (this.pointsForPoll[i] <= this.pointsForPoll[this.firstPlace] && (this.pointsForPoll[i] > this.pointsForPoll[this.secondPlace]
+            || i === 1)){
+          this.thirdPlace = i;
+          let tempSecond = this.secondPlace;
+          this.thirdPlace = tempSecond;
+          this.secondPlace = i;
+        }
+
+        else if (this.pointsForPoll[i] <= this.pointsForPoll[this.secondPlace] && (this.pointsForPoll[i] >= this.pointsForPoll[this.thirdPlace]
+            || i === 2)){
+          this.thirdPlace = i;
+        }
 }
 }}}
 
 
 
 </script>
+
+<style>
+
+.winnerImg {
+  border-radius: 100%;
+  width: 12vw;
+  height: 21vh;
+}
+.showResult {
+  display: inline-grid;
+  grid-template-columns: 20% 20% 20%;
+  width: 100%;
+  height: 60vh;
+  place-content: center;
+}
+#secondPlace {
+  margin-bottom: -20%;
+}
+#firstPlace{
+
+}
+#thirdPlace{
+
+}
+#podiumSecond {
+  width: 100%;
+  height: 12vh;
+  background-color: gray;
+  place-content: center;
+  margin-bottom: 0;
+}
+#podiumFirst {
+  width: 100%;
+  height: 15vh;
+  background-color: gray;
+  place-content: center;
+}
+#podiumThird {
+  width: 100%;
+  height: 10vh;
+  background-color: gray;
+  place-content: center;
+}
+</style>
