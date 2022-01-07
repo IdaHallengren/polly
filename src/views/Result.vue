@@ -1,7 +1,9 @@
 <template>
   {{pollId}}
+  {{allParticipants}}
   <div>
 {{pointsForPoll}}
+
   </div>
 
   <div v-on:click="showWinner=!showWinner">
@@ -10,6 +12,7 @@
 </button>
   </div>
   <div v-show="showWinner">
+    {{participants}}
   {{participants[this.firstPlace]}}
   </div>
 
@@ -45,16 +48,16 @@ export default {
     return {
       question: "",
       pointsForPoll: [],
-      participants:[],
-      firstPlace:0,
-      secondPlace:0,
-      thirdPlace:0,
-      showWinner:false,
+      participants: [],
+      firstPlace: 0,
+      secondPlace: 0,
+      thirdPlace: 0,
+      showWinner: false,
+      allParticipants: [],
 
 
-
-      data:{
-      pollId:""
+      data: {
+        pollId: ""
       }
     }
   },
@@ -63,8 +66,15 @@ export default {
     this.lang = this.$route.params.lang;
 
 
-
-     socket.emit('joinPoll', this.pollId)
+    socket.emit('joinPoll', this.pollId)
+    socket.emit('getAllParticipants', this.pollId)
+    socket.on('collectParticipants', (d) => {
+      this.allParticipants = d
+      for (let i = 0; i < this.allParticipants.length; i++) {
+        this.pointsForPoll[i] = this.allParticipants[i].totPoints
+      }
+        }
+    )
     // socket.on("dataUpdate", (update) => {
     //   this.data = update.a;
     //   this.question = update.q;
@@ -74,12 +84,12 @@ export default {
     //   this.data = {};
     // })
 
-    socket.on('pointsForQuestion', (d) => {
+/*    socket.on('pointsForQuestion', (d) => {
       console.log('Have the points sent to result?');
-      this.participants=d;
+      this.participants = d;
 
-      for (let i = 0; i<this.participants.length; i++){
-        this.pointsForPoll[i]=this.participants[i].totPoints
+      for (let i = 0; i < this.participants.length; i++) {
+        this.pointsForPoll[i] = this.participants[i].totPoints
       }
       console.log('registerd points in list', this.pointsForPoll)
       //Här måste vi nog skicka all info till socket för annars ligger det väl bara "lokalt"?
@@ -89,18 +99,22 @@ export default {
 
     socket.on('participantsAdded', (myParticipant) =>
         this.participants = myParticipant
-    )
+    )*/
 
   },
   methods: {
-     decideWinner: function(){
-       for (let i = 0; i<this.pointsForPoll.length; i++){
-         if(this.pointsForPoll > this.firstPlace){
-           this.firstPlace=i;
-         }
-       }
-  },
+    decideWinner: function () {
+
+
+    for(let i = 0; i < this.pointsForPoll.length; i++
+)
+{
+  if (this.pointsForPoll > this.firstPlace) {
+    this.firstPlace = i;
+  }
 }
-}
+}}}
+
+
 
 </script>

@@ -191,7 +191,7 @@ export default {
       console.log('End Game Now')
       this.endGame= d
       this.$router.push(`/result/${this.pollId}/${this.lang}`)
-      this.pointsTot();
+
     })
 
 

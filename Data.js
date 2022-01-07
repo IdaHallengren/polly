@@ -126,6 +126,7 @@ Data.prototype.getParticipants = function(pollId) {
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
     // poll.totPointsForQuestion.push(0)
+    console.log(poll.participants)
       return poll.participants
   }
   return {}
@@ -177,6 +178,8 @@ Data.prototype.getPoints= function(pollId ,points,  participantId){
   }
 
 }
+
+
 
 
 
