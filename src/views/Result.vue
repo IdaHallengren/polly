@@ -1,4 +1,5 @@
 <template>
+
   {{pollId}}
   {{this.allParticipants}}
   <div>
@@ -38,11 +39,13 @@
 // @ is an alias to /src
 // import Bars from '@/components/Bars.vue';
 import io from 'socket.io-client';
+
 const socket = io();
 
 export default {
   name: 'Result',
   components: {
+
     // Bars
   },
   data: function () {
@@ -65,6 +68,7 @@ export default {
   created: function () {
     this.pollId = this.$route.params.id
     this.lang = this.$route.params.lang;
+
 
 
     socket.emit('joinPoll', this.pollId)
@@ -108,20 +112,17 @@ export default {
 
 
   methods: {
+    decideWinner: function () {
+      for (let i = 0; i < this.pointsForPoll.length; i++) {
+        if (this.pointsForPoll > this.firstPlace) {
+          this.firstPlace = i;
+        }
+      }
+    },
 
-     decideWinner: function(){
-       for (let i = 0; i<this.pointsForPoll.length; i++){
-         if(this.pointsForPoll > this.firstPlace){
-           this.firstPlace=i;
-         }
-       }
+
   },
-
 }
-
-}
-
-
 
 
 </script>
