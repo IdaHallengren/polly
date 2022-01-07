@@ -6,32 +6,35 @@
     {{allParticipants[this.firstPlace]}}
     <br>
 <div class="showResult">
-  <div id="secondPlace" v-if="pointsForPoll.length >= 2">
-    <img class="winnerImg" v-bind:src="allParticipants[secondPlace].participantImg">
+  <div id="secondPlace">
+    <img id="secondImg" v-bind:src="allParticipants[secondPlace].participantImg">
+   
+
     <br>
     <div id="podiumSecond">
-
+      <span id="nr2"> 2 <br> {{allParticipants[secondPlace].participantName}} </span>
     </div>
-    <span>{{allParticipants[secondPlace].participantName}}</span>
+
 
   </div>
     <div id="firstPlace">
-      <img class="winnerImg" v-bind:src="allParticipants[firstPlace].participantImg">
+
+      <img id="winnerImg" v-bind:src="allParticipants[firstPlace].participantImg">
       <br>
       <div id="podiumFirst">
-
+        <span id="nr1"> 1 <br> {{allParticipants[firstPlace].participantName}} </span>
       </div>
-      <span>{{allParticipants[firstPlace].participantName}}</span>
+     
 
     </div>
 
-    <div id="thirdPlace" v-if="pointsForPoll.length >= 3">
-      <img class="winnerImg" v-bind:src="allParticipants[thirdPlace].participantImg">
+    <div id="thirdPlace">
+      <img id="thirdImg" v-bind:src="allParticipants[thirdPlace].participantImg">
       <br>
       <div id="podiumThird">
-
+        <span id="nr3"> 3 <br> {{allParticipants[thirdPlace].participantName}} </span>
       </div>
-      <span>{{allParticipants[thirdPlace].participantName}}</span>
+
     </div>
 </div>
 
@@ -49,7 +52,7 @@
   <div v-show="showWinner">
 
 
-  <img class="winnerImg" v-bind:src="allParticipants[firstPlace].participantImg">
+
 
 
   </div>
@@ -95,8 +98,12 @@ export default {
       allParticipants: [],
 
 
+
       data: {
         pollId: ""
+
+
+
       }
     }
   },
@@ -197,44 +204,94 @@ export default {
 
 <style>
 
-.winnerImg {
+#winnerImg {
   border-radius: 100%;
-  width: 12vw;
-  height: 21vh;
+  width: 50%;
+  height: 45%;
+
+
+}
+#secondImg {
+  border-radius: 100%;
+  width: 50%;
+  height: 45%;
+  margin-top: 6vh;
+
+}
+
+#thirdImg{
+  border-radius: 100%;
+  width: 50%;
+  height: 45%;
+  margin-top: 9vh;
 }
 .showResult {
-  display: inline-grid;
+  display: grid;
   grid-template-columns: 20% 20% 20%;
   width: 100%;
   height: 60vh;
   place-content: center;
+
+
 }
 #secondPlace {
-  margin-bottom: -20%;
+  place-content: center;
+  height: 100%;
+
 }
 #firstPlace{
+  height: 100%;
 
 }
 #thirdPlace{
+  height: 100%;
 
 }
 #podiumSecond {
   width: 100%;
-  height: 12vh;
-  background-color: gray;
+  height: 19vh;
+  background-color: saddlebrown;
   place-content: center;
-  margin-bottom: 0;
+  border-top-left-radius: 15%;
 }
 #podiumFirst {
   width: 100%;
-  height: 15vh;
-  background-color: gray;
+  height: 25vh;
+  background-color: saddlebrown;
   place-content: center;
+  border-top-left-radius: 8%;
+  border-top-right-radius: 8%;
 }
 #podiumThird {
   width: 100%;
-  height: 10vh;
-  background-color: gray;
+  height: 16vh;
+  background-color: saddlebrown;
+  place-content: center;
+  border-top-right-radius: 15%;
+}
+#nr1{
+  font-size: 5vh;
+  font-family: Damascus;
+  color: gold;
+  font-weight: bold;
+
+}
+#nr2 {
+  font-size: 5vh;
+  font-family: Damascus;
+  color: silver;
+  font-weight: bold;
+}
+#nr3{
+  font-size: 5vh;
+  font-family: Damascus;
+  color: sandybrown;
+  font-weight: bold;
   place-content: center;
 }
+
+
+
+
+
 </style>
