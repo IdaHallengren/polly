@@ -192,12 +192,7 @@ export default {
       this.endGame= d
 
       this.$router.push(`/result/${this.pollId}/${this.lang}`)
-    })
 
-    socket.on('pointsForQuestionAll', (d)=>{
-      console.log('Will all get the result?')
-      this.pointsForPoll=d
-      console.log(this.pointsForPoll)
 
     })
 

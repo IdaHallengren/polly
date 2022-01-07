@@ -1,7 +1,12 @@
 <template>
   {{pollId}}
+  {{allParticipants}}
   <div>
+<<<<<<< HEAD
 {{this.pointsForPoll}}
+=======
+{{pointsForPoll}}
+>>>>>>> main
 
   </div>
 
@@ -10,8 +15,13 @@
 </button>
   </div>
   <div v-show="showWinner">
+<<<<<<< HEAD
   {{pointsForPoll}}
     {{participants}}
+=======
+    {{participants}}
+  {{participants[this.firstPlace]}}
+>>>>>>> main
   </div>
 
 
@@ -46,16 +56,16 @@ export default {
     return {
       question: "",
       pointsForPoll: [],
-      participants:[],
-      firstPlace:0,
-      secondPlace:0,
-      thirdPlace:0,
-      showWinner:false,
+      participants: [],
+      firstPlace: 0,
+      secondPlace: 0,
+      thirdPlace: 0,
+      showWinner: false,
+      allParticipants: [],
 
 
-
-      data:{
-      pollId:""
+      data: {
+        pollId: ""
       }
     }
   },
@@ -64,8 +74,15 @@ export default {
     this.lang = this.$route.params.lang;
 
 
-
-     socket.emit('joinPoll', this.pollId)
+    socket.emit('joinPoll', this.pollId)
+    socket.emit('getAllParticipants', this.pollId)
+    socket.on('collectParticipants', (d) => {
+      this.allParticipants = d
+      for (let i = 0; i < this.allParticipants.length; i++) {
+        this.pointsForPoll[i] = this.allParticipants[i].totPoints
+      }
+        }
+    )
     // socket.on("dataUpdate", (update) => {
     //   this.data = update.a;
     //   this.question = update.q;
@@ -75,22 +92,23 @@ export default {
     //   this.data = {};
     // })
 
-    // socket.on('pointsForQuestion', (d) => {
-    //   console.log('Have the points sent to result?');
-    //   this.participants=d;
-    //
-    //   // for (let i = 0; i<this.participants.length; i++){
-    //   //   this.pointsForPoll[i]=this.participants[i].totPoints
-    //   // }
-    //   // console.log('registerd points in list', this.pointsForPoll)
-    //   // //Här måste vi nog skicka all info till socket för annars ligger det väl bara "lokalt"?
-    //   // return this.pointsForPoll
-    // })
+/*    socket.on('pointsForQuestion', (d) => {
+      console.log('Have the points sent to result?');
+      this.participants = d;
+
+      for (let i = 0; i < this.participants.length; i++) {
+        this.pointsForPoll[i] = this.participants[i].totPoints
+      }
+      console.log('registerd points in list', this.pointsForPoll)
+      //Här måste vi nog skicka all info till socket för annars ligger det väl bara "lokalt"?
+      return this.pointsForPoll
+    })
+
 
 
     socket.on('participantsAdded', (myParticipant) =>
         this.participants = myParticipant
-    )
+    )*/
 
     socket.on('pointsForQuestionAll', (d)=>{
           console.log('Will all get the result?')
@@ -106,6 +124,7 @@ export default {
 
 
   methods: {
+
      decideWinner: function(){
        for (let i = 0; i<this.pointsForPoll.length; i++){
          if(this.pointsForPoll > this.firstPlace){
@@ -119,6 +138,10 @@ export default {
       socket.emit('participants', this.pollId)
     }
 }
+
 }
+
+
+
 
 </script>
