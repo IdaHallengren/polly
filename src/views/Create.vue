@@ -125,8 +125,8 @@
       <br>
       <select v-model="typeOfQuestion" style="width: 50%">
         <option value="Quiz" > Quiz </option>
-        <option value="Voting"> {{ uiLabels.voting }} </option>
-        <option value="TrueOrFalse" > {{ uiLabels.trueOrFalse }} </option>
+<!--        <option value="Voting"> {{ uiLabels.voting }} </option>-->
+<!--        <option value="TrueOrFalse" > {{ uiLabels.trueOrFalse }} </option>-->
         <option value="Presentation" > Presentation </option>
       </select>
 <!--  <span> Selected: {{ showAnswerButton }}</span>-->
@@ -171,8 +171,8 @@
     </button>
   </div>
 
-  Poll link:
-  <input type="text" v-model="pollId">
+<!--  Poll link:-->
+<!--  <input type="text" v-model="pollId">-->
 </div>
 
 
@@ -223,7 +223,7 @@
     </div>
     </div>
 </div>
-  {{fullPoll["timeForQuestion"]}}
+<!--  {{fullPoll["timeForQuestion"]}}-->
 <!--NEXT PAGE-->
 
 <div v-if="letsPlayButton === false" class="layoutQuestionmaster">
@@ -246,14 +246,13 @@
 
   <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
   <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('result')">View Result</button>
-  {{this.allQuestions}}
-  {{this.typeOfQuestions}}
-  {{this.timeForQuestions}}
-  {{this.correctAnswers}}
-  {{this.pointsForQuestions}}
+<!--  {{this.allQuestions}}-->
+<!--  {{this.typeOfQuestions}}-->
+<!--  {{this.timeForQuestions}}-->
+<!--  {{this.correctAnswers}}-->
+<!--  {{this.pointsForQuestions}}-->
 
-  Timer:
-  Amount of participants answered
+
 
 </div>
 
@@ -286,7 +285,7 @@ export default {
       data: {},
       uiLabels: {},
       typeOfQuestion: 'Quiz',
-      timeForQuestion: 5,
+      timeForQuestion: 20,
       pointsForQuestion: 5,
 
       typeOfQuestions: [],
@@ -320,6 +319,7 @@ export default {
 
       endgame: true,
 
+      pointsForPoll:[]
 
 
 
@@ -373,15 +373,22 @@ export default {
         this.participants = myParticipant
     )
 
-
   },
 
   methods: {
     createPoll: function () {
-      this.addQuestion();
-      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
-      console.log("Skickat info")
-      socket.emit('getPoll', this.pollId)
+      // this.addQuestion();
+      if(this.question!==""){
+        this.addSlide()
+        socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
+        console.log("Skickat info")
+        socket.emit('getPoll', this.pollId)
+      }
+      else {
+        socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
+        console.log("Skickat info")
+        socket.emit('getPoll', this.pollId)
+      }
     },
 
     addQuestion: function () {
@@ -472,6 +479,7 @@ export default {
 </script>
 
 <style>
+
 
 .editDragAndDrop{
   width: 20%;
@@ -571,6 +579,7 @@ export default {
   display: grid;
   grid-template-columns: 95% 5%;
   grid-template-rows: auto;
+
 }
 
 .waitingroomHeadline{
@@ -755,7 +764,8 @@ export default {
   width: 50%;
   position: absolute;
   left: 40%;
-  height: 80%
+  height: 80%;
+
 }
 
 .participants{

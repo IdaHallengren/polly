@@ -69,7 +69,7 @@
 </div>
 </div>
 
-<div v-if="showGameStart">
+<div v-if="showGameStart" class="pollTaking">
  
  <SlideShow v-bind:questions="question.q"
             v-bind:answers="question.a"
@@ -85,12 +85,14 @@
             >
 <!--            v-bind:isClicked="this.isClicked"-->
  </SlideShow>
-  {{participants.pointsCollected}}
+<!--  <div> </div>-->
+<!--  <div class="pointsForQuestion">  Points for question is: {{question.pointsForQuestion}} </div>-->
 
-  Type of question is: {{question.typeOfQuestion}} ,
-  Time for question is: {{question.timeForQuestion}},
-  Points for question are: {{question.pointsForQuestion}},
-  The correct answer is: {{question.correctAnswer}}
+
+<!--  Type of question is: {{question.typeOfQuestion}} ,-->
+<!--  Time for question is: {{question.timeForQuestion}},-->
+<!--  Points for question are: {{question.pointsForQuestion}},-->
+<!--  The correct answer is: {{question.correctAnswer}}-->
 
 
 </div>
@@ -152,6 +154,8 @@ export default {
       endGame: false,
       pointsCollected:0,
 
+
+      pointsForPoll:[],
       totPoints:0
 
     }
@@ -187,7 +191,6 @@ export default {
 
 
     socket.on('endGame',(d)=>{
-      //de första två raderna är lite onödiga men fick det inte att funka annars
       console.log('End Game Now')
       this.endGame= d
       this.$router.push(`/result/${this.pollId}/${this.lang}`)
@@ -244,6 +247,12 @@ export default {
 /*body{*/
 /*  background-color: #772D8B;*/
 /*}*/
+
+.pollTaking{
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 95% 5%;
+}
 
 .wrapperName{
   padding-top: 100px;

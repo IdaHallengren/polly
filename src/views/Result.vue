@@ -1,7 +1,6 @@
 <template>
   {{pollId}}
 
-
   <div>
 {{pointsForPoll}}
     {{allParticipants[this.firstPlace]}}
@@ -38,22 +37,28 @@
 
 
 
-  </div>
+
+
+
+
 
   <div v-on:click="showWinner=!showWinner">
 <button v-on:click="decideWinner()">
-
 </button>
   </div>
   <div v-show="showWinner">
 
+
   <img class="winnerImg" v-bind:src="allParticipants[firstPlace].participantImg">
+
+
   </div>
 
 
   <div>
   Good work everybody! The result is.....
 
+  </div>
   </div>
 
 
@@ -106,7 +111,7 @@ export default {
       for (let i = 0; i < this.allParticipants.length; i++) {
         this.pointsForPoll[i] = this.allParticipants[i].totPoints
       }
-      for(let i = 0; i < this.pointsForPoll.length; i++
+      for (let i = 0; i < this.pointsForPoll.length; i++
       ) {
         if (this.pointsForPoll[i] > this.pointsForPoll[this.firstPlace] || i === 0) {
           this.thirdPlace = i
@@ -139,7 +144,7 @@ export default {
     //   this.data = {};
     // })
 
-/*    socket.on('pointsForQuestion', (d) => {
+    /*    socket.on('pointsForQuestion', (d) => {
       console.log('Have the points sent to result?');
       this.participants = d;
 
@@ -152,18 +157,20 @@ export default {
     })
 
 
+
     socket.on('participantsAdded', (myParticipant) =>
         this.participants = myParticipant
     )*/
 
+
   },
+
+
   methods: {
+
     decideWinner: function () {
 
-
-      for(let i = 0; i < this.pointsForPoll.length; i++
-      )
-      {
+      for (let i = 0; i < this.pointsForPoll.length; i++) {
         if (this.pointsForPoll[i] > this.pointsForPoll[this.firstPlace] || i === 0) {
           this.thirdPlace = i
           let tempSecond = this.secondPlace
@@ -172,24 +179,19 @@ export default {
           let tempFirst = this.firstPlace
           this.secondPlace = tempFirst
           this.firstPlace = i
-        }
-
-        else if (this.pointsForPoll[i] <= this.pointsForPoll[this.firstPlace] && (this.pointsForPoll[i] > this.pointsForPoll[this.secondPlace]
-            || i === 1)){
+        } else if (this.pointsForPoll[i] <= this.pointsForPoll[this.firstPlace] && (this.pointsForPoll[i] > this.pointsForPoll[this.secondPlace]
+            || i === 1)) {
           this.thirdPlace = i;
           let tempSecond = this.secondPlace;
           this.thirdPlace = tempSecond;
           this.secondPlace = i;
-        }
-
-        else if (this.pointsForPoll[i] <= this.pointsForPoll[this.secondPlace] && (this.pointsForPoll[i] >= this.pointsForPoll[this.thirdPlace]
-            || i === 2)){
+        } else if (this.pointsForPoll[i] <= this.pointsForPoll[this.secondPlace] && (this.pointsForPoll[i] >= this.pointsForPoll[this.thirdPlace]
+            || i === 2)) {
           this.thirdPlace = i;
         }
-}
-}}}
-
-
+      }
+    }
+  }}
 
 </script>
 
