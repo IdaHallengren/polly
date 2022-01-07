@@ -1,14 +1,20 @@
 <template>
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+  <ConfettiExplosion :particleCount="500" :force="0.7" :duration="50000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1200" :stageWidth="8000"  />
   {{pollId}}
+
+  <ConfettiExplosion class="styleConfettiRight" :particleCount="500" :force="0.7" :duration="50000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1200" :stageWidth="8000"  />
 
   <div>
 {{pointsForPoll}}
     {{allParticipants[this.firstPlace]}}
     <br>
 <div class="showResult">
+
   <div id="secondPlace">
     <img id="secondImg" v-bind:src="allParticipants[secondPlace].participantImg">
-   
 
     <br>
     <div id="podiumSecond">
@@ -18,7 +24,6 @@
 
   </div>
     <div id="firstPlace">
-
       <img id="winnerImg" v-bind:src="allParticipants[firstPlace].participantImg">
       <br>
       <div id="podiumFirst">
@@ -37,13 +42,6 @@
 
     </div>
 </div>
-
-
-
-
-
-
-
 
   <div v-on:click="showWinner=!showWinner">
 <button v-on:click="decideWinner()">
@@ -79,11 +77,14 @@
 // @ is an alias to /src
 // import Bars from '@/components/Bars.vue';
 import io from 'socket.io-client';
+import ConfettiExplosion from "vue-confetti-explosion";
+
 const socket = io();
 
 export default {
   name: 'Result',
   components: {
+    ConfettiExplosion
     // Bars
   },
   data: function () {
@@ -174,6 +175,8 @@ export default {
 
 
   methods: {
+
+
 
     decideWinner: function () {
 
@@ -276,6 +279,7 @@ export default {
   font-weight: bold;
 
 }
+
 #nr2 {
   font-size: 5vh;
   font-family: Damascus;
@@ -291,7 +295,39 @@ export default {
 }
 
 
+.styleConfettiRight{
+  margin-left: 95%
+}
 
 
 
+/*Style taken from the same as in start*/
+.bg {
+  animation:slide 23s ease-in-out infinite alternate;
+  background-image: linear-gradient(-60deg, #BB6372 50%, #79333D 50%);
+  bottom:0;
+  left:-50%;
+  opacity:.5;
+  position:fixed;
+  right:-50%;
+  top:0;
+  z-index:-1;
+}
+.bg2 {
+  animation-direction:alternate-reverse;
+  animation-duration:23s;
+}
+.bg3 {
+  animation-duration:23s;
+}
+@keyframes slide {
+  0% {
+    transform:translateX(-25%);
+  }
+  100% {
+    transform:translateX(25%);
+  }
+}
 </style>
+
+
