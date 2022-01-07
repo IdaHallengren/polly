@@ -34,7 +34,8 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.numberOfParticipants= "";
     poll.booleanClicked=true;
     poll.pointsForOne=0;
-    poll.allPoints=[];
+    // poll.allPoints=[];
+    poll.pointsForPoll=[];
     // poll.totPointsForQuestion=[];
 
     this.polls[pollId] = poll;
@@ -162,6 +163,7 @@ Data.prototype.getPoints= function(pollId ,points,  participantId){
         poll.pointsForOne+=points;
         poll.participants[i].totPoints=poll.pointsForOne ;
         console.log('participants and points', poll.participants[i].totPoints);
+        console.log(poll.participants)
         return poll.participants
 
         // poll.pointsForOne[i]=poll.pointsForOne[i] + points
@@ -172,8 +174,26 @@ Data.prototype.getPoints= function(pollId ,points,  participantId){
         // return poll.totPointsForQuestion
 
       }
+      // else {
+      //
+      //   return poll.participants
+      // }
     }
 
+  }
+}
+
+
+Data.prototype.findPointsForPoll=function(pollId) {
+  const poll = this.polls[pollId];
+  if (typeof poll !== 'undefined') {
+    for (let i = 0; i < poll.participants.length; i++) {
+      poll.pointsForPoll[i] = poll.participants[i].totPoints
+
+    }
+    console.log('registerd points in list', poll.pointsForPoll)
+    //Här måste vi nog skicka all info till socket för annars ligger det väl bara "lokalt"?
+    return poll.pointsForPoll
   }
 
 }

@@ -320,6 +320,7 @@ export default {
 
       endgame: true,
 
+      pointsForPoll:[]
 
 
 
@@ -373,7 +374,12 @@ export default {
         this.participants = myParticipant
     )
 
+    socket.on('pointsForQuestionAll', (d)=>{
+      console.log('Will all get the result?')
+      this.pointsForPoll=d
+      console.log(this.pointsForPoll)
 
+    })
   },
 
   methods: {

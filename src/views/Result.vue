@@ -1,15 +1,17 @@
 <template>
   {{pollId}}
   <div>
-{{pointsForPoll}}
+{{this.pointsForPoll}}
+
   </div>
 
   <div v-on:click="showWinner=!showWinner">
-<button v-on:click="decideWinner()">
+<button v-on:click="getPoints()">
 </button>
   </div>
   <div v-show="showWinner">
-  {{participants[this.firstPlace]}}
+  {{pointsForPoll}}
+    {{participants}}
   </div>
 
 
@@ -73,24 +75,36 @@ export default {
     //   this.data = {};
     // })
 
-    socket.on('pointsForQuestion', (d) => {
-      console.log('Have the points sent to result?');
-      this.participants=d;
-
-      for (let i = 0; i<this.participants.length; i++){
-        this.pointsForPoll[i]=this.participants[i].totPoints
-      }
-      console.log('registerd points in list', this.pointsForPoll)
-      //Här måste vi nog skicka all info till socket för annars ligger det väl bara "lokalt"?
-      return this.pointsForPoll
-    })
+    // socket.on('pointsForQuestion', (d) => {
+    //   console.log('Have the points sent to result?');
+    //   this.participants=d;
+    //
+    //   // for (let i = 0; i<this.participants.length; i++){
+    //   //   this.pointsForPoll[i]=this.participants[i].totPoints
+    //   // }
+    //   // console.log('registerd points in list', this.pointsForPoll)
+    //   // //Här måste vi nog skicka all info till socket för annars ligger det väl bara "lokalt"?
+    //   // return this.pointsForPoll
+    // })
 
 
     socket.on('participantsAdded', (myParticipant) =>
         this.participants = myParticipant
     )
 
+    socket.on('pointsForQuestionAll', (d)=>{
+          console.log('Will all get the result?')
+          this.pointsForPoll=d
+          console.log(this.pointsForPoll)
+
+  })
+
+    socket.on('participantsAll', (d) => {
+      this.participants=d
+    })
   },
+
+
   methods: {
      decideWinner: function(){
        for (let i = 0; i<this.pointsForPoll.length; i++){
@@ -99,6 +113,11 @@ export default {
          }
        }
   },
+    getPoints: function(){
+      console.log('Is this working?')
+      socket.emit('sendPointsToAll', this.pollId)
+      socket.emit('participants', this.pollId)
+    }
 }
 }
 

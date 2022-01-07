@@ -69,10 +69,18 @@ function sockets(io, socket, data) {
   })
 
 socket.on('totPoints', function(d){
-  io.to(d.pollId).emit('pointsForQuestion', data.getPoints( d.pollId, d.event, d.participantId))
+   data.getPoints( d.pollId, d.event, d.participantId)
+   io.to(d.pollId).emit('pointsForQuestionAll', data.findPointsForPoll(d.pollId))
 })
 
+socket.on('sendPointsToAll', function(d){
+  io.to(d.pollId).emit('pointsForQuestionAll', data.findPointsForPoll(d.pollId))
 
+})
+
+  socket.on('participants', function(d){
+    io.to(d.pollId).emit('participantsAll', data.getParticipants(d.pollId))
+  })
 
 }
 

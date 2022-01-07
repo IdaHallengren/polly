@@ -152,7 +152,8 @@ export default {
       endGame: false,
       pointsCollected:0,
 
-      totPoints:0
+
+      pointsForPoll:[]
 
     }
   },
@@ -187,11 +188,17 @@ export default {
 
 
     socket.on('endGame',(d)=>{
-      //de första två raderna är lite onödiga men fick det inte att funka annars
       console.log('End Game Now')
       this.endGame= d
+
       this.$router.push(`/result/${this.pollId}/${this.lang}`)
-      this.pointsTot();
+    })
+
+    socket.on('pointsForQuestionAll', (d)=>{
+      console.log('Will all get the result?')
+      this.pointsForPoll=d
+      console.log(this.pointsForPoll)
+
     })
 
 
