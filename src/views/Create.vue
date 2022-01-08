@@ -479,7 +479,7 @@ export default {
 </script>
 
 <style>
-
+@import 'https://fonts.googleapis.com/css?family=Open+Sans&display=swap';
 
 .editDragAndDrop{
   width: 20%;
@@ -608,30 +608,30 @@ export default {
   grid-template-rows: 100%;
   grid-template-columns: 25% 50% 25%;
   grid-gap: 2px;
-  font-family:  AppleGothic,sans-serif;
+  font-family: Georgia, cursive;
 
   height: 45em;
 }
 
 #overview{
   border:solid;
-  border-radius: 2%;
-  background-color: #D3D3D3;
+  border-radius: 8%;
+  background-color: #1F7A8C;
   overflow: scroll;
   height: 70%;
 }
 
 #presentation{
   border: solid;
-  border-radius: 2%;
-  background-color: white;
+  border-radius: 8%;
+  background-color: #7FB685;
   height: 70%
 }
 
 #editQuestion{
   border: solid;
-  border-radius: 2%;
-  background-color: #D3D3D3;
+  border-radius: 8%;
+  background-color: #1F7A8C;
   height: 70%
 }
 
@@ -641,9 +641,9 @@ export default {
   grid-template-rows: 98% 2%;
   grid-template-columns: 25% 50% 25%;
   font-size: 3vw;
-  font-family: AppleGothic,sans-serif;
-
-  font-weight: bold;
+  font-family: Tahoma, sans-serif;
+  font-style: italic;
+  /*font-weight: bold;*/
 }
 
 .questionInput{
@@ -652,7 +652,7 @@ export default {
   width: 90%;
   font-size: 1vw;
   white-space: pre-wrap;
-  font-family: inherit;
+  font-family: Tahoma, sans-serif;
   border-radius: 5%;
 }
 
@@ -662,7 +662,7 @@ export default {
   width: 90%;
   font-size: 1vw;
   white-space: pre-wrap;
-  font-family: inherit;
+  font-family: Georgia;
   border-radius: 5%;
 }
 

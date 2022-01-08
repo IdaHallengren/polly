@@ -3,12 +3,12 @@
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
 
-<!--  <&#45;&#45;!  https://vuejsexamples.com/an-explosion-of-confetti-as-a-vue-3-component/ &ndash;&gt;-->
+<!-- Confetti taken from:   https://vuejsexamples.com/an-explosion-of-confetti-as-a-vue-3-component/ -->
 
-  <ConfettiExplosion :particleCount="500" :force="0.3" :duration="50000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1200" :stageWidth="8000"  />
+  <ConfettiExplosion :particleCount="500"  :duration="10000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1000" :stageWidth="8000"  />
   {{pollId}}
 
-  <ConfettiExplosion class="styleConfettiRight" :particleCount="500" :force="0.3" :duration="50000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1200" :stageWidth="8000"  />
+  <ConfettiExplosion class="styleConfettiRight" :particleCount="500"  :duration="10000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1000" :stageWidth="8000"  />
 
   <div>
 {{pointsForPoll}}
