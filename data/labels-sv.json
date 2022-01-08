@@ -14,7 +14,6 @@
 	"addSlide": "Lägg till fråga till slide",
 	"removeAlternative": "Ta bort alternativ",
 	"addAlternative": "Lägg till alternativ",
-	"chooseTypeOfQuestion": "Typ av fråga",
 	"chooseTimeForQuestion": "Tid för frågan (sekunder)",
 	"choosePointsForQuestion": "Poäng för frågan",
 	"answers": "Svar",
@@ -38,5 +37,6 @@
 	"correctAnswer": "Välj rätt svar",
 	"edit": "Redigera",
 	"choose": "Välj:",
+	"PointsForThisQuestion": "Poäng för denna fråga är:",
 	"yourTotalPoints": "Din totalpoäng är: "
 }

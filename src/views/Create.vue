@@ -7,8 +7,7 @@
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
 
-
-
+  
 
 <div v-show="letsPlayButton">
   <div v-show="startPoll">
@@ -56,18 +55,15 @@
 
     <div>
 <!--      {{uiLabels.question}}:-->
-    <div v-if="typeOfQuestion!=='Presentation'"> <!--This is to change the input area for when it is a presentation-->
-      <textarea class="questionInput"   v-model="question" :placeholder= "'Write your question here'" ></textarea>
-    </div>
 
-    <div v-if="typeOfQuestion==='Presentation'">
-      <textarea class="presentationInput" v-model="presentation" :placeholder=" 'Write your presentation here'" ></textarea>
-    </div>
+      <textarea class="questionInput"   v-model="question" :placeholder= "'Write your question here'" ></textarea>
+
+
 
     <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
 
 
-    <div v-if="typeOfQuestion!=='Presentation'" class="answers" >
+    <div class="answers" >
 
         <br>
 <!--        {{ uiLabels.answers }}-->
@@ -84,7 +80,7 @@
           </span>
           </div>
 
-                    <div v-if="typeOfQuestion==='Quiz' || typeOfQuestion==='Voting'" >
+                    <div>
 
                       <button v-if="answers.length > 1" v-on:click="removeAnswer" class="icon-btn add-btn">
                         <span class="btn-txt">{{ uiLabels.removeAlternative }}</span>
@@ -118,21 +114,10 @@
 <!--    <router-link v-bind:to="'/result/'+pollId">Check result</router-link>-->
   </div>
   <div id="editQuestion">
+    <br>
     <span id="chooseHeadline"> {{uiLabels.choose}} </span>
-    <div id="v-model-select-question" class="typeOfQuestion">
 
-      <label class="labelsText"> {{ uiLabels.chooseTypeOfQuestion }} </label>
-      <br>
-      <select v-model="typeOfQuestion" style="width: 50%">
-        <option value="Quiz" > Quiz </option>
-<!--        <option value="Voting"> {{ uiLabels.voting }} </option>-->
-<!--        <option value="TrueOrFalse" > {{ uiLabels.trueOrFalse }} </option>-->
-        <option value="Presentation" > Presentation </option>
-      </select>
-<!--  <span> Selected: {{ showAnswerButton }}</span>-->
-    </div>
-
-    <div id="v-model-select-time" class="timeForQuestion" v-if="typeOfQuestion!=='Presentation'">
+    <div id="v-model-select-time" class="timeForQuestion">
       <label class="labelsText">{{uiLabels.chooseTimeForQuestion }} </label>
       <br>
 
@@ -144,7 +129,7 @@
 <!--       <span> Selected: {{ timeForQuestion }}</span>-->
     </div>
 
-    <div v-if="typeOfQuestion!=='Presentation'" id="v-model-select-points" class="pointsForQuestion">
+    <div id="v-model-select-points" class="pointsForQuestion">
       <label class="labelsText"> {{ uiLabels.choosePointsForQuestion}}</label>
       <br>
       <select v-model="pointsForQuestion" style="width: 30%" >
@@ -152,12 +137,12 @@
       </select>
     </div>
 
+
     <button v-on:click="removeSlide"  class="removeSlides">
       <span class="text"> {{ uiLabels.removeSlide }} </span>
     </button>
     <button v-on:click="addSlide" class="addSlides" >
       <span class="text"> {{ uiLabels.addSlide }} </span> </button>
-
 
     <div v-on:click= "startPoll= !startPoll" >
       <button class="continue" v-on:click="createPoll">
@@ -237,7 +222,6 @@
              v-bind:questionMaster="questionMaster"
              v-bind:overviewUser="overviewUser"
              v-bind:pointsForQuestion="pointsForQuestions[questionNumber]"
-             v-bind:typeOfQuestion="typeOfQuestions[questionNumber]"
              v-bind:timeForQuestion="timeForQuestions[questionNumber]"
              v-bind:correctAnswer="correctAnswers[questionNumber]"
 
@@ -247,7 +231,6 @@
   <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
   <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('result')">View Result</button>
 <!--  {{this.allQuestions}}-->
-<!--  {{this.typeOfQuestions}}-->
 <!--  {{this.timeForQuestions}}-->
 <!--  {{this.correctAnswers}}-->
 <!--  {{this.pointsForQuestions}}-->
@@ -284,11 +267,8 @@ export default {
       questionNumber: 0,
       data: {},
       uiLabels: {},
-      typeOfQuestion: 'Quiz',
       timeForQuestion: 20,
       pointsForQuestion: 5,
-
-      typeOfQuestions: [],
       timeForQuestions:[],
       pointsForQuestions:[],
 
@@ -327,23 +307,6 @@ export default {
     }
   },
 
-  watch: {
-    typeOfQuestion: function(newVal) {
-
-      if (newVal === "Quiz" || newVal === "Voting")
-        this.showAnswerButton = true
-      else if (newVal ==='Presentation'){
-        this.showAnswerButton = false
-        //this.answers.length=0
-        // this.timeForQuestion='60s'
-        // this.pointsForQuestion='0p'
-        // this.correctAnswers='null'
-      }
-      else
-        this.answers.length=2
-        this.showAnswerButton = false
-    }
-  },
 
   created: function () {
     this.lang = this.$route.params.lang;
@@ -396,7 +359,6 @@ export default {
         pollId: this.pollId,
         q: this.question,
         a: this.answers,
-        typeOfQuestion: this.typeOfQuestion,
         timeForQuestion: this.timeForQuestion,
         pointsForQuestion: this.pointsForQuestion,
         correctAnswer: this.answers[this.correctIndex]
@@ -429,7 +391,6 @@ export default {
 
     addSlide: function () {
       this.allQuestions.push(this.question)
-      this.typeOfQuestions.push(this.typeOfQuestion)
       this.timeForQuestions.push(this.timeForQuestion)
       this.pointsForQuestions.push(this.pointsForQuestion)
       this.correctAnswers.push(this.answers[this.correctIndex])
@@ -439,6 +400,7 @@ export default {
       this.addQuestion()
       this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
       socket.emit('getPoll', this.pollId)
+      this.answers = ["", ""];
     },
 
      finish: function(route) {
@@ -594,7 +556,7 @@ export default {
   font-size: 2vw;
 }
 #chooseHeadline{
-  font-size: 3vw;
+  font-size: 2.5vw;
 }
 
 .noSelect{
@@ -656,35 +618,22 @@ export default {
   border-radius: 5%;
 }
 
-.presentationInput{
-  height: 7em;
-  max-height: 10em;
-  width: 90%;
-  font-size: 1vw;
-  white-space: pre-wrap;
-  font-family: Georgia;
-  border-radius: 5%;
-}
 
 .marginPresentation{
   margin-bottom: 28%;
 }
 
-.typeOfQuestion{
-  font-size: 2vw;
-  margin-bottom: 10%;
-  margin-top: 5%;
-}
-
 .timeForQuestion{
   font-size: 2vw;
   margin-bottom: 10%;
+  margin-top: 10%;
 }
 
 .pointsForQuestion{
   font-size: 2vw;
-  margin-bottom: 20%;
+  margin-bottom: 30%;
 }
+
 
 .answers{
   font-size: 1.5vw;
