@@ -37,5 +37,6 @@
 	"waitQuestionMaster": "Please wait for the poll-creator to start the game!",
 	"correctAnswer": "Choose the correct answer",
 	"edit": "Edit",
-	"choose": "Choose:"
+	"choose": "Choose:",
+	"yourTotalPoints": "Your total points are: "
 }

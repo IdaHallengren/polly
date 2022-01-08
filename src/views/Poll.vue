@@ -82,12 +82,14 @@
             v-bind:typeOfQuestion="question.typeOfQuestion"
             v-bind:correctAnswer="question.correctAnswer"
             v-on:pointsCollected="pointsTot($event)"
+
             >
 <!--            v-bind:isClicked="this.isClicked"-->
  </SlideShow>
 <!--  <div> </div>-->
 <!--  <div class="pointsForQuestion">  Points for question is: {{question.pointsForQuestion}} </div>-->
 
+  <div class="styleYourPoints"> {{ uiLabels.yourTotalPoints }} {{this.yourPoints}} </div>
 
 <!--  Type of question is: {{question.typeOfQuestion}} ,-->
 <!--  Time for question is: {{question.timeForQuestion}},-->
@@ -125,9 +127,14 @@ export default {
       Avatars: avatar,
       lang: "",
       uiLabels: {},
+
+      //Participantinfo
       participantName: "",
       participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
       participantId: 0,
+      totPoints:0,
+
+      //For hide and show
       showName: false,
       showID: false,
 /*      question: {
@@ -152,12 +159,10 @@ export default {
        infoQuestions:{},
 
       endGame: false,
-      pointsCollected:0,
 
+      // pointsForPoll:[],
 
-      pointsForPoll:[],
-      totPoints:0
-
+      yourPoints:0
     }
   },
 
@@ -186,9 +191,8 @@ export default {
     socket.on('gameStart', (myBoolean) => {
       console.log('SHOW GAME START')
         this.showGameStart= myBoolean
+
         })
-
-
 
     socket.on('endGame',(d)=>{
       console.log('End Game Now')
@@ -197,14 +201,9 @@ export default {
 
     })
 
-
   },
 
   methods: {
-/*    submitAnswer: function (answer) {
-      socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
-    },*/
-
     changeAvatar: function (event) {
       this.participantImg=event
     },
@@ -212,6 +211,14 @@ export default {
     pointsTot: function (event){
       console.log('har vi fått poängen?', event)
       socket.emit( 'totPoints', {pollId: this.pollId,event: event, participantId: this.participantId})
+      socket.on('pointsForQuestion', (d) => {
+        this.participants=d
+        for (let i = 0; i < this.participants.length; i++) {
+          if(this.participantId===this.participants[i].participantId){
+            this.yourPoints=this.participants[i].totPoints
+          }
+        }
+      })
 
     },
 
@@ -244,14 +251,20 @@ export default {
 
 <style>
 
-/*body{*/
-/*  background-color: #772D8B;*/
-/*}*/
+.styleYourPoints{
+
+  height: 7.2vh;
+  font-size: 1.5em;
+  font-family: AppleGothic,sans-serif;
+  font-weight: bold;
+  margin-right: 20%;
+
+}
 
 .pollTaking{
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 95% 5%;
+  grid-template-rows: 80% 12% 8%;
 }
 
 .wrapperName{

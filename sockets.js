@@ -69,9 +69,11 @@ function sockets(io, socket, data) {
   })
 
 socket.on('totPoints', function(d){
-  data.getPoints( d.pollId, d.event, d.participantId)
+  // data.getPoints( d.pollId, d.event, d.participantId)
   io.to(d.pollId).emit('pointsForQuestion', data.getPoints(d.pollId, d.event, d.participantId))
 })
+
+
 
 socket.on('getAllParticipants', function(pollId){
   console.log('inne i socket wiho')

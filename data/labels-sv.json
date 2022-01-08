@@ -37,5 +37,6 @@
 	"waitQuestionMaster": "Vänta tills poll-skaparen startar spelet!",
 	"correctAnswer": "Välj rätt svar",
 	"edit": "Redigera",
-	"choose": "Välj:"
+	"choose": "Välj:",
+	"yourTotalPoints": "Din totalpoäng är: "
 }
