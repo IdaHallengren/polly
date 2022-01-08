@@ -28,7 +28,8 @@
 
   </div>
     <div id="firstPlace">
-      <img id="winnerImg" v-bind:src="allParticipants[firstPlace].participantImg">
+      <img id="winnerImg" class="animated bounce" v-bind:src="allParticipants[firstPlace].participantImg">
+
       <br>
       <div id="podiumFirst">
         <span id="nr1"> 1 <br> {{allParticipants[firstPlace].participantName}} </span>
@@ -91,9 +92,10 @@ const socket = io();
 export default {
   name: 'Result',
   components: {
-    ConfettiExplosion
+    ConfettiExplosion,
     // Bars
   },
+
   data: function () {
     return {
       question: "",
@@ -218,7 +220,7 @@ export default {
   border-radius: 100%;
   width: 50%;
   height: 45%;
-
+  animation: bounce 0.7s infinite alternate;
 
 }
 #secondImg {
@@ -345,6 +347,17 @@ export default {
     transform:translateX(25%);
   }
 }
+
+@keyframes bounce {
+  from {
+    transform: translateY(0vh);
+  }
+  to {
+    transform: translateY(-5vh);
+  }
+}
+
+
 </style>
 
 
