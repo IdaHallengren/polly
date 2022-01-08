@@ -82,14 +82,14 @@
             v-bind:typeOfQuestion="question.typeOfQuestion"
             v-bind:correctAnswer="question.correctAnswer"
             v-on:pointsCollected="pointsTot($event)"
-
+            v-bind:yourPoints="this.yourPoints"
             >
 <!--            v-bind:isClicked="this.isClicked"-->
  </SlideShow>
 <!--  <div> </div>-->
 <!--  <div class="pointsForQuestion">  Points for question is: {{question.pointsForQuestion}} </div>-->
 
-  <div class="styleYourPoints"> {{ uiLabels.yourTotalPoints }} {{this.yourPoints}} </div>
+<!-- <div class="styleYourPoints"> {{ uiLabels.yourTotalPoints }} {{this.yourPoints}} </div>-->
 
 <!--  Type of question is: {{question.typeOfQuestion}} ,-->
 <!--  Time for question is: {{question.timeForQuestion}},-->
@@ -250,16 +250,6 @@ export default {
 </script>
 
 <style>
-
-.styleYourPoints{
-
-  height: 7.2vh;
-  font-size: 1.5em;
-  font-family: AppleGothic,sans-serif;
-  font-weight: bold;
-  margin-right: 20%;
-
-}
 
 .pollTaking{
   display: grid;

@@ -44,8 +44,9 @@
     </div>
   </div><div id="app" v-if="!overviewUser">
     <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
-  <div class="showPoints"> Points for this question is:  <br> {{this.pointsForQuestion}} </div>
+  <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
 
+  <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
   </div>
 
 </div>
@@ -77,6 +78,7 @@ export default {
     typeOfQuestion: String,
     pointsForQuestion: Number,
     correctAnswer: Array,
+    yourPoints: Number
 
   },
 
@@ -170,14 +172,24 @@ export default {
 
 <style scoped>
 
-.showPoints{
-  width: 15vw;
+.styleYourPoints{
+
   height: 7.2vh;
-  font-size: 2em;
+  font-size: 1.5em;
   font-family: AppleGothic,sans-serif;
   font-weight: bold;
-  margin-left: 17%;
-  margin-top: 6%;
+  position: center;
+  margin-top: 5%;
+
+}
+
+.showPoints{
+  height: 7.2vh;
+  font-size: 1.5em;
+  font-family: AppleGothic,sans-serif;
+  font-weight: bold;
+  position: center;
+  margin-top: 15%;
 }
 
 .wrapper{
