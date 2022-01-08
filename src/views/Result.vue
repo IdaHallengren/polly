@@ -24,6 +24,7 @@
       <span v-if="pointsForPoll.length > 1" class="nr2"> {{allParticipants[secondPlace].participantName}} </span>
 
     </div>
+    <span v-if="pointsForPoll.length > 1" class="nr2"> {{allParticipants[secondPlace].totPoints}} p </span>
 
 
   </div>
@@ -32,9 +33,9 @@
 
       <br>
       <div id="podiumFirst">
-        <span id="nr1"> 1 <br> {{allParticipants[firstPlace].participantName}} </span>
+        <span class="nr1"> 1 <br> {{allParticipants[firstPlace].participantName}} </span>
       </div>
-     
+      <span class="nr1"> {{allParticipants[firstPlace].totPoints}} p </span>
 
     </div>
 
@@ -47,21 +48,10 @@
         <br>
         <span v-if="pointsForPoll.length > 2" class="nr3"> {{allParticipants[thirdPlace].participantName}} </span>
       </div>
-
+      <span v-if="pointsForPoll.length > 2" class="nr3"> {{allParticipants[thirdPlace].totPoints}} p </span>
     </div>
 </div>
 
-  <div v-on:click="showWinner=!showWinner">
-<button v-on:click="decideWinner()">
-</button>
-  </div>
-  <div v-show="showWinner">
-
-
-
-
-
-  </div>
 
 
   <div>
@@ -69,6 +59,7 @@
 
   </div>
   </div>
+
 
 
   <!-- Här ska vi ta in resultatbars -->
@@ -86,7 +77,6 @@
 // import Bars from '@/components/Bars.vue';
 import io from 'socket.io-client';
 import ConfettiExplosion from "vue-confetti-explosion";
-
 const socket = io();
 
 export default {
@@ -104,7 +94,6 @@ export default {
       firstPlace: 0,
       secondPlace: 0,
       thirdPlace: 0,
-      showWinner: false,
       allParticipants: [],
 
 
@@ -118,6 +107,7 @@ export default {
     }
   },
   created: function () {
+    this.participantId =
     this.pollId = this.$route.params.id
     this.lang = this.$route.params.lang;
 
@@ -218,26 +208,26 @@ export default {
 
 #winnerImg {
   border-radius: 100%;
-  width: 50%;
-  height: 45%;
+  width: 55%;
+  height: 40%;
   animation: bounce 0.7s infinite alternate;
 
 }
 #secondImg {
   border-radius: 100%;
-  width: 50%;
-  height: 45%;
+  width: 55%;
+  height: 40%;
   margin-top: 6vh;
 }
 #noSecondImg {
-  width: 50%;
-  height: 45%;
+  width: 55%;
+  height: 40%;
   margin-top: 6vh;
   visibility: hidden;
 }
 #noThirdImg {
   width: 50%;
-  height: 45%;
+  height: 40%;
   margin-top: 9vh;
   visibility: hidden;
 }
@@ -245,8 +235,8 @@ export default {
 
 #thirdImg{
   border-radius: 100%;
-  width: 50%;
-  height: 45%;
+  width: 55%;
+  height: 40%;
   margin-top: 9vh;
 }
 .showResult {
@@ -291,7 +281,7 @@ export default {
   place-content: center;
   border-top-right-radius: 15%;
 }
-#nr1{
+.nr1{
   font-size: 5vh;
   font-family: Damascus;
   color: gold;
