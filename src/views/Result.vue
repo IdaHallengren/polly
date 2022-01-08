@@ -14,11 +14,15 @@
 <div class="showResult">
 
   <div id="secondPlace">
-    <img id="secondImg" v-bind:src="allParticipants[secondPlace].participantImg">
+    <img v-if="pointsForPoll.length > 1" id="secondImg" v-bind:src="allParticipants[secondPlace].participantImg">
+    <img v-else id="noSecondImg" v-bind:src="allParticipants[secondPlace].participantImg">
 
     <br>
     <div id="podiumSecond">
-      <span id="nr2"> 2 <br> {{allParticipants[secondPlace].participantName}} </span>
+      <span class="nr2"> 2 </span>
+      <br>
+      <span v-if="pointsForPoll.length > 1" class="nr2"> {{allParticipants[secondPlace].participantName}} </span>
+
     </div>
 
 
@@ -34,10 +38,13 @@
     </div>
 
     <div id="thirdPlace">
-      <img id="thirdImg" v-bind:src="allParticipants[thirdPlace].participantImg">
+      <img v-if="pointsForPoll.length > 2" id="thirdImg" v-bind:src="allParticipants[thirdPlace].participantImg">
+      <img v-else id="noThirdImg" v-bind:src="allParticipants[thirdPlace].participantImg">
       <br>
       <div id="podiumThird">
-        <span id="nr3"> 3 <br> {{allParticipants[thirdPlace].participantName}} </span>
+        <span class="nr3"> 3 </span>
+        <br>
+        <span v-if="pointsForPoll.length > 2" class="nr3"> {{allParticipants[thirdPlace].participantName}} </span>
       </div>
 
     </div>
@@ -219,8 +226,20 @@ export default {
   width: 50%;
   height: 45%;
   margin-top: 6vh;
-
 }
+#noSecondImg {
+  width: 50%;
+  height: 45%;
+  margin-top: 6vh;
+  visibility: hidden;
+}
+#noThirdImg {
+  width: 50%;
+  height: 45%;
+  margin-top: 9vh;
+  visibility: hidden;
+}
+
 
 #thirdImg{
   border-radius: 100%;
@@ -234,8 +253,6 @@ export default {
   width: 100%;
   height: 60vh;
   place-content: center;
-
-
 }
 #secondPlace {
   place-content: center;
@@ -280,13 +297,13 @@ export default {
 
 }
 
-#nr2 {
+.nr2 {
   font-size: 5vh;
   font-family: Damascus;
   color: silver;
   font-weight: bold;
 }
-#nr3{
+.nr3{
   font-size: 5vh;
   font-family: Damascus;
   color: sandybrown;
