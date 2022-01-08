@@ -47,6 +47,7 @@
   <div class="showPoints"> Points for this question is:  <br> {{this.pointsForQuestion}} </div>
 
   </div>
+
 </div>
 </template>
 
@@ -76,6 +77,7 @@ export default {
     typeOfQuestion: String,
     pointsForQuestion: Number,
     correctAnswer: Array,
+
   },
 
 
@@ -146,13 +148,11 @@ export default {
 
     canClick: function(){
          return !this.isClicked[this.questions]
-
     },
 
     saveAnswer: function (answer){
         this.answer = answer
         this.isClicked[this.questions] = true
-        // socket.emit('changingBoolean', this.isClicked)
         console.log("testar om svar kommer", this.answer)
         if (this.answer === this.correctAnswer) {
           console.log("KORREKT SVAR")
@@ -162,10 +162,7 @@ export default {
         } else {
           console.log("FEL SVAR")
         }
-
-
     }
-
 },
 }
 
@@ -179,14 +176,13 @@ export default {
   font-size: 2em;
   font-family: AppleGothic,sans-serif;
   font-weight: bold;
-
   margin-left: 17%;
   margin-top: 6%;
 }
 
 .wrapper{
   display: grid;
-  grid-template-rows: 100%;
+  grid-template-rows: 90%;
   grid-template-columns: 80% 20%;
 }
 
@@ -194,9 +190,11 @@ export default {
   border: solid;
   border-radius: 10%;
   background-color: white;
-  height: 80%;
+  height: 90%;
   width: 85%;
-  margin: 2em;
+  margin-right: 2em;
+  margin-left: 2em;
+  margin-top: 2em;
 }
 
 #questionHeader {
@@ -211,7 +209,7 @@ export default {
 }
 
 .selectedAnswer{
-  height: 5vw;
+  height: 3.5vw;
   width: 25vw;
   font-size: 1.5vw;
 }
