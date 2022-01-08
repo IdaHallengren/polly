@@ -7,7 +7,7 @@
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
 
-  
+
 
 <div v-show="letsPlayButton">
   <div v-show="startPoll">
