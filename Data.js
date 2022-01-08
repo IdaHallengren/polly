@@ -28,7 +28,6 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.correctAnswer= [];
     poll.participants = [];
     poll.currentQuestion = 0;
-    poll.typeOfQuestion=[];
     poll.timeForQuestion=[];
     poll.pointsForQuestion=[];
     poll.numberOfParticipants= "";
@@ -60,7 +59,6 @@ Data.prototype.addQuestion = function(pollId, q) {
   if (typeof poll !== 'undefined') {
     poll.questions.push(q);
      // console.log('testar testar NU', q)
-     // poll.typeOfQuestion.push(q.type);
      // poll.timeForQuestion.push(q.time);
 
   }
@@ -104,7 +102,6 @@ Data.prototype.getAnswers = function(pollId) {
     if (typeof poll.questions[poll.currentQuestion] !== 'undefined') {
       return {q: poll.questions[poll.currentQuestion].q,
         a: answers,
-        type: poll.typeOfQuestion[poll.currentQuestion],
         time: poll.timeForQuestion[poll.currentQuestion],
         points: poll.pointsForQuestion[poll.currentQuestion],
         correctAnswer: poll.correctAnswer[poll.currentQuestion]};

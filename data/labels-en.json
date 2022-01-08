@@ -14,7 +14,6 @@
 	"addSlide": "Add question to slide",
 	"removeAlternative": "Remove alternative",
 	"addAlternative": "Add alternative",
-	"chooseTypeOfQuestion": "Type of question",
 	"chooseTimeForQuestion": "Time for question (seconds)",
 	"choosePointsForQuestion": "Points for question",
 	"answers": "Answers",

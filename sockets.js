@@ -14,7 +14,7 @@ function sockets(io, socket, data) {
   });
 
   socket.on('addQuestion', function (d) {
-    data.addQuestion(d.pollId, {q: d.q, a: d.a, typeOfQuestion: d.typeOfQuestion, timeForQuestion: d.timeForQuestion, pointsForQuestion: d.pointsForQuestion, correctAnswer: d.correctAnswer});
+    data.addQuestion(d.pollId, {q: d.q, a: d.a, timeForQuestion: d.timeForQuestion, pointsForQuestion: d.pointsForQuestion, correctAnswer: d.correctAnswer});
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
   });
 

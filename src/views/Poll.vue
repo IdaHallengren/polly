@@ -79,7 +79,6 @@
             v-bind:questionMaster="questionMaster"
             v-bind:pointsForQuestion="question.pointsForQuestion"
             v-bind:timeForQuestion="question.timeForQuestion"
-            v-bind:typeOfQuestion="question.typeOfQuestion"
             v-bind:correctAnswer="question.correctAnswer"
             v-on:pointsCollected="pointsTot($event)"
             v-bind:yourPoints="this.yourPoints"
@@ -154,7 +153,6 @@ export default {
 
        correctAnswer:[],
        timeForQuestion: [],
-       typeOfQuestion: [],
        pointsForQuestion: [],
        infoQuestions:{},
 

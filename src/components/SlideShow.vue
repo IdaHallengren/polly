@@ -75,7 +75,6 @@ export default {
     questionMaster: Boolean,
     overviewUser: Boolean,
     timeForQuestion: Number,
-    typeOfQuestion: String,
     pointsForQuestion: Number,
     correctAnswer: Array,
     yourPoints: Number
