@@ -774,6 +774,7 @@ export default {
   border-radius: 100%;
   padding: 15px;
   position: relative;
+  animation: bounce 0.7s infinite alternate;
 }
 
 .icon-btn {
@@ -999,8 +1000,14 @@ export default {
     transform:translateX(25%);
   }
 }
-
-
+@keyframes bounce {
+  from {
+    transform: translateY(0vh);
+  }
+  to {
+    transform: translateY(-1.5vh);
+  }
+}
 
 
 </style>

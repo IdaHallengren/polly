@@ -17,17 +17,22 @@
 <div class="showResult">
 
   <div id="secondPlace">
-    <img id="secondImg" v-bind:src="allParticipants[secondPlace].participantImg">
+    <img v-if="pointsForPoll.length > 1" id="secondImg" v-bind:src="allParticipants[secondPlace].participantImg">
+    <img v-else id="noSecondImg" v-bind:src="allParticipants[secondPlace].participantImg">
 
     <br>
     <div id="podiumSecond">
-      <span id="nr2"> 2 <br> {{allParticipants[secondPlace].participantName}} </span>
+      <span class="nr2"> 2 </span>
+      <br>
+      <span v-if="pointsForPoll.length > 1" class="nr2"> {{allParticipants[secondPlace].participantName}} </span>
+
     </div>
 
 
   </div>
     <div id="firstPlace">
-      <img id="winnerImg" v-bind:src="allParticipants[firstPlace].participantImg">
+      <img id="winnerImg" class="animated bounce" v-bind:src="allParticipants[firstPlace].participantImg">
+
       <br>
       <div id="podiumFirst">
         <span id="nr1"> 1 <br> {{allParticipants[firstPlace].participantName}} </span>
@@ -37,10 +42,13 @@
     </div>
 
     <div id="thirdPlace">
-      <img id="thirdImg" v-bind:src="allParticipants[thirdPlace].participantImg">
+      <img v-if="pointsForPoll.length > 2" id="thirdImg" v-bind:src="allParticipants[thirdPlace].participantImg">
+      <img v-else id="noThirdImg" v-bind:src="allParticipants[thirdPlace].participantImg">
       <br>
       <div id="podiumThird">
-        <span id="nr3"> 3 <br> {{allParticipants[thirdPlace].participantName}} </span>
+        <span class="nr3"> 3 </span>
+        <br>
+        <span v-if="pointsForPoll.length > 2" class="nr3"> {{allParticipants[thirdPlace].participantName}} </span>
       </div>
 
     </div>
@@ -87,9 +95,10 @@ const socket = io();
 export default {
   name: 'Result',
   components: {
-    ConfettiExplosion
+    ConfettiExplosion,
     // Bars
   },
+
   data: function () {
     return {
       question: "",
@@ -214,7 +223,7 @@ export default {
   border-radius: 100%;
   width: 50%;
   height: 45%;
-
+  animation: bounce 0.7s infinite alternate;
 
 }
 #secondImg {
@@ -222,8 +231,20 @@ export default {
   width: 50%;
   height: 45%;
   margin-top: 6vh;
-
 }
+#noSecondImg {
+  width: 50%;
+  height: 45%;
+  margin-top: 6vh;
+  visibility: hidden;
+}
+#noThirdImg {
+  width: 50%;
+  height: 45%;
+  margin-top: 9vh;
+  visibility: hidden;
+}
+
 
 #thirdImg{
   border-radius: 100%;
@@ -237,8 +258,6 @@ export default {
   width: 100%;
   height: 60vh;
   place-content: center;
-
-
 }
 #secondPlace {
   place-content: center;
@@ -283,13 +302,13 @@ export default {
 
 }
 
-#nr2 {
+.nr2 {
   font-size: 5vh;
   font-family: Damascus;
   color: silver;
   font-weight: bold;
 }
-#nr3{
+.nr3{
   font-size: 5vh;
   font-family: Damascus;
   color: sandybrown;
@@ -331,6 +350,17 @@ export default {
     transform:translateX(25%);
   }
 }
+
+@keyframes bounce {
+  from {
+    transform: translateY(0vh);
+  }
+  to {
+    transform: translateY(-5vh);
+  }
+}
+
+
 </style>
 
 
