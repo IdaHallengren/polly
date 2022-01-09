@@ -28,13 +28,15 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.correctAnswer= [];
     poll.participants = [];
     poll.currentQuestion = 0;
-    poll.typeOfQuestion=[];
     poll.timeForQuestion=[];
     poll.pointsForQuestion=[];
     poll.numberOfParticipants= "";
     poll.booleanClicked=true;
-    poll.totPointsForQuestion=[];
     poll.pointsForOne=0;
+    // poll.allPoints=[];
+    // poll.pointsForPoll=[];
+    // poll.totPointsForQuestion=[];
+
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
   }
@@ -57,7 +59,6 @@ Data.prototype.addQuestion = function(pollId, q) {
   if (typeof poll !== 'undefined') {
     poll.questions.push(q);
      // console.log('testar testar NU', q)
-     // poll.typeOfQuestion.push(q.type);
      // poll.timeForQuestion.push(q.time);
 
   }
@@ -102,7 +103,6 @@ Data.prototype.getAnswers = function(pollId) {
       return {questionNumber: poll.questionNumber,
         q: poll.questions[poll.currentQuestion].q,
         a: answers,
-        type: poll.typeOfQuestion[poll.currentQuestion],
         time: poll.timeForQuestion[poll.currentQuestion],
         points: poll.pointsForQuestion[poll.currentQuestion],
         correctAnswer: poll.correctAnswer[poll.currentQuestion]};
@@ -124,7 +124,8 @@ Data.prototype.addParticipant = function(pollId, participant) {
 Data.prototype.getParticipants = function(pollId) {
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
-    poll.totPointsForQuestion.push(0)
+    // poll.totPointsForQuestion.push(0)
+    console.log(poll.participants)
       return poll.participants
   }
   return {}
@@ -153,20 +154,25 @@ Data.prototype.removeParticipant= function(pollId, participant){
 Data.prototype.getPoints= function(pollId ,points,  participantId){
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
-    for (let i = 0; i<poll.totPointsForQuestion.length; i++ ) {
+    for (let i = 0; i<poll.participants.length; i++ ) {
       if (poll.participants[i].participantId === participantId) {
-        // poll.pointsForOne[i]=poll.pointsForOne[i] + points
-        poll.totPointsForQuestion[i] += points;
-
-        console.log(poll.totPointsForQuestion)
-        console.log('testar poang', points, poll.pointsForOne)
-        return poll.totPointsForQuestion
+        console.log('points', poll.participants[i].totPoints);
+        console.log('points and Id', points, participantId);
+        poll.pointsForOne=poll.participants[i].totPoints;
+        poll.pointsForOne+=points;
+        poll.participants[i].totPoints=poll.pointsForOne ;
+        console.log('participants and points', poll.participants[i].totPoints);
+        console.log(poll.participants)
+        return poll.participants
 
       }
+
     }
 
   }
 }
+
+
 
 
 module.exports = Data;

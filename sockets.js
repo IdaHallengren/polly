@@ -14,7 +14,7 @@ function sockets(io, socket, data) {
   });
 
   socket.on('addQuestion', function (d) {
-    data.addQuestion(d.pollId, {q: d.q, a: d.a, typeOfQuestion: d.typeOfQuestion, timeForQuestion: d.timeForQuestion, pointsForQuestion: d.pointsForQuestion, correctAnswer: d.correctAnswer, questionNumber: d.questionNumber});
+    data.addQuestion(d.pollId, {q: d.q, a: d.a, timeForQuestion: d.timeForQuestion, pointsForQuestion: d.pointsForQuestion, correctAnswer: d.correctAnswer, questionNumber: d.questionNumber});
     socket.emit('dataUpdate', data.getAnswers(d.pollId));
   });
 
@@ -54,13 +54,12 @@ function sockets(io, socket, data) {
       socket.emit('dataUpdate', data.getAnswers(d.pollId));
     })
 
-
   socket.on('startGame' , function(d){
      io.to(d.pollId).emit('gameStart', d.boolean)
   })
 
   socket.on('removeParticipant', function(d){
-    data.removeParticipant(d.pollId , {participantName: d.participantName, participantId: d.participantId, participantImg: d.participantImg})
+    data.removeParticipant(d.pollId , {participantName: d.participantName, participantId: d.participantId, participantImg: d.participantImg, totPoints: d.totPoints})
     io.to(d.pollId).emit('dataUpdate', data.getParticipants(d.pollId))
   })
 
@@ -68,9 +67,14 @@ function sockets(io, socket, data) {
     io.to(d.pollId).emit('endGame', d.endGame)
   })
 
-socket.on('totPoints', function(d){
-  io.to(d.pollId).emit('pointsForQuestion', data.getPoints( d.pollId, d.event, d.participantId))
-})
+  socket.on('totPoints', function(d){
+    io.to(d.pollId).emit('pointsForQuestion', data.getPoints(d.pollId, d.event, d.participantId))
+  })
+
+  socket.on('getAllParticipants', function(pollId){
+    console.log('inne i socket wiho')
+    io.to(pollId).emit('collectParticipants', data.getParticipants(pollId))
+  })
 
 }
 

@@ -69,7 +69,7 @@
 </div>
 </div>
 
-<div v-if="showGameStart">
+<div v-if="showGameStart" class="pollTaking">
  
  <SlideShow v-bind:questions="question.q"
             v-bind:answers="question.a"
@@ -79,18 +79,21 @@
             v-bind:questionMaster="questionMaster"
             v-bind:pointsForQuestion="question.pointsForQuestion"
             v-bind:timeForQuestion="question.timeForQuestion"
-            v-bind:typeOfQuestion="question.typeOfQuestion"
             v-bind:correctAnswer="question.correctAnswer"
             v-on:pointsCollected="pointsTot($event)"
+            v-bind:yourPoints="this.yourPoints"
             >
 <!--            v-bind:isClicked="this.isClicked"-->
  </SlideShow>
-  {{participants.pointsCollected}}
+<!--  <div> </div>-->
+<!--  <div class="pointsForQuestion">  Points for question is: {{question.pointsForQuestion}} </div>-->
 
-  Type of question is: {{question.typeOfQuestion}} ,
-  Time for question is: {{question.timeForQuestion}},
-  Points for question are: {{question.pointsForQuestion}},
-  The correct answer is: {{question.correctAnswer}}
+<!-- <div class="styleYourPoints"> {{ uiLabels.yourTotalPoints }} {{this.yourPoints}} </div>-->
+
+<!--  Type of question is: {{question.typeOfQuestion}} ,-->
+<!--  Time for question is: {{question.timeForQuestion}},-->
+<!--  Points for question are: {{question.pointsForQuestion}},-->
+<!--  The correct answer is: {{question.correctAnswer}}-->
 
 
 </div>
@@ -123,9 +126,14 @@ export default {
       Avatars: avatar,
       lang: "",
       uiLabels: {},
+
+      //Participantinfo
       participantName: "",
       participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
       participantId: 0,
+      totPoints:0,
+
+      //For hide and show
       showName: false,
       showID: false,
 /*      question: {
@@ -145,13 +153,14 @@ export default {
 
        correctAnswer:[],
        timeForQuestion: [],
-       typeOfQuestion: [],
        pointsForQuestion: [],
        infoQuestions:{},
 
       endGame: false,
-      pointsCollected:0
 
+      // pointsForPoll:[],
+
+      yourPoints:0
     }
   },
 
@@ -180,26 +189,19 @@ export default {
     socket.on('gameStart', (myBoolean) => {
       console.log('SHOW GAME START')
         this.showGameStart= myBoolean
+
         })
 
-
-
     socket.on('endGame',(d)=>{
-      //de första två raderna är lite onödiga men fick det inte att funka annars
       console.log('End Game Now')
       this.endGame= d
       this.$router.push(`/result/${this.pollId}/${this.lang}`)
-      this.pointsTot();
-    })
 
+    })
 
   },
 
   methods: {
-/*    submitAnswer: function (answer) {
-      socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
-    },*/
-
     changeAvatar: function (event) {
       this.participantImg=event
     },
@@ -207,6 +209,14 @@ export default {
     pointsTot: function (event){
       console.log('har vi fått poängen?', event)
       socket.emit( 'totPoints', {pollId: this.pollId,event: event, participantId: this.participantId})
+      socket.on('pointsForQuestion', (d) => {
+        this.participants=d
+        for (let i = 0; i < this.participants.length; i++) {
+          if(this.participantId===this.participants[i].participantId){
+            this.yourPoints=this.participants[i].totPoints
+          }
+        }
+      })
 
     },
 
@@ -220,7 +230,8 @@ export default {
           participantInfo: {
             participantId: this.participantId,
             participantName: this.participantName,
-            participantImg: this.participantImg
+            participantImg: this.participantImg,
+            totPoints: this.totPoints
           },
         },);
       }
@@ -238,9 +249,11 @@ export default {
 
 <style>
 
-/*body{*/
-/*  background-color: #772D8B;*/
-/*}*/
+.pollTaking{
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 80% 12% 8%;
+}
 
 .wrapperName{
   padding-top: 100px;

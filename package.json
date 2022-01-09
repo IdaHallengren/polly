@@ -19,6 +19,7 @@
     "socket.io-client": "^4.3.2",
     "sortablejs": "^1.14.0",
     "vue": "^3.0.0",
+    "vue-confetti": "^2.2.2",
     "vue-confetti-explosion": "^1.0.1",
     "vue-qrcode-component": "^2.1.1",
     "vue-router": "^4.0.0-0"
