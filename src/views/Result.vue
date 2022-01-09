@@ -3,12 +3,12 @@
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
 
-<!--  <&#45;&#45;!  https://vuejsexamples.com/an-explosion-of-confetti-as-a-vue-3-component/ &ndash;&gt;-->
+<!-- Confetti taken from:   https://vuejsexamples.com/an-explosion-of-confetti-as-a-vue-3-component/ -->
 
-  <ConfettiExplosion :particleCount="500" :force="0.3" :duration="50000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1200" :stageWidth="8000"  />
+  <ConfettiExplosion :particleCount="180"  :duration="10000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1000" :stageWidth="8000"  />
   {{pollId}}
 
-  <ConfettiExplosion class="styleConfettiRight" :particleCount="500" :force="0.3" :duration="50000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1200" :stageWidth="8000"  />
+  <ConfettiExplosion class="styleConfettiRight" :particleCount="180"  :duration="10000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1000" :stageWidth="8000"  />
 
   <div>
 {{pointsForPoll}}
@@ -265,14 +265,14 @@ export default {
 #podiumSecond {
   width: 100%;
   height: 19vh;
-  background-color: saddlebrown;
+  background-color: #A09181;
   place-content: center;
   border-top-left-radius: 15%;
 }
 #podiumFirst {
   width: 100%;
   height: 25vh;
-  background-color: saddlebrown;
+  background-color: #A09181;
   place-content: center;
   border-top-left-radius: 8%;
   border-top-right-radius: 8%;
@@ -280,7 +280,7 @@ export default {
 #podiumThird {
   width: 100%;
   height: 16vh;
-  background-color: saddlebrown;
+  background-color: #A09181;
   place-content: center;
   border-top-right-radius: 15%;
 }

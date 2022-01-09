@@ -69,7 +69,6 @@ function sockets(io, socket, data) {
   })
 
 socket.on('totPoints', function(d){
-  // data.getPoints( d.pollId, d.event, d.participantId)
   io.to(d.pollId).emit('pointsForQuestion', data.getPoints(d.pollId, d.event, d.participantId))
 })
 
@@ -80,7 +79,11 @@ socket.on('getAllParticipants', function(pollId){
   io.to(pollId).emit('collectParticipants', data.getParticipants(pollId))
 })
 
+socket.on('hasAnswered', function(pollId){
+  console.log("kommer vi hit med svarande")
+  io.to(pollId).emit('aPersonHasAnswered', pollId)
 
+})
 }
 
 

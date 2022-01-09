@@ -38,5 +38,7 @@
 	"correctAnswer": "Välj rätt svar",
 	"edit": "Redigera",
 	"choose": "Välj:",
-	"yourTotalPoints": "Din totalpoäng är: "
+	"PointsForThisQuestion": "Poäng för denna fråga är:",
+	"yourTotalPoints": "Din totalpoäng är: ",
+	"totalAnswered": "Antal deltagare som svarat:"
 }

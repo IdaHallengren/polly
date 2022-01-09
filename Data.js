@@ -171,6 +171,19 @@ Data.prototype.getPoints= function(pollId ,points,  participantId){
   }
 }
 
+// Data.prototype.amountAnswered= function(pollId, answered, participantId){
+//   const poll = this.polls[pollId];
+//   if (typeof poll !== 'undefined') {
+//
+//       if(answered===true){
+//         poll.participantsHasAnswered
+//
+//
+//     }
+//   }
+// }
+
+
 
 
 

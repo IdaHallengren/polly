@@ -9,7 +9,6 @@
 
 
 
-
 <div v-show="letsPlayButton">
   <div v-show="startPoll">
 
@@ -225,6 +224,8 @@
              v-bind:pointsForQuestion="pointsForQuestions[questionNumber]"
              v-bind:timeForQuestion="timeForQuestions[questionNumber]"
              v-bind:correctAnswer="correctAnswers[questionNumber]"
+             v-bind:totalParticipantsAnswered="this.totalParticipantsAnswered"
+             v-bind:participantsLength="this.participantsLength"
 
               >
   </SlideShow>
@@ -300,10 +301,10 @@ export default {
 
       endgame: true,
 
-      pointsForPoll:[]
+      pointsForPoll:[],
 
-
-
+      totalParticipantsAnswered: 0,
+      participantsLength:0
 
     }
   },
@@ -333,9 +334,20 @@ export default {
         {this.fullPoll = myPoll
         })
 
-    socket.on('participantsAdded', (myParticipant) =>
-        this.participants = myParticipant
+    socket.on('participantsAdded', (myParticipant) => {
+          this.participants = myParticipant
+          this.participantsLength = this.participants.length
+        }
     )
+
+    socket.on('aPersonHasAnswered', (pollId)=>{
+      console.log("create med antal svarande")
+      if(this.pollId===pollId){
+      this.totalParticipantsAnswered+=1
+        console.log("create kommer något", this.totalParticipantsAnswered)
+      }
+
+    })
 
   },
 
@@ -412,6 +424,7 @@ export default {
     },
 
     nextQuestion: function () {
+      this.totalParticipantsAnswered=0
       this.questionNumber++;
       socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
       socket.emit('removeButtons', {pollId: this.pollId, isClicked: this.isClicked})
@@ -442,7 +455,7 @@ export default {
 </script>
 
 <style>
-
+@import 'https://fonts.googleapis.com/css?family=Open+Sans&display=swap';
 
 .editDragAndDrop{
   width: 20%;
@@ -573,30 +586,30 @@ export default {
   grid-template-rows: 100%;
   grid-template-columns: 25% 50% 25%;
   grid-gap: 2px;
-  font-family:  AppleGothic,sans-serif;
+  font-family: Georgia, cursive;
 
   height: 45em;
 }
 
 #overview{
   border:solid;
-  border-radius: 2%;
-  background-color: #D3D3D3;
+  border-radius: 8%;
+  background-color: #1F7A8C;
   overflow: scroll;
   height: 70%;
 }
 
 #presentation{
   border: solid;
-  border-radius: 2%;
-  background-color: white;
+  border-radius: 8%;
+  background-color: #1F7A8C;
   height: 70%
 }
 
 #editQuestion{
   border: solid;
-  border-radius: 2%;
-  background-color: #D3D3D3;
+  border-radius: 8%;
+  background-color: #1F7A8C;
   height: 70%
 }
 
@@ -606,9 +619,9 @@ export default {
   grid-template-rows: 98% 2%;
   grid-template-columns: 25% 50% 25%;
   font-size: 3vw;
-  font-family: AppleGothic,sans-serif;
-
-  font-weight: bold;
+  font-family: Tahoma, sans-serif;
+  font-style: italic;
+  /*font-weight: bold;*/
 }
 
 .questionInput{
@@ -617,14 +630,14 @@ export default {
   width: 90%;
   font-size: 1vw;
   white-space: pre-wrap;
-  font-family: inherit;
+  font-family: Tahoma, sans-serif;
   border-radius: 5%;
 }
+
 
 .marginPresentation{
   margin-bottom: 28%;
 }
-
 
 .timeForQuestion{
   font-size: 2vw;

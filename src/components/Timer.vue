@@ -107,8 +107,8 @@ export default {
 
 .base-timer {
   position: relative;
-  width: 21vw;
-  height: 21vw;
+  width: 17vw;
+  height: 17vw;
 }
 
 .circle {
@@ -123,8 +123,8 @@ export default {
 
 .label {
    position: absolute;
-   width: 21vw;
-   height: 21vw;
+   width: 17vw;
+   height: 17vw;
    top: 0;
    display: flex;
    align-items: center;

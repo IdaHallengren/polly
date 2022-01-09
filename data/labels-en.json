@@ -38,5 +38,7 @@
 	"correctAnswer": "Choose the correct answer",
 	"edit": "Edit",
 	"choose": "Choose:",
-	"yourTotalPoints": "Your total points are: "
+	"PointsForThisQuestion":"Points for this question is:",
+	"yourTotalPoints": "Your total points are: ",
+	"totalAnswered": "Total participants answered:"
 }

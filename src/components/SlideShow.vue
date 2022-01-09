@@ -44,8 +44,11 @@
     </div>
   </div><div id="app" v-if="!overviewUser">
     <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
-  <div class="showPoints"> Points for this question is:  <br> {{this.pointsForQuestion}} </div>
+  <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
 
+  <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
+
+  <div class="styleYourPoints" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
   </div>
 
 </div>
@@ -76,6 +79,9 @@ export default {
     timeForQuestion: Number,
     pointsForQuestion: Number,
     correctAnswer: Array,
+    yourPoints: Number,
+    totalParticipantsAnswered: Number,
+    participantsLength: Number
 
   },
 
@@ -90,6 +96,7 @@ export default {
       isClicked:{},
       timePassed: 0,
       timerInterval: null,
+      length: 0
     }},
 
 
@@ -122,7 +129,7 @@ export default {
   },
 
   methods:{
-
+    
     startDrag: function(event, item){
       console.log(item)
       event.dataTransfer.dropEffect='move'
@@ -153,6 +160,7 @@ export default {
         this.answer = answer
         this.isClicked[this.questions] = true
         console.log("testar om svar kommer", this.answer)
+        this.$emit('hasAnswerd')
         if (this.answer === this.correctAnswer) {
           console.log("KORREKT SVAR")
           this.pointsCollected = this.pointsCollected + this.pointsForQuestion
@@ -169,20 +177,31 @@ export default {
 
 <style scoped>
 
-.showPoints{
-  width: 15vw;
-  height: 7.2vh;
-  font-size: 2em;
+.styleYourPoints{
+  height: 7.5vh;
+  font-size: 1.5vw;
   font-family: AppleGothic,sans-serif;
   font-weight: bold;
-  margin-left: 17%;
-  margin-top: 6%;
+  position: center;
+  margin-top: 5%;
+  margin-right: 10%;
+
+}
+
+.showPoints{
+  height: 7.5vh;
+  font-size: 1.5vw;
+  font-family: AppleGothic,sans-serif;
+  font-weight: bold;
+  position: center;
+  margin-top: 15%;
+  margin-right: 10%;
 }
 
 .wrapper{
   display: grid;
   grid-template-rows: 90%;
-  grid-template-columns: 80% 20%;
+  grid-template-columns: 78% 22%;
 }
 
 #slides {
@@ -263,9 +282,8 @@ export default {
 }
 
 #app {
-  position: absolute;
   right: 5%;
-  top: 15%;
+  margin-top: 20%;
 }
 
 .correctAnswer {
