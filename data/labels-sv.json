@@ -36,5 +36,6 @@
 	"waitParticipant": "Vänta tills fler deltagare har anslutit",
 	"waitQuestionMaster": "Vänta tills poll-skaparen startar spelet!",
 	"correctAnswer": "Rätt svar",
-	"edit": "Redigera"
+	"edit": "Redigera",
+	"clickDrag": "Ändra ordning med klicka och dra"
 }

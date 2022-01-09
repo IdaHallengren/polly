@@ -28,10 +28,11 @@
 
   <section id="wrapperButtons">
 
-    <button class="startButton" v-on:click="newPage('Create')">{{uiLabels.createPoll}}</button>
+    <button class="startButton" v-on:click="newPage('Create')" @mouseover="showCreateQuote = true" @mouseleave="showCreateQuote = false">{{uiLabels.createPoll}}</button>
+    <p v-show="showCreateQuote" id="createQuote">Hey mate, create!</p>
 
-    <button class="startButton" id="partButton" v-on:click = "showStart = !showStart">{{uiLabels.participatePoll}}</button>
-
+    <button class="startButton" id="partButton" v-on:click = "showStart = !showStart" @mouseover="showParticipateQuote = true" @mouseleave="showParticipateQuote = false">{{uiLabels.participatePoll}}</button>
+    <p v-show="showParticipateQuote" id="participateQuote">Don't hate, participate!</p>
   </section>
 </div>
 
@@ -40,7 +41,7 @@
     <div class = "wrapper1">
       <label id="textFont">{{uiLabels.enterPollId}}</label>
       <div >
-        <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
+        <input v-on:keyup.enter="newPage('Poll')" v-model="pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
         <button class="okButton" v-on:click="newPage('Poll')"><span class='text'> OK</span></button>
       </div>
@@ -65,7 +66,9 @@ export default {
       lang: "en",
       showStart: true,
       showId: true,
-      pollId: ""
+      pollId: "",
+      showCreateQuote: false,
+      showParticipateQuote: false
     }
   },
   created: function () {
@@ -100,6 +103,22 @@ export default {
 </script>
 
 <style>
+
+#participateQuote{
+  grid-row: 1;
+  grid-column: 4;
+  font-weight: bold;
+  font-size: 2.2vw;
+  font-family: Brush Script MT,cursive;
+}
+
+#createQuote{
+  grid-row: 1;
+  grid-column: 1;
+  font-weight: bold;
+  font-size: 2.2vw;
+  font-family: Brush Script MT,cursive;
+}
 
 body{
   background-color: #317773;
@@ -194,7 +213,6 @@ body{
 }
 
 .startButton:hover {
-  /*box-shadow: 2em 0.25em 0 #317773, -2em -0.25em 0 #317773;*/
   background: lightskyblue;
   color: White;
 }

@@ -24,8 +24,8 @@
       <div class = "wrapperName">
         <p class="fontSize">{{uiLabels.enterName}}</p>
          <div>
-           <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" required>
-           <button class="okButton" v-on:click = "showName = !showName"><span class='text'>OK</span></button>
+           <input v-on:keyup.enter="showName = !showName" v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" required>
+           <button class="okButton" v-on:click="showName = !showName"><span class='text'>OK</span></button>
          </div>
       </div>
     </div>

@@ -26,17 +26,23 @@
 
     <div id="overview">
 
-      <button class="editDragAndDrop">
-        <span class="text"> {{uiLabels.edit}}  </span>
-      </button>
+        <div v-if="drag" class="textDragInfo">{{uiLabels.clickDrag }}</div>
+
+          <button class="editDragAndDrop" v-on:click="dragAvailable()"
+               v-bind:class="{'editDragAndDropDrag': drag, 'notDrag': !drag }">
+            <span class="text"> {{uiLabels.edit}}  </span>
+          </button>
 
       <draggable :list="fullPoll['questions']"
+                 @start="drag = true"
+                 @end="drag = false"
+                 :move="detectMove"
                  item-key="questionNumber"
-                 @start="drag=true"
-                 @end="drag=false" >
-        <template #item="{}">
-        <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
+      >
 
+        <template #item="{}">
+
+       <SlideShow class="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
                    v-bind:key="question"
                    v-bind:questions="fullPoll['questions'][i].q"
                    v-bind:answers="fullPoll['questions'][i].a"
@@ -44,19 +50,14 @@
                    v-bind:uiLabels="uiLabels"
                    v-bind:questionMaster="questionMaster"
                    v-bind:overviewUser="overviewUser"
-                   v-bind:fullPoll="fullPoll">
+                   draggable="true"
+        >
 
-        </SlideShow>
-        </template>
-      </draggable>
-{{fullPoll['questions']}}
-      <button v-on:click="removeSlide" class="icon-btn add-btn" >
-       <span class="btn-txt"> {{ uiLabels.removeSlide }} </span>
-      </button>
-      <button v-on:click="addSlide" class="icon-btn add-btn" >
-        <span class="add-icon"></span>
-        <span class="btn-txt"> {{ uiLabels.addSlide }} </span> </button>
+      </SlideShow>
 
+</template>
+
+</draggable>
 
     </div>
 
@@ -274,6 +275,7 @@
 
 <script>
 import QrcodeVue from 'qrcode.vue'
+//import DragDrop from '../components/DragDrop.vue'
 import io from 'socket.io-client';
 import SlideShow from "../components/SlideShow.vue";
 import draggable from "vuedraggable";
@@ -285,7 +287,8 @@ export default {
   components: {
     SlideShow,
     QrcodeVue,
-    draggable,
+     //DragDrop,
+     draggable,
   },
 
   data: function () {
@@ -333,10 +336,7 @@ export default {
       correctIndex:0,
 
       endgame: true,
-
-      drag: false,
-      hover: false,
-
+      drag: false
     }
   },
 
@@ -391,6 +391,18 @@ export default {
   },
 
   methods: {
+
+    detectMove: function (evt){
+      console.log('Event', evt)
+    },
+
+    dragAvailable: function (){
+      if(this.drag === false){
+        this.drag = true
+      }
+      else
+        this.drag = false
+    },
 
     createPoll: function () {
       this.addQuestion();
@@ -488,13 +500,29 @@ export default {
 
 <style>
 
-.editDragAndDrop{
+.textDragInfo{
+  color: white;
+  font-weight: bold;
+  font-size: 1.5vw;
+  font-family: AppleGothic,sans-serif;
+  margin-top: 0.5vw;
+}
+.notDrag{
   width: 20%;
   margin-left:70%;
   margin-top: 0.5em;
   position: relative;
   cursor: pointer;
-  background-color: lightslategray;
+  background-color:lightslategray;
+  border-radius: 10%;
+}
+.editDragAndDropDrag{
+  width: 20%;
+  margin-left:70%;
+  margin-top: 0.5em;
+  position: relative;
+  cursor: pointer;
+  background-color: orange;
   border-radius: 10%;
 }
 
@@ -554,7 +582,6 @@ export default {
 
 .addSlides:hover{
   background:darkgreen;
->>>>>>> 12a258d9287e6557d5cfcb8972c82114540326b4
 }
 
 .nextQuestion {
@@ -613,7 +640,6 @@ export default {
   grid-template-columns: 25% 50% 25%;
   grid-gap: 2px;
   font-family:  AppleGothic,sans-serif;
-
   height: 45em;
 }
 
@@ -646,7 +672,6 @@ export default {
   grid-template-columns: 25% 50% 25%;
   font-size: 3vw;
   font-family: AppleGothic,sans-serif;
-
   font-weight: bold;
 }
 

@@ -62,7 +62,6 @@ export default {
     typeOfQuestion: String,
     pointsForQuestion: Number,
     correctAnswer: Array,
-    fullPoll: Object
   },
 
   data: function () {
@@ -99,7 +98,6 @@ export default {
   },
 
   mounted() {
-
   },
 
   methods:{
