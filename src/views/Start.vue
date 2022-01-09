@@ -3,8 +3,6 @@
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
 
-
-
 <main>
 
 <div id="langDiv">
@@ -42,10 +40,10 @@
       <div >
         <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
 
-        <button class="okButton" v-on:click="newPage('Poll')"><span class='text'> OK</span></button>
+        <button class="okButton" v-on:click="newPage('Poll')"><span class='buttonText'> OK</span></button>
       </div>
     </div>
-    <button class = "backButton" v-on:click = "showStart = !showStart"><span class='text'>{{uiLabels.backButton}}</span></button>
+    <button class = "backButton" v-on:click = "showStart = !showStart"><span class='buttonText'>{{uiLabels.backButton}}</span></button>
   </div>
 </div>
 
@@ -220,7 +218,7 @@ body{
   background: #558564;
 }
 
-.okButton .text {
+.okButton .buttonText {
   transform: translateX(50%);
   color: white;
   font-weight: bold;
@@ -265,7 +263,7 @@ body{
   left: 0.5em;
 }
 
-.backButton .text {
+.backButton .buttonText {
   transform: translateX(30%);
   color: white;
   font-weight: bold;

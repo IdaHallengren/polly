@@ -15,7 +15,7 @@
     <div> </div>
     <div> </div>
     <button class="cancel" v-on:click="cancelPage">
-      <span class='text'>{{uiLabels.cancelButton}}</span>
+      <span class="buttonText">{{uiLabels.cancelButton}}</span>
     </button>
 
   <div class="headlines">
@@ -24,11 +24,11 @@
     <div> {{uiLabels.editQuestion}}</div>
   </div>
 
-  <div class="wrapper">
+  <div class="drawAvatars">
 
     <div id="overview">
       <button class="editDragAndDrop">
-        <span class="text"> {{uiLabels.edit}}  </span>
+        <span class="buttonText"> {{uiLabels.edit}}  </span>
       </button>
         <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
                    v-bind:key="question"
@@ -139,20 +139,20 @@
 
 
     <button v-on:click="removeSlide"  class="removeSlides">
-      <span class="text"> {{ uiLabels.removeSlide }} </span>
+      <span class="buttonText"> {{ uiLabels.removeSlide }} </span>
     </button>
     <button v-on:click="addSlide" class="addSlides" >
-      <span class="text"> {{ uiLabels.addSlide }} </span> </button>
+      <span class="buttonText"> {{ uiLabels.addSlide }} </span> </button>
 
     <div v-on:click= "startPoll= !startPoll" >
       <button class="continue" v-on:click="createPoll">
-        <span class='text'>{{ uiLabels.createPoll }}</span>
+        <span class="buttonText">{{ uiLabels.createPoll }}</span>
       </button>
     </div>
   </div>
 
     <button class="noSelect" v-on:click="cancelPage">
-      <span class='text'> {{ uiLabels.backButton }} </span>
+      <span class="buttonText"> {{ uiLabels.backButton }} </span>
     </button>
   </div>
 
@@ -165,7 +165,7 @@
   <div v-show="!startPoll" class="wrapperWaitRoom">
     <div> </div>
     <div>
-      <button class="cancel" v-on:click="cancelPage"><span class='text'>{{uiLabels.cancelButton}}</span></button>
+      <button class="cancel" v-on:click="cancelPage"><span class="buttonText">{{uiLabels.cancelButton}}</span></button>
     </div>
 
     <div>
@@ -197,13 +197,13 @@
 
     <div>
       <button class="noSelect" v-on:click="startPoll=!startPoll">
-        <span class='text'> {{ uiLabels.backButton }} </span>
+        <span class="buttonText"> {{ uiLabels.backButton }} </span>
       </button>
     </div>
 
     <div v-on:click="letsPlayButton=!letsPlayButton , overviewUser=!overviewUser  ">
       <button class="continue" v-on:click="letsPlay">
-        <span class='text'> {{ uiLabels.letsPlay }} </span>
+        <span class="buttonText"> {{ uiLabels.letsPlay }} </span>
       </button>
     </div>
     </div>
@@ -467,7 +467,7 @@ export default {
   border-radius: 10%;
 }
 
-.editDragAndDrop .text{
+.editDragAndDrop .buttonText{
   transform: translateX(20%);
   color: white;
   font-weight: bold;
@@ -487,7 +487,7 @@ export default {
   margin-bottom: 0.5em;
 }
 
-.removeSlides .text{
+.removeSlides .buttonText{
   transform: translateX(20%);
   color: white;
   font-weight: bold;
@@ -513,7 +513,7 @@ export default {
 
 }
 
-.addSlides .text{
+.addSlides .buttonText{
   transform: translateX(20%);
   color: white;
   font-weight: bold;
@@ -579,7 +579,7 @@ export default {
   left: 0.5em;
 }
 
-.wrapper{
+.drawAvatars{
   display: grid;
   grid-template-rows: 100%;
   grid-template-columns: 25% 50% 25%;
@@ -857,7 +857,7 @@ export default {
   right: 0.5em;
 }
 
-.cancel .text {
+.cancel .buttonText {
   transform: translateX(20%);
   color: white;
   font-weight: bold;
@@ -888,7 +888,7 @@ export default {
 
 }
 
-.continue .text {
+.continue .buttonText {
   transform: translateX(5%);
   color: white;
   font-weight: bold;
@@ -916,7 +916,7 @@ export default {
   margin-top:1.5em;
 }
 
-.noSelect .text {
+.noSelect .buttonText {
   transform: translateX(34%);
   color: white;
   font-weight: bold;
