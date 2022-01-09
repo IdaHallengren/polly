@@ -224,6 +224,8 @@
              v-bind:pointsForQuestion="pointsForQuestions[questionNumber]"
              v-bind:timeForQuestion="timeForQuestions[questionNumber]"
              v-bind:correctAnswer="correctAnswers[questionNumber]"
+             v-bind:totalParticipantsAnswered="this.totalParticipantsAnswered"
+             v-bind:participantsLength="this.participantsLength"
 
               >
   </SlideShow>
@@ -299,10 +301,10 @@ export default {
 
       endgame: true,
 
-      pointsForPoll:[]
+      pointsForPoll:[],
 
-
-
+      totalParticipantsAnswered: 0,
+      participantsLength:0
 
     }
   },
@@ -332,9 +334,20 @@ export default {
         {this.fullPoll = myPoll
         })
 
-    socket.on('participantsAdded', (myParticipant) =>
-        this.participants = myParticipant
+    socket.on('participantsAdded', (myParticipant) => {
+          this.participants = myParticipant
+          this.participantsLength = this.participants.length
+        }
     )
+
+    socket.on('aPersonHasAnswered', (pollId)=>{
+      console.log("create med antal svarande")
+      if(this.pollId===pollId){
+      this.totalParticipantsAnswered+=1
+        console.log("create kommer något", this.totalParticipantsAnswered)
+      }
+
+    })
 
   },
 
@@ -411,6 +424,7 @@ export default {
     },
 
     nextQuestion: function () {
+      this.totalParticipantsAnswered=0
       this.questionNumber++;
       socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
       socket.emit('removeButtons', {pollId: this.pollId, isClicked: this.isClicked})

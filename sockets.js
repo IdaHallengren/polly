@@ -80,7 +80,11 @@ socket.on('getAllParticipants', function(pollId){
   io.to(pollId).emit('collectParticipants', data.getParticipants(pollId))
 })
 
+socket.on('hasAnswered', function(pollId){
+  console.log("kommer vi hit med svarande")
+  io.to(pollId).emit('aPersonHasAnswered', pollId)
 
+})
 }
 
 

@@ -38,5 +38,6 @@
 	"edit": "Redigera",
 	"choose": "Välj:",
 	"PointsForThisQuestion": "Poäng för denna fråga är:",
-	"yourTotalPoints": "Din totalpoäng är: "
+	"yourTotalPoints": "Din totalpoäng är: ",
+	"totalAnswered": "Antal deltagare som svarat:"
 }
