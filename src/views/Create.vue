@@ -600,7 +600,7 @@ export default {
 #presentation{
   border: solid;
   border-radius: 8%;
-  background-color: #7FB685;
+  background-color: #1F7A8C;
   height: 70%
 }
 
