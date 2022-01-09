@@ -25,6 +25,7 @@
 	"enterName": "Skriv in ditt namn",
 	"pollId": "Poll-Id: ",
 	"name": "Namn: ",
+	"exitPoll": "Lämna",
 	"avatar": "Välj din figur: ",
 	"cancelButton": "Avbryt",
 	"backButton": "Tillbaka",
