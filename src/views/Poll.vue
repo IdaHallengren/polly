@@ -331,10 +331,11 @@ export default {
   position: fixed;
   bottom: 0.5em;
   left: 0.5em;
-  width: 5vw;
+  width: 6vw;
   height: 6%;
   cursor: pointer;
   display: flex;
+  place-content: center;
   align-items: center;
   border: none;
   border-radius: 5px;
@@ -348,6 +349,7 @@ export default {
   font-weight: bold;
   font-size: 1.2vw;
   font-family: AppleGothic,sans-serif;
+  margin-right: 1.3vw;
 }
 
 .backButton:hover {

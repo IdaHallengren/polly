@@ -240,12 +240,13 @@ export default {
 
 /* Personal altered buttons with source code from Chance Squires*/
 .backButton{
-  width: 5vw;
+  width: 6vw;
   height: 6%;
   cursor: pointer;
   display: flex;
   text-align: center;
   align-items: center;
+  place-content: center;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
@@ -261,6 +262,7 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
+  margin-right: 2vw;
 }
 
 .backButton:hover {
