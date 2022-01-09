@@ -265,14 +265,14 @@ export default {
 #podiumSecond {
   width: 100%;
   height: 19vh;
-  background-color: saddlebrown;
+  background-color: #A09181;
   place-content: center;
   border-top-left-radius: 15%;
 }
 #podiumFirst {
   width: 100%;
   height: 25vh;
-  background-color: saddlebrown;
+  background-color: #A09181;
   place-content: center;
   border-top-left-radius: 8%;
   border-top-right-radius: 8%;
@@ -280,7 +280,7 @@ export default {
 #podiumThird {
   width: 100%;
   height: 16vh;
-  background-color: saddlebrown;
+  background-color: #A09181;
   place-content: center;
   border-top-right-radius: 15%;
 }

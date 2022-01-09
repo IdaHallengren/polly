@@ -172,29 +172,30 @@ export default {
 <style scoped>
 
 .styleYourPoints{
-
-  height: 7.2vh;
-  font-size: 1.5em;
+  height: 7.5vh;
+  font-size: 1.5vw;
   font-family: AppleGothic,sans-serif;
   font-weight: bold;
   position: center;
   margin-top: 5%;
+  margin-right: 10%;
 
 }
 
 .showPoints{
-  height: 7.2vh;
-  font-size: 1.5em;
+  height: 7.5vh;
+  font-size: 1.5vw;
   font-family: AppleGothic,sans-serif;
   font-weight: bold;
   position: center;
   margin-top: 15%;
+  margin-right: 10%;
 }
 
 .wrapper{
   display: grid;
   grid-template-rows: 90%;
-  grid-template-columns: 80% 20%;
+  grid-template-columns: 78% 22%;
 }
 
 #slides {
@@ -275,9 +276,8 @@ export default {
 }
 
 #app {
-  position: absolute;
   right: 5%;
-  top: 15%;
+  margin-top: 20%;
 }
 
 .correctAnswer {
