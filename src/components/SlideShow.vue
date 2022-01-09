@@ -1,7 +1,7 @@
 <template>
 
 
-<div class="wrapper"      @drop="onDrop($event, questions)"
+<div class="drawAvatars" @drop="onDrop($event, questions)"
      @dragenter.prevent
      @dragover.prevent>
   <div id="slides" draggable="true" @dragstart="startDrag($event, questions)">
@@ -198,7 +198,7 @@ export default {
   margin-right: 10%;
 }
 
-.wrapper{
+.drawAvatars{
   display: grid;
   grid-template-rows: 90%;
   grid-template-columns: 78% 22%;

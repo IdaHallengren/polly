@@ -1,81 +1,70 @@
 
 <template>
 
-
-
+  <!-- Style for the background, Created by Chris Smith -->
   <div class="bg"></div>
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
 
-  <!--<div>
-    <Question v-bind:question="question"
-              v-on:answer="submitAnswer"/>
-
-  </div>-->
-
 <div v-if="!showGameStart">
-
-<div v-if="!showWaiting">
-  <button class="cancelButton" v-on:click="newPage('/')"><span class='text'>{{uiLabels.cancelButton}}</span>
-  </button>
-  <p class="fontSize"> {{uiLabels.pollId}} {{pollId}} </p>
-
-    <div v-show ="!showName">
-      <div class = "wrapperName">
-        <p class="fontSize">{{uiLabels.enterName}}</p>
-         <div>
-           <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" required>
-           <button class="okButton" v-on:click = "showName = !showName"><span class='text'>OK</span></button>
-         </div>
+  <div v-if="!showWaiting">
+    <button class="cancelButton" v-on:click="newPage('/')"><span class='buttonText'>{{uiLabels.cancelButton}}</span> </button>
+     <p class="fontSize"> {{uiLabels.pollId}} {{pollId}} </p>
+      <div v-show ="!showName">
+        <div class = "wrapperName">
+          <p class="fontSize">{{uiLabels.enterName}}</p>
+           <div>
+             <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" >
+             <button class="okButton" v-on:click = "showName = !showName"><span class='buttonText'>OK</span></button>
+           </div>
+        </div>
       </div>
-    </div>
 
-
-  <div id ="HideAvatars">
-    <div v-if = "showName">
-      <p class="fontSize">{{uiLabels.name}}{{participantName}} </p>
-
-        <section id="selectAvatar">
-          <p id="select"> {{uiLabels.avatar}}  </p>
-          <span > <img id="selectedAvatar" v-bind:src=this.participantImg alt="Avatar"> </span>
-        </section>
+<!-- Page for choosing avatars -->
+    <div>
+      <div v-if = "showName">
+        <p class="fontSize">{{uiLabels.name}}{{participantName}} </p>
+          <section id="selectAvatar">
+            <p id="selectYourAvatarText"> {{uiLabels.avatar}}  </p>
+            <span > <img id="selectedAvatar" v-bind:src=this.participantImg alt="Avatar"> </span>
+          </section>
 
       <div id="formsize">
         <form class = "form">
-          <div class = "wrapper">
-           <AvatarLoop v-for="avatar in Avatars"
-                  v-bind:avatar="avatar"
-                  v-bind:key="avatar.Name"
-                  v-on:participantImg="changeAvatar($event)"
-            />
+          <div class = "drawAvatars">
+             <AvatarLoop v-for="avatar in Avatars"
+                    v-bind:avatar="avatar"
+                    v-bind:key="avatar.Name"
+                    v-on:participantImg="changeAvatar($event)"
+             />
           </div>
         </form>
       </div>
 
         <div  v-on:click="showWaiting=true">
-        <button class="continueButton"  v-on:click="newPage('add')"><span class='text'>{{uiLabels.continueButton}}</span></button>
+        <button class="continueButton"  v-on:click="newPage('add')"><span class='buttonText'>{{uiLabels.continueButton}}</span></button>
         </div>
-      <button class = "backButton" v-on:click = "showName = !showName"><span class='text'>{{uiLabels.backButton}}</span></button>
+
+        <button class = "backButton" v-on:click = "showName = !showName"><span class='buttonText'>{{uiLabels.backButton}}</span></button>
+      </div>
+
     </div>
+  </div>
+
+<!-- Page for waitingroom -->
+  <div v-if="showWaiting">
+  <Waiting v-bind:participants="participants" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels"></Waiting>
+  <button class="cancelButton" v-on:click="deleteInfo('delete')" ><span class='buttonText'>{{uiLabels.cancelButton}}</span></button>
+
   </div>
 </div>
 
-<div v-if="showWaiting">
-
-  <Waiting v-bind:participants="participants" v-bind:pollId="pollId" v-bind:uiLabels="uiLabels"></Waiting>
-
-  <button class="cancelButton" v-on:click="deleteInfo('delete')" ><span class='text'>{{uiLabels.cancelButton}}</span></button>
-
-</div>
-</div>
-
+<!-- Poll starting-->
 <div v-if="showGameStart" class="pollTaking">
- 
  <SlideShow v-bind:questions="question.q"
             v-bind:answers="question.a"
             v-bind:pollId="pollId"
             v-bind:uiLabels="uiLabels"
-            index=1
             v-bind:questionMaster="questionMaster"
             v-bind:pointsForQuestion="question.pointsForQuestion"
             v-bind:timeForQuestion="question.timeForQuestion"
@@ -84,37 +73,20 @@
             v-bind:yourPoints="this.yourPoints"
             v-on:hasAnswerd="totalAnswered()"
             >
-<!--            v-bind:isClicked="this.isClicked"-->
  </SlideShow>
-<!--  <div> </div>-->
-<!--  <div class="pointsForQuestion">  Points for question is: {{question.pointsForQuestion}} </div>-->
 
-<!-- <div class="styleYourPoints"> {{ uiLabels.yourTotalPoints }} {{this.yourPoints}} </div>-->
-
-<!--  Type of question is: {{question.typeOfQuestion}} ,-->
-<!--  Time for question is: {{question.timeForQuestion}},-->
-<!--  Points for question are: {{question.pointsForQuestion}},-->
-<!--  The correct answer is: {{question.correctAnswer}}-->
-
-  <button class="cancelButton" v-on:click="leavePoll()"> <span class='text'>{{uiLabels.exitPoll}} </span></button>
-  </div>
-
-
+</div>
+  <button class="cancelButton" v-on:click="leavePoll()"> <span class='buttonText'>{{uiLabels.exitPoll}} </span></button>
 
 </template>
 
 <script>
-/*// @ is an alias to /src
-import Question from '@/components/Question.vue';*/
-
 import AvatarLoop from '../components/AvatarLoop.vue'
 import Waiting from '../components/Waiting.vue'
 import io from 'socket.io-client'
 import avatar from '../data/avatar.json'
 import SlideShow from "../components/SlideShow";
-
 const socket = io();
-
 
 export default {
   name: 'Poll',
@@ -123,45 +95,36 @@ export default {
     AvatarLoop,
     Waiting
   },
+
   data: function () {
     return {
-      Avatars: avatar,
       lang: "",
       uiLabels: {},
+      pollId: "inactive poll",
+      Avatars: avatar,
 
       //Participantinfo
+      participants: [],
       participantName: "",
       participantImg: "https://live.staticflickr.com/65535/51722209074_02d7aa466a_b.jpg",
       participantId: 0,
       totPoints:0,
-
+      
       //For hide and show
       showName: false,
       showID: false,
-/*      question: {
-        q: "",
-        a: []
-      },*/
-      pollId: "inactive poll",
       showWaiting: false,
-      participants: [],
       showGameStart: false,
-
-      fullPoll: {},
-      // allAnswers: [],
-      // questionNumber:0,
-      question:{},
+      endGame: false,
       questionMaster: false,
 
-       correctAnswer:[],
-       timeForQuestion: [],
-       pointsForQuestion: [],
-       infoQuestions:{},
-
-      endGame: false,
-
-      // pointsForPoll:[],
-
+      //Info about questions
+      fullPoll: {},
+      question:{},
+      correctAnswer:[],
+      timeForQuestion: [],
+      pointsForQuestion: [],
+      infoQuestions:{},
       yourPoints:0
     }
   },
@@ -172,13 +135,11 @@ export default {
     this.participantId=Math.floor(Math.random() * 1000);
 
     socket.emit('joinPoll', this.pollId)
-
-    socket.on("newQuestion", q =>
-    { this.question = q
-        }
-    )
-
     socket.emit("pageLoaded", this.lang);
+
+    socket.on("newQuestion", q => {
+      this.question = q
+    })
 
     socket.on("init", (labels) => {
       this.uiLabels = labels
@@ -189,16 +150,12 @@ export default {
     )
 
     socket.on('gameStart', (myBoolean) => {
-      console.log('SHOW GAME START')
         this.showGameStart= myBoolean
+    })
 
-        })
-
-    socket.on('endGame',(d)=>{
-      console.log('End Game Now')
+    socket.on('endGame',(d)=> {
       this.endGame= d
       this.$router.push(`/result/${this.pollId}/${this.lang}`)
-
     })
 
   },
@@ -209,7 +166,6 @@ export default {
     },
 
     pointsTot: function (event){
-      console.log('har vi fått poängen?', event)
       socket.emit( 'totPoints', {pollId: this.pollId,event: event, participantId: this.participantId})
       socket.on('pointsForQuestion', (d) => {
         this.participants=d
@@ -219,7 +175,6 @@ export default {
           }
         }
       })
-
     },
 
     totalAnswered: function(){
@@ -238,14 +193,17 @@ export default {
             participantName: this.participantName,
             participantImg: this.participantImg,
             totPoints: this.totPoints
-          },
-        },);
+          }
+        });
       }
-  },
+    },
 
     deleteInfo: function(){
     socket.emit('removeParticipant', {
-      pollId: this.pollId, participantImg: this.participantImg, participantName: this.participantName, participantId: this.participantId
+      pollId: this.pollId,
+      participantImg: this.participantImg,
+      participantName: this.participantName,
+      participantId: this.participantId
     })
       this.$router.push('/')
     },
@@ -253,16 +211,17 @@ export default {
     leavePoll: function (){
       this.$router.push('/')
     }
-}
+  }
 }
 </script>
 
 <style>
 
-.pollTaking{
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 80% 12% 8%;
+.fontSize{
+  font-size: 2.5vw;
+  font-weight: bold;
+  color: white;
+  font-family: AppleGothic,sans-serif;
 }
 
 .wrapperName{
@@ -281,7 +240,15 @@ export default {
   font-family: AppleGothic,sans-serif;
 }
 
-#select {
+#selectAvatar {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding-bottom: 1em;
+  position: relative;
+  width: 100%;
+}
+
+#selectYourAvatarText {
   position: relative;
   font-size: 2.5vw;
   font-weight: bold;
@@ -290,21 +257,6 @@ export default {
   top: -25%;
   left: 35%;
   font-family: AppleGothic,sans-serif;
-}
-
-.fontSize{
-  font-size: 2.5vw;
-  font-weight: bold;
-  color: white;
-  font-family: AppleGothic,sans-serif;
-}
-
-#selectAvatar {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  padding-bottom: 1em;
-  position: relative;
-  width: 100%;
 }
 
 #selectedAvatar {
@@ -316,7 +268,6 @@ export default {
   border-radius: 100%;
   position: relative;
   top: -10%;
-
 }
 
 #formsize {
@@ -325,7 +276,7 @@ export default {
   left: 25%
 }
 
-.wrapper{
+.drawAvatars{
   display:grid;
   width: 100%;
   grid-template-rows: 33% 33% 33%;
@@ -337,6 +288,12 @@ export default {
   padding-bottom: 2em;
   background-color: #D3D3D3;
   border: 0.3em solid white;
+}
+
+.pollTaking{
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 80% 12% 8%;
 }
 
 /* Personal altered buttons with source code from Chance Squires*/
@@ -354,11 +311,9 @@ export default {
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #EF6461;
-
-
 }
 
-.cancelButton .text {
+.cancelButton .buttonText {
   transform: translateX(20%);
   color: white;
   font-weight: bold;
@@ -385,10 +340,9 @@ export default {
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #5995ED;
-
 }
 
-.backButton .text {
+.backButton .buttonText {
   transform: translateX(30%);
   color: white;
   font-weight: bold;
@@ -413,7 +367,7 @@ export default {
   background: #558564;
 }
 
-.okButton .text {
+.okButton .buttonText {
   transform: translateX(50%);
   color: white;
   font-weight: bold;
@@ -441,7 +395,7 @@ export default {
   background: #558564;
 }
 
-.continueButton .text {
+.continueButton .buttonText {
   transform: translateX(40%);
   color: white;
   font-weight: bold;
@@ -453,14 +407,7 @@ export default {
   background: #1d823c;
 }
 
-
-
-
-
-
-
-/*testar ändra bakgrund även på Poll */
-
+/* Style for the background, Created by Chris Smith */
 .bg {
   animation:slide 23s ease-in-out infinite alternate;
   background-image: linear-gradient(-60deg, #c1b7f7 50%, #7496db 50%);
@@ -487,8 +434,5 @@ export default {
     transform:translateX(25%);
   }
 }
-
-
-
 
 </style>
