@@ -114,11 +114,7 @@ export default {
       showWaiting: false,
       showGameStart: false,
       endGame: false,
-
       questionMaster: false,
-
-
-
 
       //Info about questions
       fullPoll: {},
@@ -127,11 +123,6 @@ export default {
       timeForQuestion: [],
       pointsForQuestion: [],
       infoQuestions:{},
-
-
-
-      // pointsForPoll:[],
-
       yourPoints:0
     }
   },
@@ -142,13 +133,11 @@ export default {
     this.participantId=Math.floor(Math.random() * 1000);
 
     socket.emit('joinPoll', this.pollId)
-
-    socket.on("newQuestion", q =>
-    { this.question = q
-        }
-    )
-
     socket.emit("pageLoaded", this.lang);
+
+    socket.on("newQuestion", q => {
+      this.question = q
+    })
 
     socket.on("init", (labels) => {
       this.uiLabels = labels
@@ -159,16 +148,12 @@ export default {
     )
 
     socket.on('gameStart', (myBoolean) => {
-      console.log('SHOW GAME START')
         this.showGameStart= myBoolean
+    })
 
-        })
-
-    socket.on('endGame',(d)=>{
-      console.log('End Game Now')
+    socket.on('endGame',(d)=> {
       this.endGame= d
       this.$router.push(`/result/${this.pollId}/${this.lang}`)
-
     })
 
   },
@@ -179,7 +164,6 @@ export default {
     },
 
     pointsTot: function (event){
-      console.log('har vi fått poängen?', event)
       socket.emit( 'totPoints', {pollId: this.pollId,event: event, participantId: this.participantId})
       socket.on('pointsForQuestion', (d) => {
         this.participants=d
@@ -189,7 +173,6 @@ export default {
           }
         }
       })
-
     },
 
     totalAnswered: function(){
@@ -208,14 +191,17 @@ export default {
             participantName: this.participantName,
             participantImg: this.participantImg,
             totPoints: this.totPoints
-          },
-        },);
+          }
+        });
       }
-  },
+    },
 
     deleteInfo: function(){
     socket.emit('removeParticipant', {
-      pollId: this.pollId, participantImg: this.participantImg, participantName: this.participantName, participantId: this.participantId
+      pollId: this.pollId,
+      participantImg: this.participantImg,
+      participantName: this.participantName,
+      participantId: this.participantId
     })
       this.$router.push('/')
     },
@@ -223,16 +209,17 @@ export default {
     leavePoll: function (){
       this.$router.push('/')
     }
-}
+  }
 }
 </script>
 
 <style>
 
-.pollTaking{
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 80% 12% 8%;
+.fontSize{
+  font-size: 2.5vw;
+  font-weight: bold;
+  color: white;
+  font-family: AppleGothic,sans-serif;
 }
 
 .wrapperName{
@@ -251,6 +238,14 @@ export default {
   font-family: AppleGothic,sans-serif;
 }
 
+#selectAvatar {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding-bottom: 1em;
+  position: relative;
+  width: 100%;
+}
+
 #selectYourAvatarText {
   position: relative;
   font-size: 2.5vw;
@@ -262,21 +257,6 @@ export default {
   font-family: AppleGothic,sans-serif;
 }
 
-.fontSize{
-  font-size: 2.5vw;
-  font-weight: bold;
-  color: white;
-  font-family: AppleGothic,sans-serif;
-}
-
-#selectAvatar {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  padding-bottom: 1em;
-  position: relative;
-  width: 100%;
-}
-
 #selectedAvatar {
   place-content: center;
   grid-column: 2;
@@ -286,7 +266,6 @@ export default {
   border-radius: 100%;
   position: relative;
   top: -10%;
-
 }
 
 #formsize {
@@ -309,6 +288,12 @@ export default {
   border: 0.3em solid white;
 }
 
+.pollTaking{
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 80% 12% 8%;
+}
+
 /* Personal altered buttons with source code from Chance Squires*/
 .cancelButton {
   top: 0.5em;
@@ -324,8 +309,6 @@ export default {
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #EF6461;
-
-
 }
 
 .cancelButton .buttonText {
@@ -355,7 +338,6 @@ export default {
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #5995ED;
-
 }
 
 .backButton .buttonText {
@@ -423,14 +405,7 @@ export default {
   background: #1d823c;
 }
 
-
-
-
-
-
-
-/*testar ändra bakgrund även på Poll */
-
+/* Style for the background, Created by Chris Smith */
 .bg {
   animation:slide 23s ease-in-out infinite alternate;
   background-image: linear-gradient(-60deg, #c1b7f7 50%, #7496db 50%);
@@ -457,8 +432,5 @@ export default {
     transform:translateX(25%);
   }
 }
-
-
-
 
 </style>
