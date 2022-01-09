@@ -517,6 +517,7 @@ export default {
   height: 7%;
   cursor: pointer;
   display: flex;
+  justify-content: center;
   align-items: center;
   border: none;
   border-radius: 5px;
@@ -526,12 +527,12 @@ export default {
   position: fixed;
   bottom: 0.5em;
   right: 5em;
-
   transform: translateX(5%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
   font-family: AppleGothic,sans-serif;
+
 }
 
 .nextQuestion:hover {
@@ -555,6 +556,7 @@ export default {
 
 .labelsText{
   font-size: 2vw;
+
 }
 #chooseHeadline{
   font-size: 2.5vw;
@@ -901,6 +903,8 @@ export default {
   background: #5995ED;
   left: 0.5em;
   margin-top:1.5em;
+
+
 }
 
 .noSelect .text {
@@ -909,6 +913,7 @@ export default {
   font-weight: bold;
   font-size: 1.2vw;
   font-family: AppleGothic,sans-serif;
+  margin-left: 1vw;
 
 }
 

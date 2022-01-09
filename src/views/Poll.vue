@@ -95,8 +95,9 @@
 <!--  Points for question are: {{question.pointsForQuestion}},-->
 <!--  The correct answer is: {{question.correctAnswer}}-->
 
+  <button class="cancelButton" v-on:click="leavePoll()"> <span class='text'>{{uiLabels.exitPoll}} </span></button>
+  </div>
 
-</div>
 
 
 </template>
@@ -242,6 +243,10 @@ export default {
       pollId: this.pollId, participantImg: this.participantImg, participantName: this.participantName, participantId: this.participantId
     })
       this.$router.push('/')
+    },
+
+    leavePoll: function (){
+      this.$router.push('/')
     }
 }
 }
@@ -341,18 +346,21 @@ export default {
 
 /* Personal altered buttons with source code from Chance Squires*/
 .cancelButton {
-  position: fixed;
   top: 0.5em;
   right: 0.5em;
-  width: 6%;
+  width: 6vw;
   height: 6%;
   cursor: pointer;
-  display: flex;
   align-items: center;
+  display: flex;
+  justify-content: center;
+  position: fixed;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #EF6461;
+
+
 }
 
 .cancelButton .text {
@@ -361,6 +369,7 @@ export default {
   font-weight: bold;
   font-size: 1.2vw;
   font-family: AppleGothic,sans-serif;
+  margin-right: 1.8vw;
 }
 
 .cancelButton:hover {
@@ -372,7 +381,7 @@ export default {
   position: fixed;
   bottom: 0.5em;
   left: 0.5em;
-  width: 7%;
+  width: 5vw;
   height: 6%;
   cursor: pointer;
   display: flex;
@@ -381,6 +390,7 @@ export default {
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
   background: #5995ED;
+
 }
 
 .backButton .text {
@@ -397,7 +407,7 @@ export default {
 
 /* Personal altered buttons with source code from Chance Squires*/
 .okButton {
-  width: 5vw;
+  width: 4.6vw;
   height: 8vh;
   cursor: pointer;
   display: flex;

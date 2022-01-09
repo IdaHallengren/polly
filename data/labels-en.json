@@ -25,6 +25,7 @@
 	"enterName": "Enter your name",
 	"pollId": "Poll-Id: ",
 	"name": "Name: ",
+	"exitPoll": "Leave",
 	"avatar": "Choose your avatar: ",
 	"cancelButton": "Cancel",
 	"backButton": "Back",

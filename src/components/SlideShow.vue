@@ -214,7 +214,7 @@ export default {
 }
 
 .selectedAnswer:hover{
-  background: green;
+  background: #57A0D3;
 }
 
 .answerLayout{
@@ -269,7 +269,7 @@ export default {
 }
 
 .correctAnswer {
-  background-color: green;
+  background-color: #1d823c;
   font-weight: bold;
   font-size: xx-large;
   animation: blinker 0.5s linear;
@@ -279,7 +279,8 @@ export default {
 }
 
 .wrongAnswer {
-  background-color: red;
+
+  background-color: #ed3632;
   font-size: xx-large;
   border-radius: 1vw;
 }

@@ -250,10 +250,11 @@ body{
 
 /* Personal altered buttons with source code from Chance Squires*/
 .backButton{
-  width: 7%;
+  width: 5vw;
   height: 6%;
   cursor: pointer;
   display: flex;
+  text-align: center;
   align-items: center;
   border: none;
   border-radius: 5px;
