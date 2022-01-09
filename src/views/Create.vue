@@ -230,8 +230,8 @@
               >
   </SlideShow>
 
-  <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
-  <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('result')">View Result</button>
+  <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> {{uiLabels.nextQuestion}} </button>
+  <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('result')">{{uiLabels.viewResult}}</button>
 <!--  {{this.allQuestions}}-->
 <!--  {{this.timeForQuestions}}-->
 <!--  {{this.correctAnswers}}-->
