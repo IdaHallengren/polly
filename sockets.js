@@ -71,11 +71,17 @@ function sockets(io, socket, data) {
     io.to(d.pollId).emit('pointsForQuestion', data.getPoints(d.pollId, d.event, d.participantId))
   })
 
+
   socket.on('getAllParticipants', function(pollId){
     console.log('inne i socket wiho')
     io.to(pollId).emit('collectParticipants', data.getParticipants(pollId))
   })
 
+socket.on('hasAnswered', function(pollId){
+  console.log("kommer vi hit med svarande")
+  io.to(pollId).emit('aPersonHasAnswered', pollId)
+
+})
 }
 
 

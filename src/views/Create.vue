@@ -7,11 +7,6 @@
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 1efb60fb8c89d4fe937b320232820e0b304b9192
 <div v-show="letsPlayButton">
   <div v-show="startPoll">
 
@@ -246,6 +241,8 @@
              v-bind:pointsForQuestion="pointsForQuestions[questionNumber]"
              v-bind:timeForQuestion="timeForQuestions[questionNumber]"
              v-bind:correctAnswer="correctAnswers[questionNumber]"
+             v-bind:totalParticipantsAnswered="this.totalParticipantsAnswered"
+             v-bind:participantsLength="this.participantsLength"
 
               >
   </SlideShow>
@@ -324,8 +321,14 @@ export default {
       correctIndex:0,
 
       endgame: true,
+
       drag: false,
-      pointsForPoll:[]
+
+      pointsForPoll:[],
+
+      totalParticipantsAnswered: 0,
+      participantsLength:0
+
     }
   },
 
@@ -354,9 +357,20 @@ export default {
 
         })
 
-    socket.on('participantsAdded', (myParticipant) =>
-        this.participants = myParticipant
+    socket.on('participantsAdded', (myParticipant) => {
+          this.participants = myParticipant
+          this.participantsLength = this.participants.length
+        }
     )
+
+    socket.on('aPersonHasAnswered', (pollId)=>{
+      console.log("create med antal svarande")
+      if(this.pollId===pollId){
+      this.totalParticipantsAnswered+=1
+        console.log("create kommer något", this.totalParticipantsAnswered)
+      }
+
+    })
 
   },
 
@@ -446,6 +460,7 @@ export default {
     },
 
     nextQuestion: function () {
+      this.totalParticipantsAnswered=0
       this.questionNumber++;
       socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
       socket.emit('removeButtons', {pollId: this.pollId, isClicked: this.isClicked})

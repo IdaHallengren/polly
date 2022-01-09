@@ -39,6 +39,6 @@
 	"edit": "Edit",
 	"choose": "Choose:",
 	"PointsForThisQuestion":"Points for this question is:",
-	"yourTotalPoints": "Your total points are: "
-
+	"yourTotalPoints": "Your total points are: ",
+	"totalAnswered": "Total participants answered:"
 }

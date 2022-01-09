@@ -46,6 +46,8 @@
   <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
 
   <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
+
+  <div class="styleYourPoints" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
   </div>
 
 </div>
@@ -73,7 +75,9 @@ export default {
     timeForQuestion: Number,
     pointsForQuestion: Number,
     correctAnswer: Array,
-    yourPoints: Number
+    yourPoints: Number,
+    totalParticipantsAnswered: Number,
+    participantsLength: Number
 
   },
 
@@ -86,6 +90,7 @@ export default {
       isClicked:{},
       timePassed: 0,
       timerInterval: null,
+      length: 0
     }},
 
   watch: {
@@ -131,6 +136,7 @@ export default {
         this.answer = answer
         this.isClicked[this.questions] = true
         console.log("testar om svar kommer", this.answer)
+        this.$emit('hasAnswerd')
         if (this.answer === this.correctAnswer) {
           console.log("KORREKT SVAR")
           this.pointsCollected = this.pointsCollected + this.pointsForQuestion

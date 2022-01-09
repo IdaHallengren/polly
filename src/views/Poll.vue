@@ -82,6 +82,7 @@
             v-bind:correctAnswer="question.correctAnswer"
             v-on:pointsCollected="pointsTot($event)"
             v-bind:yourPoints="this.yourPoints"
+            v-on:hasAnswerd="totalAnswered()"
             >
 <!--            v-bind:isClicked="this.isClicked"-->
  </SlideShow>
@@ -218,6 +219,10 @@ export default {
         }
       })
 
+    },
+
+    totalAnswered: function(){
+      socket.emit('hasAnswered', this.pollId)
     },
 
     newPage: function(route) {
