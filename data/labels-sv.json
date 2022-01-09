@@ -40,5 +40,7 @@
 	"choose": "Välj:",
 	"PointsForThisQuestion": "Poäng för denna fråga är:",
 	"yourTotalPoints": "Din totalpoäng är: ",
-	"totalAnswered": "Antal deltagare som svarat:"
+	"totalAnswered": "Antal deltagare som svarat:",
+	"nextQuestion": "Nästa fråga",
+	"viewResult": "Visa resultat"
 }

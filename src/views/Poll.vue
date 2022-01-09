@@ -44,8 +44,10 @@
         <div  v-on:click="showWaiting=true">
         <button class="continueButton"  v-on:click="newPage('add')"><span class='buttonText'>{{uiLabels.continueButton}}</span></button>
         </div>
+
         <button class = "backButton" v-on:click = "showName = !showName"><span class='buttonText'>{{uiLabels.backButton}}</span></button>
       </div>
+
     </div>
   </div>
 
