@@ -7,7 +7,7 @@
 
 <div v-show="!letsPlayButton">
   <div v-show="!startPoll">
-    <button class="cancel" v-on:click="cancelPage"><span class='text'>{{uiLabels.cancelButton}}</span></button>
+    <button class="cancel" v-on:click="cancelPage"><span class='buttonText'>{{uiLabels.cancelButton}}</span></button>
   <div class="headlines">
     <div> {{uiLabels.overview}} </div>
     <div> {{uiLabels.presentation}} </div>
@@ -18,8 +18,9 @@
 
   <!-- Overview -->
       <div id="overview">
-          <button class="editDragAndDrop" v-on:click="dragAvailable()" v-bind:class="{'editDragAndDropDrag': drag, 'notDrag': !drag }">
-            <span class="ButtonText"> {{uiLabels.edit}}  </span>
+        <div v-if="drag" class="buttonText"> {{uiLabels.clickDrag}}</div>
+          <button class="dragFalse" v-on:click="dragAvailable()" v-bind:class="{'dragTrue': drag, 'dragFalse': !drag }">
+            <span class="buttonText"> {{uiLabels.edit}}  </span>
           </button>
 
 <!--   <draggable :list="fullPoll['questions']"
@@ -290,7 +291,10 @@ export default {
     },
 
     dragAvailable: function (){
-      this.drag = this.drag === false;
+      if( this.drag === false)
+        return this.drag = true
+      else
+        this.drag = false
     },
 
     createPoll: function () {
@@ -395,23 +399,16 @@ export default {
 <style>
 @import 'https://fonts.googleapis.com/css?family=Open+Sans&display=swap';
 
-.textDragInfo{
-  color: black;
-  font-weight: bold;
-  font-size: 1.5vw;
-  font-family: AppleGothic,sans-serif;
-  margin-top: 0.5vw;
-}
-.notDrag{
+.dragFalse{
   width: 20%;
   margin-left:70%;
   margin-top: 0.5em;
   position: relative;
   cursor: pointer;
-  background-color:lightslategray;
+  background-color: lightslategray;
   border-radius: 10%;
 }
-.editDragAndDrop{
+.dragTrue{
   width: 20%;
   margin-left:70%;
   margin-top: 0.5em;
@@ -421,7 +418,7 @@ export default {
   border-radius: 10%;
 }
 
-.editDragAndDrop .buttonText{
+.dragTrue .buttonText{
   transform: translateX(20%);
   color: white;
   font-weight: bold;
