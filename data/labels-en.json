@@ -25,6 +25,7 @@
 	"enterName": "Enter your name",
 	"pollId": "Poll-Id: ",
 	"name": "Name: ",
+	"exitPoll": "Leave",
 	"avatar": "Choose your avatar: ",
 	"cancelButton": "Cancel",
 	"backButton": "Back",
@@ -40,5 +41,7 @@
 	"choose": "Choose:",
 	"PointsForThisQuestion":"Points for this question is:",
 	"yourTotalPoints": "Your total points are: ",
-	"totalAnswered": "Total participants answered:"
+	"totalAnswered": "Total participants answered:",
+	"nextQuestion": "Next question",
+	"viewResult": "View result"
 }

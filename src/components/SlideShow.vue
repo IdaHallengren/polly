@@ -1,9 +1,6 @@
 <template>
 
-
-<div class="wrapper">
-
-
+<div class="drawAvatars">
   <div id="slides">
 
     <div v-show="overviewUser" class="overview">{{questions}}<br></div>
@@ -42,16 +39,17 @@
 
       </div>
     </div>
-  </div><div id="app" v-if="!overviewUser">
-    <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
-  <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
-
-  <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
-
-  <div class="styleYourPoints" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
   </div>
+  <div id="app" v-if="!overviewUser">
+    <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
+    <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
 
+    <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
+
+    <div class="styleYourPoints" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
+  </div>
 </div>
+
 </template>
 
 <script>
@@ -160,7 +158,6 @@ export default {
   position: center;
   margin-top: 5%;
   margin-right: 10%;
-
 }
 
 .showPoints{
@@ -173,7 +170,7 @@ export default {
   margin-right: 10%;
 }
 
-.wrapper{
+.drawAvatars{
   display: grid;
   grid-template-rows: 90%;
   grid-template-columns: 78% 22%;
@@ -208,7 +205,7 @@ export default {
 }
 
 .selectedAnswer:hover{
-  background: green;
+  background: #57A0D3;
 }
 
 .answerLayout{
@@ -237,7 +234,6 @@ export default {
 }
 
 .AnswerQuestionMasters{
-
   display: grid;
   margin-bottom: 15%;
   grid-template-columns: 50% 50%;
@@ -259,17 +255,16 @@ export default {
 }
 
 .correctAnswer {
-  background-color: green;
+  background-color: #1d823c;
   font-weight: bold;
   font-size: xx-large;
   animation: blinker 0.5s linear;
   animation-iteration-count: 3;
   border-radius: 1vw;
-
 }
 
 .wrongAnswer {
-  background-color: red;
+  background-color: #ed3632;
   font-size: xx-large;
   border-radius: 1vw;
 }

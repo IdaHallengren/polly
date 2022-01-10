@@ -1,54 +1,48 @@
 <template>
+
+<!-- Style for the background, Created by Chris Smith -->
   <div class="bg"></div>
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
 
 <main>
 
-<div id="langDiv">
+  <div id="langDiv">
     <img id="sweImg" src="../img/swe.jpg" v-on:click="switchToSwedishLanguage"/>
-
     <img id="engImg" src="../img/eng.jpg" v-on:click="switchToEnglishLanguage"/>
-</div>
-
-<div v-show="showStart">
-
-  <div id="wrapperHead">
-    <div id="header">
-
-      <img id="logo" src="../img/logo1.svg">
-      <div id="headerText">
-      <p style="font-size: 1.5vw;"> {{uiLabels.welcome}}</p>
-      <p style="font-size: 1vw;">{{uiLabels.welcomeEasy}}</p>
-      </div>
-    </div>
   </div>
 
-  <section id="wrapperButtons">
-
-    <button class="startButton" v-on:click="newPage('Create')">{{uiLabels.createPoll}}</button>
-
-    <button class="startButton" id="partButton" v-on:click = "showStart = !showStart">{{uiLabels.participatePoll}}</button>
-
-  </section>
-</div>
-
-<div v-if="!showStart">
-  <div v-show = "showId">
-    <div class = "wrapper1">
-      <label id="textFont">{{uiLabels.enterPollId}}</label>
-      <div >
-        <input v-on:keyup.enter="newPage('Poll')" v-model="pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
-
-        <button class="okButton" v-on:click="newPage('Poll')"><span class='text'> OK</span></button>
+  <div v-show="showStart">
+    <div id="wrapperHead">
+      <div id="header">
+        <img id="logo" src="../img/logo1.svg">
+        <div id="headerText">
+        <p style="font-size: 1.5vw;"> {{uiLabels.welcome}}</p>
+        <p style="font-size: 1vw;">{{uiLabels.welcomeEasy}}</p>
+        </div>
       </div>
     </div>
-    <button class = "backButton" v-on:click = "showStart = !showStart"><span class='text'>{{uiLabels.backButton}}</span></button>
+
+    <section id="wrapperButtons">
+      <button class="startButton" v-on:click="newPage('Create')">{{uiLabels.createPoll}}</button>
+      <button class="startButton" id="partButton" v-on:click = "showStart = !showStart">{{uiLabels.participatePoll}}</button>
+    </section>
   </div>
-</div>
+
+  <div v-if="!showStart">
+    <div v-show = "showId">
+      <div class = "wrapperPollId">
+        <label class="textFont">{{uiLabels.enterPollId}}</label>
+        <div>
+          <input v-on:keyup.enter="newPage('Poll')" v-model = "pollId" type="number" min="0" class= "PollId" required="required" name="PollId" placeholder="Poll-Id">
+          <button class="okButton" v-on:click="newPage('Poll')"><span class='buttonText'> OK</span></button>
+        </div>
+      </div>
+      <button class = "backButton" v-on:click = "showStart = !showStart"><span class='buttonText'>{{uiLabels.backButton}}</span></button>
+    </div>
+  </div>
 
 </main>
-
 </template>
 
 <script>
@@ -68,13 +62,16 @@ export default {
       showParticipateQuote: false
     }
   },
+
   created: function () {
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
     socket.emit('pageLoaded')
   },
+
   methods: {
+
     switchToSwedishLanguage: function() {
       if (this.lang === "en")
         this.lang = "sv"
@@ -89,7 +86,6 @@ export default {
 
     newPage: function(route) {
       if (route === 'Create'){
-
         this.pollId=Math.floor(Math.random() * 100000);
         this.$router.push(`/create/${this.pollId}/${this.lang}`)}
       else
@@ -100,6 +96,7 @@ export default {
 </script>
 
 <style>
+
 body{
   background-color: #317773;
 }
@@ -115,12 +112,16 @@ body{
   grid-row: 1;
 }
 
-#sweImg:hover{
-  width: 2.5em;
-  height: 2.5em;
+#sweImg{
+  position: absolute;
+  top: 0em;
+  right: 2.2em;
+  border-radius: 100%;
+  width: 2em;
+  height: 2em;
 }
 
-#engImg:hover{
+#sweImg:hover{
   width: 2.5em;
   height: 2.5em;
 }
@@ -134,18 +135,14 @@ body{
   height: 2em;
 }
 
-#sweImg{
-  position: absolute;
-  top: 0em;
-  right: 2.2em;
-  border-radius: 100%;
-  width: 2em;
-  height: 2em;
+#engImg:hover{
+  width: 2.5em;
+  height: 2.5em;
 }
 
-#logo{
-  height:80%;
-  width: 80%;
+#wrapperHead {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
 }
 
 #header{
@@ -155,6 +152,11 @@ body{
   color: white;
   grid-column: 2;
   grid-row: 1;
+}
+
+#logo{
+  height:80%;
+  width: 80%;
 }
 
 #headerText{
@@ -182,7 +184,6 @@ body{
   font-weight: bold;
   color: dimgrey;
   font-family: AppleGothic,sans-serif;
-
   background: white;
   border: 0.1em solid #1d72f0;
   box-shadow: 0.1em 0.1em 0 #5995ED,
@@ -200,6 +201,7 @@ body{
 .startButton:focus {
   outline: none;
 }
+
 #partButton{
   grid-column: 3;
   grid-row: 1;
@@ -218,7 +220,7 @@ body{
   background: #558564;
 }
 
-.okButton .text {
+.okButton .buttonText {
   transform: translateX(50%);
   color: white;
   font-weight: bold;
@@ -230,14 +232,14 @@ body{
   background: #1d823c;
 }
 
-#PollId{
+.PollId{
   width: 15vw;
   height: 7.2vh;
   font-size: larger;
   float:left;
 }
 
-.wrapper1{
+.wrapperPollId{
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: 50% 50%;
@@ -248,11 +250,13 @@ body{
 
 /* Personal altered buttons with source code from Chance Squires*/
 .backButton{
-  width: 7%;
+  width: 6vw;
   height: 6%;
   cursor: pointer;
   display: flex;
+  text-align: center;
   align-items: center;
+  place-content: center;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
@@ -263,23 +267,24 @@ body{
   left: 0.5em;
 }
 
-.backButton .text {
+.backButton .buttonText {
   transform: translateX(30%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
+  margin-right: 2vw;
 }
 
 .backButton:hover {
   background: #1d72f0;
 }
 
-#textFont{
+.textFont{
   font-size: xx-large;
   color: white;
 }
 
-/*Created by Chris Smith */
+ /*Style for the background, Created by Chris Smith */
 .bg {
   animation:slide 12s ease-in-out infinite alternate;
   background-image: linear-gradient(-60deg, #772D8B 50%, #e2725b 50%);
@@ -308,3 +313,4 @@ body{
 }
 
 </style>
+

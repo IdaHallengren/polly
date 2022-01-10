@@ -25,6 +25,7 @@
 	"enterName": "Skriv in ditt namn",
 	"pollId": "Poll-Id: ",
 	"name": "Namn: ",
+	"exitPoll": "Lämna",
 	"avatar": "Välj din figur: ",
 	"cancelButton": "Avbryt",
 	"backButton": "Tillbaka",
@@ -40,5 +41,7 @@
 	"choose": "Välj:",
 	"PointsForThisQuestion": "Poäng för denna fråga är:",
 	"yourTotalPoints": "Din totalpoäng är: ",
-	"totalAnswered": "Antal deltagare som svarat:"
+	"totalAnswered": "Antal deltagare som svarat:",
+	"nextQuestion": "Nästa fråga",
+	"viewResult": "Visa resultat"
 }

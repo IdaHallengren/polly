@@ -1,187 +1,120 @@
 <template>
 
+<!-- Style for the background, Created by Chris Smith -->
   <div class="bg"></div>
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
 
-<div v-show="letsPlayButton">
-  <div v-show="startPoll">
-
-    <div> </div>
-    <div> </div>
-    <button class="cancel" v-on:click="cancelPage">
-      <span class='text'>{{uiLabels.cancelButton}}</span>
-    </button>
-
+<div v-show="!letsPlayButton">
+  <div v-show="!startPoll">
+    <button class="cancel" v-on:click="cancelPage"><span class='text'>{{uiLabels.cancelButton}}</span></button>
   <div class="headlines">
     <div> {{uiLabels.overview}} </div>
     <div> {{uiLabels.presentation}} </div>
     <div> {{uiLabels.editQuestion}}</div>
   </div>
 
-  <div class="wrapper">
+    <div class="createPoll">
 
-    <div id="overview">
-
-        <div v-if="drag" class="textDragInfo">{{uiLabels.clickDrag }}</div>
-
-          <button class="editDragAndDrop" v-on:click="dragAvailable()"
-               v-bind:class="{'editDragAndDropDrag': drag, 'notDrag': !drag }">
-            <span class="text"> {{uiLabels.edit}}  </span>
+  <!-- Overview -->
+      <div id="overview">
+          <button class="editDragAndDrop" v-on:click="dragAvailable()" v-bind:class="{'editDragAndDropDrag': drag, 'notDrag': !drag }">
+            <span class="ButtonText"> {{uiLabels.edit}}  </span>
           </button>
 
-<!--      <draggable :list="fullPoll['questions']"
+<!--   <draggable :list="fullPoll['questions']"
                  @start="drag = true"
                  @end="drag = false"
                  :move="detectMove"
                  item-key="questionNumber"
-      >
-
+        >
         <template #item="{}">-->
-
-
-       <SlideShow class="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
-                   v-bind:key="question"
-                   v-bind:questions="fullPoll['questions'][i].q"
-                   v-bind:answers="fullPoll['questions'][i].a"
-                   v-bind:pollId="pollId"
-                   v-bind:uiLabels="uiLabels"
-                   v-bind:questionMaster="questionMaster"
-                   v-bind:overviewUser="overviewUser"
-       >
-
-      </SlideShow>
-
-<!--</template>
-
-</draggable>-->
-
-    </div>
-
-    <div id="presentation" >
-      <div>
-      </div>
-      <br>
-      <br>
-
-      <div></div>
-      <div></div>
-
-    <div>
-<!--      {{uiLabels.question}}:-->
-
-      <textarea class="questionInput"   v-model="question" :placeholder= "'Write your question here'" ></textarea>
-
-
-
-    <p class="marginPresentation"> </p> <!--This is to put the whitespace between the question and the answers-->
-
-
-    <div class="answers" >
-
-        <br>
-<!--        {{ uiLabels.answers }}-->
-
-        <div>
-          <div class="answerBox">
-          <span v-for="(answer, i) in answers"
-               v-bind:key="'answer'+i">
-
-              {{answerOptions[i]}}
-        <input v-model="answers[i]"
-               class="answersStyle"
+          <SlideShow class="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
+                      v-bind:key="question"
+                      v-bind:questions="fullPoll['questions'][i].q"
+                      v-bind:answers="fullPoll['questions'][i].a"
+                      v-bind:pollId="pollId"
+                      v-bind:uiLabels="uiLabels"
+                      v-bind:questionMaster="questionMaster"
+                      v-bind:overviewUser="overviewUser"
           >
-          </span>
-          </div>
-
-                    <div>
-
-                      <button v-if="answers.length > 1" v-on:click="removeAnswer" class="icon-btn add-btn">
-                        <span class="btn-txt">{{ uiLabels.removeAlternative }}</span>
-                      </button>
-
-                      <button v-if="answers.length < 4" v-on:click="addAnswer" class="icon-btn add-btn" >
-                        <span class="add-icon"></span>
-                        <span class="btn-txt">{{ uiLabels.addAlternative }}</span>
-                      </button>
-                    </div>
-                    <br>
-                  </div>
-              <div>
-
-                <span class="correctAnswer">{{ uiLabels.correctAnswer }}:</span> <br>
-                <label v-for="(answer, i) in answers" v-bind:key="'answer' + i" class="correctAnswer">
-                  <input type="radio" name="test" v-bind:id="answer" v-bind:value="i" v-model="correctIndex" >
-                  {{answerOptions[i]}}<br> </label>
-            <!--    {{correctIndex}}-->
-
-  </div>
-        <br>
-      <div>
-<!--        <button v-on:click="addQuestion">Add question</button>-->
-<!--        <input type="number" v-model="questionNumber">-->
-<!--        <button v-on:click="runQuestion">Run question</button>-->
-<!--        {{data}}-->
+          </SlideShow>
+      <!--   </template>
+       </draggable>-->
       </div>
+
+  <!-- Presentation -->
+      <div id="presentation">
+        <div>
+          <textarea class="questionInput" v-model="question" :placeholder= "'Write your question here'" ></textarea>
+          <div class="answers" >
+            <br>
+            <div>
+              <div class="answerBox">
+                <span v-for="(answer, i) in answers" v-bind:key="'answer'+i">
+                  {{answerOptions[i]}}
+                  <input v-model="answers[i]" class="answersStyle">
+                </span>
+              </div>
+              <div>
+                <button v-if="answers.length > 1" v-on:click="removeAnswer" class="icon-btn add-btn">
+                  <span class="btn-txt">{{ uiLabels.removeAlternative }}</span>
+                </button>
+                <button v-if="answers.length < 4" v-on:click="addAnswer" class="icon-btn add-btn" >
+                  <span class="add-icon"></span><span class="btn-txt">{{ uiLabels.addAlternative }}</span>
+                </button>
+              </div>
+              <br>
+            </div>
+            <div>
+              <span class="correctAnswer">{{ uiLabels.correctAnswer }}:</span> <br>
+              <label v-for="(answer, i) in answers" v-bind:key="'answer' + i" class="correctAnswer">
+                <input type="radio" name="test" v-bind:id="answer" v-bind:value="i" v-model="correctIndex" >
+                {{answerOptions[i]}}
+                <br>
+              </label>
+            </div>
+            <br>
+          </div>
+        </div>
+    </div>
+
+  <!-- Edit question -->
+      <div id="editQuestion">
+        <div id="chooseHeadline"> {{uiLabels.choose}} </div>
+          <div id="v-model-select-time" class="timeForQuestion">
+            <label class="labelsText">{{uiLabels.chooseTimeForQuestion }} </label>
+            <br>
+            <select v-model="timeForQuestion" style="width: 30%">
+              <option v-for="index in 10" :key="index" v-bind:value="5*index" > {{5*index}} </option>
+            </select>
+          </div>
+        <div id="v-model-select-points" class="pointsForQuestion">
+          <label class="labelsText"> {{ uiLabels.choosePointsForQuestion}}</label>
+          <br>
+          <select v-model="pointsForQuestion" style="width: 30%" >
+            <option v-for="index in 6" :key="index" v-bind:value="5*index"> {{5*index}} </option>
+          </select>
+        </div>
+
+        <button v-on:click="removeSlide"  class="removeSlides"><span class="buttonText"> {{ uiLabels.removeSlide }} </span></button>
+        <button v-on:click="addSlide" class="addSlides" ><span class="buttonText"> {{ uiLabels.addSlide }} </span> </button>
+
+        <div v-on:click= "startPoll= !startPoll" >
+          <button class="continue" v-on:click="createPoll"><span class="buttonText">{{ uiLabels.createPoll }}</span></button>
+        </div>
+      </div>
+
+      <button class="noSelect" v-on:click="cancelPage"><span class="buttonText"> {{ uiLabels.backButton }} </span></button>
     </div>
   </div>
-<!--    <router-link v-bind:to="'/result/'+pollId">Check result</router-link>-->
-  </div>
-  <div id="editQuestion">
-    <br>
-    <span id="chooseHeadline"> {{uiLabels.choose}} </span>
 
-    <div id="v-model-select-time" class="timeForQuestion">
-      <label class="labelsText">{{uiLabels.chooseTimeForQuestion }} </label>
-      <br>
-
-      <select v-model="timeForQuestion" style="width: 30%">
-        <option v-for="index in 10" :key="index" v-bind:value="5*index" > {{5*index}} </option>
-
-      </select>
-
-<!--       <span> Selected: {{ timeForQuestion }}</span>-->
-    </div>
-
-    <div id="v-model-select-points" class="pointsForQuestion">
-      <label class="labelsText"> {{ uiLabels.choosePointsForQuestion}}</label>
-      <br>
-      <select v-model="pointsForQuestion" style="width: 30%" >
-        <option v-for="index in 6" :key="index" v-bind:value="5*index"> {{5*index}} </option>
-      </select>
-    </div>
-
-
-    <button v-on:click="removeSlide"  class="removeSlides">
-      <span class="text"> {{ uiLabels.removeSlide }} </span>
-    </button>
-    <button v-on:click="addSlide" class="addSlides" >
-      <span class="text"> {{ uiLabels.addSlide }} </span> </button>
-
-    <div v-on:click= "startPoll= !startPoll" >
-      <button class="continue" v-on:click="createPoll">
-        <span class='text'>{{ uiLabels.createPoll }}</span>
-      </button>
-    </div>
-  </div>
-
-    <button class="noSelect" v-on:click="cancelPage">
-      <span class='text'> {{ uiLabels.backButton }} </span>
-    </button>
-  </div>
-
-<!--  Poll link:-->
-<!--  <input type="text" v-model="pollId">-->
-</div>
-
-
-<!--  NEXT PAGE  -->
-  <div v-show="!startPoll" class="wrapperWaitRoom">
+<!--  Waitingroom -->
+  <div v-show="startPoll" class="wrapperWaitRoom">
     <div> </div>
     <div>
-      <button class="cancel" v-on:click="cancelPage"><span class='text'>{{uiLabels.cancelButton}}</span></button>
+      <button class="cancel" v-on:click="cancelPage"><span class="buttonText">{{uiLabels.cancelButton}}</span></button>
     </div>
-
     <div>
       <div class="pollIdStyle">
         PollId: {{pollId}}
@@ -194,39 +127,31 @@
       </div>
     </div>
 
-
     <div>
       <p class="waitingroomHeadline"> {{ uiLabels.waitingRoom }}</p>
       <form class = "waitingRoom">
         <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
           <span v-if="participants.length>0">
-          <img class="participants"
-            :src="participant.participantImg">
-        <br>
-          {{participant.participantName}}
-            </span>
+            <img class="participants" :src="participant.participantImg">
+            <br>
+            {{participant.participantName}}
+          </span>
         </div>
       </form>
     </div>
 
     <div>
-      <button class="noSelect" v-on:click="startPoll=!startPoll">
-        <span class='text'> {{ uiLabels.backButton }} </span>
-      </button>
+      <button class="noSelect" v-on:click="startPoll=!startPoll"><span class="buttonText"> {{ uiLabels.backButton }} </span></button>
     </div>
 
     <div v-on:click="letsPlayButton=!letsPlayButton , overviewUser=!overviewUser  ">
-      <button class="continue" v-on:click="letsPlay">
-        <span class='text'> {{ uiLabels.letsPlay }} </span>
-      </button>
+      <button class="continue" v-on:click="letsPlay"><span class="buttonText"> {{ uiLabels.letsPlay }} </span></button>
     </div>
-    </div>
+  </div>
 </div>
-<!--  {{fullPoll["timeForQuestion"]}}-->
-<!--NEXT PAGE-->
 
-<div v-if="letsPlayButton === false" class="layoutQuestionmaster">
-
+<!-- Starting poll -->
+<div v-if="letsPlayButton === true" class="layoutQuestionmaster">
   <SlideShow class="overviewSlideShow"
              v-bind:questions="fullPoll['questions'][questionNumber].q"
              v-bind:answers="fullPoll['questions'][questionNumber].a"
@@ -239,22 +164,12 @@
              v-bind:timeForQuestion="timeForQuestions[questionNumber]"
              v-bind:correctAnswer="correctAnswers[questionNumber]"
              v-bind:totalParticipantsAnswered="this.totalParticipantsAnswered"
-             v-bind:participantsLength="this.participantsLength"
-
-              >
+             v-bind:participantsLength="this.participantsLength">
   </SlideShow>
 
-  <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> Next question </button>
-  <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('result')">View Result</button>
-<!--  {{this.allQuestions}}-->
-<!--  {{this.timeForQuestions}}-->
-<!--  {{this.correctAnswers}}-->
-<!--  {{this.pointsForQuestions}}-->
-
-
-
+  <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> {{uiLabels.nextQuestion}} </button>
+  <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('result')">{{uiLabels.viewResult}}</button>
 </div>
-
 
 </template>
 
@@ -265,7 +180,6 @@ import io from 'socket.io-client';
 import SlideShow from "../components/SlideShow.vue";
 //import draggable from "vuedraggable";
 const socket = io();
-
 
 export default {
   name: 'Create',
@@ -279,50 +193,48 @@ export default {
   data: function () {
     return {
       lang: "",
-      pollId: "",
-      question: "",
-      presentation: "",
-      answers: ["", ""],
-      slides: {},
-      questionNumber: 0,
-      data: {},
       uiLabels: {},
+      pollId: "",
+      data: {},
+      drag: false,
+
+      //One question with answers
+      question: "",
+      answers: ["", ""],
+      correctIndex:0,
+      questionNumber: 0,
+
+      //Info about questions
       timeForQuestion: 20,
       pointsForQuestion: 5,
       timeForQuestions:[],
       pointsForQuestions:[],
-
-      showAnswerButton: true,
-      startPoll: true,
-      size: 300,
-      letsPlayButton: true,
-      fullPoll: {},
-
-      number: 1,
-      activeQuestion: {},
+      correctAnswers:[],
+      pointsForPoll:[],
       allQuestions:[],
-      participants: [],
-      participantName: "",
-      participantImg: "",
+      fullPoll: {},
       answerOptions: ['A','B','C','D'],
 
-      selectedAnswer: "",
-      correctAnswers:[],
-
+      //Hide and show
+      showAnswerButton: true,
+      startPoll: false,
+      letsPlayButton: false,
       showGameStart: true,
+      endgame: true,
 
       // For the SlideShow
       questionMaster: true,
       overviewUser: true,
 
-      correctIndex:0,
+      //QR-code
+      size: 300,
 
-      endgame: true,
+      //Info about participants
+      participants: [],
+      participantName: "",
+      participantImg: "",
 
-      drag: false,
-
-      pointsForPoll:[],
-
+      //Participants answering
       totalParticipantsAnswered: 0,
       participantsLength:0
 
@@ -378,15 +290,10 @@ export default {
     },
 
     dragAvailable: function (){
-      if(this.drag === false){
-        this.drag = true
-      }
-      else
-        this.drag = false
+      this.drag = this.drag === false;
     },
 
     createPoll: function () {
-      // this.addQuestion();
       if(this.question!==""){
         this.addSlide()
         socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
@@ -442,7 +349,6 @@ export default {
       this.pointsForQuestions.push(this.pointsForQuestion)
       this.correctAnswers.push(this.answers[this.correctIndex])
       console.log(this.answers[this.correctIndex])
-      // this.selectedAnswer=""
       this.addQuestion()
       this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
       socket.emit('getPoll', this.pollId)
@@ -467,7 +373,6 @@ export default {
       socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
       this.allQuestions.pop();
       this.questionNumber--;
-      // socket.emit("dataUpdate", {questionNumber: this.questionNumber});
       this.runQuestion();
       socket.emit('getPoll', this.pollId)
     },
@@ -506,7 +411,7 @@ export default {
   background-color:lightslategray;
   border-radius: 10%;
 }
-.editDragAndDropDrag{
+.editDragAndDrop{
   width: 20%;
   margin-left:70%;
   margin-top: 0.5em;
@@ -516,7 +421,7 @@ export default {
   border-radius: 10%;
 }
 
-.editDragAndDrop .text{
+.editDragAndDrop .buttonText{
   transform: translateX(20%);
   color: white;
   font-weight: bold;
@@ -536,7 +441,7 @@ export default {
   margin-bottom: 0.5em;
 }
 
-.removeSlides .text{
+.removeSlides .buttonText{
   transform: translateX(20%);
   color: white;
   font-weight: bold;
@@ -559,10 +464,9 @@ export default {
   background: lightslategray;
   margin-bottom: 0.5em;
   margin-left: 0.5em;
-
 }
 
-.addSlides .text{
+.addSlides .buttonText{
   transform: translateX(20%);
   color: white;
   font-weight: bold;
@@ -579,6 +483,7 @@ export default {
   height: 7%;
   cursor: pointer;
   display: flex;
+  justify-content: center;
   align-items: center;
   border: none;
   border-radius: 5px;
@@ -588,7 +493,6 @@ export default {
   position: fixed;
   bottom: 0.5em;
   right: 5em;
-
   transform: translateX(5%);
   color: white;
   font-weight: bold;
@@ -604,7 +508,6 @@ export default {
   display: grid;
   grid-template-columns: 95% 5%;
   grid-template-rows: auto;
-
 }
 
 .waitingroomHeadline{
@@ -620,6 +523,7 @@ export default {
 }
 #chooseHeadline{
   font-size: 2.5vw;
+  margin-top: 5%;
 }
 
 .noSelect{
@@ -628,7 +532,7 @@ export default {
   left: 0.5em;
 }
 
-.wrapper{
+.createPoll{
   display: grid;
   grid-template-rows: 100%;
   grid-template-columns: 25% 50% 25%;
@@ -677,6 +581,8 @@ export default {
   white-space: pre-wrap;
   font-family: Tahoma, sans-serif;
   border-radius: 5%;
+  margin-top: 5%;
+  margin-bottom: 30%;
 }
 
 .marginPresentation{
@@ -693,7 +599,6 @@ export default {
   font-size: 2vw;
   margin-bottom: 30%;
 }
-
 
 .answers{
   font-size: 1.5vw;
@@ -891,13 +796,12 @@ export default {
   right: 0.5em;
 }
 
-.cancel .text {
+.cancel .buttonText {
   transform: translateX(20%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
   font-family: AppleGothic,sans-serif;
-
 }
 
 .cancel:hover {
@@ -919,16 +823,14 @@ export default {
   position: fixed;
   bottom: 0.5em;
   right:0.5em;
-
 }
 
-.continue .text {
+.continue .buttonText {
   transform: translateX(5%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
   font-family: AppleGothic,sans-serif;
-
 }
 
 .continue:hover {
@@ -950,21 +852,17 @@ export default {
   margin-top:1.5em;
 }
 
-.noSelect .text {
+.noSelect .buttonText {
   transform: translateX(34%);
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
   font-family: AppleGothic,sans-serif;
-
+  margin-left: 1vw;
 }
 
 .noSelect:hover {
   background: #1d72f0;
-}
-
-.selectRightAnswer:hover{
-
 }
 
 /*testar ändra bakgrund även på create */
@@ -1003,6 +901,5 @@ export default {
     transform: translateY(-1.5vh);
   }
 }
-
 
 </style>

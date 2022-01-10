@@ -1,5 +1,5 @@
 <template>
-<div class="wrapper">
+<div class="drawAvatars">
 
 
   <div class="bar" v-for="(item, key) in data" v-bind:key="key">
@@ -51,7 +51,7 @@ export default {
   background-color:yellow;
 }
 
-.wrapper {
+.drawAvatars {
   padding:3em;
 }
 </style>
