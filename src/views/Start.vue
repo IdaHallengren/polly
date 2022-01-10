@@ -3,8 +3,6 @@
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
 
-
-
 <main>
 
 <div id="langDiv">
@@ -28,11 +26,10 @@
 
   <section id="wrapperButtons">
 
-    <button class="startButton" v-on:click="newPage('Create')" @mouseover="showCreateQuote = true" @mouseleave="showCreateQuote = false">{{uiLabels.createPoll}}</button>
-    <p v-show="showCreateQuote" id="createQuote">Hey mate, create!</p>
+    <button class="startButton" v-on:click="newPage('Create')">{{uiLabels.createPoll}}</button>
 
-    <button class="startButton" id="partButton" v-on:click = "showStart = !showStart" @mouseover="showParticipateQuote = true" @mouseleave="showParticipateQuote = false">{{uiLabels.participatePoll}}</button>
-    <p v-show="showParticipateQuote" id="participateQuote">Don't hate, participate!</p>
+    <button class="startButton" id="partButton" v-on:click = "showStart = !showStart">{{uiLabels.participatePoll}}</button>
+
   </section>
 </div>
 
@@ -103,23 +100,6 @@ export default {
 </script>
 
 <style>
-
-#participateQuote{
-  grid-row: 1;
-  grid-column: 4;
-  font-weight: bold;
-  font-size: 2.2vw;
-  font-family: Brush Script MT,cursive;
-}
-
-#createQuote{
-  grid-row: 1;
-  grid-column: 1;
-  font-weight: bold;
-  font-size: 2.2vw;
-  font-family: Brush Script MT,cursive;
-}
-
 body{
   background-color: #317773;
 }
@@ -326,6 +306,5 @@ body{
     transform:translateX(25%);
   }
 }
-
 
 </style>

@@ -54,7 +54,7 @@ questions: Array,
     }
   },
   watch: {
-    question: {
+    questions: {
       immediate: true,
       deep: true,
       handler: function () {

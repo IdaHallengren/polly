@@ -3,6 +3,7 @@
 
 <div class="wrapper">
 
+
   <div id="slides">
 
     <div v-show="overviewUser" class="overview">{{questions}}<br></div>
@@ -54,14 +55,12 @@
 </template>
 
 <script>
- // import io from 'socket.io-client'
  import Timer from "../components/Timer";
- // const socket = io();
 
 export default {
   name: "SlideShow",
    components: {
-       Timer
+       Timer,
    },
 
   props: {
@@ -77,7 +76,7 @@ export default {
     correctAnswer: Array,
     yourPoints: Number,
     totalParticipantsAnswered: Number,
-    participantsLength: Number
+    participantsLength: Number,
 
   },
 

@@ -1,6 +1,3 @@
-
-
-
 <template>
 
   <div class="bg"></div>
@@ -33,14 +30,15 @@
             <span class="text"> {{uiLabels.edit}}  </span>
           </button>
 
-      <draggable :list="fullPoll['questions']"
+<!--      <draggable :list="fullPoll['questions']"
                  @start="drag = true"
                  @end="drag = false"
                  :move="detectMove"
                  item-key="questionNumber"
       >
 
-        <template #item="{}">
+        <template #item="{}">-->
+
 
        <SlideShow class="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
                    v-bind:key="question"
@@ -50,14 +48,13 @@
                    v-bind:uiLabels="uiLabels"
                    v-bind:questionMaster="questionMaster"
                    v-bind:overviewUser="overviewUser"
-                   draggable="true"
-        >
+       >
 
       </SlideShow>
 
-</template>
+<!--</template>
 
-</draggable>
+</draggable>-->
 
     </div>
 
@@ -266,7 +263,7 @@ import QrcodeVue from 'qrcode.vue'
 //import DragDrop from '../components/DragDrop.vue'
 import io from 'socket.io-client';
 import SlideShow from "../components/SlideShow.vue";
-import draggable from "vuedraggable";
+//import draggable from "vuedraggable";
 const socket = io();
 
 
@@ -275,8 +272,8 @@ export default {
   components: {
     SlideShow,
     QrcodeVue,
-     //DragDrop,
-     draggable,
+    // DragDrop,
+    // draggable,
   },
 
   data: function () {
@@ -494,7 +491,7 @@ export default {
 @import 'https://fonts.googleapis.com/css?family=Open+Sans&display=swap';
 
 .textDragInfo{
-  color: white;
+  color: black;
   font-weight: bold;
   font-size: 1.5vw;
   font-family: AppleGothic,sans-serif;
@@ -613,7 +610,7 @@ export default {
 .waitingroomHeadline{
   padding-right: 10%;
   font-size: 2.5vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic, sans-serif;
   font-weight: bold;
   color: white;
 }
@@ -643,7 +640,7 @@ export default {
 #overview{
   border:solid;
   border-radius: 8%;
-  background-color: #1F7A8C;
+  background-color: #d3d0c4;
   overflow: scroll;
   height: 70%;
 }
@@ -651,14 +648,14 @@ export default {
 #presentation{
   border: solid;
   border-radius: 8%;
-  background-color: #1F7A8C;
+  background-color: #f0efeb;
   height: 70%
 }
 
 #editQuestion{
   border: solid;
   border-radius: 8%;
-  background-color: #1F7A8C;
+  background-color: #d3d0c4;
   height: 70%
 }
 
@@ -681,7 +678,6 @@ export default {
   font-family: Tahoma, sans-serif;
   border-radius: 5%;
 }
-
 
 .marginPresentation{
   margin-bottom: 28%;
@@ -719,14 +715,11 @@ export default {
 .correctAnswer{
   font-size: 1vw;
   margin-right: 4%;
-
 }
 
 .answerBox{
   display: grid;
   grid-template-columns: 50% 50%;
-
-
 }
 
 .overviewPresentationSlide{
@@ -777,7 +770,6 @@ export default {
   position: absolute;
   left: 40%;
   height: 80%;
-
 }
 
 .participants{
@@ -798,12 +790,7 @@ export default {
   overflow: hidden;
   position: relative;
   transition: width 0.2s ease-in-out;
-
 }
-
-
-
-
 
 .add-btn:hover {
   width: 120px;
@@ -818,7 +805,6 @@ export default {
   width: 10px;
   top: calc(50% - 2px);
   background: plum;
-
 }
 
 .add-btn::after {
@@ -848,7 +834,6 @@ export default {
   width: 4px;
   border-radius: 2px;
 }
-
 
 .add-btn:hover .btn-txt {
   opacity: 1;
@@ -982,13 +967,11 @@ export default {
 
 }
 
-
-
 /*testar ändra bakgrund även på create */
 
 .bg {
   animation:slide 23s ease-in-out infinite alternate;
-  background-image: linear-gradient(-60deg, #1a8489 50%, #5EAC9B 50%);
+  background-image: linear-gradient(-60deg, #BB8FCE 50%, #ea9c8c 50%);
   bottom:0;
   left:-50%;
   opacity:.5;
