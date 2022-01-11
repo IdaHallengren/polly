@@ -4,13 +4,14 @@
     <div v-for="(question, k) in questions"
          v-bind:class="['answer', {wiggle: currentlyMoving===question}]"
          draggable="true"
-         v-on:mousedown="prepareDrag(question)"
+         v-on:mousedown="prepareDrag(question,k)"
          v-on:dragstart="startDrag($event)"
          v-on:dragenter="updatePosition($event, k)"
          v-on:dragend="drop"
-         v-bind:key="question.questionNumber"
-         v-bind:ref="question.questionNumber">
-      {{ question.questionNumber }}
+         v-bind:key="'q'+ k"
+         v-bind:ref="'q'+ k">
+        {{question.q}} <ul><li v-for="a in question.a" :key="a"> {{a}}</li></ul>
+
     </div>
   </div>
 </template>
@@ -51,25 +52,17 @@ questions: Array,
         ]
       },*/
       currentlyMoving: null,
+      currentlyMovingIndex: 0
     }
+
   },
-  watch: {
-    questions: {
-      immediate: true,
-      deep: true,
-      handler: function () {
-        return this.question.sort((a,b) => a.order-b.order)
-      }
-    }
-  },
+
   methods: {
     updatePosition: function(e, d) {
       if (this.currentlyMoving != d) {
-        for (let a of this.question.a) {
-          if (e.target === this.$refs[a.questionNumber]) {
-            let tempOrder = a.order;
-            a.order = this.currentlyMoving.order
-            this.currentlyMoving.order = tempOrder
+        for (let i=0; i<this.questions.length; i++) {
+          if (e.target === this.$refs["q"+i]) {
+            this.$emit('reorder',{ startDragIndex: this.currentlyMovingIndex, newDragIndex: i})
             break;
           }
         }
@@ -78,8 +71,11 @@ questions: Array,
     drop: function() {
       this.currentlyMoving = null;
     },
-    prepareDrag: function (a) {
+    prepareDrag: function (a,i) {
+      console.log('prepare drag',a)
       this.currentlyMoving = a;
+      this.currentlyMovingIndex = i;
+
     },
     startDrag: function (e) {
       e.dataTransfer.setDragImage(new Image(), 0, 0);

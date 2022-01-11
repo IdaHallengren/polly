@@ -93,21 +93,16 @@ export default {
       secondPlace: 0,
       thirdPlace: 0,
       allParticipants: [],
-
-
-
       data: {
         pollId: ""
-
-
-
-      }
+      },
     }
   },
   created: function () {
     this.participantId =
     this.pollId = this.$route.params.id
     this.lang = this.$route.params.lang;
+
 
     socket.emit('joinPoll', this.pollId)
     socket.emit('getAllParticipants', this.pollId)
@@ -170,10 +165,13 @@ export default {
 
   },
 
+  mounted() {
+console.log('champions', audio)
+  const audio = new Audio ('/public/audio.mp3')
+  audio.play()
+},
 
   methods: {
-
-
 
     decideWinner: function () {
 

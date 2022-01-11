@@ -18,30 +18,17 @@
 
   <!-- Overview -->
       <div id="overview">
+        {{this.drag}}
         <div v-if="drag" class="buttonText"> {{uiLabels.clickDrag}}</div>
           <button class="dragFalse" v-on:click="dragAvailable()" v-bind:class="{'dragTrue': drag, 'dragFalse': !drag }">
             <span class="buttonText"> {{uiLabels.edit}}  </span>
           </button>
 
-<!--   <draggable :list="fullPoll['questions']"
-                 @start="drag = true"
-                 @end="drag = false"
-                 :move="detectMove"
-                 item-key="questionNumber"
-        >
-        <template #item="{}">-->
-          <SlideShow class="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
-                      v-bind:key="question"
-                      v-bind:questions="fullPoll['questions'][i].q"
-                      v-bind:answers="fullPoll['questions'][i].a"
-                      v-bind:pollId="pollId"
-                      v-bind:uiLabels="uiLabels"
-                      v-bind:questionMaster="questionMaster"
-                      v-bind:overviewUser="overviewUser"
-          >
-          </SlideShow>
-      <!--   </template>
-       </draggable>-->
+        <DragDrop v-bind:questions="fullPoll['questions']"
+                  v-on:reorder="reorder($event)">
+
+        </DragDrop>
+
       </div>
 
   <!-- Presentation -->
@@ -176,7 +163,7 @@
 
 <script>
 import QrcodeVue from 'qrcode.vue'
-//import DragDrop from '../components/DragDrop.vue'
+import DragDrop from '../components/DragDrop.vue'
 import io from 'socket.io-client';
 import SlideShow from "../components/SlideShow.vue";
 //import draggable from "vuedraggable";
@@ -187,7 +174,7 @@ export default {
   components: {
     SlideShow,
     QrcodeVue,
-    // DragDrop,
+     DragDrop,
     // draggable,
   },
 
@@ -264,6 +251,8 @@ export default {
 
     socket.on('fullPoll', (myPoll) =>
         {this.fullPoll = myPoll
+          setTimeout(function(){
+        this.ready=true}, 100)
 
         })
 
@@ -285,6 +274,15 @@ export default {
   },
 
   methods: {
+
+    reorder: function (event){
+      if(this.ready){
+      event.pollId = this.pollId
+      this.ready = false
+      socket.emit('reorder', event)
+      }
+
+    },
 
     detectMove: function (evt){
       console.log('Event', evt)
