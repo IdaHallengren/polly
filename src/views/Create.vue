@@ -165,11 +165,19 @@
              v-bind:timeForQuestion="timeForQuestions[questionNumber]"
              v-bind:correctAnswer="correctAnswers[questionNumber]"
              v-bind:totalParticipantsAnswered="this.totalParticipantsAnswered"
-             v-bind:participantsLength="this.participantsLength">
+             v-bind:participantsLength="this.participantsLength"
+             v-on:timePassed="totalTimeLeft($event)"
+  >
+
   </SlideShow>
 
-  <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1" v-on:click="nextQuestion"> {{uiLabels.nextQuestion}} </button>
-  <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1" v-on:click="finish('result')">{{uiLabels.viewResult}}</button>
+  <div v-if="this.timeLeft>1 ">
+  <button class="showResult" v-on:click="showCorrectAnswer() "> Show correct answer </button>
+  </div>
+  <div v-if="this.timeLeft===1">
+  <button  class="nextQuestion" v-if="this.questionNumber < allQuestions.length-1 " v-on:click="nextQuestion"> {{uiLabels.nextQuestion}} </button>
+  <button  class="nextQuestion" v-show="this.questionNumber === allQuestions.length-1 " v-on:click="finish('result')">{{uiLabels.viewResult}}</button>
+  </div>
 </div>
 
 </template>
@@ -222,6 +230,9 @@ export default {
       letsPlayButton: false,
       showGameStart: true,
       endgame: true,
+      timeLeft:30,
+      timePassed:2,
+
 
       // For the SlideShow
       questionMaster: true,
@@ -264,7 +275,6 @@ export default {
 
     socket.on('fullPoll', (myPoll) =>
         {this.fullPoll = myPoll
-
         })
 
     socket.on('participantsAdded', (myParticipant) => {
@@ -285,6 +295,20 @@ export default {
   },
 
   methods: {
+
+    totalTimeLeft: function(event){
+      console.log('testar tid kvar')
+      console.log(event)
+      if(this.timeLeft!=1) {
+        this.timeLeft = event
+      }
+    },
+
+    showCorrectAnswer: function(){
+      this.timeForQuestions[this.questionNumber]=0
+      this.timeLeft=1
+      socket.emit('showCorrectAnswer', this.pollId)
+    },
 
     detectMove: function (evt){
       console.log('Event', evt)
@@ -312,6 +336,7 @@ export default {
     },
 
     addQuestion: function () {
+
       socket.emit("addQuestion", {
         pollId: this.pollId,
         q: this.question,
@@ -367,10 +392,15 @@ export default {
     },
 
     nextQuestion: function () {
-      this.totalParticipantsAnswered=0
-      this.questionNumber++;
-      socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
-      socket.emit('removeButtons', {pollId: this.pollId, isClicked: this.isClicked})
+         this.timeLeft=30
+        // this.showCorrectAnswer()
+        this.timePassed=this.timeForQuestions-this.timeLeft
+        this.timeForQuestions[this.questionNumber]=0
+        this.timeForQuestions[this.questionNumber]=0
+        this.totalParticipantsAnswered=0
+        this.questionNumber++;
+        socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
+        socket.emit('removeButtons', {pollId: this.pollId, isClicked: this.isClicked})
     },
 
     removeSlide: function() {
@@ -475,6 +505,28 @@ export default {
   background:darkgreen;
 }
 
+.showResult{
+  width: 10%;
+  height: 7%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  background: #558564;
+  margin-left: 32em;
+  position: fixed;
+  bottom: 4em;
+  right:1em;
+  transform: translateX(5%);
+  color: white;
+  font-weight: bold;
+  font-size: 1.2vw;
+  font-family: AppleGothic,sans-serif;
+}
+
 .nextQuestion {
   width: 10%;
   height: 7%;
@@ -489,7 +541,7 @@ export default {
   margin-left: 32em;
   position: fixed;
   bottom: 0.5em;
-  right: 5em;
+  right: 1em;
   transform: translateX(5%);
   color: white;
   font-weight: bold;
@@ -582,9 +634,6 @@ export default {
   margin-bottom: 30%;
 }
 
-.marginPresentation{
-  margin-bottom: 28%;
-}
 
 .timeForQuestion{
   font-size: 2vw;

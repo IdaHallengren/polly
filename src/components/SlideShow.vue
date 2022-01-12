@@ -87,7 +87,8 @@ export default {
       isClicked:{},
       timePassed: 0,
       timerInterval: null,
-      length: 0
+      length: 0,
+
     }},
 
   watch: {
@@ -102,9 +103,11 @@ export default {
   computed: {
     timeLeft() {
       if(this.timeForQuestion - this.timePassed <= 0) {
+
         return 0
       }
       else
+        this.$emit('timePassed', this.timeForQuestion- this.timePassed)
         return this.timeForQuestion - this.timePassed
     }
   },

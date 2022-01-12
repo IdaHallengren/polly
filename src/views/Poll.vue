@@ -157,6 +157,13 @@ export default {
       this.$router.push(`/result/${this.pollId}/${this.lang}`)
     })
 
+    socket.on('setTimeToZero', (pollId)=>{
+      if(this.pollId===pollId){
+        this.question.timeForQuestion=0
+      }
+
+    })
+
   },
 
   methods: {

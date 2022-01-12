@@ -43,5 +43,6 @@
 	"yourTotalPoints": "Your total points are: ",
 	"totalAnswered": "Total participants answered:",
 	"nextQuestion": "Next question",
-	"viewResult": "View result"
+	"viewResult": "View result",
+	"ShowCorrectAnswer": "Show correct answer"
 }
