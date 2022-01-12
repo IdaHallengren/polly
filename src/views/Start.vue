@@ -321,7 +321,8 @@ export default {
 
 @media only screen and (max-width: 768px) {
   .okButton{
-    width: 11vw;
+    width: 13vw;
+    height: 9vh;
   }
   .backButton{
     width: 23vw;
@@ -336,22 +337,22 @@ export default {
   }
   #logo{
     margin-bottom: 0%;
-    margin-top: -15%;
+    margin-top: -10%;
     height: 90%;
     width: 90%;
   }
   #headerText{
-    margin-top: 0%;
+    margin-top: 5%;
   }
   #wrapperHead{
     grid-template-columns: 15% 70% 15%;
   }
   #wrapperButtons{
     margin-top: 20%;
-    grid-template-columns: 10% 40% 40% 10%;
+    grid-template-columns: 5% 45% 45% 5%;
   }
   .startButton {
-    width: 25vw;
+    width: 40vw;
     font-size: 4vw;
   }
   .welcomeText{

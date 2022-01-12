@@ -94,6 +94,7 @@ export default {
 
 .drawAvatars{
   display: grid;
+  grid-template-rows: 100%;
   grid-template-columns: 100%;
 }
 

@@ -133,11 +133,11 @@ export default {
     )
   },
 
-  mounted() {
-  },
+ /* mounted() {
+  },*/
 
-  methods: {
-  }
+ /* methods: {
+  }*/
 }
 
 </script>

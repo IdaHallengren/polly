@@ -9,7 +9,7 @@
 
           <div v-show="!questionMaster" >
             <div v-if="canClick()">
-              <button v-if="timePassed < timeForQuestion" id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">{{answer}}</button>
+              <button v-if="timePassed < timeForQuestion" class="selectedAnswer" v-on:click="saveAnswer(answer)">{{answer}}</button>
             </div>
             <div class="hasAnswered" v-if="!canClick() && timePassed < timeForQuestion">
               {{answer}}
@@ -77,7 +77,7 @@ export default {
     overviewUser: Boolean,
     timeForQuestion: Number,
     pointsForQuestion: Number,
-    correctAnswer: Array,
+    correctAnswer: String,
     yourPoints: Number,
     totalParticipantsAnswered: Number,
     participantsLength: Number,
@@ -239,7 +239,7 @@ export default {
 .correctAnswer {
   background-color: #1d823c;
   font-weight: bold;
-  font-size: xx-large;
+  font-size: 2vw;
   animation: blinker 0.5s linear;
   animation-iteration-count: 3;
   border-radius: 1vw;
@@ -247,13 +247,12 @@ export default {
 
 .wrongAnswer {
   background-color: #ed3632;
-  font-size: xx-large;
+  font-size: 2vw;
   border-radius: 1vw;
 }
 
 .hasAnswered{
   background-color: gray;
-  font-size: xx-large;
   border-radius: 1vw;
 }
 
@@ -296,6 +295,18 @@ export default {
   .showPoints{
     font-size: 3vw;
   }
+  .selectedAnswer{
+    height: 5vw;
+    width: 30vw;
+    font-size: 4vw;
+  }
+  .wrongAnswer {
+    font-size: 3.5vw;
+  }
+  .correctAnswer {
+    font-size: 3.5vw;
+  }
+
 
 
 }

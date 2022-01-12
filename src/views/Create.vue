@@ -116,7 +116,7 @@
         </div>
         <div id="QRCode">
           <!-- QR-code taken from: https://www.npmjs.com/package/qrcode.vue -->
-          <qrcode-vue :value="`http://localhost:8080/#/poll/${this.pollId}/${this.lang}`"  :size="300" >  </qrcode-vue>
+          <qrcode-vue :value="`https://pollifyquiz.herokuapp.com/#/poll/${this.pollId}/${this.lang}`"  :size="300" >  </qrcode-vue>
         </div>
       </div>
 
@@ -208,10 +208,7 @@ export default {
       //Info about questions
       timeForQuestion: 20,
       pointsForQuestion: 5,
-      timeForQuestions:[],
-      pointsForQuestions:[],
-      correctAnswers:[],
-      pointsForPoll:[],
+      correctAnswer: "",
       allQuestions:[],
       fullPoll: {},
       answerOptions: ['A','B','C','D'],
@@ -295,8 +292,9 @@ export default {
     },
 
     showCorrectAnswer: function(){
-      this.fullPoll['questions'][questionNumber].timeForQuestion=0
+      this.fullPoll['questions'][this.questionNumber].timeForQuestion = 0
       this.timeLeft=1
+      this.timePassed = 100
       socket.emit('showCorrectAnswer', this.pollId)
     },
 
@@ -340,7 +338,7 @@ export default {
       if(this.answers.length<4){
         this.answers.push("")}
       else
-        this.answers
+        this.answers()
     },
 
     removeAnswer: function () {
@@ -357,9 +355,6 @@ export default {
 
     addSlide: function () {
       this.allQuestions.push(this.question)
-      this.timeForQuestions.push(this.timeForQuestion)
-      this.pointsForQuestions.push(this.pointsForQuestion)
-      this.correctAnswers.push(this.answers[this.correctIndex])
       this.addQuestion()
       this.runQuestion()
       this.answers = ["", ""];
@@ -378,10 +373,10 @@ export default {
 
     nextQuestion: function () {
       this.timeLeft=0
-      this.timeForQuestions[this.questionNumber]=0
+      this.fullPoll['questions'][this.questionNumber].timeForQuestion = 0
       this.totalParticipantsAnswered=0
       this.questionNumber++;
-      socket.emit('nextQuestion',{pollId: this.pollId, questionNumber: this.questionNumber} )
+      socket.emit('nextQuestion', {pollId: this.pollId,questionNumber: this.questionNumber })
       socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
       socket.emit('removeButtons', {pollId: this.pollId, isClicked: this.isClicked})
     },
@@ -483,8 +478,6 @@ export default {
   height: 50%;
   width: 100%;
 }
-
-
 
 
 .removeSlides{
