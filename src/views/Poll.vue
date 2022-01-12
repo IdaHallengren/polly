@@ -11,7 +11,7 @@
      <p class="fontSize"> {{uiLabels.pollId}} {{pollId}} </p>
       <div v-show ="!showName">
         <div class = "wrapperName">
-          <p class="fontSize">{{uiLabels.enterName}}</p>
+          <label class="fontSize">{{uiLabels.enterName}}</label>
            <div>
              <input v-on:keyup.enter="showName = !showName" v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" >
              <button class="okButton" v-on:click = "showName = !showName"><span class='buttonText'>OK</span></button>
@@ -60,6 +60,7 @@
 
 <!-- Poll starting-->
 <div v-if="showGameStart" class="pollTaking">
+
  <SlideShow v-bind:questions="fullPoll['questions'][questionNumber].q"
             v-bind:answers="fullPoll['questions'][questionNumber].a"
             v-bind:pollId="pollId"
@@ -88,6 +89,7 @@ import io from 'socket.io-client'
 import avatar from '../data/avatar.json'
 import SlideShow from "../components/SlideShow";
 const socket = io();
+
 
 export default {
   name: 'Poll',
@@ -233,17 +235,17 @@ export default {
 <style>
 
 .fontSize{
-  font-size: 2.5vw;
   font-weight: bold;
+  font-size: xx-large;
   color: white;
   font-family: AppleGothic,sans-serif;
 }
 
 .wrapperName{
-  padding-top: 100px;
+  padding-top: 80px;
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 50% 50%;
+  grid-template-rows: auto;
   place-items: center;
 }
 
@@ -450,6 +452,64 @@ export default {
   100% {
     transform:translateX(25%);
   }
+}
+
+
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+   .pollTaking{
+     height: 100%;
+  }
+  .cancelButton{
+    width: 15vw;
+  }
+  .cancelButton .buttonText {
+    font-size: 3vw;
+    margin-right: 3vw;
+  }
+  .okButton{
+    width: 10vw;
+  }
+  .okButton .buttonText {
+    font-size: 3vw;
+  }
+  .backButton{
+    width: 20vw;
+  }
+  .backButton .buttonText {
+    font-size: 4vw;
+    margin-right: 5vw;
+  }
+
+  .continueButton{
+    width: 20vw;
+
+  }
+  .continueButton .buttonText {
+    font-size: 4vw;
+    margin-left: 1vw;
+  }
+
+  .fontSize{
+    font-size: 6vw;
+  }
+  #formSize{
+    width: 80%;
+    left: 10%;
+    margin-bottom: 15%;
+
+  }
+  #selectYourAvatarText{
+    font-size: 3vw;
+  }
+  #selectedAvatar{
+    width: 25%;
+  }
+  #selectedAvatar{
+    right: 20%;
+  }
+
 }
 
 </style>

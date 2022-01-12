@@ -17,8 +17,8 @@
       <div id="header">
         <img id="logo" src="../img/logo-2.svg">
         <div id="headerText">
-        <p style="font-size: 1.5vw;"> {{uiLabels.welcome}}</p>
-        <p style="font-size: 1vw;">{{uiLabels.welcomeEasy}}</p>
+        <p class="welcomeText"> {{uiLabels.welcome}}</p>
+        <p class="welcomeText2">{{uiLabels.welcomeEasy}}</p>
         </div>
       </div>
     </div>
@@ -161,12 +161,19 @@ export default {
   font-weight: bold;
   color: #603F83;
   padding-top: 10%;
+  font-family: AppleGothic,sans-serif;
 }
-
+.welcomeText{
+  font-size: 1.5vw;
+}
+.welcomeText2{
+  font-size: 1vw;
+}
 #wrapperButtons{
   display: grid;
   place-items: center;
   grid-template-columns: 25% 25% 25% 25%;
+  font-family: AppleGothic,sans-serif;
 }
 
 /* Personal altered buttons with source code from Chance Squires*/
@@ -220,8 +227,10 @@ export default {
   transform: translateX(50%);
   color: white;
   font-weight: bold;
-  font-size: 1.2vw;
+  font-size: 2vh;
   font-family: AppleGothic,sans-serif;
+
+
 }
 
 .okButton:hover {
@@ -269,6 +278,7 @@ export default {
   font-weight: bold;
   font-size: 1.2vw;
   margin-right: 2vw;
+
 }
 
 .backButton:hover {
@@ -276,6 +286,7 @@ export default {
 }
 
 .textFont{
+  font-weight: bold;
   font-size: xx-large;
   color: white;
 }
@@ -306,6 +317,53 @@ export default {
   100% {
     transform:translateX(25%);
   }
+}
+
+@media only screen and (max-width: 768px) {
+  .okButton{
+    width: 11vw;
+  }
+  .backButton{
+    width: 23vw;
+    height: 8%;
+    text-align: center;
+
+
+  }
+  .backButton .buttonText {
+    font-size: 6vw;
+    margin-right: 7vw;
+  }
+  #logo{
+    margin-bottom: 0%;
+    margin-top: -15%;
+    height: 90%;
+    width: 90%;
+  }
+  #headerText{
+    margin-top: 0%;
+  }
+  #wrapperHead{
+    grid-template-columns: 15% 70% 15%;
+  }
+  #wrapperButtons{
+    margin-top: 20%;
+    grid-template-columns: 10% 40% 40% 10%;
+  }
+  .startButton {
+    width: 25vw;
+    font-size: 4vw;
+  }
+  .welcomeText{
+    font-size: 5vw;
+  }
+  .welcomeText2{
+    font-size: 3vw;
+  }
+
+
+
+
 }
 
 </style>

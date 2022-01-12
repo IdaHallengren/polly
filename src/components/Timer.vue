@@ -158,4 +158,17 @@ transform: scaleX(-1);
    color: red;
  }
 
+@media only screen and (max-width: 768px) {
+  .base-timer {
+    width: 30vw;
+    height: 30vw;
+  }
+  .label {
+    width: 30vw;
+    height: 30vw;
+    font-size: 6vw;
+  }
+}
+
+
 </style>

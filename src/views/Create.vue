@@ -351,7 +351,7 @@ export default {
 
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
-      this.questionNumber++; //Added this to increase the number for the question
+      this.questionNumber++;
     },
 
     addSlide: function () {
@@ -360,9 +360,12 @@ export default {
       this.pointsForQuestions.push(this.pointsForQuestion)
       this.correctAnswers.push(this.answers[this.correctIndex])
       this.addQuestion()
-      this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
-      socket.emit('getPoll', this.pollId)
+      this.runQuestion()
       this.answers = ["", ""];
+      this.timeForQuestion=20;
+      this.pointsForQuestion=5;
+      this.correctIndex=0;
+      socket.emit('getPoll', this.pollId)
     },
 
     finish: function(route) {
@@ -374,8 +377,6 @@ export default {
 
     nextQuestion: function () {
       this.timeLeft=0
-      this.timePassed=this.timeForQuestions-this.timeLeft
-      this.timeForQuestions[this.questionNumber]=0
       this.timeForQuestions[this.questionNumber]=0
       this.totalParticipantsAnswered=0
       this.questionNumber++;
@@ -406,7 +407,6 @@ export default {
 </script>
 
 <style>
-@import 'https://fonts.googleapis.com/css?family=Open+Sans&display=swap';
 
 .dragFalse{
   width: 20%;
@@ -417,6 +417,7 @@ export default {
   background-color: lightslategray;
   border-radius: 10%;
 }
+
 .dragTrue{
   width: 20%;
   margin-left:70%;
@@ -434,6 +435,55 @@ export default {
   font-size: 1vw;
   font-family: AppleGothic,sans-serif;
 }
+
+.headlines{
+  margin-top: 1.5em;
+  display: grid;
+  grid-template-rows: 98% 2%;
+  grid-template-columns: 25% 50% 25%;
+  font-size: 3vw;
+  font-family: AppleGothic,sans-serif;
+  font-style: italic;
+}
+
+.createPoll{
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 25% 50% 25%;
+  grid-gap: 2px;
+  font-family: AppleGothic,sans-serif;
+  height: 45em;
+}
+
+#overview{
+  border:solid;
+  border-radius: 8%;
+  background-color: #d3d0c4;
+  overflow: scroll;
+  height: 70%;
+}
+
+#presentation{
+  border: solid;
+  border-radius: 8%;
+  background-color: #f0efeb;
+  height: 70%
+}
+
+#editQuestion{
+  border: solid;
+  border-radius: 8%;
+  background-color: #d3d0c4;
+  height: 70%
+}
+
+.overviewPresentationSlide{
+  height: 50%;
+  width: 100%;
+}
+
+
+
 
 .removeSlides{
   width: 40%;
@@ -549,6 +599,7 @@ export default {
 .labelsText{
   font-size: 2vw;
 }
+
 #chooseHeadline{
   font-size: 2.5vw;
   margin-top: 5%;
@@ -560,59 +611,17 @@ export default {
   left: 0.5em;
 }
 
-.createPoll{
-  display: grid;
-  grid-template-rows: 100%;
-  grid-template-columns: 25% 50% 25%;
-  grid-gap: 2px;
-  font-family: Georgia, cursive;
-  height: 45em;
-}
-
-#overview{
-  border:solid;
-  border-radius: 8%;
-  background-color: #d3d0c4;
-  overflow: scroll;
-  height: 70%;
-}
-
-#presentation{
-  border: solid;
-  border-radius: 8%;
-  background-color: #f0efeb;
-  height: 70%
-}
-
-#editQuestion{
-  border: solid;
-  border-radius: 8%;
-  background-color: #d3d0c4;
-  height: 70%
-}
-
-.headlines{
-  margin-top: 1.5em;
-  display: grid;
-  grid-template-rows: 98% 2%;
-  grid-template-columns: 25% 50% 25%;
-  font-size: 3vw;
-  font-family: Tahoma, sans-serif;
-  font-style: italic;
-}
-
 .questionInput{
   height: 7em;
   max-height: 10em;
   width: 90%;
   font-size: 1vw;
   white-space: pre-wrap;
-  font-family: Tahoma, sans-serif;
+  font-family: AppleGothic,sans-serif;
   border-radius: 5%;
   margin-top: 5%;
   margin-bottom: 30%;
 }
-
 
 .timeForQuestion{
   font-size: 2vw;
@@ -650,11 +659,6 @@ export default {
 .answerBox{
   display: grid;
   grid-template-columns: 50% 50%;
-}
-
-.overviewPresentationSlide{
-  height: 50%;
-  width: 100%;
 }
 
 .pollIdStyle{

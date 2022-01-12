@@ -3,69 +3,66 @@
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
 
-<!-- Confetti taken from:   https://vuejsexamples.com/an-explosion-of-confetti-as-a-vue-3-component/ -->
-
+  <!-- Confetti taken from: https://vuejsexamples.com/an-explosion-of-confetti-as-a-vue-3-component/ -->
   <ConfettiExplosion :particleCount="180"  :duration="10000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1000" :stageWidth="8000"  />
-
   <ConfettiExplosion class="styleConfettiRight" :particleCount="180"  :duration="10000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1000" :stageWidth="8000"  />
 
   <div>
-
     <br>
-<div class="showResult">
+    <div class="showResult">
 
-  <div id="secondPlace">
-    <img v-if="pointsForPoll.length > 1" id="secondImg" v-bind:src="allParticipants[secondPlace].participantImg">
-    <img v-else id="noSecondImg" v-bind:src="allParticipants[secondPlace].participantImg">
+      <div id="secondPlace">
+        <img v-if="pointsForPoll.length > 1" id="secondImg" v-bind:src="allParticipants[secondPlace].participantImg">
+        <img v-else id="noSecondImg" v-bind:src="allParticipants[secondPlace].participantImg">
 
-    <br>
-    <div id="podiumSecond">
-      <span class="nr2"> 2 </span>
-      <br>
-      <span v-if="pointsForPoll.length > 1" class="nr2"> {{allParticipants[secondPlace].participantName}} </span>
-
-    </div>
-    <span v-if="pointsForPoll.length > 1" class="nr2"> {{allParticipants[secondPlace].totPoints}} p </span>
-
-  </div>
-    <div id="firstPlace">
-      <img id="winnerImg" class="animated bounce" v-bind:src="allParticipants[firstPlace].participantImg">
-
-      <br>
-      <div id="podiumFirst">
-        <span class="nr1"> 1 <br> {{allParticipants[firstPlace].participantName}} </span>
-      </div>
-      <span class="nr1"> {{allParticipants[firstPlace].totPoints}} p </span>
-
-    </div>
-
-    <div id="thirdPlace">
-      <img v-if="pointsForPoll.length > 2" id="thirdImg" v-bind:src="allParticipants[thirdPlace].participantImg">
-      <img v-else id="noThirdImg" v-bind:src="allParticipants[thirdPlace].participantImg">
-      <br>
-      <div id="podiumThird">
-        <span class="nr3"> 3 </span>
         <br>
-        <span v-if="pointsForPoll.length > 2" class="nr3"> {{allParticipants[thirdPlace].participantName}} </span>
-      </div>
-      <span v-if="pointsForPoll.length > 2" class="nr3"> {{allParticipants[thirdPlace].totPoints}} p </span>
-    </div>
-</div>
+        <div id="podiumSecond">
+          <span class="nr2"> 2 </span>
+          <br>
+          <span v-if="pointsForPoll.length > 1" class="nr2"> {{allParticipants[secondPlace].participantName}} </span>
 
-  <div>
-  </div>
+        </div>
+        <span v-if="pointsForPoll.length > 1" class="nr2"> {{allParticipants[secondPlace].totPoints}} p </span>
+
+      </div>
+      <div id="firstPlace">
+        <img id="winnerImg" class="animated bounce" v-bind:src="allParticipants[firstPlace].participantImg">
+
+        <br>
+        <div id="podiumFirst">
+          <span class="nr1"> 1 <br> {{allParticipants[firstPlace].participantName}} </span>
+        </div>
+        <span class="nr1"> {{allParticipants[firstPlace].totPoints}} p </span>
+
+      </div>
+
+      <div id="thirdPlace">
+        <img v-if="pointsForPoll.length > 2" id="thirdImg" v-bind:src="allParticipants[thirdPlace].participantImg">
+        <img v-else id="noThirdImg" v-bind:src="allParticipants[thirdPlace].participantImg">
+        <br>
+        <div id="podiumThird">
+          <span class="nr3"> 3 </span>
+          <br>
+          <span v-if="pointsForPoll.length > 2" class="nr3"> {{allParticipants[thirdPlace].participantName}} </span>
+        </div>
+        <span v-if="pointsForPoll.length > 2" class="nr3"> {{allParticipants[thirdPlace].totPoints}} p </span>
+      </div>
+    </div>
+
+    <div>
+    </div>
   </div>
 
 
 
   <!-- Här ska vi ta in resultatbars -->
 
-<!--  <Bars v-bind:data="data"/>-->
+  <!--  <Bars v-bind:data="data"/>-->
 
-<!--  <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">-->
-<!--   <span> pointsForPoll[key]= participant.totPoints </span>-->
-<!--          -->
-<!--  </div>-->
+  <!--  <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">-->
+  <!--   <span> pointsForPoll[key]= participant.totPoints </span>-->
+  <!--          -->
+  <!--  </div>-->
 </template>
 
 <script>
@@ -74,6 +71,8 @@
 import io from 'socket.io-client';
 import ConfettiExplosion from "vue-confetti-explosion";
 const socket = io();
+
+
 
 export default {
   name: 'Result',
@@ -98,103 +97,48 @@ export default {
   },
   created: function () {
     this.participantId =
-    this.pollId = this.$route.params.id
+        this.pollId = this.$route.params.id
     this.lang = this.$route.params.lang;
 
 
     socket.emit('joinPoll', this.pollId)
     socket.emit('getAllParticipants', this.pollId)
     socket.on('collectParticipants', (d) => {
-      this.allParticipants = d
-      for (let i = 0; i < this.allParticipants.length; i++) {
-        this.pointsForPoll[i] = this.allParticipants[i].totPoints
-      }
-      for (let i = 0; i < this.pointsForPoll.length; i++
-      ) {
-        if (this.pointsForPoll[i] > this.pointsForPoll[this.firstPlace] || i === 0) {
-          this.thirdPlace = i
-          let tempSecond = this.secondPlace
-          this.thirdPlace = tempSecond
-          this.secondPlace = i
-          let tempFirst = this.firstPlace
-          this.secondPlace = tempFirst
-          this.firstPlace = i
-        } else if (this.pointsForPoll[i] <= this.pointsForPoll[this.firstPlace] && (this.pointsForPoll[i] > this.pointsForPoll[this.secondPlace]
-            || i === 1)) {
-          this.thirdPlace = i;
-          let tempSecond = this.secondPlace;
-          this.thirdPlace = tempSecond;
-          this.secondPlace = i;
-        } else if (this.pointsForPoll[i] <= this.pointsForPoll[this.secondPlace] && (this.pointsForPoll[i] >= this.pointsForPoll[this.thirdPlace]
-            || i === 2)) {
-          this.thirdPlace = i;
-        }
-      }
+          this.allParticipants = d
+          for (let i = 0; i < this.allParticipants.length; i++) {
+            this.pointsForPoll[i] = this.allParticipants[i].totPoints
+          }
+          for (let i = 0; i < this.pointsForPoll.length; i++
+          ) {
+            if (this.pointsForPoll[i] > this.pointsForPoll[this.firstPlace] || i === 0) {
+              this.thirdPlace = i
+              let tempSecond = this.secondPlace
+              this.thirdPlace = tempSecond
+              this.secondPlace = i
+              let tempFirst = this.firstPlace
+              this.secondPlace = tempFirst
+              this.firstPlace = i
+            } else if (this.pointsForPoll[i] <= this.pointsForPoll[this.firstPlace] && (this.pointsForPoll[i] > this.pointsForPoll[this.secondPlace]
+                || i === 1)) {
+              this.thirdPlace = i;
+              let tempSecond = this.secondPlace;
+              this.thirdPlace = tempSecond;
+              this.secondPlace = i;
+            } else if (this.pointsForPoll[i] <= this.pointsForPoll[this.secondPlace] && (this.pointsForPoll[i] >= this.pointsForPoll[this.thirdPlace]
+                || i === 2)) {
+              this.thirdPlace = i;
+            }
+          }
         }
     )
-
-    // socket.on("dataUpdate", (update) => {
-    //   this.data = update.a;
-    //   this.question = update.q;
-    // });
-    // socket.on("newQuestion", update => {
-    //   this.question = update.q;
-    //   this.data = {};
-    // })
-
-    /*    socket.on('pointsForQuestion', (d) => {
-      console.log('Have the points sent to result?');
-      this.participants = d;
-
-      for (let i = 0; i < this.participants.length; i++) {
-        this.pointsForPoll[i] = this.participants[i].totPoints
-      }
-      console.log('registerd points in list', this.pointsForPoll)
-      //Här måste vi nog skicka all info till socket för annars ligger det väl bara "lokalt"?
-      return this.pointsForPoll
-    })
-
-
-
-    socket.on('participantsAdded', (myParticipant) =>
-        this.participants = myParticipant
-    )*/
-
-
   },
 
   mounted() {
-console.log('champions', audio)
-  const audio = new Audio ('/public/audio.mp3')
-  audio.play()
-},
+  },
 
   methods: {
-
-    decideWinner: function () {
-
-      for (let i = 0; i < this.pointsForPoll.length; i++) {
-        if (this.pointsForPoll[i] > this.pointsForPoll[this.firstPlace] || i === 0) {
-          this.thirdPlace = i
-          let tempSecond = this.secondPlace
-          this.thirdPlace = tempSecond
-          this.secondPlace = i
-          let tempFirst = this.firstPlace
-          this.secondPlace = tempFirst
-          this.firstPlace = i
-        } else if (this.pointsForPoll[i] <= this.pointsForPoll[this.firstPlace] && (this.pointsForPoll[i] > this.pointsForPoll[this.secondPlace]
-            || i === 1)) {
-          this.thirdPlace = i;
-          let tempSecond = this.secondPlace;
-          this.thirdPlace = tempSecond;
-          this.secondPlace = i;
-        } else if (this.pointsForPoll[i] <= this.pointsForPoll[this.secondPlace] && (this.pointsForPoll[i] >= this.pointsForPoll[this.thirdPlace]
-            || i === 2)) {
-          this.thirdPlace = i;
-        }
-      }
-    }
-  }}
+  }
+}
 
 </script>
 
@@ -202,43 +146,44 @@ console.log('champions', audio)
 
 #winnerImg {
   border-radius: 100%;
-  width: 55%;
-  height: 40%;
+  width: 15vw;
+  height: 15vw;
   animation: bounce 0.7s infinite alternate;
 
 }
 #secondImg {
   border-radius: 100%;
-  width: 55%;
-  height: 40%;
+  width: 15vw;
+  height: 15vw;
   margin-top: 6vh;
 }
 #noSecondImg {
-  width: 55%;
-  height: 40%;
+  width: 15vw;
+  height: 15vw;
   margin-top: 6vh;
   visibility: hidden;
 }
 #noThirdImg {
-  width: 50%;
-  height: 40%;
+  width: 15vw;
+  height: 15vw;
   margin-top: 9vh;
   visibility: hidden;
 }
 
-
 #thirdImg{
   border-radius: 100%;
-  width: 55%;
-  height: 40%;
+  width: 15vw;
+  height: 15vw;
   margin-top: 9vh;
 }
 .showResult {
+  margin-top: 10%;
   display: grid;
   grid-template-columns: 20% 20% 20%;
   width: 100%;
   height: 60vh;
   place-content: center;
+  font-family: AppleGothic,sans-serif;
 }
 #secondPlace {
   place-content: center;
@@ -277,20 +222,23 @@ console.log('champions', audio)
 }
 .nr1{
   font-size: 5vh;
-  font-family: Damascus;
+  font-family: AppleGothic,sans-serif;
+  font-style: italic;
   color: gold;
   font-weight: bold;
 }
 
 .nr2 {
   font-size: 5vh;
-  font-family: Damascus;
+  font-family: AppleGothic,sans-serif;
+  font-style: italic;
   color: silver;
   font-weight: bold;
 }
 .nr3{
   font-size: 5vh;
-  font-family: Damascus;
+  font-family: AppleGothic,sans-serif;
+  font-style: italic;
   color: sandybrown;
   font-weight: bold;
   place-content: center;
@@ -338,6 +286,24 @@ console.log('champions', audio)
   to {
     transform: translateY(-5vh);
   }
+}
+
+@media only screen and (max-width: 768px) {
+  .nr1{
+    font-size: 5vw;
+  }
+
+  .nr2 {
+    font-size: 5vw;
+  }
+  .nr3{
+    font-size: 5vw;
+  }
+  .showResult{
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+  }
+ 
 }
 
 
