@@ -30,8 +30,17 @@
 
         </div>
 
-        <div v-show="questionMaster && !overviewUser" class="AnswerQuestionMasters">
-          {{answer}}
+        <div v-show="questionMaster && !overviewUser">
+          <div v-if="timePassed < timeForQuestion" class="AnswerQuestionMasters">
+            {{answer}}
+          </div>
+          <div v-if="answer === correctAnswer && timePassed >= timeForQuestion" class="correctAnswer">
+            {{answer}}
+          </div>
+          <div v-if="answer != correctAnswer && timePassed >= timeForQuestion" class="wrongAnswer">
+            {{answer}}
+          </div>
+
         </div>
         <div v-show="questionMaster && overviewUser" class="AnswerQuestionMasterOverview">
            {{answer}}
