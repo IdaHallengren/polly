@@ -230,9 +230,7 @@ export default {
       letsPlayButton: false,
       showGameStart: true,
       endgame: true,
-      timeLeft:30,
-      timePassed:2,
-
+      timeLeft:0,
 
       // For the SlideShow
       questionMaster: true,

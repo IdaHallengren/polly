@@ -97,10 +97,6 @@ export default {
 
 <style>
 
-body{
-  background-color: #317773;
-}
-
 #wrapperHead {
   display: grid;
   grid-template-columns: 33% 33% 33%;
