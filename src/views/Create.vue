@@ -570,7 +570,7 @@ export default {
   grid-template-rows: 100%;
   grid-template-columns: 25% 50% 25%;
   grid-gap: 2px;
-  font-family: Georgia, cursive;
+  font-family: AppleGothic,sans-serif;
   height: 45em;
 }
 
@@ -602,7 +602,7 @@ export default {
   grid-template-rows: 98% 2%;
   grid-template-columns: 25% 50% 25%;
   font-size: 3vw;
-  font-family: Tahoma, sans-serif;
+  font-family: AppleGothic,sans-serif;
   font-style: italic;
 }
 
@@ -612,7 +612,7 @@ export default {
   width: 90%;
   font-size: 1vw;
   white-space: pre-wrap;
-  font-family: Tahoma, sans-serif;
+  font-family: AppleGothic,sans-serif;
   border-radius: 5%;
   margin-top: 5%;
   margin-bottom: 30%;

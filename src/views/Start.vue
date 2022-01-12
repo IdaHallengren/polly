@@ -161,12 +161,14 @@ export default {
   font-weight: bold;
   color: #603F83;
   padding-top: 10%;
+  font-family: AppleGothic,sans-serif;
 }
 
 #wrapperButtons{
   display: grid;
   place-items: center;
   grid-template-columns: 25% 25% 25% 25%;
+  font-family: AppleGothic,sans-serif;
 }
 
 /* Personal altered buttons with source code from Chance Squires*/
@@ -229,6 +231,7 @@ export default {
 }
 
 .PollId{
+
   width: 15vw;
   height: 7.2vh;
   font-size: larger;
@@ -276,6 +279,7 @@ export default {
 }
 
 .textFont{
+  font-weight: bold;
   font-size: xx-large;
   color: white;
 }

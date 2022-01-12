@@ -241,6 +241,7 @@ export default {
   width: 100%;
   height: 60vh;
   place-content: center;
+  font-family: AppleGothic,sans-serif;
 }
 #secondPlace {
   place-content: center;
@@ -279,20 +280,23 @@ export default {
 }
 .nr1{
   font-size: 5vh;
-  font-family: Damascus;
+  font-family: AppleGothic,sans-serif;
+  font-style: italic;
   color: gold;
   font-weight: bold;
 }
 
 .nr2 {
   font-size: 5vh;
-  font-family: Damascus;
+  font-family: AppleGothic,sans-serif;
+  font-style: italic;
   color: silver;
   font-weight: bold;
 }
 .nr3{
   font-size: 5vh;
-  font-family: Damascus;
+  font-family: AppleGothic,sans-serif;
+  font-style: italic;
   color: sandybrown;
   font-weight: bold;
   place-content: center;
