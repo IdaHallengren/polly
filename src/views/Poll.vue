@@ -469,13 +469,14 @@ export default {
   }
   .cancelButton{
     width: 15vw;
+    height: 9vh;
   }
   .cancelButton .buttonText {
     font-size: 3vw;
     margin-right: 3vw;
   }
   .okButton{
-    width: 10vw;
+    width: 13vw;
   }
   .okButton .buttonText {
     font-size: 3vw;
