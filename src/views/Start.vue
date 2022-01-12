@@ -321,7 +321,8 @@ export default {
 
 @media only screen and (max-width: 768px) {
   .okButton{
-    width: 11vw;
+    width: 13vw;
+    height: 8vh;
   }
   .backButton{
     width: 23vw;
