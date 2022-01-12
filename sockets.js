@@ -80,8 +80,16 @@ function sockets(io, socket, data) {
 socket.on('hasAnswered', function(pollId){
   console.log("kommer vi hit med svarande")
   io.to(pollId).emit('aPersonHasAnswered', pollId)
-
 })
+
+  socket.on('reorder', function(d) {
+    data.reorder(d)
+    socket.emit('fullPoll', data.getPoll(d.pollId))
+  })
+
+  socket.on('showCorrectAnswer', function(pollId){
+    io.to(pollId).emit('setTimeToZero', pollId)
+  })
 }
 
 

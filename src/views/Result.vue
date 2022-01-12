@@ -53,8 +53,6 @@
 </div>
 
   <div>
-  Good work everybody! The result is.....
-
   </div>
   </div>
 
@@ -93,21 +91,16 @@ export default {
       secondPlace: 0,
       thirdPlace: 0,
       allParticipants: [],
-
-
-
       data: {
         pollId: ""
-
-
-
-      }
+      },
     }
   },
   created: function () {
     this.participantId =
     this.pollId = this.$route.params.id
     this.lang = this.$route.params.lang;
+
 
     socket.emit('joinPoll', this.pollId)
     socket.emit('getAllParticipants', this.pollId)
@@ -170,6 +163,11 @@ export default {
 
   },
 
+  mounted() {
+console.log('champions', audio)
+  const audio = new Audio ('/public/audio.mp3')
+  audio.play()
+},
 
   methods: {
 
@@ -240,6 +238,7 @@ export default {
   width: 100%;
   height: 60vh;
   place-content: center;
+  font-family: AppleGothic,sans-serif;
 }
 #secondPlace {
   place-content: center;
@@ -278,21 +277,23 @@ export default {
 }
 .nr1{
   font-size: 5vh;
-  font-family: Damascus;
+  font-family: AppleGothic,sans-serif;
+  font-style: italic;
   color: gold;
   font-weight: bold;
-
 }
 
 .nr2 {
   font-size: 5vh;
-  font-family: Damascus;
+  font-family: AppleGothic,sans-serif;
+  font-style: italic;
   color: silver;
   font-weight: bold;
 }
 .nr3{
   font-size: 5vh;
-  font-family: Damascus;
+  font-family: AppleGothic,sans-serif;
+  font-style: italic;
   color: sandybrown;
   font-weight: bold;
   place-content: center;
@@ -308,7 +309,7 @@ export default {
 /*Style taken from the same as in start*/
 .bg {
   animation:slide 23s ease-in-out infinite alternate;
-  background-image: linear-gradient(-60deg, #BB6372 50%, #79333D 50%);
+  background-image: linear-gradient(-60deg, #BB8FCE 50%, #ea9c8c 50%);
   bottom:0;
   left:-50%;
   opacity:.5;

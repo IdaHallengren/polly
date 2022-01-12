@@ -39,9 +39,10 @@
 	"correctAnswer": "Choose the correct answer",
 	"edit": "Edit",
 	"choose": "Choose:",
-	"PointsForThisQuestion":"Points for this question is:",
+	"PointsForThisQuestion":"Maximum points for this question is:",
 	"yourTotalPoints": "Your total points are: ",
 	"totalAnswered": "Total participants answered:",
 	"nextQuestion": "Next question",
-	"viewResult": "View result"
+	"viewResult": "View result",
+	"ShowCorrectAnswer": "Show correct answer"
 }
