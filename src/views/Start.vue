@@ -32,9 +32,9 @@
   <div v-if="!showStart">
     <div v-show = "showId">
       <div class = "wrapperPollId">
-        <label id="textFont">{{uiLabels.enterPollId}}</label>
+        <label class="textFont">{{uiLabels.enterPollId}}</label>
         <div>
-          <input v-model = "pollId" type="number" min="0" id = "PollId" required="required" name="PollId" placeholder="Poll-Id">
+          <input v-on:keyup.enter="newPage('Poll')" v-model = "pollId" type="number" min="0" class= "PollId" required="required" name="PollId" placeholder="Poll-Id">
           <button class="okButton" v-on:click="newPage('Poll')"><span class='buttonText'> OK</span></button>
         </div>
       </div>
@@ -57,7 +57,9 @@ export default {
       lang: "en",
       showStart: true,
       showId: true,
-      pollId: ""
+      pollId: "",
+      showCreateQuote: false,
+      showParticipateQuote: false
     }
   },
 
@@ -94,6 +96,15 @@ export default {
 </script>
 
 <style>
+
+body{
+  background-color: #317773;
+}
+
+#wrapperHead {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+}
 
 #langDiv{
   position: relative;
@@ -183,7 +194,6 @@ export default {
 }
 
 .startButton:hover {
-  /*box-shadow: 2em 0.25em 0 #317773, -2em -0.25em 0 #317773;*/
   background: lightskyblue;
   color: White;
 }
@@ -222,7 +232,7 @@ export default {
   background: #1d823c;
 }
 
-#PollId{
+.PollId{
   width: 15vw;
   height: 7.2vh;
   font-size: larger;
@@ -269,7 +279,7 @@ export default {
   background: #1d72f0;
 }
 
-#textFont{
+.textFont{
   font-size: xx-large;
   color: white;
 }
@@ -303,3 +313,4 @@ export default {
 }
 
 </style>
+

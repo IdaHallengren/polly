@@ -7,29 +7,41 @@
 
 <div v-show="!letsPlayButton">
   <div v-show="!startPoll">
-      <button class="cancel" v-on:click="cancelPage"><span class="buttonText">{{uiLabels.cancelButton}}</span></button>
-    <div class="headlines">
-      <div> {{uiLabels.overview}} </div>
-      <div> {{uiLabels.presentation}} </div>
-      <div> {{uiLabels.editQuestion}}</div>
-    </div>
+    <button class="cancel" v-on:click="cancelPage"><span class='buttonText'>{{uiLabels.cancelButton}}</span></button>
+  <div class="headlines">
+    <div> {{uiLabels.overview}} </div>
+    <div> {{uiLabels.presentation}} </div>
+    <div> {{uiLabels.editQuestion}}</div>
+  </div>
 
     <div class="createPoll">
 
   <!-- Overview -->
       <div id="overview">
-        <button class="editDragAndDrop"><span class="buttonText"> {{uiLabels.edit}}</span></button>
+        <div v-if="drag" class="buttonText"> {{uiLabels.clickDrag}}</div>
+          <button class="dragFalse" v-on:click="dragAvailable()" v-bind:class="{'dragTrue': drag, 'dragFalse': !drag }">
+            <span class="buttonText"> {{uiLabels.edit}}  </span>
+          </button>
 
-          <SlideShow id="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
-                     v-bind:key="question"
-                     v-bind:questions="fullPoll['questions'][i].q"
-                     v-bind:answers="fullPoll['questions'][i].a"
-                     v-bind:pollId="pollId"
-                     v-bind:uiLabels="uiLabels"
-                     v-bind:questionMaster="questionMaster"
-                     v-bind:overviewUser="overviewUser">
+<!--   <draggable :list="fullPoll['questions']"
+                 @start="drag = true"
+                 @end="drag = false"
+                 :move="detectMove"
+                 item-key="questionNumber"
+        >
+        <template #item="{}">-->
+          <SlideShow class="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
+                      v-bind:key="question"
+                      v-bind:questions="fullPoll['questions'][i].q"
+                      v-bind:answers="fullPoll['questions'][i].a"
+                      v-bind:pollId="pollId"
+                      v-bind:uiLabels="uiLabels"
+                      v-bind:questionMaster="questionMaster"
+                      v-bind:overviewUser="overviewUser"
+          >
           </SlideShow>
-
+      <!--   </template>
+       </draggable>-->
       </div>
 
   <!-- Presentation -->
@@ -164,15 +176,19 @@
 
 <script>
 import QrcodeVue from 'qrcode.vue'
+//import DragDrop from '../components/DragDrop.vue'
 import io from 'socket.io-client';
 import SlideShow from "../components/SlideShow.vue";
+//import draggable from "vuedraggable";
 const socket = io();
 
 export default {
   name: 'Create',
   components: {
     SlideShow,
-    QrcodeVue
+    QrcodeVue,
+    // DragDrop,
+    // draggable,
   },
 
   data: function () {
@@ -181,6 +197,7 @@ export default {
       uiLabels: {},
       pollId: "",
       data: {},
+      drag: false,
 
       //One question with answers
       question: "",
@@ -247,6 +264,7 @@ export default {
 
     socket.on('fullPoll', (myPoll) =>
         {this.fullPoll = myPoll
+
         })
 
     socket.on('participantsAdded', (myParticipant) => {
@@ -267,8 +285,19 @@ export default {
   },
 
   methods: {
+
+    detectMove: function (evt){
+      console.log('Event', evt)
+    },
+
+    dragAvailable: function (){
+      if( this.drag === false)
+        return this.drag = true
+      else
+        this.drag = false
+    },
+
     createPoll: function () {
-      // this.addQuestion();
       if(this.question!==""){
         this.addSlide()
         socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
@@ -287,6 +316,7 @@ export default {
         pollId: this.pollId,
         q: this.question,
         a: this.answers,
+        questionNumber: this.questionNumber,
         timeForQuestion: this.timeForQuestion,
         pointsForQuestion: this.pointsForQuestion,
         correctAnswer: this.answers[this.correctIndex]
@@ -322,9 +352,7 @@ export default {
       this.timeForQuestions.push(this.timeForQuestion)
       this.pointsForQuestions.push(this.pointsForQuestion)
       this.correctAnswers.push(this.answers[this.correctIndex])
-      console.log(this.correctIndex, this.answers, this.correctAnswers)
       console.log(this.answers[this.correctIndex])
-      // this.selectedAnswer=""
       this.addQuestion()
       this.runQuestion() //Added this so that we get the questionnumber, but it can be made easier
       socket.emit('getPoll', this.pollId)
@@ -349,7 +377,6 @@ export default {
       socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
       this.allQuestions.pop();
       this.questionNumber--;
-      // socket.emit("dataUpdate", {questionNumber: this.questionNumber});
       this.runQuestion();
       socket.emit('getPoll', this.pollId)
     },
@@ -372,7 +399,7 @@ export default {
 <style>
 @import 'https://fonts.googleapis.com/css?family=Open+Sans&display=swap';
 
-.editDragAndDrop{
+.dragFalse{
   width: 20%;
   margin-left:70%;
   margin-top: 0.5em;
@@ -381,8 +408,17 @@ export default {
   background-color: lightslategray;
   border-radius: 10%;
 }
+.dragTrue{
+  width: 20%;
+  margin-left:70%;
+  margin-top: 0.5em;
+  position: relative;
+  cursor: pointer;
+  background-color: orange;
+  border-radius: 10%;
+}
 
-.editDragAndDrop .buttonText{
+.dragTrue .buttonText{
   transform: translateX(20%);
   color: white;
   font-weight: bold;
@@ -425,7 +461,6 @@ export default {
   background: lightslategray;
   margin-bottom: 0.5em;
   margin-left: 0.5em;
-
 }
 
 .addSlides .buttonText{
@@ -460,7 +495,6 @@ export default {
   font-weight: bold;
   font-size: 1.2vw;
   font-family: AppleGothic,sans-serif;
-
 }
 
 .nextQuestion:hover {
@@ -471,13 +505,12 @@ export default {
   display: grid;
   grid-template-columns: 95% 5%;
   grid-template-rows: auto;
-
 }
 
 .waitingroomHeadline{
   padding-right: 10%;
   font-size: 2.5vw;
-  font-family: AppleGothic;
+  font-family: AppleGothic, sans-serif;
   font-weight: bold;
   color: white;
 }
@@ -508,7 +541,7 @@ export default {
 #overview{
   border:solid;
   border-radius: 8%;
-  background-color: #1F7A8C;
+  background-color: #d3d0c4;
   overflow: scroll;
   height: 70%;
 }
@@ -516,14 +549,14 @@ export default {
 #presentation{
   border: solid;
   border-radius: 8%;
-  background-color: #1F7A8C;
+  background-color: #f0efeb;
   height: 70%
 }
 
 #editQuestion{
   border: solid;
   border-radius: 8%;
-  background-color: #1F7A8C;
+  background-color: #d3d0c4;
   height: 70%
 }
 
@@ -535,7 +568,6 @@ export default {
   font-size: 3vw;
   font-family: Tahoma, sans-serif;
   font-style: italic;
-  /*font-weight: bold;*/
 }
 
 .questionInput{
@@ -550,8 +582,9 @@ export default {
   margin-bottom: 30%;
 }
 
-
-
+.marginPresentation{
+  margin-bottom: 28%;
+}
 
 .timeForQuestion{
   font-size: 2vw;
@@ -563,7 +596,6 @@ export default {
   font-size: 2vw;
   margin-bottom: 30%;
 }
-
 
 .answers{
   font-size: 1.5vw;
@@ -585,18 +617,14 @@ export default {
 .correctAnswer{
   font-size: 1vw;
   margin-right: 4%;
-
 }
 
 .answerBox{
   display: grid;
   grid-template-columns: 50% 50%;
-
-
 }
 
-
-#overviewPresentationSlide{
+.overviewPresentationSlide{
   height: 50%;
   width: 100%;
   margin: 1em;
@@ -644,7 +672,6 @@ export default {
   position: absolute;
   left: 40%;
   height: 80%;
-
 }
 
 .participants{
@@ -665,12 +692,7 @@ export default {
   overflow: hidden;
   position: relative;
   transition: width 0.2s ease-in-out;
-
 }
-
-
-
-
 
 .add-btn:hover {
   width: 120px;
@@ -685,7 +707,6 @@ export default {
   width: 10px;
   top: calc(50% - 2px);
   background: plum;
-
 }
 
 .add-btn::after {
@@ -715,7 +736,6 @@ export default {
   width: 4px;
   border-radius: 2px;
 }
-
 
 .add-btn:hover .btn-txt {
   opacity: 1;
@@ -779,7 +799,6 @@ export default {
   font-weight: bold;
   font-size: 1.2vw;
   font-family: AppleGothic,sans-serif;
-
 }
 
 .cancel:hover {
@@ -801,7 +820,6 @@ export default {
   position: fixed;
   bottom: 0.5em;
   right:0.5em;
-
 }
 
 .continue .buttonText {
@@ -810,7 +828,6 @@ export default {
   font-weight: bold;
   font-size: 1.2vw;
   font-family: AppleGothic,sans-serif;
-
 }
 
 .continue:hover {
@@ -830,8 +847,6 @@ export default {
   background: #5995ED;
   left: 0.5em;
   margin-top:1.5em;
-
-
 }
 
 .noSelect .buttonText {
@@ -841,24 +856,17 @@ export default {
   font-size: 1.2vw;
   font-family: AppleGothic,sans-serif;
   margin-left: 1vw;
-
 }
 
 .noSelect:hover {
   background: #1d72f0;
 }
 
-.selectRightAnswer:hover{
-
-}
-
-
-
 /*testar ändra bakgrund även på create */
 
 .bg {
   animation:slide 23s ease-in-out infinite alternate;
-  background-image: linear-gradient(-60deg, #1a8489 50%, #5EAC9B 50%);
+  background-image: linear-gradient(-60deg, #BB8FCE 50%, #ea9c8c 50%);
   bottom:0;
   left:-50%;
   opacity:.5;
@@ -890,6 +898,5 @@ export default {
     transform: translateY(-1.5vh);
   }
 }
-
 
 </style>

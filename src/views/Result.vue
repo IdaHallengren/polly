@@ -6,13 +6,11 @@
 <!-- Confetti taken from:   https://vuejsexamples.com/an-explosion-of-confetti-as-a-vue-3-component/ -->
 
   <ConfettiExplosion :particleCount="180"  :duration="10000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1000" :stageWidth="8000"  />
-  {{pollId}}
 
   <ConfettiExplosion class="styleConfettiRight" :particleCount="180"  :duration="10000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1000" :stageWidth="8000"  />
 
   <div>
-{{pointsForPoll}}
-    {{allParticipants[this.firstPlace]}}
+
     <br>
 <div class="showResult">
 
@@ -28,7 +26,6 @@
 
     </div>
     <span v-if="pointsForPoll.length > 1" class="nr2"> {{allParticipants[secondPlace].totPoints}} p </span>
-
 
   </div>
     <div id="firstPlace">
@@ -54,8 +51,6 @@
       <span v-if="pointsForPoll.length > 2" class="nr3"> {{allParticipants[thirdPlace].totPoints}} p </span>
     </div>
 </div>
-
-
 
   <div>
   Good work everybody! The result is.....

@@ -1,10 +1,7 @@
 <template>
 
-
-<div class="drawAvatars" @drop="onDrop($event, questions)"
-     @dragenter.prevent
-     @dragover.prevent>
-  <div id="slides" draggable="true" @dragstart="startDrag($event, questions)">
+<div class="drawAvatars">
+  <div id="slides">
 
     <div v-show="overviewUser" class="overview">{{questions}}<br></div>
 
@@ -42,31 +39,27 @@
 
       </div>
     </div>
-  </div><div id="app" v-if="!overviewUser">
-    <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
-  <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
-
-  <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
-
-  <div class="styleYourPoints" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
   </div>
+  <div id="app" v-if="!overviewUser">
+    <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
+    <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
 
+    <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
+
+    <div class="styleYourPoints" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
+  </div>
 </div>
+
 </template>
 
 <script>
- // import io from 'socket.io-client'
  import Timer from "../components/Timer";
- // const socket = io();
-
-
 
 export default {
   name: "SlideShow",
    components: {
-       Timer
+       Timer,
    },
-
 
   props: {
     uiLabels: Object,
@@ -81,15 +74,13 @@ export default {
     correctAnswer: Array,
     yourPoints: Number,
     totalParticipantsAnswered: Number,
-    participantsLength: Number
+    participantsLength: Number,
 
   },
-
 
   data: function () {
     return {
       lang: "",
-      fullPoll: {},
       questionNumber: 0,
       number: 1,
       pointsCollected: 0,
@@ -98,8 +89,6 @@ export default {
       timerInterval: null,
       length: 0
     }},
-
-
 
   watch: {
     questions: {
@@ -119,30 +108,14 @@ export default {
         return this.timeForQuestion - this.timePassed
     }
   },
+
   created: function () {
-/*    socket.on("sendQuestions", (activeQuestion) =>
-        this.question = activeQuestion)*/
   },
 
   mounted() {
-
   },
 
   methods:{
-    
-    startDrag: function(event, item){
-      console.log(item)
-      event.dataTransfer.dropEffect='move'
-      event.dataTransfer.effectAllowed = 'move'
-      event.dataTransfer.setData('itemId', item.id)
-    },
-
-     onDrop: function(event, list){
-      const itemId = event.dataTransfer.getData('itemId')
-      const item = this.item.find(list = item.id === itemId)
-       item.list = list
-
-     },
 
     startTimer() {
       if(this.timerInterval != null){
@@ -185,7 +158,6 @@ export default {
   position: center;
   margin-top: 5%;
   margin-right: 10%;
-
 }
 
 .showPoints{
@@ -259,9 +231,6 @@ export default {
   margin-top: 5%;
   font-size: 0.8vw;
   place-content: center;
-  /*border:solid;*/
-  /*height: 5vw;*/
-  /*width: 25vw;*/
 }
 
 .AnswerQuestionMasters{
@@ -283,11 +252,9 @@ export default {
   animation: blinker 0.5s linear;
   animation-iteration-count: 3;
   border-radius: 1vw;
-
 }
 
 .wrongAnswer {
-
   background-color: #ed3632;
   font-size: xx-large;
   border-radius: 1vw;

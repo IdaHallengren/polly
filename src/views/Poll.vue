@@ -1,6 +1,5 @@
 
 <template>
-
   <!-- Style for the background, Created by Chris Smith -->
   <div class="bg"></div>
   <div class="bg bg2"></div>
@@ -14,7 +13,7 @@
         <div class = "wrapperName">
           <p class="fontSize">{{uiLabels.enterName}}</p>
            <div>
-             <input v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" >
+             <input v-on:keyup.enter="showName = !showName" v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" >
              <button class="okButton" v-on:click = "showName = !showName"><span class='buttonText'>OK</span></button>
            </div>
         </div>
@@ -29,7 +28,7 @@
             <span > <img id="selectedAvatar" v-bind:src=this.participantImg alt="Avatar"> </span>
           </section>
 
-      <div id="formsize">
+      <div id="formSize">
         <form class = "form">
           <div class = "drawAvatars">
              <AvatarLoop v-for="avatar in Avatars"
@@ -270,7 +269,7 @@ export default {
   top: -10%;
 }
 
-#formsize {
+#formSize {
   width: 50%;
   position: absolute;
   left: 25%
@@ -412,7 +411,7 @@ export default {
 /* Style for the background, Created by Chris Smith */
 .bg {
   animation:slide 23s ease-in-out infinite alternate;
-  background-image: linear-gradient(-60deg, #c1b7f7 50%, #7496db 50%);
+  background-image: linear-gradient(-60deg, #BB8FCE 50%, #ea9c8c 50%);
   bottom:0;
   left:-50%;
   opacity:.5;
