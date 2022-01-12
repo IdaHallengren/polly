@@ -231,7 +231,6 @@ export default {
 }
 
 .PollId{
-
   width: 15vw;
   height: 7.2vh;
   font-size: larger;

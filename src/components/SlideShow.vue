@@ -1,17 +1,16 @@
 <template>
 
-  <div class="drawAvatars">
+  <div class="wrapperSlideShow">
     <div id="slides">
       <div v-show="overviewUser" class="overview">{{questions}}<br></div>
-      <div id="questionHeader" v-show="!overviewUser">{{questions}}<br></div>
+      <div v-show="!overviewUser" id="questionHeader" >{{questions}}<br></div>
+
       <div class="answerLayout">
         <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key" >
+
           <div v-show="!questionMaster" >
             <div v-if="canClick()">
-              <button v-if="timePassed < timeForQuestion" id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">
-                {{answer}}
-              </button>
-
+              <button v-if="timePassed < timeForQuestion" id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">{{answer}}</button>
             </div>
             <div class="hasAnswered" v-if="!canClick() && timePassed < timeForQuestion">
               {{answer}}
@@ -19,11 +18,9 @@
             <div class="correctAnswer" v-if="answer === correctAnswer && timePassed >= timeForQuestion">
               {{answer}}
             </div>
-            <div class="wrongAnswer" v-if="answer != correctAnswer && timePassed >= timeForQuestion">
+            <div class="wrongAnswer" v-if="answer !== correctAnswer && timePassed >= timeForQuestion">
               {{answer}}
             </div>
-
-
           </div>
 
           <div v-show="questionMaster && !overviewUser">
@@ -36,23 +33,22 @@
             <div v-if="answer != correctAnswer && timePassed >= timeForQuestion" class="wrongAnswer">
               {{answer}}
             </div>
-
           </div>
+
           <div v-show="questionMaster && overviewUser" class="AnswerQuestionMasterOverview">
             {{answer}}
           </div>
-
         </div>
       </div>
     </div>
+
     <div id="app" v-if="!overviewUser">
       <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
       <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
-
-      <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
-
-      <div class="styleYourPoints" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
+      <div class="stylePointsAndAnswered" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
+      <div class="stylePointsAndAnswered" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
     </div>
+
   </div>
 
 </template>
@@ -70,7 +66,6 @@ export default {
     uiLabels: Object,
     questions: String,
     pollId: String,
-    index: String,
     answers: Array,
     questionMaster: Boolean,
     overviewUser: Boolean,
@@ -80,20 +75,14 @@ export default {
     yourPoints: Number,
     totalParticipantsAnswered: Number,
     participantsLength: Number,
-
   },
 
   data: function () {
     return {
       lang: "",
-      questionNumber: 0,
-      number: 1,
-      pointsCollected: 0,
       isClicked:{},
       timePassed: 0,
       timerInterval: null,
-      length: 0,
-
     }},
 
   watch: {
@@ -108,20 +97,19 @@ export default {
   computed: {
     timeLeft() {
       if(this.timeForQuestion - this.timePassed <= 0) {
-
         return 0
       }
       else
         this.$emit('timePassed', this.timeForQuestion- this.timePassed)
-      return this.timeForQuestion - this.timePassed
+        return this.timeForQuestion - this.timePassed
     }
   },
 
   created: function () {
   },
 
-  mounted() {
-  },
+  // mounted() {
+  // },
 
   methods:{
 
@@ -143,10 +131,7 @@ export default {
       console.log("testar om svar kommer", this.answer)
       this.$emit('hasAnswerd')
       if (this.answer === this.correctAnswer) {
-        console.log("KORREKT SVAR")
-        this.pointsCollected = this.pointsCollected + this.pointsForQuestion
-        this.$emit('pointsCollected', this.pointsForQuestion*(this.timeLeft/this.timeForQuestion))
-        console.log("testar poang", this.pointsCollected)
+        this.$emit('pointsCollected', Math.trunc(this.pointsForQuestion*(this.timeLeft/this.timeForQuestion)))
       } else {
         console.log("FEL SVAR")
       }
@@ -158,7 +143,7 @@ export default {
 
 <style scoped>
 
-.styleYourPoints{
+.stylePointsAndAnswered{
   height: 7.5vh;
   font-size: 1.5vw;
   font-family: AppleGothic,sans-serif;
@@ -178,7 +163,7 @@ export default {
   margin-right: 10%;
 }
 
-.drawAvatars{
+.wrapperSlideShow{
   display: grid;
   grid-template-rows: 90%;
   grid-template-columns: 78%;
