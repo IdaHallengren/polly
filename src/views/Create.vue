@@ -474,9 +474,10 @@ export default {
 }
 
 .overviewPresentationSlide{
+  position: unset;
   height: 50%;
   width: 100%;
-  padding-bottom: 10vw;
+  padding-bottom: 100vw;
 }
 
 
