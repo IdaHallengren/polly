@@ -9,7 +9,7 @@
 
           <div v-show="!questionMaster" >
             <div v-if="canClick()">
-              <button v-if="timePassed < timeForQuestion" id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">{{answer}}</button>
+              <button v-if="timePassed < timeForQuestion" class="selectedAnswer" v-on:click="saveAnswer(answer)">{{answer}}</button>
             </div>
             <div class="hasAnswered" v-if="!canClick() && timePassed < timeForQuestion">
               {{answer}}
@@ -296,10 +296,9 @@ export default {
     font-size: 3vw;
   }
   .selectedAnswer{
+    height: 5vw;
+    width: 30vw;
     font-size: 4vw;
-  }
-  .selectedAnswer:hover{
-    background: white;
   }
   .wrongAnswer {
     font-size: 3.5vw;
