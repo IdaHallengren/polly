@@ -15,7 +15,7 @@
 
         <div class="answerLayout" >
           <div class="oneQuestion" v-for="answer in fullPoll['questions'][k].a" :key="answer">{{answer}}</div>
-          <div style="font-style: italic">{{uiLabels.timeSlide}}{{fullPoll['questions'][k].timeForQuestion}}s, {{uiLabels.pointsSlide}}{{fullPoll['questions'][k].pointsForQuestion}}p</div>
+          <div style="font-style: italic; font-weight: bold">{{uiLabels.timeSlide}}{{fullPoll['questions'][k].timeForQuestion}}s<br> {{uiLabels.pointsSlide}}{{fullPoll['questions'][k].pointsForQuestion}}p</div>
         </div>
 
     </div>

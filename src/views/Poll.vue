@@ -172,7 +172,6 @@ export default {
 
     socket.on('setTimeToZero', (pollId)=>{
       if(this.pollId===pollId){
-        console.log('hej2')
         this.fullPoll['questions'][this.questionNumber].timeForQuestion = 0
       }
     })

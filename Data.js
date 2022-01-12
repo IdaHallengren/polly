@@ -33,10 +33,6 @@ Data.prototype.createPoll = function(pollId, lang="en") {
     poll.numberOfParticipants= "";
     poll.booleanClicked=true;
     poll.pointsForOne=0;
-    // poll.allPoints=[];
-    // poll.pointsForPoll=[];
-    // poll.totPointsForQuestion=[];
-
     this.polls[pollId] = poll;
     console.log("poll created", pollId, poll);
   }
@@ -58,9 +54,6 @@ Data.prototype.addQuestion = function(pollId, q) {
   console.log("question added to", pollId, q);
   if (typeof poll !== 'undefined') {
     poll.questions.push(q);
-     // console.log('testar testar NU', q)
-     // poll.timeForQuestion.push(q.time);
-
   }
 }
 
@@ -90,7 +83,6 @@ Data.prototype.submitAnswer = function(pollId, answer) {
       answers[answer] = 1;
     else
       answers[answer] += 1
-    console.log("answers looks like ", answers, typeof answers);
   }
 }
 
@@ -124,8 +116,6 @@ Data.prototype.addParticipant = function(pollId, participant) {
 Data.prototype.getParticipants = function(pollId) {
   const poll = this.polls[pollId];
   if (typeof poll !== 'undefined') {
-    // poll.totPointsForQuestion.push(0)
-    console.log(poll.participants)
       return poll.participants
   }
   return {}
@@ -156,44 +146,23 @@ Data.prototype.getPoints= function(pollId ,points,  participantId){
   if (typeof poll !== 'undefined') {
     for (let i = 0; i<poll.participants.length; i++ ) {
       if (poll.participants[i].participantId === participantId) {
-        console.log('points', poll.participants[i].totPoints);
-        console.log('points and Id', points, participantId);
         poll.pointsForOne=poll.participants[i].totPoints;
         poll.pointsForOne+=points;
         poll.participants[i].totPoints=poll.pointsForOne ;
-        console.log('participants and points', poll.participants[i].totPoints);
-        console.log(poll.participants)
         return poll.participants
 
       }
     }
-
   }
 }
 
 Data.prototype.reorder = function(d) {
   const poll = this.polls[d.pollId];
   if (typeof poll !== 'undefined') {
-    console.log(poll.questions)
     poll.questions = d.q;
-    console.log(poll.questions)
 
   }
 }
-
-// Data.prototype.amountAnswered= function(pollId, answered, participantId){
-//   const poll = this.polls[pollId];
-//   if (typeof poll !== 'undefined') {
-//
-//       if(answered===true){
-//         poll.participantsHasAnswered
-//
-//
-//     }
-//   }
-// }
-
-
 
 
 
