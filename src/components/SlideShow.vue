@@ -1,20 +1,16 @@
 <template>
 
-<div class="drawAvatars">
-  <div id="slides">
-
-    <div v-show="overviewUser" class="overview">{{questions}}<br></div>
-
+  <div class="drawAvatars">
+    <div id="slides">
+      <div v-show="overviewUser" class="overview">{{questions}}<br></div>
       <div id="questionHeader" v-show="!overviewUser">{{questions}}<br></div>
-
-    <div class="answerLayout">
-      <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key" >
-        <div v-show="!questionMaster" >
-           <div v-if="canClick()">
-
-            <button v-if="timePassed < timeForQuestion" id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">
-              {{answer}}
-            </button>
+      <div class="answerLayout">
+        <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key" >
+          <div v-show="!questionMaster" >
+            <div v-if="canClick()">
+              <button v-if="timePassed < timeForQuestion" id="testMe" class="selectedAnswer" v-on:click="saveAnswer(answer)">
+                {{answer}}
+              </button>
 
             </div>
             <div class="hasAnswered" v-if="!canClick() && timePassed < timeForQuestion">
@@ -28,47 +24,47 @@
             </div>
 
 
-        </div>
-
-        <div v-show="questionMaster && !overviewUser">
-          <div v-if="timePassed < timeForQuestion" class="AnswerQuestionMasters">
-            {{answer}}
-          </div>
-          <div v-if="answer === correctAnswer && timePassed >= timeForQuestion" class="correctAnswer">
-            {{answer}}
-          </div>
-          <div v-if="answer != correctAnswer && timePassed >= timeForQuestion" class="wrongAnswer">
-            {{answer}}
           </div>
 
-        </div>
-        <div v-show="questionMaster && overviewUser" class="AnswerQuestionMasterOverview">
-           {{answer}}
-        </div>
+          <div v-show="questionMaster && !overviewUser">
+            <div v-if="timePassed < timeForQuestion" class="AnswerQuestionMasters">
+              {{answer}}
+            </div>
+            <div v-if="answer === correctAnswer && timePassed >= timeForQuestion" class="correctAnswer">
+              {{answer}}
+            </div>
+            <div v-if="answer != correctAnswer && timePassed >= timeForQuestion" class="wrongAnswer">
+              {{answer}}
+            </div>
 
+          </div>
+          <div v-show="questionMaster && overviewUser" class="AnswerQuestionMasterOverview">
+            {{answer}}
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
-  <div id="app" v-if="!overviewUser">
-    <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
-    <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
+    <div id="app" v-if="!overviewUser">
+      <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
+      <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
 
-    <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
+      <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
 
-    <div class="styleYourPoints" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
+      <div class="styleYourPoints" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
+    </div>
   </div>
-</div>
 
 </template>
 
 <script>
- import Timer from "../components/Timer";
+import Timer from "../components/Timer";
 
 export default {
   name: "SlideShow",
-   components: {
-       Timer,
-   },
+  components: {
+    Timer,
+  },
 
   props: {
     uiLabels: Object,
@@ -117,7 +113,7 @@ export default {
       }
       else
         this.$emit('timePassed', this.timeForQuestion- this.timePassed)
-        return this.timeForQuestion - this.timePassed
+      return this.timeForQuestion - this.timePassed
     }
   },
 
@@ -138,24 +134,24 @@ export default {
     },
 
     canClick: function(){
-         return !this.isClicked[this.questions]
+      return !this.isClicked[this.questions]
     },
 
     saveAnswer: function (answer){
-        this.answer = answer
-        this.isClicked[this.questions] = true
-        console.log("testar om svar kommer", this.answer)
-        this.$emit('hasAnswerd')
-        if (this.answer === this.correctAnswer) {
-          console.log("KORREKT SVAR")
-          this.pointsCollected = this.pointsCollected + this.pointsForQuestion
-          this.$emit('pointsCollected', this.pointsForQuestion*(this.timeLeft/this.timeForQuestion))
-          console.log("testar poang", this.pointsCollected)
-        } else {
-          console.log("FEL SVAR")
-        }
+      this.answer = answer
+      this.isClicked[this.questions] = true
+      console.log("testar om svar kommer", this.answer)
+      this.$emit('hasAnswerd')
+      if (this.answer === this.correctAnswer) {
+        console.log("KORREKT SVAR")
+        this.pointsCollected = this.pointsCollected + this.pointsForQuestion
+        this.$emit('pointsCollected', this.pointsForQuestion*(this.timeLeft/this.timeForQuestion))
+        console.log("testar poang", this.pointsCollected)
+      } else {
+        console.log("FEL SVAR")
+      }
     }
-},
+  },
 }
 
 </script>
