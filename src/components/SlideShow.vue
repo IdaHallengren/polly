@@ -44,17 +44,18 @@
 
         </div>
       </div>
-    </div>
   </div>
   <div id="app" v-if="!overviewUser">
     <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
-    <div id="textForPhones">
+
+    <span id="textForPhones">
 
       <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
 
       <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
 
       <div class="styleYourPoints" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
+      </span>
     </div>
   </div>
 
@@ -184,7 +185,7 @@ export default {
 .drawAvatars{
   display: grid;
   grid-template-rows: 90%;
-  grid-template-columns: 78%;
+  grid-template-columns: 78% 22%;
 }
 
 #slides {
@@ -294,7 +295,8 @@ export default {
   #slides{
     grid-row: 2;
     grid-column: span 2;
-    height: 55vh;
+    height: 90%;
+    width: 85%;
   }
   #app{
     grid-column: span 2;
