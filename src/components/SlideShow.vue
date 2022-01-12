@@ -296,16 +296,16 @@ export default {
     font-size: 3vw;
   }
   .selectedAnswer{
-    font-size: 6vw;
+    font-size: 4vw;
   }
   .selectedAnswer:hover{
     background: white;
   }
   .wrongAnswer {
-    font-size: 3vw;
+    font-size: 3.5vw;
   }
   .correctAnswer {
-    font-size: 3vw;
+    font-size: 3.5vw;
   }
 
 
