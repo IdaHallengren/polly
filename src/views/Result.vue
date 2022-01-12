@@ -233,6 +233,7 @@ console.log('champions', audio)
   margin-top: 9vh;
 }
 .showResult {
+  margin-top: 10%;
   display: grid;
   grid-template-columns: 20% 20% 20%;
   width: 100%;
