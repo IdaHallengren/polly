@@ -15,7 +15,7 @@
   <div v-show="showStart">
     <div id="wrapperHead">
       <div id="header">
-        <img id="logo" src="../img/logo1.svg">
+        <img id="logo" src="../img/logo-2.svg">
         <div id="headerText">
         <p style="font-size: 1.5vw;"> {{uiLabels.welcome}}</p>
         <p style="font-size: 1vw;">{{uiLabels.welcomeEasy}}</p>
@@ -97,10 +97,6 @@ export default {
 
 <style>
 
-body{
-  background-color: #317773;
-}
-
 #wrapperHead {
   display: grid;
   grid-template-columns: 33% 33% 33%;
@@ -163,7 +159,7 @@ body{
   position: relative;
   bottom: 22%;
   font-weight: bold;
-  color: lightskyblue;
+  color: #603F83;
   padding-top: 10%;
 }
 
@@ -185,16 +181,16 @@ body{
   color: dimgrey;
   font-family: AppleGothic,sans-serif;
   background: white;
-  border: 0.1em solid #1d72f0;
-  box-shadow: 0.1em 0.1em 0 #5995ED,
-  -0.1em -0.1em 0 #5995ED,
-  -0.1em 0.1em 0 #5995ED,
-  0.1em -0.1em 0 #5995ED;
+  border: 0.1em solid #603F83;
+  box-shadow: 0.1em 0.1em 0 #603F83,
+  -0.1em -0.1em 0 #603F83,
+  -0.1em 0.1em 0 #603F83,
+  0.1em -0.1em 0 #603F83;
   transition: 500ms ease-in-out;
 }
 
 .startButton:hover {
-  background: lightskyblue;
+  background: #C7D3D4;
   color: White;
 }
 
@@ -287,7 +283,7 @@ body{
  /*Style for the background, Created by Chris Smith */
 .bg {
   animation:slide 12s ease-in-out infinite alternate;
-  background-image: linear-gradient(-60deg, #772D8B 50%, #e2725b 50%);
+  background-image: linear-gradient(-60deg, #BB8FCE 50%, #ea9c8c 50%);
   bottom:0;
   left:-50%;
   opacity:.5;

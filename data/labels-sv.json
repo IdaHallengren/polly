@@ -15,7 +15,7 @@
 	"removeAlternative": "Ta bort alternativ",
 	"addAlternative": "Lägg till alternativ",
 	"chooseTimeForQuestion": "Tid för frågan (sekunder)",
-	"choosePointsForQuestion": "Poäng för frågan",
+	"choosePointsForQuestion": "Maxpoäng för frågan",
 	"answers": "Svar",
 	"voting": "Omröstning",
 	"trueOrFalse": "Sant eller falskt",
@@ -43,5 +43,6 @@
 	"yourTotalPoints": "Din totalpoäng är: ",
 	"totalAnswered": "Antal deltagare som svarat:",
 	"nextQuestion": "Nästa fråga",
-	"viewResult": "Visa resultat"
+	"viewResult": "Visa resultat",
+	"ShowCorrectAnswer": "Visa rätt svar"
 }

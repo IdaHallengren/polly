@@ -53,8 +53,6 @@
 </div>
 
   <div>
-  Good work everybody! The result is.....
-
   </div>
   </div>
 
@@ -282,7 +280,6 @@ console.log('champions', audio)
   font-family: Damascus;
   color: gold;
   font-weight: bold;
-
 }
 
 .nr2 {
@@ -309,7 +306,7 @@ console.log('champions', audio)
 /*Style taken from the same as in start*/
 .bg {
   animation:slide 23s ease-in-out infinite alternate;
-  background-image: linear-gradient(-60deg, #BB6372 50%, #79333D 50%);
+  background-image: linear-gradient(-60deg, #BB8FCE 50%, #ea9c8c 50%);
   bottom:0;
   left:-50%;
   opacity:.5;

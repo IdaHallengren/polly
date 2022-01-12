@@ -15,7 +15,7 @@
 	"removeAlternative": "Remove alternative",
 	"addAlternative": "Add alternative",
 	"chooseTimeForQuestion": "Time for question (seconds)",
-	"choosePointsForQuestion": "Points for question",
+	"choosePointsForQuestion": "Maximum points for question",
 	"answers": "Answers",
 	"voting": "Voting",
 	"trueOrFalse": "True or false",
@@ -43,5 +43,6 @@
 	"yourTotalPoints": "Your total points are: ",
 	"totalAnswered": "Total participants answered:",
 	"nextQuestion": "Next question",
-	"viewResult": "View result"
+	"viewResult": "View result",
+	"ShowCorrectAnswer": "Show correct answer"
 }
