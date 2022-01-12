@@ -29,6 +29,11 @@ function sockets(io, socket, data) {
       io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
     });
 
+
+    socket.on('nextQuestion', function(d){
+      io.to(d.pollId).emit('updateQuestion', d.questionNumber)
+    })
+
     socket.on('submitAnswer', function (d) {
       data.submitAnswer(d.pollId, d.answer);
       io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));

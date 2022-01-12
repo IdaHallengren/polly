@@ -159,6 +159,7 @@
                v-bind:totalParticipantsAnswered="this.totalParticipantsAnswered"
                v-bind:participantsLength="this.participantsLength"
                v-on:timePassed="totalTimeLeft($event)"
+
     >
 
     </SlideShow>
@@ -294,7 +295,7 @@ export default {
     },
 
     showCorrectAnswer: function(){
-      this.timeForQuestions[this.questionNumber]=0
+      this.fullPoll['questions'][questionNumber].timeForQuestion=0
       this.timeLeft=1
       socket.emit('showCorrectAnswer', this.pollId)
     },
@@ -380,6 +381,7 @@ export default {
       this.timeForQuestions[this.questionNumber]=0
       this.totalParticipantsAnswered=0
       this.questionNumber++;
+      socket.emit('nextQuestion',{pollId: this.pollId, questionNumber: this.questionNumber} )
       socket.emit('runQuestion', {pollId: this.pollId, questionNumber: this.questionNumber} )
       socket.emit('removeButtons', {pollId: this.pollId, isClicked: this.isClicked})
     },

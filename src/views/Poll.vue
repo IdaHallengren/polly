@@ -74,6 +74,7 @@
             v-on:pointsCollected="pointsTot($event)"
             v-bind:yourPoints="this.yourPoints"
             v-on:hasAnswerd="totalAnswered()"
+            v-bind:timeLeft="this.timeLeft"
             >
  </SlideShow>
 
@@ -130,6 +131,7 @@ export default {
       infoQuestions:{},
       yourPoints:0,
       questionNumber: 0,
+      timeLeft:0
     }
   },
 
@@ -150,6 +152,10 @@ export default {
 
     socket.on("newQuestion", q => {
       this.question = q
+    })
+    socket.on('updateQuestion', q => {
+      this.question = q
+      this.questionNumber++;
     })
 
     socket.on("init", (labels) => {
@@ -172,7 +178,9 @@ export default {
 
     socket.on('setTimeToZero', (pollId)=>{
       if(this.pollId===pollId){
-        this.question.timeForQuestion=0
+        this.timeLeft=this.fullPoll['questions'][this.questionNumber].timeForQuestion
+        this.timeLeft=0
+
       }
     })
   },
