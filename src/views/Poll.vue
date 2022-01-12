@@ -172,8 +172,14 @@ export default {
 
     socket.on('setTimeToZero', (pollId)=>{
       if(this.pollId===pollId){
-        this.question.timeForQuestion=0
+        console.log('hej2')
+        this.fullPoll['questions'][this.questionNumber].timeForQuestion = 0
       }
+    })
+
+    socket.on('updateQuestion', q=>{
+      this.question = q
+      this.questionNumber ++
     })
   },
 

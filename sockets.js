@@ -87,8 +87,13 @@ socket.on('hasAnswered', function(pollId){
     socket.emit('fullPoll', data.getPoll(d.pollId))
   })
 
+  socket.on('nextQuestion', function(d) {
+    io.to(d.pollId).emit('updateQuestion', d.questionNumber)
+  })
+
   socket.on('showCorrectAnswer', function(pollId){
     io.to(pollId).emit('setTimeToZero', pollId)
+    console.log('hej')
   })
 }
 

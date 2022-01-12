@@ -77,7 +77,7 @@ export default {
     overviewUser: Boolean,
     timeForQuestion: Number,
     pointsForQuestion: Number,
-    correctAnswer: Array,
+    correctAnswer: String,
     yourPoints: Number,
     totalParticipantsAnswered: Number,
     participantsLength: Number,
