@@ -296,6 +296,12 @@ export default {
   .showPoints{
     font-size: 3vw;
   }
+  .selectedAnswer:hover{
+    background: unset;
+  }
+  .selectedAnswer{
+    font-size: 2vw;
+  }
 
 
 }
