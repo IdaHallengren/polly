@@ -30,8 +30,17 @@
 
         </div>
 
-        <div v-show="questionMaster && !overviewUser" class="AnswerQuestionMasters">
-          {{answer}}
+        <div v-show="questionMaster && !overviewUser">
+          <div v-if="timePassed < timeForQuestion" class="AnswerQuestionMasters">
+            {{answer}}
+          </div>
+          <div v-if="answer === correctAnswer && timePassed >= timeForQuestion" class="correctAnswer">
+            {{answer}}
+          </div>
+          <div v-if="answer != correctAnswer && timePassed >= timeForQuestion" class="wrongAnswer">
+            {{answer}}
+          </div>
+
         </div>
         <div v-show="questionMaster && overviewUser" class="AnswerQuestionMasterOverview">
            {{answer}}
@@ -140,7 +149,7 @@ export default {
         if (this.answer === this.correctAnswer) {
           console.log("KORREKT SVAR")
           this.pointsCollected = this.pointsCollected + this.pointsForQuestion
-          this.$emit('pointsCollected', this.pointsForQuestion)
+          this.$emit('pointsCollected', this.pointsForQuestion*(this.timeLeft/this.timeForQuestion))
           console.log("testar poang", this.pointsCollected)
         } else {
           console.log("FEL SVAR")
@@ -237,20 +246,11 @@ export default {
 }
 
 .AnswerQuestionMasters{
-  display: grid;
-  margin-bottom: 15%;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: auto;
-  margin-top: 5%;
-  font-size: 1.3vw;
-  place-content: center;
-  padding-right: 4vw;
+  background-color: gray;
+  font-size: xx-large;
+  border-radius: 1vw;
 }
 
-.AnswerQuestionMasters:before {
-  content:"•";
-  padding-left: 10vw;
-}
 
 #app {
   right: 5%;
