@@ -3,9 +3,9 @@
 <div id="wrapper">
   <div id="textColumn">
 
-    <p style="font-size: 2.5vw ; font-weight: bold"> {{uiLabels.waitingRoomNr}}{{this.pollId}}</p>
-    <p style="font-size: 2vw ; font-weight: bold"> {{uiLabels.waitParticipant}}</p>
-    <p style="font-size: 1vw ; font-weight: bold">{{uiLabels.waitQuestionMaster}}</p>
+    <p class="textLine1"> {{uiLabels.waitingRoomNr}}{{this.pollId}}</p>
+    <p class="textLine2"> {{uiLabels.waitParticipant}}</p>
+    <p class="textLine3">{{uiLabels.waitQuestionMaster}}</p>
 
   </div>
 
@@ -81,7 +81,18 @@ export default {
   position: relative;
   animation: bounce 0.7s infinite alternate;
 }
-
+.textLine1{
+  font-size: 2.5vw;
+  font-weight: bold;
+}
+.textLine2{
+  font-size: 2vw;
+  font-weight: bold
+}
+.textLine3 {
+  font-size: 1vw;
+  font-weight: bold;
+}
 
 
 @keyframes bounce {
@@ -93,7 +104,38 @@ export default {
   }
 }
 
+@media only screen and (max-width: 768px) {
+  #wrapper{
+    grid-template-rows: 35% 65%;
+    grid-template-columns: 100%;
 
+
+  }
+  #textColumn{
+    grid-row: 1;
+    height: 15vh;
+    font-size: 3vw;
+    margin-bottom: 5%;
+  }
+  #waitingSection{
+    position: unset;
+    grid-row: 2;
+    grid-column: 1;
+    width: 90%;
+    margin-left: 4%;
+    height: 50vh;
+
+  }
+  .textLine1{
+    font-size: 5vw;
+  }
+  .textLine2{
+    font-size: 3vw;
+  }
+  .textLine3 {
+    font-size: 3vw;
+  }
+}
 
 
 
