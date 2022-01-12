@@ -44,5 +44,7 @@
 	"totalAnswered": "Total participants answered:",
 	"nextQuestion": "Next question",
 	"viewResult": "View result",
-	"ShowCorrectAnswer": "Show correct answer"
+	"ShowCorrectAnswer": "Show correct answer",
+	"timeSlide": "Time: ",
+	"pointsSlide": "Points: "
 }

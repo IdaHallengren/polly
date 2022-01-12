@@ -50,7 +50,7 @@ function sockets(io, socket, data) {
     });
 
     socket.on('removeSlide', function (d) {
-      data.removeQuestion(d.pollId, {q: d.q, a: d.a});
+      data.removeQuestion(d.pollId, {q: d.q, a: d.a, timeForQuestion: d.timeForQuestion, pointsForQuestion: d.pointsForQuestion, correctAnswer: d.correctAnswer, questionNumber: d.questionNumber});
       socket.emit('dataUpdate', data.getAnswers(d.pollId));
     })
 

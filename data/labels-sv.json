@@ -44,5 +44,7 @@
 	"totalAnswered": "Antal deltagare som svarat:",
 	"nextQuestion": "Nästa fråga",
 	"viewResult": "Visa resultat",
-	"ShowCorrectAnswer": "Visa rätt svar"
+	"ShowCorrectAnswer": "Visa rätt svar",
+	"timeSlide": "Tid: ",
+	"pointsSlide": "Poäng: "
 }

@@ -4,7 +4,6 @@
     <div id="slides">
       <div v-show="overviewUser" class="overview">{{questions}}<br></div>
       <div v-show="!overviewUser" id="questionHeader" >{{questions}}<br></div>
-
       <div class="answerLayout">
         <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key" >
 
@@ -30,7 +29,7 @@
             <div v-if="answer === correctAnswer && timePassed >= timeForQuestion" class="correctAnswer">
               {{answer}}
             </div>
-            <div v-if="answer != correctAnswer && timePassed >= timeForQuestion" class="wrongAnswer">
+            <div v-if="answer !== correctAnswer && timePassed >= timeForQuestion" class="wrongAnswer">
               {{answer}}
             </div>
           </div>
@@ -149,8 +148,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 
 .showPoints{
   height: 7.5vh;

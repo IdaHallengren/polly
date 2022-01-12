@@ -1,6 +1,5 @@
 <template>
 <div class="drawAvatars">
-  <span v-bind:class="{'wiggleAll': drag}"></span>
 
     <div v-for="(question, k) in fullPoll['questions']"
          draggable="true"
@@ -16,6 +15,7 @@
 
         <div class="answerLayout" >
           <div class="oneQuestion" v-for="answer in fullPoll['questions'][k].a" :key="answer">{{answer}}</div>
+          <div style="font-style: italic">{{uiLabels.timeSlide}}{{fullPoll['questions'][k].timeForQuestion}}s, {{uiLabels.pointsSlide}}{{fullPoll['questions'][k].pointsForQuestion}}p</div>
         </div>
 
     </div>
@@ -31,6 +31,7 @@ export default {
     questions: Array,
     drag: Boolean,
     fullPoll: Object,
+    uiLabels: Object,
   },
 
   data: function () {
@@ -56,6 +57,7 @@ export default {
         }
       }
     },
+
     drop: function() {
       this.currentlyMoving = null;
       this.$emit('drop')

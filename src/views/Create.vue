@@ -28,6 +28,7 @@
                   v-on:drop="reorder()"
                   v-bind:questions="fullPoll['questions']"
                   v-bind:fullPoll="fullPoll"
+                  v-bind:uiLabels="uiLabels"
                   v-bind:drag="drag">
 
         </DragDrop>
@@ -152,9 +153,9 @@
                v-bind:index="questionNumber"
                v-bind:questionMaster="questionMaster"
                v-bind:overviewUser="overviewUser"
-               v-bind:pointsForQuestion="pointsForQuestions[questionNumber]"
-               v-bind:timeForQuestion="timeForQuestions[questionNumber]"
-               v-bind:correctAnswer="correctAnswers[questionNumber]"
+               v-bind:pointsForQuestion="fullPoll['questions'][questionNumber].pointsForQuestion"
+               v-bind:timeForQuestion="fullPoll['questions'][questionNumber].timeForQuestion"
+               v-bind:correctAnswer="fullPoll['questions'][questionNumber].correctAnswer"
                v-bind:totalParticipantsAnswered="this.totalParticipantsAnswered"
                v-bind:participantsLength="this.participantsLength"
                v-on:timePassed="totalTimeLeft($event)"
@@ -384,7 +385,7 @@ export default {
     },
 
     removeSlide: function() {
-      socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers})
+      socket.emit("removeSlide", {pollId: this.pollId, q: this.question, a: this.answers, timeForQuestion: this.timeForQuestion, pointsForQuestion: this.pointsForQuestion, correctAnswer: this.correctAnswer, questionNumber: this.questionNumber})
       this.allQuestions.pop();
       this.questionNumber--;
       this.runQuestion();

@@ -61,14 +61,16 @@
 <!-- Poll starting-->
 <div v-if="showGameStart" class="pollTaking">
 
- <SlideShow v-bind:questions="question.q"
-            v-bind:answers="question.a"
+ <SlideShow v-bind:questions="fullPoll['questions'][questionNumber].q"
+            v-bind:answers="fullPoll['questions'][questionNumber].a"
             v-bind:pollId="pollId"
             v-bind:uiLabels="uiLabels"
+            v-bind:index="questionNumber"
             v-bind:questionMaster="questionMaster"
-            v-bind:pointsForQuestion="question.pointsForQuestion"
-            v-bind:timeForQuestion="question.timeForQuestion"
-            v-bind:correctAnswer="question.correctAnswer"
+            v-bind:overviewUser="overviewUser"
+            v-bind:pointsForQuestion="fullPoll['questions'][questionNumber].pointsForQuestion"
+            v-bind:timeForQuestion="fullPoll['questions'][questionNumber].timeForQuestion"
+            v-bind:correctAnswer="fullPoll['questions'][questionNumber].correctAnswer"
             v-on:pointsCollected="pointsTot($event)"
             v-bind:yourPoints="this.yourPoints"
             v-on:hasAnswerd="totalAnswered()"
@@ -126,7 +128,8 @@ export default {
       timeForQuestion: [],
       pointsForQuestion: [],
       infoQuestions:{},
-      yourPoints:0
+      yourPoints:0,
+      questionNumber: 0,
     }
   },
 
@@ -137,6 +140,13 @@ export default {
 
     socket.emit('joinPoll', this.pollId)
     socket.emit("pageLoaded", this.lang);
+    socket.emit('getPoll', this.pollId)
+
+    socket.on('fullPoll', (myPoll) => {
+      this.fullPoll = myPoll
+      console.log('kommer poll fram')
+      console.log(this.fullPoll)
+    })
 
     socket.on("newQuestion", q => {
       this.question = q
@@ -151,6 +161,7 @@ export default {
     )
 
     socket.on('gameStart', (myBoolean) => {
+      console.log('bjas')
         this.showGameStart= myBoolean
     })
 
@@ -163,9 +174,7 @@ export default {
       if(this.pollId===pollId){
         this.question.timeForQuestion=0
       }
-
     })
-
   },
 
   methods: {
