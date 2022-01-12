@@ -173,8 +173,6 @@ export default {
 
   methods: {
 
-
-
     decideWinner: function () {
 
       for (let i = 0; i < this.pointsForPoll.length; i++) {
@@ -206,35 +204,34 @@ export default {
 
 #winnerImg {
   border-radius: 100%;
-  width: 55%;
-  height: 40%;
+  width: 15vw;
+  height: 15vw;
   animation: bounce 0.7s infinite alternate;
 
 }
 #secondImg {
   border-radius: 100%;
-  width: 55%;
-  height: 40%;
+  width: 15vw;
+  height: 15vw;
   margin-top: 6vh;
 }
 #noSecondImg {
-  width: 55%;
-  height: 40%;
+  width: 15vw;
+  height: 15vw;
   margin-top: 6vh;
   visibility: hidden;
 }
 #noThirdImg {
-  width: 50%;
-  height: 40%;
+  width: 15vw;
+  height: 15vw;
   margin-top: 9vh;
   visibility: hidden;
 }
 
-
 #thirdImg{
   border-radius: 100%;
-  width: 55%;
-  height: 40%;
+  width: 15vw;
+  height: 15vw;
   margin-top: 9vh;
 }
 .showResult {
@@ -343,6 +340,24 @@ export default {
   to {
     transform: translateY(-5vh);
   }
+}
+
+@media only screen and (max-width: 768px) {
+  .nr1{
+    font-size: 5vw;
+  }
+
+  .nr2 {
+    font-size: 5vw;
+  }
+  .nr3{
+    font-size: 5vw;
+  }
+  .showResult{
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+  }
+ 
 }
 
 

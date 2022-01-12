@@ -51,11 +51,13 @@
   </div>
   <div id="app" v-if="!overviewUser">
     <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
-    <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
+    <div id="textForPhones">
+      <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
 
-    <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
+      <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
 
-    <div class="styleYourPoints" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
+      <div class="styleYourPoints" v-if="questionMaster"> <br> {{uiLabels.totalAnswered}} {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
+    </div>
   </div>
 </div>
 
@@ -278,6 +280,44 @@ export default {
 @keyframes blinker {
   50% {
     opacity: 0;
+  }
+}
+
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .drawAvatars{
+    display: grid;
+    grid-template-rows: 40% 60%;
+    grid-template-columns: 50% 50%;
+
+  }
+  #slides{
+    grid-row: 2;
+    grid-column: span 2;
+    height: 55vh;
+  }
+  #app{
+    grid-column: span 2;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 100%;
+    place-items: center;
+    margin-top: 10%;
+    margin-bottom: 5%;
+  }
+  #textForPhones{
+    margin-right: 15%;
+    margin-left: -30%;
+    margin-bottom: 5%;
+  }
+  .showPoints{
+    font-size: 3vw;
+    align-items: center;
+  }
+  .styleYourPoints{
+    font-size: 3vw;
   }
 }
 

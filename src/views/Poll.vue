@@ -60,6 +60,7 @@
 
 <!-- Poll starting-->
 <div v-if="showGameStart" class="pollTaking">
+
  <SlideShow v-bind:questions="question.q"
             v-bind:answers="question.a"
             v-bind:pollId="pollId"
@@ -86,6 +87,7 @@ import io from 'socket.io-client'
 import avatar from '../data/avatar.json'
 import SlideShow from "../components/SlideShow";
 const socket = io();
+
 
 export default {
   name: 'Poll',
@@ -434,6 +436,64 @@ export default {
   100% {
     transform:translateX(25%);
   }
+}
+
+
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+   .pollTaking{
+     height: 100%;
+  }
+  .cancelButton{
+    width: 15vw;
+  }
+  .cancelButton .buttonText {
+    font-size: 3vw;
+    margin-right: 3vw;
+  }
+  .okButton{
+    width: 10vw;
+  }
+  .okButton .buttonText {
+    font-size: 3vw;
+  }
+  .backButton{
+    width: 20vw;
+  }
+  .backButton .buttonText {
+    font-size: 4vw;
+    margin-right: 5vw;
+  }
+
+  .continueButton{
+    width: 20vw;
+
+  }
+  .continueButton .buttonText {
+    font-size: 4vw;
+    margin-left: 1vw;
+  }
+
+  .fontSize{
+    font-size: 6vw;
+  }
+  #formSize{
+    width: 80%;
+    left: 10%;
+    margin-bottom: 15%;
+
+  }
+  #selectYourAvatarText{
+    font-size: 3vw;
+  }
+  #selectedAvatar{
+    width: 25%;
+  }
+  #selectedAvatar{
+    right: 20%;
+  }
+
 }
 
 </style>
