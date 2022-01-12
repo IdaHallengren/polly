@@ -283,7 +283,7 @@ export default {
  /*Style for the background, Created by Chris Smith */
 .bg {
   animation:slide 12s ease-in-out infinite alternate;
-  background-image: linear-gradient(-60deg, #772D8B 50%, #e2725b 50%);
+  background-image: linear-gradient(-60deg, #BB8FCE 50%, #ea9c8c 50%);
   bottom:0;
   left:-50%;
   opacity:.5;
