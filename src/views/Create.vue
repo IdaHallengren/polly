@@ -23,26 +23,16 @@
             <span class="buttonText"> {{uiLabels.edit}}  </span>
           </button>
 
-          <!--   <draggable :list="fullPoll['questions']"
-                           @start="drag = true"
-                           @end="drag = false"
-                           :move="detectMove"
-                           item-key="questionNumber"
-                  >
-                  <template #item="{}">-->
-          <SlideShow class="overviewPresentationSlide" v-for="(question, i) in fullPoll['questions']"
-                     v-bind:key="question"
-                     v-bind:questions="fullPoll['questions'][i].q"
-                     v-bind:answers="fullPoll['questions'][i].a"
-                     v-bind:pollId="pollId"
-                     v-bind:uiLabels="uiLabels"
-                     v-bind:questionMaster="questionMaster"
-                     v-bind:overviewUser="overviewUser"
-          >
-          </SlideShow>
-          <!--   </template>
-           </draggable>-->
-        </div>
+        <DragDrop class="overviewPresentationSlide"
+                  v-on:reorderDisplay="reorderDisplay($event)"
+                  v-on:drop="reorder()"
+                  v-bind:questions="fullPoll['questions']"
+                  v-bind:fullPoll="fullPoll"
+                  v-bind:drag="drag">
+
+        </DragDrop>
+
+      </div>
 
         <!-- Presentation -->
         <div id="presentation">
@@ -185,10 +175,10 @@
 
 <script>
 import QrcodeVue from 'qrcode.vue'
-//import DragDrop from '../components/DragDrop.vue'
+import DragDrop from '../components/DragDrop.vue'
 import io from 'socket.io-client';
 import SlideShow from "../components/SlideShow.vue";
-//import draggable from "vuedraggable";
+
 const socket = io();
 
 export default {
@@ -196,8 +186,7 @@ export default {
   components: {
     SlideShow,
     QrcodeVue,
-    // DragDrop,
-    // draggable,
+     DragDrop,
   },
 
   data: function () {
@@ -288,6 +277,15 @@ export default {
 
   methods: {
 
+    reorderDisplay: function (d) {
+      let moving = this.fullPoll.questions.splice(d.startDragIndex,1)
+      this.fullPoll.questions.splice(d.newDragIndex,0, moving[0])
+    },
+
+    reorder: function () {
+      socket.emit('reorder', {pollId: this.pollId, q: this.fullPoll.questions})
+    },
+
     totalTimeLeft: function(event){
       if(this.timeLeft!=1) {
         this.timeLeft = event
@@ -298,10 +296,6 @@ export default {
       this.timeForQuestions[this.questionNumber]=0
       this.timeLeft=1
       socket.emit('showCorrectAnswer', this.pollId)
-    },
-
-    detectMove: function (evt){
-      console.log('Event', evt)
     },
 
     dragAvailable: function (){
@@ -660,7 +654,6 @@ export default {
 .overviewPresentationSlide{
   height: 50%;
   width: 100%;
-  margin: 1em;
 }
 
 .pollIdStyle{

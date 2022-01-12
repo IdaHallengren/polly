@@ -181,7 +181,7 @@ export default {
 .drawAvatars{
   display: grid;
   grid-template-rows: 90%;
-  grid-template-columns: 78% 22%;
+  grid-template-columns: 78%;
 }
 
 #slides {
@@ -222,7 +222,6 @@ export default {
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
   margin-top: 15%;
-
 }
 
 #oneQuestion{

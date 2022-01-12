@@ -82,6 +82,11 @@ socket.on('hasAnswered', function(pollId){
   io.to(pollId).emit('aPersonHasAnswered', pollId)
 })
 
+  socket.on('reorder', function(d) {
+    data.reorder(d)
+    socket.emit('fullPoll', data.getPoll(d.pollId))
+  })
+
   socket.on('showCorrectAnswer', function(pollId){
     io.to(pollId).emit('setTimeToZero', pollId)
   })

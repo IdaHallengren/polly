@@ -166,8 +166,17 @@ Data.prototype.getPoints= function(pollId ,points,  participantId){
         return poll.participants
 
       }
-
     }
+
+  }
+}
+
+Data.prototype.reorder = function(d) {
+  const poll = this.polls[d.pollId];
+  if (typeof poll !== 'undefined') {
+    console.log(poll.questions)
+    poll.questions = d.q;
+    console.log(poll.questions)
 
   }
 }
