@@ -18,17 +18,20 @@
 
   <!-- Overview -->
       <div id="overview">
-        {{this.drag}}
         <div v-if="drag" class="buttonText"> {{uiLabels.clickDrag}}</div>
           <button class="dragFalse" v-on:click="dragAvailable()" v-bind:class="{'dragTrue': drag, 'dragFalse': !drag }">
             <span class="buttonText"> {{uiLabels.edit}}  </span>
           </button>
 
-        <DragDrop v-bind:questions="fullPoll['questions']"
-                  v-on:reorder="reorder($event)">
+        <DragDrop class="overviewPresentationSlide"
+                  v-on:reorderDisplay="reorderDisplay($event)"
+                  v-on:drop="reorder()"
+                  v-bind:questions="fullPoll['questions']"
+                  v-bind:fullPoll="fullPoll"
+                  v-bind:drag="drag">
 
         </DragDrop>
-
+<!--        v-bind:questions="fullPoll['questions']"-->
       </div>
 
   <!-- Presentation -->
@@ -251,9 +254,6 @@ export default {
 
     socket.on('fullPoll', (myPoll) =>
         {this.fullPoll = myPoll
-          setTimeout(function(){
-        this.ready=true}, 100)
-
         })
 
     socket.on('participantsAdded', (myParticipant) => {
@@ -275,17 +275,13 @@ export default {
 
   methods: {
 
-    reorder: function (event){
-      if(this.ready){
-      event.pollId = this.pollId
-      this.ready = false
-      socket.emit('reorder', event)
-      }
-
+    reorderDisplay: function (d) {
+      let moving = this.fullPoll.questions.splice(d.startDragIndex,1)
+      this.fullPoll.questions.splice(d.newDragIndex,0, moving[0])
     },
 
-    detectMove: function (evt){
-      console.log('Event', evt)
+    reorder: function (){
+      socket.emit('reorder', {pollId: this.pollId, q: this.fullPoll.questions})
     },
 
     dragAvailable: function (){
@@ -625,7 +621,6 @@ export default {
 .overviewPresentationSlide{
   height: 50%;
   width: 100%;
-  margin: 1em;
 }
 
 .pollIdStyle{

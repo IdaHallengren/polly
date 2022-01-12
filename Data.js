@@ -175,8 +175,7 @@ Data.prototype.reorder = function(d) {
   const poll = this.polls[d.pollId];
   if (typeof poll !== 'undefined') {
     console.log(poll.questions)
-    let moving = poll.questions.splice(d.startDragIndex,1)
-    poll.questions.splice(d.newDragIndex,0, moving)
+    poll.questions = d.q;
     console.log(poll.questions)
 
   }
