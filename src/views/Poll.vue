@@ -11,7 +11,7 @@
      <p class="fontSize"> {{uiLabels.pollId}} {{pollId}} </p>
       <div v-show ="!showName">
         <div class = "wrapperName">
-          <p class="fontSize">{{uiLabels.enterName}}</p>
+          <label class="fontSize">{{uiLabels.enterName}}</label>
            <div>
              <input v-on:keyup.enter="showName = !showName" v-model="participantName" type="text" id="participantName" name="participantName" placeholder="Name" >
              <button class="okButton" v-on:click = "showName = !showName"><span class='buttonText'>OK</span></button>
@@ -226,17 +226,17 @@ export default {
 <style>
 
 .fontSize{
-  font-size: 2.5vw;
   font-weight: bold;
+  font-size: xx-large;
   color: white;
   font-family: AppleGothic,sans-serif;
 }
 
 .wrapperName{
-  padding-top: 100px;
+  padding-top: 80px;
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 50% 50%;
+  grid-template-rows: auto;
   place-items: center;
 }
 
