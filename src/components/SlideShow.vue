@@ -239,7 +239,7 @@ export default {
 .correctAnswer {
   background-color: #1d823c;
   font-weight: bold;
-  font-size: xx-large;
+  font-size: 2vw;
   animation: blinker 0.5s linear;
   animation-iteration-count: 3;
   border-radius: 1vw;
@@ -247,13 +247,12 @@ export default {
 
 .wrongAnswer {
   background-color: #ed3632;
-  font-size: xx-large;
+  font-size: 2vw;
   border-radius: 1vw;
 }
 
 .hasAnswered{
   background-color: gray;
-  font-size: xx-large;
   border-radius: 1vw;
 }
 
@@ -296,12 +295,19 @@ export default {
   .showPoints{
     font-size: 3vw;
   }
-  .selectedAnswer:hover{
-    background: unset;
-  }
   .selectedAnswer{
-    font-size: 2vw;
+    font-size: 6vw;
   }
+  .selectedAnswer:hover{
+    background: white;
+  }
+  .wrongAnswer {
+    font-size: 3vw;
+  }
+  .correctAnswer {
+    font-size: 3vw;
+  }
+
 
 
 }
