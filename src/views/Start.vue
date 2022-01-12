@@ -351,7 +351,7 @@ export default {
     grid-template-columns: 5% 45% 45% 5%;
   }
   .startButton {
-    width: 25vw;
+    width: 40vw;
     font-size: 4vw;
   }
   .welcomeText{

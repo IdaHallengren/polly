@@ -116,7 +116,7 @@
         </div>
         <div id="QRCode">
           <!-- QR-code taken from: https://www.npmjs.com/package/qrcode.vue -->
-          <qrcode-vue :value="`http://localhost:8080/#/poll/${this.pollId}/${this.lang}`"  :size="300" >  </qrcode-vue>
+          <qrcode-vue :value="`https://pollifyquiz.herokuapp.com/#/poll/${this.pollId}/${this.lang}`"  :size="300" >  </qrcode-vue>
         </div>
       </div>
 
@@ -476,7 +476,6 @@ export default {
 .overviewPresentationSlide{
   height: 50%;
   width: 100%;
-
 }
 
 
