@@ -47,6 +47,7 @@
     </div>
     <div id="app" v-if="!overviewUser">
       <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
+
       <div class="showPoints"> {{ uiLabels.PointsForThisQuestion }}  <br> {{this.pointsForQuestion}} </div>
 
       <div class="styleYourPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
