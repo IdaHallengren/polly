@@ -44,7 +44,6 @@ function sockets(io, socket, data) {
       io.to(d.pollId).emit('participantsAdded', data.getParticipants(d.pollId));
     })
 
-
     socket.on('resetAll', () => {
       data = new Data();
       data.initializeData();
@@ -76,14 +75,11 @@ function sockets(io, socket, data) {
     io.to(d.pollId).emit('pointsForQuestion', data.getPoints(d.pollId, d.event, d.participantId))
   })
 
-
   socket.on('getAllParticipants', function(pollId){
-    console.log('inne i socket wiho')
     io.to(pollId).emit('collectParticipants', data.getParticipants(pollId))
   })
 
 socket.on('hasAnswered', function(pollId){
-  console.log("kommer vi hit med svarande")
   io.to(pollId).emit('aPersonHasAnswered', pollId)
 })
 
@@ -98,10 +94,8 @@ socket.on('hasAnswered', function(pollId){
 
   socket.on('showCorrectAnswer', function(pollId){
     io.to(pollId).emit('setTimeToZero', pollId)
-    console.log('hej')
   })
 }
-
 
 
 module.exports = sockets;
