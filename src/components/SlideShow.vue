@@ -245,6 +245,7 @@ export default {
 .hasAnswered{
   background-color: gray;
   border-radius: 1vw;
+  font-size: 2vw;
 }
 
 @keyframes blinker {
