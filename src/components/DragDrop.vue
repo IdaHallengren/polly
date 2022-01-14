@@ -1,3 +1,4 @@
+<!--- Cred to Mikael Laaksoharju -->
 <template>
 <div class="drawAvatars">
 
