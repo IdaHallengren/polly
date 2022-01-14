@@ -14,7 +14,7 @@
     <div v-for="(participant, key) in participants" v-bind:key="'participant'+key">
 
       <img class="participants"
-           :src="participant.participantImg"><br>
+           :src="participant.participantImg" ><br>
            {{participant.participantName}}
     </div>
   </section>

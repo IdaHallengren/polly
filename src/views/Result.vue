@@ -7,7 +7,6 @@
   <ConfettiExplosion :particleCount="180"  :duration="10000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1000" :stageWidth="8000"  />
   <ConfettiExplosion class="styleConfettiRight" :particleCount="180"  :duration="10000" :colors="['#2E3191', '#41BBC7', '#EB6373']" :stageHeight="1000" :stageWidth="8000"  />
 
-  <iframe src="audio.mp3" allow="autoplay" id="audio" style="display: none"></iframe>
   <audio id="player" autoplay loop>
     <source src="audio.mp3" type="audio/mp3">
   </audio>
