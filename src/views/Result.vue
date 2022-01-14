@@ -66,19 +66,14 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import Bars from '@/components/Bars.vue';
 import io from 'socket.io-client';
 import ConfettiExplosion from "vue-confetti-explosion";
 const socket = io();
-
-
 
 export default {
   name: 'Result',
   components: {
     ConfettiExplosion,
-    // Bars
   },
 
   data: function () {
@@ -132,12 +127,6 @@ export default {
         }
     )
   },
-
- /* mounted() {
-  },*/
-
- /* methods: {
-  }*/
 }
 
 </script>
@@ -163,6 +152,7 @@ export default {
   margin-top: 6vh;
   visibility: hidden;
 }
+
 #noThirdImg {
   width: 15vw;
   height: 15vw;
@@ -176,6 +166,7 @@ export default {
   height: 15vw;
   margin-top: 9vh;
 }
+
 .showResult {
   margin-top: 10%;
   display: grid;
@@ -185,19 +176,20 @@ export default {
   place-content: center;
   font-family: AppleGothic,sans-serif;
 }
+
 #secondPlace {
   place-content: center;
   height: 100%;
-
 }
+
 #firstPlace{
   height: 100%;
-
 }
+
 #thirdPlace{
   height: 100%;
-
 }
+
 #podiumSecond {
   width: 100%;
   height: 19vh;
@@ -205,6 +197,7 @@ export default {
   place-content: center;
   border-top-left-radius: 15%;
 }
+
 #podiumFirst {
   width: 100%;
   height: 25vh;
@@ -213,6 +206,7 @@ export default {
   border-top-left-radius: 8%;
   border-top-right-radius: 8%;
 }
+
 #podiumThird {
   width: 100%;
   height: 16vh;
@@ -220,6 +214,7 @@ export default {
   place-content: center;
   border-top-right-radius: 15%;
 }
+
 .nr1{
   font-size: 5vh;
   font-family: AppleGothic,sans-serif;
@@ -235,6 +230,7 @@ export default {
   color: silver;
   font-weight: bold;
 }
+
 .nr3{
   font-size: 5vh;
   font-family: AppleGothic,sans-serif;
@@ -244,12 +240,9 @@ export default {
   place-content: center;
 }
 
-
 .styleConfettiRight{
   margin-left: 95%
 }
-
-
 
 /*Style taken from the same as in start*/
 .bg {
@@ -303,9 +296,7 @@ export default {
     display: grid;
     grid-template-columns: 30% 30% 30%;
   }
- 
 }
-
 
 </style>
 

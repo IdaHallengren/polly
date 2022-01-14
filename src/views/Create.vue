@@ -32,7 +32,6 @@
                   v-bind:drag="drag">
 
         </DragDrop>
-
       </div>
 
         <!-- Presentation -->
@@ -158,9 +157,7 @@
                v-bind:correctAnswer="fullPoll['questions'][questionNumber].correctAnswer"
                v-bind:totalParticipantsAnswered="this.totalParticipantsAnswered"
                v-bind:participantsLength="this.participantsLength"
-               v-on:timePassed="totalTimeLeft($event)"
-
-    >
+               v-on:timePassed="totalTimeLeft($event)">
 
     </SlideShow>
 
@@ -233,7 +230,6 @@ export default {
       //Participants answering
       totalParticipantsAnswered: 0,
       participantsLength:0
-
     }
   },
 
@@ -478,7 +474,6 @@ export default {
   height: 50%;
   width: 100%;
 }
-
 
 .removeSlides{
   width: 40%;
@@ -783,18 +778,20 @@ export default {
   left: 22px;
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
-
 }
+
 .add-icon::after {
   right: 22px;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
 }
+
 .add-btn:hover .add-icon::before {
   left: 15px;
   height: 4px;
   top: calc(50% - 2px);
 }
+
 .add-btn:hover .add-icon::after {
   right: 15px;
   height: 4px;
@@ -888,8 +885,6 @@ export default {
   background: #1d72f0;
 }
 
-/*testar ändra bakgrund även på create */
-
 .bg {
   animation:slide 23s ease-in-out infinite alternate;
   background-image: linear-gradient(-60deg, #BB8FCE 50%, #ea9c8c 50%);
@@ -901,13 +896,16 @@ export default {
   top:0;
   z-index:-1;
 }
+
 .bg2 {
   animation-direction:alternate-reverse;
   animation-duration:23s;
 }
+
 .bg3 {
   animation-duration:23s;
 }
+
 @keyframes slide {
   0% {
     transform:translateX(-25%);
@@ -916,6 +914,7 @@ export default {
     transform:translateX(25%);
   }
 }
+
 @keyframes bounce {
   from {
     transform: translateY(0vh);

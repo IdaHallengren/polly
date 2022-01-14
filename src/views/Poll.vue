@@ -444,13 +444,16 @@ export default {
   top:0;
   z-index:-1;
 }
+
 .bg2 {
   animation-direction:alternate-reverse;
   animation-duration:23s;
 }
+
 .bg3 {
   animation-duration:23s;
 }
+
 @keyframes slide {
   0% {
     transform:translateX(-25%);
@@ -460,30 +463,34 @@ export default {
   }
 }
 
-
-
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
    .pollTaking{
      height: 100%;
   }
+
   .cancelButton{
     width: 15vw;
     height: 9vh;
   }
+
   .cancelButton .buttonText {
     font-size: 3vw;
     margin-right: 3vw;
   }
+
   .okButton{
     width: 13vw;
   }
+
   .okButton .buttonText {
     font-size: 3vw;
   }
+
   .backButton{
     width: 20vw;
   }
+
   .backButton .buttonText {
     font-size: 4vw;
     margin-right: 5vw;
@@ -493,6 +500,7 @@ export default {
     width: 20vw;
 
   }
+
   .continueButton .buttonText {
     font-size: 4vw;
     margin-left: 1vw;
@@ -501,22 +509,25 @@ export default {
   .fontSize{
     font-size: 6vw;
   }
+
   #formSize{
     width: 80%;
     left: 10%;
     margin-bottom: 15%;
 
   }
+
   #selectYourAvatarText{
     font-size: 3vw;
   }
+
   #selectedAvatar{
     width: 25%;
   }
+
   #selectedAvatar{
     right: 20%;
   }
-
 }
 
 </style>

@@ -1,3 +1,4 @@
+<!--- Cred to Mikael Laaksoharju -->
 <template>
 <div class="drawAvatars">
 
@@ -15,9 +16,7 @@
 
         <div class="answerLayout" >
           <div class="oneQuestion" v-for="answer in fullPoll['questions'][k].a" :key="answer">{{answer}}</div>
-
           <div style="font-style: italic; font-weight: bold">{{uiLabels.timeSlide}}{{fullPoll['questions'][k].timeForQuestion}}s<br> {{uiLabels.pointsSlide}}{{fullPoll['questions'][k].pointsForQuestion}}p</div>
-
         </div>
 
     </div>
@@ -42,7 +41,6 @@ export default {
       currentlyMovingIndex: 0,
       draggable: false
     }
-
   },
 
   methods: {
@@ -54,7 +52,7 @@ export default {
             this.$emit('reorderDisplay', {startDragIndex: this.currentlyMovingIndex, newDragIndex: i})
             this.currentlyMovingIndex = i;
             break;
-          }
+            }
           }
         }
       }
@@ -64,6 +62,7 @@ export default {
       this.currentlyMoving = null;
       this.$emit('drop')
     },
+
     prepareDrag: function (a,i) {
       if(this.drag) {
         console.log('prepare drag', a)
@@ -79,6 +78,7 @@ export default {
     }
   }
 }
+
 </script>
 <style scoped>
 
@@ -134,4 +134,5 @@ export default {
   50% {transform:rotate(-0.5deg);}
   100% {transform:rotate(0.5deg);}
 }
+
 </style>

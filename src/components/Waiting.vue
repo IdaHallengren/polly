@@ -18,7 +18,6 @@
            {{participant.participantName}}
     </div>
   </section>
-
 </div>
 
 </template>
@@ -39,9 +38,6 @@ export default {
       lang: "",
     }
   },
-
-  created: function () {
-  }
 }
 
 </script>
@@ -81,19 +77,21 @@ export default {
   position: relative;
   animation: bounce 0.7s infinite alternate;
 }
+
 .textLine1{
   font-size: 2.5vw;
   font-weight: bold;
 }
+
 .textLine2{
   font-size: 2vw;
   font-weight: bold
 }
+
 .textLine3 {
   font-size: 1vw;
   font-weight: bold;
 }
-
 
 @keyframes bounce {
   from {
@@ -108,15 +106,15 @@ export default {
   #wrapper{
     grid-template-rows: 35% 65%;
     grid-template-columns: 100%;
-
-
   }
+
   #textColumn{
     grid-row: 1;
     height: 15vh;
     font-size: 3vw;
     margin-bottom: 5%;
   }
+
   #waitingSection{
     position: unset;
     grid-row: 2;
@@ -124,25 +122,19 @@ export default {
     width: 90%;
     margin-left: 4%;
     height: 50vh;
-
   }
+
   .textLine1{
     font-size: 5vw;
   }
+
   .textLine2{
     font-size: 3vw;
   }
+
   .textLine3 {
     font-size: 3vw;
   }
 }
-
-
-
-
-
-
-
-
 
 </style>

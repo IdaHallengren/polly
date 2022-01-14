@@ -24,37 +24,38 @@ function sockets(io, socket, data) {
     socket.emit('dataUpdate', data.getAnswers(pollId));
   });
 
-    socket.on('runQuestion', function (d) {
-      io.to(d.pollId).emit('newQuestion', data.getQuestion(d.pollId, d.questionNumber));
-      io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
-    });
+  socket.on('runQuestion', function (d) {
+    io.to(d.pollId).emit('newQuestion', data.getQuestion(d.pollId, d.questionNumber));
+    io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
+  });
 
-    socket.on('submitAnswer', function (d) {
-      data.submitAnswer(d.pollId, d.answer);
-      io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
-    });
 
-    socket.on('addParticipant', function (d) {
-      data.addParticipant(d.pollId, d.participantInfo)
-      io.to(d.pollId).emit('participantsAdded', data.getParticipants(d.pollId));
-    })
+  socket.on('submitAnswer', function (d) {
+    data.submitAnswer(d.pollId, d.answer);
+    io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
+  });
 
-    socket.on('resetAll', () => {
-      data = new Data();
-      data.initializeData();
-    });
+  socket.on('addParticipant', function (d) {
+    data.addParticipant(d.pollId, d.participantInfo)
+    io.to(d.pollId).emit('participantsAdded', data.getParticipants(d.pollId));
+  })
 
-    socket.on('getPoll', function (pollId) {
-      socket.emit('fullPoll', data.getPoll(pollId))
-    });
+  socket.on('resetAll', () => {
+    data = new Data();
+    data.initializeData();
+  });
 
-    socket.on('removeSlide', function (d) {
-      data.removeQuestion(d.pollId, {q: d.q, a: d.a, timeForQuestion: d.timeForQuestion, pointsForQuestion: d.pointsForQuestion, correctAnswer: d.correctAnswer, questionNumber: d.questionNumber});
-      socket.emit('dataUpdate', data.getAnswers(d.pollId));
-    })
+  socket.on('getPoll', function (pollId) {
+    socket.emit('fullPoll', data.getPoll(pollId))
+  });
+
+  socket.on('removeSlide', function (d) {
+    data.removeQuestion(d.pollId, {q: d.q, a: d.a, timeForQuestion: d.timeForQuestion, pointsForQuestion: d.pointsForQuestion, correctAnswer: d.correctAnswer, questionNumber: d.questionNumber});
+    socket.emit('dataUpdate', data.getAnswers(d.pollId));
+  })
 
   socket.on('startGame' , function(d){
-     io.to(d.pollId).emit('gameStart', d.boolean)
+    io.to(d.pollId).emit('gameStart', d.boolean)
   })
 
   socket.on('removeParticipant', function(d){
@@ -74,9 +75,9 @@ function sockets(io, socket, data) {
     io.to(pollId).emit('collectParticipants', data.getParticipants(pollId))
   })
 
-socket.on('hasAnswered', function(pollId){
-  io.to(pollId).emit('aPersonHasAnswered', pollId)
-})
+  socket.on('hasAnswered', function(pollId){
+    io.to(pollId).emit('aPersonHasAnswered', pollId)
+  })
 
   socket.on('reorder', function(d) {
     data.reorder(d)
@@ -91,6 +92,5 @@ socket.on('hasAnswered', function(pollId){
     io.to(pollId).emit('setTimeToZero', pollId)
   })
 }
-
 
 module.exports = sockets;

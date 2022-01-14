@@ -108,10 +108,8 @@ Data.prototype.addParticipant = function(pollId, participant) {
   console.log("participant added to", pollId, participant);
   if (typeof poll !== 'undefined') {
     poll.participants.push(participant);
-
   }
 }
-
 
 Data.prototype.getParticipants = function(pollId) {
   const poll = this.polls[pollId];
@@ -150,7 +148,6 @@ Data.prototype.getPoints= function(pollId ,points,  participantId){
         poll.pointsForOne+=points;
         poll.participants[i].totPoints=poll.pointsForOne ;
         return poll.participants
-
       }
     }
   }
@@ -160,11 +157,8 @@ Data.prototype.reorder = function(d) {
   const poll = this.polls[d.pollId];
   if (typeof poll !== 'undefined') {
     poll.questions = d.q;
-
   }
 }
-
-
 
 module.exports = Data;
 

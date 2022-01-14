@@ -1,45 +1,44 @@
 <template>
 
-  <div class="wrapperSlideShow">
-    <div id="slides">
-      <div v-show="overviewUser" class="overview">{{questions}}<br></div>
-      <div v-show="!overviewUser" id="questionHeader" >{{questions}}<br></div>
-      <div class="answerLayout">
-        <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key" >
+<div class="wrapperSlideShow">
+  <div id="slides">
+    <div v-show="overviewUser" class="overview">{{questions}}<br></div>
+    <div v-show="!overviewUser" id="questionHeader" >{{questions}}<br></div>
+    <div class="answerLayout">
+      <div id="oneQuestion" v-for="(answer, key) in answers" v-bind:key="'answer'+key" >
 
-          <div v-show="!questionMaster" >
-            <div v-if="canClick()">
-              <button v-if="timePassed < timeForQuestion" class="selectedAnswer" v-on:click="saveAnswer(answer)">{{answer}}</button>
-            </div>
-            <div class="hasAnswered" v-if="!canClick() && timePassed < timeForQuestion">
-              {{answer}}
-            </div>
-            <div class="correctAnswer" v-if="answer === correctAnswer && timePassed >= timeForQuestion">
-              {{answer}}
-            </div>
-            <div class="wrongAnswer" v-if="answer !== correctAnswer && timePassed >= timeForQuestion">
-              {{answer}}
-            </div>
+        <div v-show="!questionMaster" >
+          <div v-if="canClick()">
+            <button v-if="timePassed < timeForQuestion" class="selectedAnswer" v-on:click="saveAnswer(answer)">{{answer}}</button>
           </div>
-
-          <div v-show="questionMaster && !overviewUser">
-            <div v-if="timePassed < timeForQuestion" class="AnswerQuestionMasters">
-              {{answer}}
-            </div>
-            <div v-if="answer === correctAnswer && timePassed >= timeForQuestion" class="correctAnswer">
-              {{answer}}
-            </div>
-            <div v-if="answer !== correctAnswer && timePassed >= timeForQuestion" class="wrongAnswer">
-              {{answer}}
-            </div>
+          <div class="hasAnswered" v-if="!canClick() && timePassed < timeForQuestion">
+            {{answer}}
           </div>
-
-          <div v-show="questionMaster && overviewUser" class="AnswerQuestionMasterOverview">
+          <div class="correctAnswer" v-if="answer === correctAnswer && timePassed >= timeForQuestion">
+            {{answer}}
+          </div>
+          <div class="wrongAnswer" v-if="answer !== correctAnswer && timePassed >= timeForQuestion">
             {{answer}}
           </div>
         </div>
-      </div>
 
+        <div v-show="questionMaster && !overviewUser">
+          <div v-if="timePassed < timeForQuestion" class="AnswerQuestionMasters">
+            {{answer}}
+          </div>
+          <div v-if="answer === correctAnswer && timePassed >= timeForQuestion" class="correctAnswer">
+            {{answer}}
+          </div>
+          <div v-if="answer !== correctAnswer && timePassed >= timeForQuestion" class="wrongAnswer">
+            {{answer}}
+          </div>
+        </div>
+
+        <div v-show="questionMaster && overviewUser" class="AnswerQuestionMasterOverview">
+          {{answer}}
+        </div>
+      </div>
+    </div>
   </div>
   <div id="app" v-if="!overviewUser">
     <Timer :time-left="timeLeft" v-bind:timeLimit="this.timeForQuestion"></Timer>
@@ -51,11 +50,10 @@
       <div class="showPoints" v-if="!questionMaster"><br> {{ uiLabels.yourTotalPoints }} <br>{{this.yourPoints}} </div>
 
       <div class="showPoints" v-if="questionMaster"> {{uiLabels.totalAnswered}} <br> {{this.totalParticipantsAnswered}} / {{this.participantsLength}}</div>
-      </div>
-
     </div>
 
   </div>
+</div>
 
 </template>
 
@@ -110,12 +108,6 @@ export default {
         return this.timeForQuestion - this.timePassed
     }
   },
-
-  created: function () {
-  },
-
-  // mounted() {
-  // },
 
   methods:{
 
@@ -230,7 +222,6 @@ export default {
   font-size: 1.5vw;
 }
 
-
 #app {
   right: 5%;
   margin-top: 20%;
@@ -262,7 +253,6 @@ export default {
   }
 }
 
-
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   .wrapperSlideShow{
@@ -277,6 +267,7 @@ export default {
     height: 90%;
     width: 85%;
   }
+
   #app{
     grid-column: span 2;
     grid-row: 1;
@@ -287,28 +278,30 @@ export default {
     margin-top: 15%;
     margin-bottom: 10%;
   }
+
   #textForPhones{
     margin-right: 15%;
     margin-left: -30%;
     margin-bottom: 5%;
   }
+
   .showPoints{
     font-size: 3vw;
   }
+
   .selectedAnswer{
     height: 5vw;
     width: 30vw;
     font-size: 4vw;
   }
+
   .wrongAnswer {
     font-size: 3.5vw;
   }
+
   .correctAnswer {
     font-size: 3.5vw;
   }
-
-
-
 }
 
 </style>
