@@ -111,7 +111,7 @@
           PollId: {{pollId}}
         </div>
         <div class="pollLink">
-          Link: {{`http://localhost:8080/#/poll/${this.pollId}/${this.lang}`}}
+          Link: <br>{{`https://pollifyquiz.herokuapp.com/#/poll/${this.pollId}/${this.lang}`}}
         </div>
         <div id="QRCode">
           <!-- QR-code taken from: https://www.npmjs.com/package/qrcode.vue -->
