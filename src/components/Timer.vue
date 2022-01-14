@@ -130,7 +130,6 @@ export default {
    align-items: center;
    justify-content: center;
    font-size: 3vw;
-
 }
 
 .path-remaining {
@@ -163,12 +162,12 @@ transform: scaleX(-1);
     width: 30vw;
     height: 30vw;
   }
+
   .label {
     width: 30vw;
     height: 30vw;
     font-size: 6vw;
   }
 }
-
 
 </style>

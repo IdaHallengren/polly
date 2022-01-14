@@ -163,12 +163,15 @@ export default {
   padding-top: 10%;
   font-family: AppleGothic,sans-serif;
 }
+
 .welcomeText{
   font-size: 1.5vw;
 }
+
 .welcomeText2{
   font-size: 1vw;
 }
+
 #wrapperButtons{
   display: grid;
   place-items: center;
@@ -229,8 +232,6 @@ export default {
   font-weight: bold;
   font-size: 2vh;
   font-family: AppleGothic,sans-serif;
-
-
 }
 
 .okButton:hover {
@@ -278,7 +279,6 @@ export default {
   font-weight: bold;
   font-size: 1.2vw;
   margin-right: 2vw;
-
 }
 
 .backButton:hover {
@@ -303,13 +303,16 @@ export default {
   top:0;
   z-index:-1;
 }
+
 .bg2 {
   animation-direction:alternate-reverse;
   animation-duration:12s;
 }
+
 .bg3 {
   animation-duration:12s;
 }
+
 @keyframes slide {
   0% {
     transform:translateX(-25%);
@@ -328,43 +331,45 @@ export default {
     width: 23vw;
     height: 8%;
     text-align: center;
-
-
   }
+
   .backButton .buttonText {
     font-size: 6vw;
     margin-right: 7vw;
   }
+
   #logo{
     margin-bottom: 0%;
     margin-top: -10%;
     height: 90%;
     width: 90%;
   }
+
   #headerText{
     margin-top: 5%;
   }
+
   #wrapperHead{
     grid-template-columns: 15% 70% 15%;
   }
+
   #wrapperButtons{
     margin-top: 20%;
     grid-template-columns: 5% 45% 45% 5%;
   }
+
   .startButton {
     width: 40vw;
     font-size: 4vw;
   }
+
   .welcomeText{
     font-size: 5vw;
   }
+
   .welcomeText2{
     font-size: 3vw;
   }
-
-
-
-
 }
 
 </style>
