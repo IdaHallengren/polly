@@ -153,10 +153,6 @@ export default {
     socket.on("newQuestion", q => {
       this.question = q
     })
-    socket.on('updateQuestion', q => {
-      this.question = q
-      this.questionNumber++;
-    })
 
     socket.on("init", (labels) => {
       this.uiLabels = labels
@@ -167,7 +163,6 @@ export default {
     )
 
     socket.on('gameStart', (myBoolean) => {
-      console.log('bjas')
         this.showGameStart= myBoolean
     })
 
