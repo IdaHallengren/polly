@@ -106,18 +106,13 @@ export default {
   font-weight: bold;
   place-content: center;
   user-drag: none;
-}
-
-/*.wiggle {
-  animation: wiggle 0.2s ease-in-out;
-  animation-iteration-count:infinite;
-  background-color: forestgreen;
-}*/
+} 
 
 .wiggleAll {
   animation: wiggle 0.2s ease-in-out;
   animation-iteration-count:infinite;
-  background-color: lightgrey;
+  background-color: white;
+  border-color: orange;
 }
 
 .answerLayout{
